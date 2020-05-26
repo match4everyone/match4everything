@@ -14,8 +14,8 @@ logger = logging.getLogger(__name__)
 
 @method_decorator([login_required, hospital_required], name="dispatch")
 class StudentDetailView(View):
-    def get(self, request):
-        s = Student.objects.get(uuid=self.kwargs["uuid"])
+    def get(self, request, uuid):
+        s = Student.objects.get(uuid=uuid)
         form = StudentFormView(instance=s, prefix="infos")
         context = {"form": form}
         return render(request, "view_student.html", context)

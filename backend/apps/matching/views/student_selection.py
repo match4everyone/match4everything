@@ -9,7 +9,7 @@ from django.views.generic.base import View
 from apps.matching.admin import hospital_required
 from apps.matching.filters import StudentJobRequirementsFilter
 from apps.matching.models import Student
-from apps.matching.tables import StudentTable
+from apps.matching.tables import StudentTable, StudentSelectionTable
 from apps.matching.src.map import get_plzs_close_to, plzs
 
 logger = logging.getLogger(__name__)
@@ -46,7 +46,7 @@ class StudentSelectionView(View):
         qs = filter_jobrequirements.qs
 
         # displayed table
-        table = StudentTable(qs, hospital=request.user.hospital)
+        table = StudentSelectionTable(qs, hospital=request.user.hospital)
 
         # disable huge amounts of email sends
         max_mails = request.user.hospital.leftover_emails_for_today()

@@ -48,7 +48,7 @@ class EmailToStudentEditView(FormView):
         context["n"] = len(id_list)
         return context
 
-    def from_valid(self, form):
+    def form_valid(self, form):
 
         hospital_message = form.cleaned_data["message"]
 
@@ -58,8 +58,8 @@ class EmailToStudentEditView(FormView):
             subject=subject, message=hospital_message, hospital=self.request.user.hospital,
         )
 
-        for student_id in self.kwargs["id_list"]:
-            student = Student.objects.get(user_id=student_id)
+        for student_id in self.kwargs["id_list"].split('_'):
+            student = Student.objects.get(user_id=int(student_id))
 
             new_message = format_lazy(
                 _(

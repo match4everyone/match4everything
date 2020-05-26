@@ -70,6 +70,7 @@ TEMPLATES = [
 ]
 
 LOGIN_REDIRECT_URL = "/matching/login_redirect"
+LOGIN_URL = '/matching/login'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 

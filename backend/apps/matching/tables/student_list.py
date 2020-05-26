@@ -5,7 +5,7 @@ import django_tables2 as tables
 from apps.matching.models import Student
 
 
-class StudentTable(tables.Table):
+class StudentSelectionTable(tables.Table):
     select = tables.TemplateColumn(template_name="checkbox_studenttable.html", visible=False)
     select.attrs = {
         "td": {"class": "bs-checkbox", "id": lambda record: "display-table-%s" % record.user_id,}
