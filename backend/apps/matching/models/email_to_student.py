@@ -5,7 +5,8 @@ from django.db import models
 
 from .hospital import Hospital
 
-from . import EmailGroup, Student
+from .email_group import EmailGroup
+from .student import Student
 
 
 # emails that hospitals send to students

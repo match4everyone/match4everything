@@ -3,7 +3,8 @@ import logging
 from django.db import models
 import numpy as np
 
-from . import Newsletter, User
+from .newsletter import Newsletter
+from .user import User
 
 logger = logging.getLogger(__name__)
 
