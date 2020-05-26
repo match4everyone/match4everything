@@ -10,7 +10,7 @@ from django.utils.translation import gettext as _
 import django_tables2 as tables
 import pandas as pd
 
-from apps.mapview.views import get_ttl_hash
+from apps.matching.views import get_ttl_hash
 
 logged_data_names = ["time", "status_line", "status", "request_time"]
 threshold_to_filter = 50

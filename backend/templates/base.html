@@ -51,25 +51,25 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item {% if "about" in request.path %}active{% endif %}"> <a class="nav-link" href="/about">{% blocktrans %}Über uns{% endblocktrans %}</a> </li>
         {% if not user.is_authenticated %}
-        <li class="nav-item {% if "signup_student" in request.path %}active{% endif %} hide-home"> <a class="nav-link" href="/accounts/signup_student">{% blocktrans %}Ich will
+        <li class="nav-item {% if "signup_student" in request.path %}active{% endif %} hide-home"> <a class="nav-link" href="/matching/signup_student">{% blocktrans %}Ich will
           helfen{% endblocktrans %}</a> </li>
-        <li class="nav-item  {% if "signup_hospital" in request.path %}active{% endif %} hide-home"> <a class="nav-link" href="/accounts/signup_hospital">{% blocktrans %}Ich brauche
+        <li class="nav-item  {% if "signup_hospital" in request.path %}active{% endif %} hide-home"> <a class="nav-link" href="/matching/signup_hospital">{% blocktrans %}Ich brauche
           Hilfe{% endblocktrans %}</a> </li>
         {% endif %}
         {% if user.is_authenticated and user.is_hospital %}
         {% url 'list_by_plz' user.hospital.countrycode user.hospital.plz 10 as filter_student_url %}
-        <li class="nav-item  {% if "signup_hospital" in request.path %}active{% endif %} hide-home"> <a class="nav-link" href="/ineedstudent/hospital_dashboard">{% blocktrans %}Helfer*innen finden{% endblocktrans %}</a> </li>
+        <li class="nav-item  {% if "signup_hospital" in request.path %}active{% endif %} hide-home"> <a class="nav-link" href="/matching/hospital_dashboard">{% blocktrans %}Helfer*innen finden{% endblocktrans %}</a> </li>
         {% endif %}
         {% if user.is_authenticated and user.is_student %}
-        <li class="nav-item {% if "mapview" in request.path %}active{% endif %}"> <a class="nav-link" href="/mapview">{% blocktrans %}Einrichtungen finden{% endblocktrans %}</a> </li>
+        <li class="nav-item {% if "matching" in request.path %}active{% endif %}"> <a class="nav-link" href="/matching">{% blocktrans %}Einrichtungen finden{% endblocktrans %}</a> </li>
         {% else %}
-        <li class="nav-item {% if "mapview" in request.path %}active{% endif %}"> <a class="nav-link" href="/mapview">{% blocktrans %}Karte{% endblocktrans %}</a> </li>
+        <li class="nav-item {% if "matching" in request.path %}active{% endif %}"> <a class="nav-link" href="/matching">{% blocktrans %}Karte{% endblocktrans %}</a> </li>
         {% endif %}
         {% if user.is_authenticated %}
-        <li class="nav-item {% if "profile" in request.path %}active{% endif %}"> <a class="nav-link" href="/accounts/profile_redirect">{% blocktrans %}Mein
+        <li class="nav-item {% if "profile" in request.path %}active{% endif %}"> <a class="nav-link" href="/matching/profile_redirect">{% blocktrans %}Mein
           Profil{% endblocktrans %}</a> </li>
         {% else %}
-        <li class="nav-item {% if "login" in request.path %}active{% endif %}"> <a class="nav-link" href="/accounts/profile_redirect">{% blocktrans %}Login{% endblocktrans %}</a> </li>
+        <li class="nav-item {% if "login" in request.path %}active{% endif %}"> <a class="nav-link" href="/matching/profile_redirect">{% blocktrans %}Login{% endblocktrans %}</a> </li>
         {% endif %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown">
@@ -79,13 +79,13 @@
             </svg>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <form action="/accounts/i18n/setlang/" method="post">
+                        <form action="/matching/i18n/setlang/" method="post">
                             {% csrf_token %}
                             <button class="dropdown-item" formmethod="post" type="submit">{% blocktrans %}Deutsch{% endblocktrans %}</button>
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <input type="hidden" name="language" value="de">
                         </form>
-                        <form action="/accounts/i18n/setlang/" method="post">
+                        <form action="/matching/i18n/setlang/" method="post">
                             {% csrf_token %}
                             <button class="dropdown-item" formmethod="post" type="submit">{% blocktrans %}English{% endblocktrans %}</button>
                             <input type="hidden" name="next" value="{{ request.path }}">

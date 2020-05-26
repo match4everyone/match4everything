@@ -36,10 +36,7 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "crispy_forms",
     "django_tables2",
-    "apps.mapview",
-    "apps.iamstudent",
-    "apps.ineedstudent",
-    "apps.accounts",
+    "apps.matching",
     "apps.use_statistics",
 ]
 
@@ -72,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-LOGIN_REDIRECT_URL = "/accounts/login_redirect"
+LOGIN_REDIRECT_URL = "/matching/login_redirect"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
@@ -100,7 +97,7 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
-AUTH_USER_MODEL = "accounts.User"
+AUTH_USER_MODEL = "matching.User"
 
 USE_L10N = True
 
