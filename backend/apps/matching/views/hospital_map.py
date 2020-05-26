@@ -6,8 +6,7 @@ from django.views.decorators.gzip import gzip_page
 from django.views.generic.base import TemplateView
 
 from apps.matching.models import Hospital
-from apps.matching.src.map import plzs
-from apps.matching.views import get_ttl_hash
+from apps.matching.src.map import plzs, get_ttl_hash
 
 logger = logging.getLogger(__name__)
 

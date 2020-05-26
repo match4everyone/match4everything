@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic.base import RedirectView
 
-from apps.matching.views import send_mails_for
+from .emailtostudent_edit import send_mails_for
 from apps.matching.models import Hospital
 
 logger = logging.getLogger(__name__)

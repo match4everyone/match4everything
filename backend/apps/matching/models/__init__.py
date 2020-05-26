@@ -8,8 +8,14 @@ if STATIC_HACK:
     The actual modules are loaded dynamically during startup
     Inspired by https://github.com/celery/kombu/blob/4644a5e9400beac6668f326c16078286f7d60b64/kombu/__init__.py#L34
     """
+    from .email_group import *
+    from .email_to_hospital import *
+    from .email_to_student import *
+    from .hospital import *
     from .newsletter import *  # noqa
     from .newsletter_approved_by import *  # noqa
+    from .student import *  # noqa
     from .user import *  # noqa
+
 
 import_submodules(globals(), __name__, __path__)  # noqa: F405

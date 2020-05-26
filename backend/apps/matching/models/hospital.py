@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .models import User
+from .user import User
 from apps.matching.files.map_data import plzs
 
 # Create your models here.
