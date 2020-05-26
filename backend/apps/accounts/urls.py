@@ -2,7 +2,12 @@ from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
-from . import views, views_staff
+from apps.iamstudent.forms import StudentForm, StudentFormAndMail
+from apps.iamstudent.models import Student
+from apps.ineedstudent.forms import HospitalFormInfoCreate, HospitalFormInfoSignUp
+from apps.ineedstudent.models import Hospital
+
+from . import views
 
 urlpatterns = [
     path(
@@ -66,29 +71,65 @@ urlpatterns = [
     ),
     path("", include("django.contrib.auth.urls")),
     path("validate_email", views.validate_email, name="validate_email"),
-    path("profile_redirect", views.profile_redirect, name="profile_redirect"),
-    path("login_redirect", views.login_redirect, name="login_redirect"),
+    path("profile_redirect", views.ProfileDashboardRedirect.as_view(), name="profile_redirect"),
+    path("login_redirect", views.LoginRedirect.as_view(), name="login_redirect"),
     path("delete_me_ask", views.delete_me_ask, name="delete_me_ask"),
     path("delete_me", views.delete_me, name="delete_me"),
-    path("signup_student", views.student_signup, name="student_signup"),
-    path("signup_hospital", views.hospital_signup, name="hospital_signup"),
-    path("profile_student", views.edit_student_profile, name="edit_student_profile"),
-    path("profile_hospital", views.edit_hospital_profile, name="edit_hospital_profile"),
-    path("approve_hospitals", views.approve_hospitals, name="approve_hospitals"),
+    path(
+        "signup_student",
+        views.ParticipantSignupView.as_view(
+            template_signup="student_signup.html",
+            template_thanks_for_registering="/iamstudent/thanks",
+            signup_form=StudentFormAndMail,
+            save_form=StudentForm,
+            subject_template="registration/password_reset_email_subject.txt",
+            model=Student,
+            mail_template="registration/password_set_email_.html",
+        ),
+        name="student_signup",
+    ),
+    path(
+        "signup_hospital",
+        views.ParticipantSignupView.as_view(
+            template_signup="hospital_signup.html",
+            template_thanks_for_registering="/iamstudent/thanks",
+            signup_form=HospitalFormInfoSignUp,
+            save_form=HospitalFormInfoCreate,
+            subject_template="registration/password_reset_email_subject.txt",
+            model=Hospital,
+            mail_template="registration/password_set_email_hospital.html",
+        ),
+        name="hospital_signup",
+    ),
+    path("profile_student", views.StudentEditProfileView.as_view(), name="edit_student_profile"),
+    path("profile_hospital", views.HospitalEditProfileView.as_view(), name="edit_hospital_profile"),
+    path("approve_hospitals", views.ApproveHospitalsView.as_view(), name="approve_hospitals"),
     path(
         "change_hospital_approval/<str:uuid>/",
-        views.change_hospital_approval,
+        views.ChangeHospitalApprovalRedirect.as_view(),
         name="change_hospital_approval",
     ),
-    path("delete_hospital/<str:uuid>/", views.delete_hospital, name="delete_hospitall"),
+    path(
+        "delete_hospital/<str:uuid>/",
+        views.DeleteHospitalRedirect.as_view(),
+        name="delete_hospitall",
+    ),
     path("count", views.UserCountView.as_view(), name="count"),
-    path("change_activation", views.change_activation_ask, name="activate_student_ask"),
-    path("change_activation_confirm", views.change_activation, name="activate_student"),
-    path("view_newsletter/<uuid>", views.view_newsletter, name="view_newsletter"),
-    path("new_newsletter", views.new_newsletter, name="new_newsletter"),
-    path("list_newsletter", views.list_newsletter, name="list_newsletter"),
-    path("did_see_newsletter/<uuid>/<token>", views.did_see_newsletter, name="did_see_newsletter"),
-    path("stats", views_staff.view_statistics, name="statistics"),
-    path("profile_staff", views.staff_profile, name="staff_profile"),
+    path("change_activation", views.ChangeActivationAskView.as_view(), name="activate_student_ask"),
+    path(
+        "change_activation_confirm",
+        views.ChangeActivationRedirect.as_view(),
+        name="activate_student",
+    ),
+    path("view_newsletter/<uuid>", views.NewsletterDetailView.as_view(), name="view_newsletter"),
+    path("new_newsletter", views.NewNewsletterRedirect.as_view(), name="new_newsletter"),
+    path("list_newsletter", views.NewsletterListView.as_view(), name="list_newsletter"),
+    path(
+        "did_see_newsletter/<uuid>/<token>",
+        views.ApproveNewsletterTextRedirect.as_view(),
+        name="did_see_newsletter",
+    ),
+    path("stats", views.DBStatsView.as_view(), name="statistics"),
+    path("profile_staff", views.StaffProfileView.as_view(), name="staff_profile"),
     path("i18n/", include("django.conf.urls.i18n")),
 ]

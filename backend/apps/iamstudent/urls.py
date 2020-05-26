@@ -1,17 +1,15 @@
 from django.urls import path
+from django.views.generic.base import TemplateView
 
 from . import views
 
 urlpatterns = [
-    # path('student_registration', views.get_student, name='student_registration'),
-    path("thanks", views.thx, name="thanks"),
-    # path('send_mail_student', views.send_mail_student, name='send_mail_student'),
-    path("successful_mail", views.successful_mail, name="success"),
-    # path('students_testing/<countrycode>/<plz>/<int:distance>', views.student_list_view, name='student_list_view'),
+    path("thanks", TemplateView.as_view(template_name="thanks.html"), name="thanks"),
+    path("successful_mail", views.EmailToStudentSuccessView.as_view(), name="success"),
     path(
         "send_mail_student/<id_list>",
-        views.send_mail_student_id_list,
+        views.EmailToStudentEditView.as_view(),
         name="send_mail_student_id_list",
     ),
-    path("view_student/<uuid>", views.view_student, name="view_student"),
+    path("view_student/<uuid>", views.StudentDetailView.as_view(), name="view_student"),
 ]
