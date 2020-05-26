@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% blocktrans %}
+Profil - Studierende
+{% endblocktrans %}
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<script type="text/javascript">
+
+var signUpHelper = {
+        handleQualificationInput : function handleQualificationInput(event) {
+            let sourceElement = event.srcElement;
+            let qualificationSelected = event.srcElement.checked;
+
+            // Extract qualification Id from parent div with suitable class, name ausbildung-checkbox-<id>
+            let qualificationId = event.srcElement.closest("div.ausbildung-checkbox").id.split("-").slice(-1)
+            this.setQualificationSectionVisibility(qualificationId, qualificationSelected)
+        },
+        setQualificationSectionVisibility : function setQualificationSectionVisibility(id, setVisibility) {
+            let section = document.getElementById(`div-ausbildung-${id}`)
+            if (!section) return;
+            if (setVisibility) {
+                section.classList.remove('hidden')
+            } else {
+                section.classList.add('hidden');
+                section.querySelectorAll("input[type='checkbox']").forEach( (checkbox) => { checkbox.checked = false })
+                section.querySelectorAll("input[type='text'], select").forEach( (textbox) => { textbox.value = '' })
+            }
+
+        },
+    }
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        let qualifikationSelectors = document.querySelectorAll("div.ausbildung-checkbox input")
+        qualifikationSelectors.forEach(element => {
+            element.addEventListener("change", (event) => { signUpHelper.handleQualificationInput(event) })
+
+            // To handle Mozillas brilliant idea to keep state of checkboxes on refresh, trigger dummy handler for every checkbox
+            signUpHelper.handleQualificationInput({ srcElement: element });
+        })
+
+    });
+
+</script>
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div class="container">
+    <br>
+    <br>
+    {% if messages %}
+
+
+    {% for message in messages %}
+    <div class="alert {{ message.tags }} fade show alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% endif %}
+
+
+
+    <div class="container">
+
+		<h1 class="font-weight-light match4hc-title">{% blocktrans %}Mein Profil{% endblocktrans %}</h1>
+		<h2 class="font-weight-light match4hc-title">{% blocktrans %}Aktualisiere hier jederzeit deine Angaben.{% endblocktrans %}</h2>
+		<br>
+        <div class="card" style="margin-bottom:35px;">
+            <div class="card-header">
+                {% blocktrans %}Account Details{% endblocktrans %}
+            </div>
+            <div class="card-body">
+                {% if participant.is_activated %} {% else %}{% blocktrans %}<mark>Vorsicht!</mark> Dein Profil ist deaktiviert, aktuell kannst du nicht kontaktiert werden.{% endblocktrans %} <br> {% endif %}
+
+                    <a role="button" class="btn blue text-white btn-md" href="logout">{% blocktrans %}Logout{% endblocktrans %}</a>
+                    <a role="button" class="btn blue text-white btn-md" href="password_change">{% blocktrans %}Passwort ändern{% endblocktrans %}</a>
+                <a role="button" class="btn btn-info" href="change_activation">{% if participant.is_activated %} {% blocktrans %}Profil deaktivieren{% endblocktrans %} {% else %}{% blocktrans %}Profil aktivieren{% endblocktrans %} {% endif %}</a>
+                <a role="button" class="btn btn-info" href="delete_me_ask">{% blocktrans %}Mein Profil löschen{% endblocktrans %}</a>
+
+            </div>
+        </div>
+        <div class="card" style="margin-bottom:35px;">
+            <div class="card-header">
+                {% blocktrans %}Nützliche Hinweise{% endblocktrans %}
+            </div>
+            <div class="card-body">
+                <p>
+                    {% blocktrans %}Für rechtliche Hinweise und Tipps informieren Sie sich gerne beim der <a href="https://www.marburger-bund.de/mitarbeit-studierenden-pandemie">Übersicht des Marburger Bunds zur Mitarbeit in der Corona Pandemie</a>.{% endblocktrans %}
+                </p>
+                <p>
+                    {% blocktrans %}Zusätzlich wollen wir euch bestmöglich auf den Einsatz und den Kontakt mit COVID-19 Patienten vorbereiten.  Hierfür stellen wir euch eine <a href="https://www.amboss.com/de/wissen/COVID-19">Zusammenfassung der Symptome und Therapiemöglichkeiten</a> zur Verfügung.{% endblocktrans %}
+                </p>
+                <p>
+                    {% blocktrans %}Zur Vorbereitung auf euren Einsatz hat ein weiteres Team des #WirVsVirus Hackathon eine <a href="https://helferhaende.it-servicehost.de/">interaktive E-Learning Plattform</a> entwickelt.{% endblocktrans %}
+                </p>
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                {% blocktrans %}Informationen über dich{% endblocktrans %}
+            </div>
+            <div class="card-body" style="margin-bottom: 1rem;">
+                <form action="profile_student" method="post">
+                    {% csrf_token %}
+                    {% crispy form form.helper %}
+                </form>
+            </div>
+        </div>
+    </div>
+ <br>
+    {% endblock %}

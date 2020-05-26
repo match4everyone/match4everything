@@ -1,0 +1,1 @@
+<a class="btn btn-sm {% if record.is_approved %} btn-warning {% else %} btn-success {%endif%}" href="/matching_old/change_hospital_approval/{{record.uuid}}">{% if record.is_approved %}Disapprove{% else %}  Approve {%endif%}</a>
