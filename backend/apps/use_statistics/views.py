@@ -10,7 +10,9 @@ from django.utils.translation import gettext as _
 import django_tables2 as tables
 import pandas as pd
 
-from apps.matching.views import get_ttl_hash
+def get_ttl_hash(seconds=300):
+    """Return the same value withing `seconds` time period."""
+    return round(time.time() / seconds)
 
 logged_data_names = ["time", "status_line", "status", "request_time"]
 threshold_to_filter = 50

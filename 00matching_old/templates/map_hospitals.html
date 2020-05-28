@@ -145,8 +145,8 @@ $(window).on("resize", function () {
        radius: 500 + 100 * {{ location.count }}
    })
    .bindPopup('In {{ location.ort }} {{ location.countrycode }}(PLZ {{location.plz }}){% blocktrans %} gibt es {% endblocktrans %}{{ location.count|localize }}{% blocktrans %} Orte, an welchen Hilfe gebraucht wird. {% endblocktrans %}' +
-   {% if location.count > 1 %}'<a href=/matching_old/hospitals/{{location.countrycode}}/{{ location.plz }}>{% blocktrans %}Detailansicht{% endblocktrans %}</a>'
-   {% else %}'<a href=/matching_old/hospital_view/{{location.uuid}}>{% blocktrans %}Detailansicht{% endblocktrans %}</a>'
+   {% if location.count > 1 %}'<a href=/00matching_old/hospitals/{{location.countrycode}}/{{ location.plz }}>{% blocktrans %}Detailansicht{% endblocktrans %}</a>'
+   {% else %}'<a href=/00matching_old/hospital_view/{{location.uuid}}>{% blocktrans %}Detailansicht{% endblocktrans %}</a>'
    {% endif %}
     )
    .addTo(mymap);

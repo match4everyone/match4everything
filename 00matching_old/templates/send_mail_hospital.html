@@ -27,7 +27,7 @@
             <h4>{% blocktrans %}E-Mail versenden{% endblocktrans %}</h4>
         </div>
         <div class="card-body">
-            <form action="/matching_old/send_mail_student/{{ids}}" method="post" onsubmit="disableButton()">
+            <form action="/00matching_old/send_mail_student/{{ids}}" method="post" onsubmit="disableButton()">
                 {% csrf_token %}
                 {% crispy form form.helper %}
                 <p>

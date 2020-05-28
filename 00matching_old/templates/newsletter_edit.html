@@ -126,7 +126,7 @@
                 <div class="row">
                     {% if newsletter_state <= state_enum.BEING_EDITED %}
                     <div class="col-sm-3">
-                        <a href="/matching_old/view_newsletter/{{uuid}}?freezeNewsletter"
+                        <a href="/00matching_old/view_newsletter/{{uuid}}?freezeNewsletter"
                            class="btn btn-sm btn-dark {% if newsletter_state < state_enum.BEING_EDITED %}disabled{%endif%}">
                             {% blocktrans %}Fertig stellen{% endblocktrans %}
                         </a>
@@ -185,7 +185,7 @@
                     </div>
                     {% else %}
                     <div class="col-sm-3">
-                        <a href="/matching_old/view_newsletter/{{uuid}}?approveNewsletter"
+                        <a href="/00matching_old/view_newsletter/{{uuid}}?approveNewsletter"
                            class="btn btn-sm btn-dark {% if newsletter_state < state_enum.UNDER_APPROVAL %}disabled{%endif%}">
                             {% blocktrans %}Text Approven{% endblocktrans %}
                         </a>
@@ -201,7 +201,7 @@
                 <div class="row">
                     {% if newsletter_state <= state_enum.READY_TO_SEND %}
                     <div class="col-sm-3">
-                    <a href="/matching_old/view_newsletter/{{uuid}}?sendNewsletter"
+                    <a href="/00matching_old/view_newsletter/{{uuid}}?sendNewsletter"
                        onclick="return sendNewsletterClicked()"
                         id="sendNewsletterButton"
                        class="btn btn-sm btn-dark {% if newsletter_state < state_enum.READY_TO_SEND %}disabled{%endif%}">
@@ -247,7 +247,7 @@
             <div class="col text-right">{% if not  newsletter_state == state_enum.SENT %}
                 <!-- Button trigger modal -->
                 {% if newsletter_state == state_enum.READY_TO_SEND or newsletter_state == state_enum.UNDER_APPROVAL %}
-                <a href="/matching_old/view_newsletter/{{uuid}}?unFreezeNewsletter"
+                <a href="/00matching_old/view_newsletter/{{uuid}}?unFreezeNewsletter"
                    onclick="return confirm('{% blocktrans %}Wenn du den Newsletter jetzt wieder editieren möchtest, gehen bereits gegebene Approvals von anderen verloren.\nWillst du den Text wirklich editieren?{% endblocktrans %}')"
                    class="btn btn-sm btn-success">
                     {% blocktrans %}Text nochmal ändern {% endblocktrans %}
@@ -289,7 +289,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="/matching_old/view_newsletter/{{uuid}}" method="get" onsubmit="disableButton()">
+                        <form action="/00matching_old/view_newsletter/{{uuid}}" method="get" onsubmit="disableButton()">
                             <div class="modal-body">
 
                                 {% csrf_token %}
