@@ -86,7 +86,7 @@ In order to run pre-commit checks every time, please run `pre-commit install` on
 - Add translatable strings in python with `_("Welcome to my site.")` and import `from django.utils.translation import gettext as _` ([Documentation](https://docs.djangoproject.com/en/3.0/topics/i18n/translation/#internationalization-in-python-code))
 - Add translatable strings in templates with `{% blocktrans %}This string will have {{ value }} inside.{% endblocktrans %}` or alternatively with the `trans` block and include `{% load i18n %}` at the top ([Documentation](https://docs.djangoproject.com/en/3.0/topics/i18n/translation/#internationalization-in-template-code))
 - Update the translation file
-`django-admin makemessages -l de --no-location` (line numbers omitted to allow nicer merges)
+`django-admin makemessages -l de --no-location --ignore 00_old_m4h_matching_code` (line numbers omitted to allow nicer merges)
 - Edit translations in `backend/locale/de/LC_MESSAGES/django.po`
 
 ### Testing
