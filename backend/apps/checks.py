@@ -8,7 +8,7 @@ from django.core.checks import Error, register
 from django.core.checks import Tags as DjangoTags
 from django.core.checks import Warning
 
-from match4healthcare.constants.enum import Environment
+from match4everyone.constants.enum import Environment
 
 logger = logging.getLogger(__name__)
 
@@ -30,14 +30,14 @@ def does_sendgrid_sandbox_mail_work():
                 "subject": "Hello, World!",
             }
         ],
-        "content": [{"type": "text/plain", "value": "Heya!"}],
+        "content": [{"p_type": "text/plain", "value": "Heya!"}],
         "from": {"email": "sam.smith@example.com", "name": "Sam Smith"},
         "reply_to": {"email": "sam.smith@example.com", "name": "Sam Smith"},
         "mail_settings": {"sandbox_mode": {"enable": True}},
     }
     headers = {
         "authorization": "Bearer " + settings.SENDGRID_API_KEY,
-        "content-type": "application/json",
+        "content-p_type": "application/json",
     }
 
     conn.request("POST", "/v3/mail/send", json.dumps(payload), headers)
@@ -59,7 +59,7 @@ def check_fork(app_configs=None, **kwargs):
     if settings.IS_FORK:
         errors.append(
             Warning(
-                "This is a fork of the original 'match4healthcare' repo.",
+                "This is a fork of the original 'match4everyone' repo.",
                 hint=(
                     "Thanks for forking our repository. Pay attention that Travis CI doesn't test your code "
                     "with sendgrid. If you want to use sendgrid for your tests, "

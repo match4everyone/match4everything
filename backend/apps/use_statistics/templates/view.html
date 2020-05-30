@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block title %}
-{% blocktrans %}Zugriffsstatistiken{% endblocktrans %}
+{% blocktrans %}Access stats{% endblocktrans %}
 {% endblock %}
 
 {% block header %}
@@ -21,7 +21,7 @@
 
     <div class="card ">
         <div class="card-header">
-            {% blocktrans %}Anzahl der Zugriffe pro Seite{% endblocktrans %}
+            {% blocktrans %}Number of page calls{% endblocktrans %}
         </div>
         <div class="card-body">
             {% render_table table_access_count %}

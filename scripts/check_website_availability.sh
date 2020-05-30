@@ -26,7 +26,7 @@ failed=False
 URL=localhost:8000
 
 # Log file location
-ERR_LOG_PATH=backend/run/match4healthcare.json.error.log
+ERR_LOG_PATH=backend/run/match4everyone.json.error.log
 
 # Execute command and print status
 function test() {

@@ -9,7 +9,7 @@
 database/data/
 
 # Generated staticfiles by Django
-backend/match4healthcare/static
+backend/match4everyone/static
 
 # Created by https://www.gitignore.io/api/react,django,python
 # Edit at https://www.gitignore.io/?templates=react,django,python
@@ -128,7 +128,7 @@ celerybeat-schedule
 .dmypy.json
 dmypy.json
 
-# Pyre type checker
+# Pyre p_type checker
 .pyre/
 
 ### Python ###
@@ -176,7 +176,7 @@ dmypy.json
 
 # mypy
 
-# Pyre type checker
+# Pyre p_type checker
 
 ### react ###
 .DS_*

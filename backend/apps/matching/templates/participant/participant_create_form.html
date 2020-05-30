@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    {% blocktrans %}
+        Registration
+    {% endblocktrans %}
+{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div style="height:40px"></div>
+    <div class="container" style="margin-bottom: 55px;">
+
+        {% blocktrans %} Already registered? {% endblocktrans %}
+        <a href="/matching/login_redirect">{% blocktrans %}Login{% endblocktrans %}</a>
+        {% blocktrans %} or {% endblocktrans %}
+        <a href="/matching/password_reset">{% blocktrans %}Reset Password{% endblocktrans %}</a>
+        <hr>
+
+
+        <div class="row" style="margin-top:30px;">
+            <div class="col-lg-10 col-sm-12 col-12">
+
+                <form method="post">
+                    {% csrf_token %}
+                    {% crispy form form.helper %}
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
