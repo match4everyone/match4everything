@@ -25,7 +25,7 @@ jobs:
         pip install -r ./backend/requirements.txt
 
     - name: Generate updated .po file
-      run: django-admin makemessages -l de --no-location --settings=match4everyone.settings.development
+      run: PYTHONPATH="./backend:$PYTHONPATH" django-admin makemessages -l de --no-location --settings=match4everyone.settings.development
 
     - name: "[TEST] Check for fuzzy translations"
       id: fuzzy_translations
