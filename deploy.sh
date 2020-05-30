@@ -4,7 +4,7 @@ set -e -o pipefail
 export CURRENT_UID=$(id -u):$(id -g)
 docker-compose -f docker-compose.dev.yml -f docker-compose.prod.yml up -d --build
 docker exec backend python3 manage.py migrate
-docker exec --env PYTHONPATH="/match4everyone-backend:$PYTHONPATH" backend django-admin makemessages --no-location
+docker exec --env PYTHONPATH="/match4everyone-backend:$PYTHONPATH" backend django-admin makemessages --no-location --ignore 00_old_m4h_matching_code
 docker exec --env PYTHONPATH="/match4everyone-backend:$PYTHONPATH" backend django-admin compilemessages
 docker exec backend python3 manage.py collectstatic --no-input
 docker exec backend python3 manage.py migrate
