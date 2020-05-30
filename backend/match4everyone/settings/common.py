@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "crispy_forms",
     "django_tables2",
-    "apps.matching",
-    "apps.use_statistics",
+    "apps.matching.apps.MatchingConfig",
+    "apps.use_statistics.apps.UseStatisticsConfig",
 ]
 
 MIDDLEWARE = [
