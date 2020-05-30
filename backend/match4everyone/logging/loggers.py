@@ -24,7 +24,7 @@ class SlackMessageHandler(logging.Handler):
         super().__init__()
 
     def create_block(self, name, value):
-        return {"p_type": "mrkdwn", "text": "*{}*:\n{}".format(name, value)}
+        return {"type": "mrkdwn", "text": "*{}*:\n{}".format(name, value)}
 
     # replacing default django emit (https://github.com/django/django/blob/master/django/utils/log.py)
     def emit(self, record: logging.LogRecord, *args, **kwargs):
@@ -47,9 +47,9 @@ class SlackMessageHandler(logging.Handler):
         message = {
             "blocks": [
                 {
-                    "p_type": "section",
+                    "type": "section",
                     "text": {
-                        "p_type": "mrkdwn",
+                        "type": "mrkdwn",
                         "text": "{} *{}*:\n[{}]: {}".format(
                             emoji[record.levelname],
                             record.levelname,
@@ -59,9 +59,9 @@ class SlackMessageHandler(logging.Handler):
                     },
                 },
                 {
-                    "p_type": "section",
+                    "type": "section",
                     "fields": [
-                        {"p_type": "mrkdwn", "text": "*Level*:\n{}".format(record.levelname),},
+                        {"type": "mrkdwn", "text": "*Level*:\n{}".format(record.levelname),},
                         *request_fields,
                     ],
                 },

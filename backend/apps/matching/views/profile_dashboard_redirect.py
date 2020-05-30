@@ -26,6 +26,6 @@ class ProfileDashboardRedirect(View):
 
         else:
             logger.warning(
-                "User is unknown p_type, profile redirect not possible", extra={"request": request},
+                "User is unknown type, profile redirect not possible", extra={"request": request},
             )
             return Http404

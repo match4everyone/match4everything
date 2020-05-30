@@ -60,7 +60,7 @@ def process_file(ttl_hash):
     arbitrary_column_name = df_names.columns.delete(list(df_names.columns).index("status_line"))[0]
     groupby = groupby[arbitrary_column_name].count()
 
-    # df.to_dict('index') throws TypeError "unsupported p_type: <class 'str'>"
+    # df.to_dict('index') throws TypeError "unsupported type: <class 'str'>"
     data = []
     for _groupby_key, (status_line, counts) in zip(groupby_keys, groupby.items()):
         if counts > threshold_to_filter:

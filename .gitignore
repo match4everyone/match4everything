@@ -128,7 +128,7 @@ celerybeat-schedule
 .dmypy.json
 dmypy.json
 
-# Pyre p_type checker
+# Pyre type checker
 .pyre/
 
 ### Python ###
@@ -176,7 +176,7 @@ dmypy.json
 
 # mypy
 
-# Pyre p_type checker
+# Pyre type checker
 
 ### react ###
 .DS_*

@@ -228,7 +228,7 @@ class PostingForm(forms.ModelForm):
         self.helper.form_method = "post"
         self.helper.layout = Layout(
             HTML(
-                '<script p_type="text/javascript" src="{}"></script>'.format(
+                '<script type="text/javascript" src="{}"></script>'.format(
                     static("js/PostingForm.js")
                 )
             ),

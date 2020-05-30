@@ -30,14 +30,14 @@ def does_sendgrid_sandbox_mail_work():
                 "subject": "Hello, World!",
             }
         ],
-        "content": [{"p_type": "text/plain", "value": "Heya!"}],
+        "content": [{"type": "text/plain", "value": "Heya!"}],
         "from": {"email": "sam.smith@example.com", "name": "Sam Smith"},
         "reply_to": {"email": "sam.smith@example.com", "name": "Sam Smith"},
         "mail_settings": {"sandbox_mode": {"enable": True}},
     }
     headers = {
         "authorization": "Bearer " + settings.SENDGRID_API_KEY,
-        "content-p_type": "application/json",
+        "content-type": "application/json",
     }
 
     conn.request("POST", "/v3/mail/send", json.dumps(payload), headers)

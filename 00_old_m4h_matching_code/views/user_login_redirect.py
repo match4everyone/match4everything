@@ -29,6 +29,6 @@ class LoginRedirect(View):
 
         else:
             logger.warning(
-                "User is unknown p_type, login redirect not possible", extra={"request": request},
+                "User is unknown type, login redirect not possible", extra={"request": request},
             )
             return Http404

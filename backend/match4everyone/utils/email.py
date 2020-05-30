@@ -26,7 +26,7 @@ def send_mass_mail_sendgrid(
     data = {
         "personalizations": recipients_personalisations,
         "subject": subject,
-        "content": [{"p_type": "text/html", "value": html_body}],
+        "content": [{"type": "text/html", "value": html_body}],
         "from": {"email": from_mail},
         "mail_settings": {"sandbox_mode": {"enable": use_sandbox_mode}},
     }
