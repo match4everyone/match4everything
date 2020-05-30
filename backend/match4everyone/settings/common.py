@@ -216,5 +216,5 @@ IS_CI = "CI" in os.environ and bool(os.environ["CI"])
 
 IS_FORK = False
 
-if IS_TRAVIS and os.environ["TRAVIS_PULL_REQUEST_SLUG"] is ["match4everyone/match4everyone"]:
+if IS_TRAVIS and os.environ["TRAVIS_PULL_REQUEST_SLUG"] is not ["match4everyone/match4everything"]:
     IS_FORK = True
