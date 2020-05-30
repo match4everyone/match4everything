@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load l10n %}
+
+{% block title %}
+{% blocktrans %}Karte der Hilfsbereiten{% endblocktrans %}
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'js/leaflet-1.6.0/leaflet.css' %}" />
+<link rel="stylesheet" href="{% static 'js/leaflet.markercluster-1.4.1/MarkerCluster.css' %}" />
+<link rel="stylesheet" href="{% static 'js/leaflet.markercluster-1.4.1/MarkerCluster.Default.css' %}" />
+<link rel="stylesheet" href="{% static 'css/map.css' %}">
+
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="{% static 'js/leaflet-1.6.0/leaflet.js' %}" ></script>
+<script src="{% static 'js/leaflet.markercluster-1.4.1/leaflet.markercluster.js' %}" ></script>
+<script src="{% static 'js/Leaflet.FeatureGroup.SubGroup-1.0.2/leaflet.featuregroup.subgroup.js' %}" ></script>
+
+<script type="text/javascript">
+
+  pageOptions = {
+    mapViewContainerId: 'mapContainer',
+    aURL     : "{% url 'participant_a_JSON' %}",
+    bURL     : "{% url 'participant_b_JSON' %}",
+    aListURL  : "{% url 'participant_list' 'A' 'COUNTRYCODE' 'PLZ' 0 %}",
+    bListURL   : "{% url 'participant_list' 'B' 'COUNTRYCODE' 'PLZ' 0 %}",
+    mapboxToken       : "{{ mapbox_token }}",
+    createPopupTextA :  (countrycode,city, plz, count, url) => `{% blocktrans %}In ${city}, (PLZ ${plz}) there are ${count} A's.\n<a href="${url}" target="_blank">Detail</a>{% endblocktrans %}`,
+    createPopupTextB :  (countrycode,city, plz, count, url) => `{% blocktrans %}In ${city}, (PLZ ${plz}) there are ${count} B's.\n<a href="${url}" target="_blank">Detail</a>{% endblocktrans %}`,
+    createBCountText: (count) => `<img src="{% static 'img/map/b-marker.svg' %}"> ${count} {% trans "B's" %}`,
+    createACountText: (count) => `<img src="{% static 'img/map/a-marker.svg' %}"> ${count} {% trans "A's" %}`,
+    facilityIcon: L.icon({
+      iconUrl: "{% static 'img/map/b-marker.svg' %}",
+      iconSize: [40, 40],
+    }),
+  }
+
+</script>
+<script type="text/javascript" src="{% static 'js/mapview.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated and user.is_hospital %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-light search-map" id="hospital_navbar">
+  <div class="container">
+    <div class="order-0">
+      <select name="countrycode" id="countrycode" class="map-dropdown">
+        <option value="DE">{% blocktrans %}Deutschland{% endblocktrans %}</option>
+        <option value="AT">{% blocktrans %}Österreich{% endblocktrans %}</option>
+      </select>
+      <input type="text" id="search" class="form textinput textInput map-input" placeholder="Postleitzahl">
+      <button class="btn btn-primary btn blue text-white btn-md" role="button" onclick="gototable()">{% blocktrans %}Direct Search{% endblocktrans %} &raquo;</button>
+    </div>
+  </div>
+</nav>
+{% endif %}
+
+
+<div id="mapContainer" style="z-index:1;">
+	 <a href="http://mapbox.com/about/maps" class="mapbox-wordmark" target="_blank">Mapbox</a>
+</div>
+
+<script type="text/javascript">
+  var gototable = function() {
+      if ($('#search').val()) {
+        window.location = "/matching/students/" + $('#countrycode').val() + "/" + $('#search').val() + "/0"
+      }
+    };
+  $("#search").keyup(function(event) {
+      if (event.keyCode === 13) {
+          gototable();
+      }
+  });
+</script>
+{% endblock %}

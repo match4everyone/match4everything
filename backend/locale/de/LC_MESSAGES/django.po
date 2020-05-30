@@ -1,0 +1,629 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-29 09:03+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps/matching/forms/custom_auth.py:7
+msgid "E-Mail"
+msgstr ""
+
+#: apps/matching/forms/participant_signup.py:17
+msgid "Email adress for your account."
+msgstr ""
+
+#: apps/matching/models/participant_info_location.py:10
+msgid "<10 km"
+msgstr ""
+
+#: apps/matching/models/participant_info_location.py:11
+msgid "<20 km"
+msgstr ""
+
+#: apps/matching/models/participant_info_location.py:12
+msgid "<40 km"
+msgstr ""
+
+#: apps/matching/models/participant_info_location.py:13
+msgid ">40 km"
+msgstr ""
+
+#: apps/matching/models/participant_info_location.py:17
+msgid "Germany"
+msgstr ""
+
+#: apps/matching/models/participant_info_location.py:18
+msgid "Austria"
+msgstr ""
+
+#: apps/matching/models/participant_info_location.py:30
+msgid " ist keine Postleitzahl in "
+msgstr ""
+
+#: apps/matching/models/user.py:23
+msgid "This email is already taken."
+msgstr ""
+
+#: apps/matching/templates/map/map.html:7
+msgid "Karte der Hilfsbereiten"
+msgstr ""
+
+#: apps/matching/templates/map/map.html:30
+#, python-brace-format
+msgid ""
+"In ${city}, (PLZ ${plz}) gibt es ${count} Helfer*innen.\\n<a href=\"${url}\" "
+"target=\"_blank\">Detailansicht für Kliniken</a>"
+msgstr ""
+
+#: apps/matching/templates/map/map.html:31
+#, python-brace-format
+msgid ""
+"In ${city}, (PLZ ${plz}) gibt es ${count} Orte an denen Hilfe gebraucht wird."
+"\\n<a href=\"${url}\" target=\"_blank\">Detailansicht</a>"
+msgstr ""
+
+#: apps/matching/templates/map/map.html:32
+msgid "Einrichtungen"
+msgstr ""
+
+#: apps/matching/templates/map/map.html:33
+msgid "Helfende"
+msgstr ""
+
+#: apps/matching/templates/map/map.html:51
+msgid "Deutschland"
+msgstr ""
+
+#: apps/matching/templates/map/map.html:52
+msgid "Österreich"
+msgstr ""
+
+#: apps/matching/templates/map/map.html:55
+msgid "Direktsuche"
+msgstr ""
+
+#: apps/matching/templates/messages/thanks_for_registering.html:6
+msgid "Vielen Dank"
+msgstr ""
+
+#: apps/matching/templates/messages/thanks_for_registering.html:46
+msgid ""
+"<h2 class=\"font-weight-light\">Welcome to match4everyone,</h2>\n"
+"    <p>To complete registration we sent you a <b style=\"font-weight:500;"
+"\">Registration Link</b>.\n"
+"        So please check your mails :)\n"
+"     <p>Your Team</p>\n"
+"    "
+msgstr ""
+
+#: apps/matching/templates/participant/participant_create_form.html:6
+msgid ""
+"\n"
+"Registrierung - Institution\n"
+msgstr ""
+
+#: apps/matching/templates/participant/participant_create_form.html:22
+msgid " Schon registriert? Hier geht es zum "
+msgstr ""
+
+#: apps/matching/templates/participant/participant_create_form.html:23
+#: apps/matching/templates/registration/login.html:37 templates/base.html:89
+msgid "Login"
+msgstr ""
+
+#: apps/matching/templates/participant/participant_dashboard.html:6
+msgid ""
+"\n"
+"        Profil - Institution\n"
+"    "
+msgstr ""
+
+#: apps/matching/templates/participant/participant_dashboard.html:41
+msgid "Profil Details"
+msgstr ""
+
+#: apps/matching/templates/participant/participant_dashboard.html:45
+msgid ""
+"\n"
+"                    Logout"
+msgstr ""
+
+#: apps/matching/templates/participant/participant_dashboard.html:48
+msgid "Change Password"
+msgstr ""
+
+#: apps/matching/templates/participant/participant_dashboard.html:49
+msgid ""
+"Delete my\n"
+"                    profile"
+msgstr ""
+
+#: apps/matching/templates/participant/participant_dashboard.html:53
+msgid "Deactivate Profile"
+msgstr ""
+
+#: apps/matching/templates/participant/participant_dashboard.html:55
+msgid "Activate Profile"
+msgstr ""
+
+#: apps/matching/templates/registration/login.html:1
+msgid " Registrierung - Studierende "
+msgstr ""
+
+#: apps/matching/templates/registration/login.html:41
+msgid "Anmelden"
+msgstr ""
+
+#: apps/matching/templates/registration/login.html:57
+#: apps/matching/templates/registration/password_reset_confirm_.html:77
+#: apps/matching/templates/registration/password_reset_form_.html:49
+msgid "Passwort vergessen?"
+msgstr ""
+
+#: apps/matching/templates/registration/login.html:60
+#: apps/matching/templates/registration/password_reset_confirm_.html:80
+msgid "Passwort zurücksetzen"
+msgstr ""
+
+#: apps/matching/templates/registration/login.html:63
+msgid "Noch kein Account?"
+msgstr ""
+
+#: apps/matching/templates/registration/login.html:66
+msgid "Ich bin Helfende/r"
+msgstr ""
+
+#: apps/matching/templates/registration/login.html:69
+msgid "Wir sind eine Institution"
+msgstr ""
+
+#: apps/matching/templates/registration/logout.html:6
+msgid ""
+"\n"
+"Logout - Studierende\n"
+msgstr ""
+
+#: apps/matching/templates/registration/logout.html:57
+msgid "Logout erfolgreich"
+msgstr ""
+
+#: apps/matching/templates/registration/logout.html:58
+msgid ""
+"<p>Danke, dass Du heute etwas Zeit mit der Website verbracht hast.</p>\n"
+"    <p>Dein Team von</p>\n"
+"    "
+msgstr ""
+
+#: apps/matching/templates/registration/logout.html:63
+msgid " Neu anmelden"
+msgstr ""
+
+#: apps/matching/templates/registration/password_change_done_.html:6
+msgid ""
+"\n"
+"Passwort geändert\n"
+msgstr ""
+
+#: apps/matching/templates/registration/password_change_done_.html:20
+msgid " Ihr Passwort wurde geändert. "
+msgstr ""
+
+#: apps/matching/templates/registration/password_change_form_.html:6
+#: apps/matching/templates/registration/password_change_form_.html:60
+#: apps/matching/templates/registration/password_change_form_.html:81
+msgid "Passwort ändern"
+msgstr ""
+
+#: apps/matching/templates/registration/password_change_form_.html:51
+msgid "Bitte beheben Sie den unten angezeigten Fehler"
+msgstr ""
+
+#: apps/matching/templates/registration/password_change_form_.html:53
+msgid "Bitte beben Sie die unten angezeigten Fehler"
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_complete_.html:6
+msgid "Passwort gesetzt"
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_complete_.html:18
+msgid " Ihr Passwort wurde gesetzt. Sie können sich jetzt einloggen."
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_confirm_.html:6
+msgid "Erfolgreiche Anmeldung"
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_confirm_.html:50
+msgid "Liebe*r Benutzer*in,"
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_confirm_.html:52
+msgid ""
+"vielen Dank für Ihre Registrierung. Auf dieser Seite können Sie ein Passwort "
+"für Ihren Account erstellen und sich damit einloggen."
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_confirm_.html:54
+msgid "Neues Passwort"
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_confirm_.html:67
+msgid "Passwort Setzen"
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_confirm_.html:75
+msgid ""
+"Der Link zum Setzen des Passworts ist nicht gültig. Eventuell wurde er "
+"bereits benutzt."
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_done_.html:6
+msgid "Passwort setzen"
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_done_.html:20
+msgid ""
+"Wir haben Ihnen eine EMail gesendet mit einem Link um ihr Kennwort "
+"zurückzusetzen, wenn ein Account mit dieser EMail-Adresse existiert."
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_done_.html:21
+msgid ""
+"Wenn Sie kein EMail erhalten, überprüfen Sie bitte die eingegebene Adresse "
+"und Ihren Spam-Ordner."
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_email_.html:3
+msgid ""
+"\n"
+"Sie erhalten diese Mail um ein neues Passwort bei match4everyone zu "
+"setzen.\n"
+"\n"
+"Bitte klicken Sie auf den folgenden Link um ein Passwort zu wählen:\n"
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_email_.html:13
+msgid ""
+"\n"
+"Vielen Dank,\n"
+"ihr match4everyone Team\n"
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_email_subject.txt:2
+msgid "Email bestätigen"
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_form_.html:6
+msgid "Passwort Vergessen?"
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_form_.html:50
+msgid "Geben Sie Ihre Email-Addresse an und Sie erhalten ein neues Passwort."
+msgstr ""
+
+#: apps/matching/templates/registration/password_reset_form_.html:57
+msgid "Passwort zurücksetzen "
+msgstr ""
+
+#: apps/matching/templates/registration/password_set_email_.html:445
+msgid "Liebe/r Helfende*r,"
+msgstr ""
+
+#: apps/matching/templates/registration/password_set_email_.html:447
+msgid ""
+"Vielen Dank für deine Anmeldung auf match4everyone. Gemeinsam sind wir ein "
+"unschlagbares Team!"
+msgstr ""
+
+#: apps/matching/templates/registration/password_set_email_.html:448
+msgid "Wir hoffen sehr, dass wir dir bald zu einem Platz verhelfen können."
+msgstr ""
+
+#: apps/matching/templates/registration/password_set_email_.html:450
+msgid ""
+"Bitte validiere jetzt deine Registrierung, indem du auf den folgenden Link "
+"klickst:"
+msgstr ""
+
+#: apps/matching/templates/registration/password_set_email_.html:463
+msgid ""
+"\n"
+"<span style=\"font-size:18px; font-weight: 500;\"><span style=\"color:"
+"#0d2333\">Hier einige wichtige Informationen zum allgemeinen Ablauf für dich:"
+"</span></span>\n"
+"<ul>\n"
+"  <li>Im Falle eines Matches werden Gesundheitsinstitutionen dich "
+"kontaktieren und sich über Einzelheiten mit dir abstimmen. Die "
+"Kontaktaufnahme erfolgt außerhalb unserer Plattform.</li>\n"
+"  <li>Wenn du dich bereits in einer andere Liste, z.B. der Unikliniken oder "
+"medizinischen Fakultäten eingetragen hast, denk daran, dass du Bescheid "
+"gibst, falls du über unsere Plattform einen Match erhältst und keine "
+"weiteren Kapazitäten mehr hast. Genauso andersherum, falls du über diese "
+"lokalen Wege helfen kannst, entferne deinen Eintrag bei uns. Wir wollen, "
+"dass für niemanden Verwirrung und doppelter Aufwand entsteht, sondern einzig "
+"und allein, dass du einen Ort zum Helfen findest, egal über welchen Weg.</"
+"li>\n"
+"  <li>Wir informieren die Institutionen, dass Sie sich um einen "
+"Arbeitsvertrag sowie hygienische Standards und eine Einarbeitung kümmern "
+"sollten. Bitte achte darauf, dass du dich versichern lässt. Für weiteres "
+"haben wir eine umfangreiche Sammlung an Tipps und Infos zu Vertrag, "
+"Vergütung und Recht zusammengestellt: <a href=\"https://match4everyone.de/"
+"legal-questions/\">https://match4everyone.de/legal-questions/</a></li>\n"
+"  <li>Sollte eine Institution Falschangaben gemacht haben oder sich nicht an "
+"die Grundbedingungen zu Ausrüstung/Versicherung halten, dann bitte "
+"informiere uns bitte über die u.g. E-Mail Adresse.</li>\n"
+"  <li>Wenn du Fragen zu lokalen Gegebenheiten oder Studienbedingungen hast, "
+"melde dich bei deiner lokalen Fachschaft Medizin oder lokalen Ärztekammer. "
+"Wir stellen dir hier nur Infos zusammen, aber können dir keine Fragen zu den "
+"genauen Bedingungen deines Einsatzes vor Ort beantworten, und für etwaige "
+"Probleme keine Haftung übernehmen.</li>\n"
+"  <li>Wenn du aufgrund deines Gesundheitszustands unsicher bist, ob du "
+"helfen darfst, hilft dir diese App weiter: <a href=\"https://covapp.charite."
+"de/\">https://covapp.charite.de/</a></li>\n"
+"</ul>\n"
+"\n"
+msgstr ""
+
+#: apps/matching/templates/registration/password_set_email_hospital.html:445
+msgid "Sehr geehrte Einrichtung!"
+msgstr ""
+
+#: apps/matching/templates/registration/password_set_email_hospital.html:447
+msgid "Vielen Dank für Ihren Eintrag auf match4everyone!"
+msgstr ""
+
+#: apps/matching/templates/registration/password_set_email_hospital.html:450
+msgid ""
+"Bitte bestätigen Sie jetzt Ihre Registrierung, indem Sie auf den folgenden "
+"Link klicken:"
+msgstr ""
+
+#: apps/matching/templates/registration/password_set_email_hospital.html:463
+msgid ""
+"\n"
+"<p  style=\"font-size:15px; color: #535353;\">Wir hoffen sehr, dass Sie "
+"schnell und direkt die Hilfe finden, die Sie suchen. Hier haben wir Ihnen "
+"einige wichtige Informationen zusammengetragen. Dies soll Ihnen eine Hilfe "
+"sein, jedoch gewährleisten wir keinen Anspruch auf Vollständigkeit:</p>\n"
+"<ul>\n"
+"  <li>Nachdem Ihre Registrierung abgeschlossen ist, gelangen Sie nun auf der "
+"Plattform in die Datenbank. Dort können nach den von Ihnen gewünschten "
+"Kriterien (Ausbildungsstand etc.) Helfende suchen, filtern und diesen auf "
+"unserer Plattform direkt eine E-Mail verfassen. Der Emailversand erfolgt "
+"dann nach einer Validierung durch uns.</li>\n"
+"  <li>Wenn Sie Helfende nicht mehr benötigen, bitte geben Sie diesen "
+"Bescheid, damit diese Ihren Status bei uns anpassen können und für andere "
+"Einrichtungen zur Verfügung stehen. </li>\n"
+"  <li>Wir haben den Studierenden einige Informationen zu ihren "
+"Arbeitsrechten bezüglich Vertrag, Vergütung etc. gegeben. Bitte garantieren "
+"Sie den Studierenden Rechtssicherheit und Versicherungsschutz der Helfenden. "
+"Ebenfalls muss geeignete Schutzausrüstung zur Verfügung gestellt und "
+"hygienische Standards eingehalten werden.</li>\n"
+"  <li>Bitte überprüfen Sie vor Ort die Kompetenzen und ggf. erforderlichen "
+"formalen Qualifikationen der Helfenden. Besprechen Sie welche Befugnisse die "
+"Helfenden bei Ihnen haben und welche nicht. Sie sind für ihren Einsatz "
+"verantwortlich.</li>\n"
+"  <li>Manche unserer Helfenden würden gerne an einem ferneren Einsatzort "
+"helfen, jedoch benötigen Sie dafür eine Unterkunft. Falls Sie diese "
+"unkompliziert anbieten können, so würden sich unsere Studierenden über die "
+"Unterstützung diesbezüglich sehr freuen. </li>\n"
+"</ul>\n"
+msgstr ""
+
+#: apps/use_statistics/templates/view.html:6
+msgid "Zugriffsstatistiken"
+msgstr ""
+
+#: apps/use_statistics/templates/view.html:24
+msgid "Anzahl der Zugriffe pro Seite"
+msgstr ""
+
+#: apps/use_statistics/views.py:30
+msgid ""
+"<html><body>gunicorn-access.log nicht gefunden oder "
+"zugreifbar                            </body></html>"
+msgstr ""
+
+#: match4everyone/settings/common.py:110
+msgid "English"
+msgstr ""
+
+#: match4everyone/settings/common.py:111
+msgid "Deutsch"
+msgstr ""
+
+#: templates/404.html:6 templates/500.html:6
+msgid ""
+"\n"
+"        Logout - Studierende\n"
+"    "
+msgstr ""
+
+#: templates/404.html:63
+msgid ""
+"Diese Seite konnte nicht gefunden\n"
+"                        werden"
+msgstr ""
+
+#: templates/404.html:65 templates/500.html:64
+msgid "Wenn der Fehler weiterhin auftritt, melde dich per email bei "
+msgstr ""
+
+#: templates/404.html:72 templates/500.html:71
+msgid "Zurück zur Startseite"
+msgstr ""
+
+#: templates/500.html:63
+msgid "Ein Fehler ist aufgetreten"
+msgstr ""
+
+#: templates/about.html:6
+msgid "Über uns"
+msgstr ""
+
+#: templates/about.html:12
+msgid ""
+"Wir sind das Team von\n"
+"            match4everyone! Muhahaha"
+msgstr ""
+
+#: templates/about.html:23
+msgid "Entwickelt von Open Source Team"
+msgstr ""
+
+#: templates/about.html:25
+msgid "im Rahmen des Hackathon der Bundesregierung (#wirvsvirus)"
+msgstr ""
+
+#: templates/base.html:56
+msgid ""
+"\n"
+"                    Über uns"
+msgstr ""
+
+#: templates/base.html:60
+msgid ""
+"Ich will\n"
+"                        helfen"
+msgstr ""
+
+#: templates/base.html:63
+msgid ""
+"Ich brauche\n"
+"                        Hilfe"
+msgstr ""
+
+#: templates/base.html:69
+msgid ""
+"Helfer*innen\n"
+"                        finden"
+msgstr ""
+
+#: templates/base.html:75
+msgid "Einrichtungen finden"
+msgstr ""
+
+#: templates/base.html:79
+msgid "Karte"
+msgstr ""
+
+#: templates/base.html:84
+msgid ""
+"Mein\n"
+"                            Profil"
+msgstr ""
+
+#: templates/base.html:103
+msgid ""
+"\n"
+"                                Deutsch"
+msgstr ""
+
+#: templates/base.html:110
+msgid ""
+"\n"
+"                                English"
+msgstr ""
+
+#: templates/base.html:156
+msgid ""
+"A project that originated from\n"
+"            <a href=\"https://wirvsvirushackathon.org/\" target=\"_blank"
+"\">#WirVsVirus Hackathons</a>."
+msgstr ""
+
+#: templates/base.html:158
+msgid "Impressum"
+msgstr ""
+
+#: templates/base.html:159
+msgid "Datenschutz"
+msgstr ""
+
+#: templates/base.html:159
+msgid ""
+"\n"
+"                und"
+msgstr ""
+
+#: templates/base.html:161
+msgid "Nutzungsbedingungen"
+msgstr ""
+
+#: templates/home.html:127
+msgid ""
+"\n"
+"                                We match for everyone.\n"
+"                            "
+msgstr ""
+
+#: templates/home.html:138 templates/home.html:160
+msgid "I am"
+msgstr ""
+
+#: templates/home.html:139
+msgid "A"
+msgstr ""
+
+#: templates/home.html:140
+msgid ""
+"\n"
+"                            I own an ice cream parlor.\n"
+"                        "
+msgstr ""
+
+#: templates/home.html:144
+msgid ""
+"This is\n"
+"                                me"
+msgstr ""
+
+#: templates/home.html:161
+msgid "B"
+msgstr ""
+
+#: templates/home.html:162
+msgid "I feel hungry."
+msgstr ""
+
+#: templates/home.html:166
+msgid ""
+"This is\n"
+"                            me"
+msgstr ""
+
+#: templates/home.html:188
+msgid "How does this work?"
+msgstr ""
+
+#: templates/home.html:191
+msgid ""
+"\n"
+"                            We match.\n"
+"                        "
+msgstr ""
+
+#: templates/home.html:197
+msgid ""
+"\n"
+"                    another open-source project"
+msgstr ""
+
+#: templates/terms-of-use.html:6
+msgid "Allgemeine Nutzungsbedingungen"
+msgstr ""

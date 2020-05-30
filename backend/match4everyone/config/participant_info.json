@@ -1,0 +1,62 @@
+{
+  "A": {
+    "info": [
+      {
+        "field_name": "name",
+        "label": "Name",
+        "property_type": {
+          "name": "text",
+          "max_length": 100,
+          "default": ""
+        }
+      },
+      {
+        "field_name": "favourite color",
+        "label": "Favourite Color",
+        "property_type": {
+          "name": "choice",
+          "choices": {
+            "CH": "Only lovely chocolate",
+            "VA": "My dearest Vanilla",
+            "ST": "Red is the only true color"
+          },
+          "default": "chocolate"
+        }
+      },
+      {
+        "field_name": "is_earlybird",
+        "label": "Loves waking up early",
+        "property_type": {
+          "name": "bool",
+          "default": "False"
+        }
+      },
+      {
+        "field_name": "education_level",
+        "label": "School Education Level",
+        "property_type": {
+          "name": "ordered_choice",
+          "choices": {
+            "0": "kindergarden",
+            "1": "high school",
+            "2": "wrote last exam years ago"
+          },
+          "default": 0
+        }
+      }
+    ]
+  },
+  "B": {
+    "info": [
+      {
+        "field_name": "name",
+        "label": "Name",
+        "property_type": {
+          "name": "text",
+          "max_length": 100,
+          "default": ""
+        }
+      }
+    ]
+  }
+}

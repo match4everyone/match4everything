@@ -70,7 +70,7 @@ jobs:
         pip install -r ./backend/requirements.txt
 
     - name: "[TEST] Check if migrations were made"
-      run: PYTHONPATH="./backend:$PYTHONPATH" django-admin makemigrations --settings=match4healthcare.settings.development --check --dry-run
+      run: PYTHONPATH="./backend:$PYTHONPATH" django-admin makemigrations --settings=match4everyone.settings.development --check --dry-run
 
   test-code-style:
     name: Test if code is properly formatted
