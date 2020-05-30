@@ -53,8 +53,8 @@
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item {% if "about" in request.path %}active{% endif %}"><a class="nav-link"
-                                                                                          href="/about">{% blocktrans %}
-                    About{% endblocktrans %}</a></li>
+                                                                                          href="/about">
+                    {% blocktrans %}About{% endblocktrans %}</a></li>
                 <li class="nav-item {% if "mapview" in request.path %}active{% endif %}"> <a class="nav-link" href="{% url 'map' %}">
                     {% blocktrans %}Map{% endblocktrans %}
                 </a> </li>
@@ -91,8 +91,8 @@
                         </form>
                         <form action="/matching/i18n/setlang/" method="post">
                             {% csrf_token %}
-                            <button class="dropdown-item" formmethod="post" type="submit">{% blocktrans %}
-                                English{% endblocktrans %}</button>
+                            <button class="dropdown-item" formmethod="post" type="submit">
+                                {% blocktrans %}English{% endblocktrans %}</button>
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <input type="hidden" name="language" value="en">
                         </form>
@@ -140,8 +140,8 @@
         <p>{% blocktrans %}A project that originated from
             <a href="https://wirvsvirushackathon.org/" target="_blank">#WirVsVirus hackathon</a>.{% endblocktrans %}
             <a href="/impressum">{% blocktrans %}Imprint{% endblocktrans %}</a>,
-            <a href="/dataprotection">{% blocktrans %}Data Protection{% endblocktrans %}</a> {% blocktrans %}
-                and{% endblocktrans %}
+            <a href="/dataprotection">{% blocktrans %}Data Protection{% endblocktrans %}</a>
+            {% blocktrans %}and{% endblocktrans %}
             <a href="/terms-of-use">{% blocktrans %}Terms of Use{% endblocktrans %}</a>.
         </p>
     </div>

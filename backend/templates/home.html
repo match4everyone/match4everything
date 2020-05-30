@@ -124,9 +124,7 @@
                     <div class="col-md-8 col-xl-5"><img src="{% static 'img/logo.svg' %}" width="320px"
                                                         class="logo-header">
                         <h1 class="text-white font-weight-light">
-                            {% blocktrans %}
-                                We match for everyone.
-                            {% endblocktrans %}</h1>
+                            {% blocktrans %}We match for everyone.{% endblocktrans %}</h1>
                     </div>
                 </div>
             </div>
@@ -137,12 +135,12 @@
                     <div class="box-left">
                         <h2 class="text-white font-weight-light">{% blocktrans %}I am{% endblocktrans %}<br>
                             <b>{% blocktrans %}A{% endblocktrans %}</b></h2>
-                        <p class="text-white home-box-description">{% blocktrans %}
+                        <p class="text-white home-box-description">{% blocktrans trimmed %}
                             I own an ice cream parlor.
                         {% endblocktrans %}</p>
                         <a href="{% url 'signup' 'A' %}">
-                            <button type="button" class="btn blue text-white btn-lg">{% blocktrans %}This is
-                                me{% endblocktrans %}
+                            <button type="button" class="btn blue text-white btn-lg">
+                                {% blocktrans %}This is me{% endblocktrans %}
                                 <svg class="bi bi-person-plus" style="margin-left:3px;" width="1em" height="1em"
                                      viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
@@ -163,8 +161,8 @@
                         {% if user.is_authenticated and user.is_hospital %}
                             {% url 'list_by_plz' user.hospital.countrycode user.hospital.plz 10 as filter_student_url %}
                             <a href="{{ filter_student_url }}"> {% else %} <a href="/matching/signup_b"> {% endif %}
-                        <button type="button" class="btn text-white btn-lg pink">{% blocktrans %}This is
-                            me{% endblocktrans %}
+                        <button type="button" class="btn text-white btn-lg pink">
+                            {% blocktrans %}This is me{% endblocktrans %}
                             <svg class="bi bi-search" style="margin-left:3px;" width="1em" height="1em"
                                  viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -188,14 +186,11 @@
                         {% blocktrans %}How does this work?{% endblocktrans %}</h2>
                     <hr style="width:60%; margin: 0 auto; margin-bottom:25px; border-width: 2px; ">
                     <p style="text-align:center;">
-                        {% blocktrans %}
-                            We match.
-                        {% endblocktrans %}</p>
+                        {% blocktrans %}We match.{% endblocktrans %}</p>
                 </div>
             </div>
             <div class="col-md-12" style="text-align: left; margin: 0 auto;">
-                <h2 style="text-align:center; font-size: 1.5rem; font-weight:600; margin-bottom: 55px">{% blocktrans %}
-                    another open-source project{% endblocktrans %}</h2>
+                <h2 style="text-align:center; font-size: 1.5rem; font-weight:600; margin-bottom: 55px">{% blocktrans %}another open-source project{% endblocktrans %}</h2>
             </div>
     </main>
 {% endblock %}
