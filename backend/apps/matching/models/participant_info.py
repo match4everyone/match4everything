@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 import uuid
 
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
@@ -86,7 +87,7 @@ def add_participant_specific_info(name, config):
     )
 
 
-with open("match4everyone/config/participant_info.json") as json_file:
+with open(f"{settings.BASE_DIR}/match4everyone/config/participant_info.json") as json_file:
     info_config = json.load(json_file)
 
 add_participant_specific_info("A", info_config["A"])
