@@ -15,7 +15,7 @@ services:
     environment:
      - DJANGO_SETTINGS_MODULE=match4everyone.settings.production
     user: ${CURRENT_UID:-0}
-    command: bash -c 'while !</dev/tcp/database/5432 &> /dev/null; do echo "Waiting for database..."; sleep 1; done; gunicorn -c /match4everyone-backend/gunicorn.conf.py match4everyone.wsgi'
+    command: bash -c 'while ! (< /dev/tcp/database/5432) &> /dev/null; do sleep 1; done; gunicorn -c /match4everyone-backend/gunicorn.conf.py match4everyone.wsgi'
     depends_on:
       - database
 
