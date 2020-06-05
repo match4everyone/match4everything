@@ -28,14 +28,23 @@ DATABASES = {
 # Don't use our domain, prevent bad reputation
 NOREPLY_MAIL = "match4everyone-DEVELOPMENT<noreply@example.de>"
 
-# Possible values are 'file', 'external', 'sendgrid'
-# For storing mails local in files files, sending external (uberspace) or sending over sendgrid (production like)
+# Possible values are 'file', 'mailhog', 'external', 'sendgrid'
+# For storing mails local in files files, view using mailhog,
+# sending external (uberspace) or sending over sendgrid (production like)
 MAIL_RELAY_OPTION = "file"
 
 # +++ Store files locally
 if MAIL_RELAY_OPTION == "file":
     EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
     EMAIL_FILE_PATH = os.path.join(RUN_DIR, "sent_emails")
+
+# +++ Store files locally
+elif MAIL_RELAY_OPTION == "mailhog":
+    EMAIL_HOST = "0.0.0.0"
+    EMAIL_PORT = 1025
+    EMAIL_HOST_USER = ""
+    EMAIL_HOST_PASSWORD = ""
+    EMAIL_USE_TLS = False
 
 # +++ Use local debug server
 elif MAIL_RELAY_OPTION == "external":
