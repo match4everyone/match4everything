@@ -8,7 +8,7 @@ from django.core.checks import Error, register
 from django.core.checks import Tags as DjangoTags
 from django.core.checks import Warning
 
-from match4healthcare.constants.enum import Environment
+from match4everyone.constants.enum import Environment
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +59,7 @@ def check_fork(app_configs=None, **kwargs):
     if settings.IS_FORK:
         errors.append(
             Warning(
-                "This is a fork of the original 'match4healthcare' repo.",
+                "This is a fork of the original 'match4everyone' repo.",
                 hint=(
                     "Thanks for forking our repository. Pay attention that Travis CI doesn't test your code "
                     "with sendgrid. If you want to use sendgrid for your tests, "

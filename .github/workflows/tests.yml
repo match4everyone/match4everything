@@ -25,12 +25,12 @@ jobs:
         pip install -r ./backend/requirements.txt
 
     - name: Generate updated .po file
-      run: django-admin makemessages -l en --no-location
+      run: PYTHONPATH="./backend:$PYTHONPATH" django-admin makemessages -l de --no-location --ignore 00_old_m4h_matching_code --settings=match4everyone.settings.development
 
     - name: "[TEST] Check for fuzzy translations"
       id: fuzzy_translations
       continue-on-error: true
-      run: bash -c 'if [ $(cat ./backend/locale/en/LC_MESSAGES/django.po | grep "#, fuzzy" | wc -l) -gt 0 ];
+      run: bash -c 'if [ $(cat ./backend/locale/*/LC_MESSAGES/django.po | grep "#, fuzzy" | wc -l) -gt 0 ];
                     then echo "Unresolved fuzzy translations are present"; exit 1; fi'
 
     - name: "[TEST] Check for missing translations"
@@ -38,7 +38,7 @@ jobs:
       continue-on-error: true
       # https://stackoverflow.com/a/14799019/3342058
       run: |
-        if [ $(awk '$NF == "msgstr \"\"" { c++ } END { print c ? c : "0" }' FS="\n" RS= ./backend/locale/en/LC_MESSAGES/django.po) -gt 0 ];
+        if [ $(awk '$NF == "msgstr \"\"" { c++ } END { print c ? c : "0" }' FS="\n" RS= ./backend/locale/*/LC_MESSAGES/django.po) -gt 0 ];
           then echo "Missing translations are present"; exit 1;
         fi
 
@@ -70,7 +70,7 @@ jobs:
         pip install -r ./backend/requirements.txt
 
     - name: "[TEST] Check if migrations were made"
-      run: PYTHONPATH="./backend:$PYTHONPATH" django-admin makemigrations --settings=match4healthcare.settings.development --check --dry-run
+      run: PYTHONPATH="./backend:$PYTHONPATH" django-admin makemigrations --settings=match4everyone.settings.development --check --dry-run
 
   test-code-style:
     name: Test if code is properly formatted

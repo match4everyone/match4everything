@@ -4,7 +4,7 @@ max-line-length = 100
 # flake8>additional_dependencies, otherwise it will not be installed to pre-commits private env
 select=C,E,F,W,B,I,A,D,T,G
 ignore = E203, E501, W503, E231, D1, T002, G202
-application-package-names = apps, match4healthcare
+application-package-names = apps, match4everyone
 import-order-style = appnexus
 # maybe switch back to google once all code is in a single app
 # We ignore E203, E501, W503 because black itself does this and E231 until [1] is fixed, a concrete example can be found in [2].
