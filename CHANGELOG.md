@@ -99,7 +99,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Text in Bausteine aufteilen zur besseren Übersetzbarkeit
 - Filterseite: "Unterkunft kann angeboten werden" statt "Unterkunft gewünscht"
 - HTTPS-Links statt HTTP in Validierungsmails
-- Klarere Darstellung der Trennung zwischen Opensource-Entwicklerteam und Match4healthcare als Verein
+- Klarere Darstellung der Trennung zwischen Opensource-Entwicklerteam und match4everyone als Verein
 - Einrichtungskarte eingeblendet wenn man als Student angemeldet ist, als "Gesuche" in Navigationsleiste
 - Tabellenanzeige in der Helfersuche verbessert
 - Anzeige schalten als Einrichtung auf eigene Seite ausgelagert

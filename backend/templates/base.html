@@ -4,146 +4,154 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<script src="{% static 'js/jquery-3.4.1.min.js' %}"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
-<script src="{% static 'js/bootstrap_4.4.1/bootstrap.bundle.min.js' %}"
-    integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
-    crossorigin="anonymous"></script>
-<link rel="stylesheet" href="{% static 'css/bootstrap_4.4.1/bootstrap.min.css' %}" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'css/general.css' %}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap_4.4.1/bootstrap.bundle.min.js' %}"
+            integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap_4.4.1/bootstrap.min.css' %}"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/general.css' %}">
 
-<!-- Generate your favicons in this format on https://favicomatic.com/ -->
-<link rel="apple-touch-icon-precomposed" sizes="57x57" href="{% static 'img/favicon/apple-touch-icon-57x57.png' %}" />
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'img/favicon/apple-touch-icon-114x114.png' %}" />
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'img/favicon/apple-touch-icon-72x72.png' %}" />
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'img/favicon/apple-touch-icon-144x144.png' %}" />
-<link rel="apple-touch-icon-precomposed" sizes="60x60" href="{% static 'img/favicon/apple-touch-icon-60x60.png' %}" />
-<link rel="apple-touch-icon-precomposed" sizes="120x120" href="{% static 'img/favicon/apple-touch-icon-120x120.png' %}" />
-<link rel="apple-touch-icon-precomposed" sizes="76x76" href="{% static 'img/favicon/apple-touch-icon-76x76.png' %}" />
-<link rel="apple-touch-icon-precomposed" sizes="152x152" href="{% static 'img/favicon/apple-touch-icon-152x152.png' %}" />
-<link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-196x196.png' %}" sizes="196x196" />
-<link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-96x96.png' %}" sizes="96x96" />
-<link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-32x32.png' %}" sizes="32x32" />
-<link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-16x16.png' %}" sizes="16x16" />
-<link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-128.png' %}" sizes="128x128" />
-<meta name="application-name" content="&nbsp;"/>
-<meta name="msapplication-TileColor" content="#FFFFFF" />
-<meta name="msapplication-TileImage" content="{% static 'img/favicon/mstile-144x144.png' %}" />
-<meta name="msapplication-square70x70logo" content="{% static 'img/favicon/mstile-70x70.png' %}" />
-<meta name="msapplication-square150x150logo" content="{% static 'img/favicon/mstile-150x150.png' %}" />
-<meta name="msapplication-wide310x150logo" content="{% static 'img/favicon/mstile-310x150.png' %}" />
-<meta name="msapplication-square310x310logo" content="{% static 'img/favicon/mstile-310x310.png' %}" />
-<meta name="theme-color" content="#ffffff">
+    <!-- Generate your favicons in this format on https://favicomatic.com/ -->
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{% static 'img/favicon/apple-touch-icon-57x57.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'img/favicon/apple-touch-icon-114x114.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'img/favicon/apple-touch-icon-72x72.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'img/favicon/apple-touch-icon-144x144.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="{% static 'img/favicon/apple-touch-icon-60x60.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{% static 'img/favicon/apple-touch-icon-120x120.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{% static 'img/favicon/apple-touch-icon-76x76.png' %}" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{% static 'img/favicon/apple-touch-icon-152x152.png' %}" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-196x196.png' %}" sizes="196x196" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-32x32.png' %}" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-16x16.png' %}" sizes="16x16" />
+    <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-128.png' %}" sizes="128x128" />
+    <meta name="application-name" content="&nbsp;"/>
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="{% static 'img/favicon/mstile-144x144.png' %}" />
+    <meta name="msapplication-square70x70logo" content="{% static 'img/favicon/mstile-70x70.png' %}" />
+    <meta name="msapplication-square150x150logo" content="{% static 'img/favicon/mstile-150x150.png' %}" />
+    <meta name="msapplication-wide310x150logo" content="{% static 'img/favicon/mstile-310x150.png' %}" />
+    <meta name="msapplication-square310x310logo" content="{% static 'img/favicon/mstile-310x310.png' %}" />
+    <meta name="theme-color" content="#ffffff">
 
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://match4healthcare.de{% static 'img/facebook-share.jpg' %}">
-<meta property="og:image:secure_url" content="https://match4healthcare.de{% static 'img/facebook-share.jpg' %}">
-<meta name="twitter:image" content="https://match4healthcare.de{% static 'img/facebook-share.jpg' %}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<title>{% block title %} {% endblock %} | match4healthcare </title>
-{% block header %}
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://match4everyone.de{% static 'img/share_icons/facebook-share.jpg' %}">
+    <meta property="og:image:secure_url"
+          content="https://match4everyone.de{% static 'img/share_icons/facebook-share.jpg' %}">
+    <meta name="twitter:image" content="https://match4everyone.de{% static 'img/share_icons/facebook-share.jpg' %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <title>{% block title %} {% endblock %} | match4everyone </title>
+    {% block header %}
     {% endblock %}
 </head>
 
 <body>
 <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white">
-  <div class="container"> <a class="navbar-brand" href="/"><img src="{% static 'img/match4healthcare-logo.svg' %}" width="199px"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarsExampleDefault">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item {% if "about" in request.path %}active{% endif %}"> <a class="nav-link" href="/about">{% blocktrans %}Über uns{% endblocktrans %}</a> </li>
-        {% if not user.is_authenticated %}
-        <li class="nav-item {% if "signup_student" in request.path %}active{% endif %} hide-home"> <a class="nav-link" href="/accounts/signup_student">{% blocktrans %}Ich will
-          helfen{% endblocktrans %}</a> </li>
-        <li class="nav-item  {% if "signup_hospital" in request.path %}active{% endif %} hide-home"> <a class="nav-link" href="/accounts/signup_hospital">{% blocktrans %}Ich brauche
-          Hilfe{% endblocktrans %}</a> </li>
-        {% endif %}
-        {% if user.is_authenticated and user.is_hospital %}
-        {% url 'list_by_plz' user.hospital.countrycode user.hospital.plz 10 as filter_student_url %}
-        <li class="nav-item  {% if "signup_hospital" in request.path %}active{% endif %} hide-home"> <a class="nav-link" href="/ineedstudent/hospital_dashboard">{% blocktrans %}Helfer*innen finden{% endblocktrans %}</a> </li>
-        {% endif %}
-        {% if user.is_authenticated and user.is_student %}
-        <li class="nav-item {% if "mapview" in request.path %}active{% endif %}"> <a class="nav-link" href="/mapview">{% blocktrans %}Einrichtungen finden{% endblocktrans %}</a> </li>
-        {% else %}
-        <li class="nav-item {% if "mapview" in request.path %}active{% endif %}"> <a class="nav-link" href="/mapview">{% blocktrans %}Karte{% endblocktrans %}</a> </li>
-        {% endif %}
-        {% if user.is_authenticated %}
-        <li class="nav-item {% if "profile" in request.path %}active{% endif %}"> <a class="nav-link" href="/accounts/profile_redirect">{% blocktrans %}Mein
-          Profil{% endblocktrans %}</a> </li>
-        {% else %}
-        <li class="nav-item {% if "login" in request.path %}active{% endif %}"> <a class="nav-link" href="/accounts/profile_redirect">{% blocktrans %}Login{% endblocktrans %}</a> </li>
-        {% endif %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" stroke="#000943" fill="none" viewBox="0 0 420 420">
-              <path stroke-width="26" d="M209,15a195,195 0 1,0 2,0z"/>
-              <path stroke-width="18" d="m210,15v390m195-195H15M59,90a260,260 0 0,0 302,0 m0,240 a260,260 0 0,0-302,0M195,20a250,250 0 0,0 0,382 m30,0 a250,250 0 0,0 0-382"/>
-            </svg>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <form action="/accounts/i18n/setlang/" method="post">
+    <div class="container"><a class="navbar-brand" href="/"><img src="{% static 'img/logo.svg' %}" width="199px"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarsExampleDefault">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item {% if "about" in request.path %}active{% endif %}"><a class="nav-link"
+                                                                                          href="/about">
+                    {% blocktrans %}About{% endblocktrans %}</a></li>
+                <li class="nav-item {% if "mapview" in request.path %}active{% endif %}"> <a class="nav-link" href="{% url 'map' %}">
+                    {% blocktrans %}Map{% endblocktrans %}
+                </a> </li>
+                {% if not user.is_authenticated %}
+                    <li class="nav-item {% if "A/signup" in request.path %}active{% endif %} hide-home"><a
+                            class="nav-link" href="{% url 'signup' "A" %}">{% blocktrans %}Signup A{% endblocktrans %}</a></li>
+                    <li class="nav-item  {% if "B/signup" in request.path %}active{% endif %} hide-home"><a
+                            class="nav-link" href="{% url 'signup' "B" %}">{% blocktrans %}Signup B{% endblocktrans %}</a></li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <li class="nav-item {% if "profile" in request.path %}active{% endif %}">
+                        <a class="nav-link" href="{% url 'profile_redirect' %}">
+                        {% blocktrans %}My Profile{% endblocktrans %}</a></li>
+                {% else %}
+                    <li class="nav-item {% if "login" in request.path %}active{% endif %}"><a class="nav-link"
+                                                                                              href="{% url 'profile_redirect' %}">
+                        {% blocktrans %}Login{% endblocktrans %}</a></li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" stroke="#000943" fill="none"
+                             viewBox="0 0 420 420">
+                            <path stroke-width="26" d="M209,15a195,195 0 1,0 2,0z"/>
+                            <path stroke-width="18"
+                                  d="m210,15v390m195-195H15M59,90a260,260 0 0,0 302,0 m0,240 a260,260 0 0,0-302,0M195,20a250,250 0 0,0 0,382 m30,0 a250,250 0 0,0 0-382"/>
+                        </svg>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <form action="/matching/i18n/setlang/" method="post">
                             {% csrf_token %}
-                            <button class="dropdown-item" formmethod="post" type="submit">{% blocktrans %}Deutsch{% endblocktrans %}</button>
+                            <button class="dropdown-item" formmethod="post" type="submit">{% blocktrans %}German{% endblocktrans %}</button>
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <input type="hidden" name="language" value="de">
                         </form>
-                        <form action="/accounts/i18n/setlang/" method="post">
+                        <form action="/matching/i18n/setlang/" method="post">
                             {% csrf_token %}
-                            <button class="dropdown-item" formmethod="post" type="submit">{% blocktrans %}English{% endblocktrans %}</button>
+                            <button class="dropdown-item" formmethod="post" type="submit">
+                                {% blocktrans %}English{% endblocktrans %}</button>
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <input type="hidden" name="language" value="en">
                         </form>
-        </div>
-        </li>
-      </ul>
-      <!--</div>
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" class="navbarsExampleDefault">-->
+                    </div>
+                </li>
+            </ul>
+            <!--</div>
+              <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" class="navbarsExampleDefault">-->
 
+        </div>
     </div>
-  </div>
 </nav>
 <div class="content"> {% block content %}
-  {% endblock %} </div>
+{% endblock %} </div>
 <footer class="footer">
-  <div class="container">
-    <p style="margin-bottom:5px !important;">
-      <a style="text-decoration: none; display: inline;"
-                                                href="https://twitter.com/match4health_" target="_blank"> <img
-            width="25" style="margin-bottom:0px; border:none; display:inline;" height="25"
-            src="{% static 'img/twitter.svg' %}" alt="Twitter"> </a>
-      <a style="text-decoration: none; display: inline;" href="https://www.instagram.com/match4healthcare/"
-         target="_blank"> <img width="25" style="margin-bottom:0px; border:none; margin-left:8px; display:inline;"
-                               height="25" src="{% static 'img/instagram.svg' %}" alt="Instagram"> </a>
-      <a style="text-decoration: none; display: inline; margin-left:8px;"
-         href="https://www.facebook.com/Match4Healthcare/" target="_blank"> <img width="25"
-                                                                                 style="margin-bottom:0px; border:none; display:inline;"
-                                                                                 height="25"
-                                                                                 src="{% static 'img/facebook.svg' %}"
-                                                                                 alt="Facebook"> </a>
-      <a style="text-decoration: none; display: inline; margin-left:8px;"
-         href="https://www.youtube.com/watch?v=g8-EqUU55Bo" target="_blank"> <img width="25"
-                                                                                                    style="margin-bottom:0px; border:none; display:inline;"
-                                                                                                    height="25"
-                                                                                                    src="{% static 'img/youtube.svg' %}"
-                                                                                                    alt="Youtube"> </a>
-      <a style="text-decoration: none; display: inline; margin-left:8px;"
-         href="https://github.com/match4everyone/match4healthcare" target="_blank"> <img width="25"
-                                                                                                    style="margin-bottom:0px; border:none; display:inline;"
-                                                                                                    height="25"
-                                                                                                    src="{% static 'img/GitHub-Mark-Light-32px.png' %}"
-                                                                                                    alt="Youtube"> </a>
-    </p>
-    <p>{% blocktrans %}Ein Projekt im Rahmen des <a href="https://wirvsvirushackathon.org/" target="_blank">#WirVsVirus Hackathons</a>.{% endblocktrans %}
-      <a href="/impressum">{% blocktrans %}Impressum{% endblocktrans %}</a>,
-      <a href="/dataprotection">{% blocktrans %}Datenschutz{% endblocktrans %}</a> {% blocktrans %}und{% endblocktrans %}
-      <a href="/terms-of-use">{% blocktrans %}Nutzungsbedingungen{% endblocktrans %}</a>.
-    </p>
-  </div>
+    <div class="container">
+        <p style="margin-bottom:5px !important;">
+            <a style="text-decoration: none; display: inline;"
+               href="https://twitter.com/match4health_" target="_blank"> <img
+                    width="25" style="margin-bottom:0px; border:none; display:inline;" height="25"
+                    src="{% static 'img/share_icons/twitter.svg' %}" alt="Twitter"> </a>
+            <a style="text-decoration: none; display: inline;" href="https://www.instagram.com/match4everyone/"
+               target="_blank"> <img width="25" style="margin-bottom:0px; border:none; margin-left:8px; display:inline;"
+                                     height="25" src="{% static 'img/share_icons/instagram.svg' %}" alt="Instagram">
+            </a>
+            <a style="text-decoration: none; display: inline; margin-left:8px;"
+               href="https://www.facebook.com/match4everyone/" target="_blank"> <img width="25"
+                                                                                       style="margin-bottom:0px; border:none; display:inline;"
+                                                                                       height="25"
+                                                                                       src="{% static 'img/share_icons/facebook.svg' %}"
+                                                                                       alt="Facebook"> </a>
+            <a style="text-decoration: none; display: inline; margin-left:8px;"
+               href="https://www.youtube.com/watch?v=g8-EqUU55Bo" target="_blank"> <img width="25"
+                                                                                        style="margin-bottom:0px; border:none; display:inline;"
+                                                                                        height="25"
+                                                                                        src="{% static 'img/share_icons/youtube.svg' %}"
+                                                                                        alt="Youtube"> </a>
+            <a style="text-decoration: none; display: inline; margin-left:8px;"
+               href="https://github.com/match4everyone/match4everyone" target="_blank"> <img width="25"
+                                                                                               style="margin-bottom:0px; border:none; display:inline;"
+                                                                                               height="25"
+                                                                                               src="{% static 'img/share_icons/GitHub-Mark-Light-32px.png' %}"
+                                                                                               alt="Youtube"> </a>
+        </p>
+        <p>{% blocktrans %}A project that originated from
+            <a href="https://wirvsvirushackathon.org/" target="_blank">#WirVsVirus hackathon</a>.{% endblocktrans %}
+            <a href="/impressum">{% blocktrans %}Imprint{% endblocktrans %}</a>,
+            <a href="/dataprotection">{% blocktrans %}Data Protection{% endblocktrans %}</a>
+            {% blocktrans %}and{% endblocktrans %}
+            <a href="/terms-of-use">{% blocktrans %}Terms of Use{% endblocktrans %}</a>.
+        </p>
+    </div>
 </footer>
 </body>
 </html>

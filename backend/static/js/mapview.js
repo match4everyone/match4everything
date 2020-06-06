@@ -3,17 +3,17 @@
 mapViewPage = {
     options: {
         mapViewContainerId: '',
-        facilitiesURL : '',
-        supportersURL : '',
-        supporterListURL  : '',
-        hospitalListURL   : '',
+        aURL : '',
+        bURL : '',
+        aListURL  : '',
+        bListURL   : '',
         mapboxToken: '',
         isStudent: true,
         isHospital: true,
-        createPopupTextStudent  :  (countrycode,city, plz, count, url) => '',
-        createPopupTextHospital :  (countrycode,city, plz, count, url) => '',
-        createFacilitiesCountText: (count) => '',
-        createSupportersCountText: (count) => '',
+        createPopupTextA  :  (countrycode, city, plz, count, url) => '',
+        createPopupTextB :  (countrycode, city, plz, count, url) => '',
+        createACountText: (count) => '',
+        createBCountText: (count) => '',
         facilityIcon: new L.Icon.Default(),
     },
 
@@ -102,7 +102,7 @@ mapViewPage = {
     },
 
     loadMapMarkers : async function loadMapMarkers() {
-        let [ facilities, supporters ] = await Promise.all([$.get(this.options.facilitiesURL),$.get(this.options.supportersURL)])
+        let [ facilities, supporters ] = await Promise.all([$.get(this.options.bURL),$.get(this.options.aURL)])
 
         var facilityClusterMarkerGroup = L.markerClusterGroup({
             iconCreateFunction: this.cssClassedIconCreateFunction('facilityMarker'),
@@ -111,7 +111,7 @@ mapViewPage = {
             return L.marker([lon,lat],{ 
                 icon:  this.createFacilityIcon(count),
                 itemCount: count,
-           }).bindPopup(this.options.createPopupTextHospital(countrycode,city, plz, count, this.options.hospitalListURL.replace("COUNTRYCODE",countrycode).replace("PLZ",plz)))
+           }).bindPopup(this.options.createPopupTextB(countrycode,city, plz, count, this.options.bListURL.replace("COUNTRYCODE",countrycode).replace("PLZ",plz)))
         }))
 
         var supporterClusterMarkerGroup = L.markerClusterGroup({
@@ -121,7 +121,7 @@ mapViewPage = {
             return L.marker([lon,lat],{
                  icon:  this.createSupporterIcon(count),
                  itemCount: count,
-            }).bindPopup(this.options.createPopupTextStudent(countrycode,city, plz, count, this.options.supporterListURL.replace("COUNTRYCODE",countrycode).replace("PLZ",plz)))
+            }).bindPopup(this.options.createPopupTextA(countrycode,city, plz, count, this.options.aListURL.replace("COUNTRYCODE",countrycode).replace("PLZ",plz)))
         }))
 
         supporterClusterMarkerGroup.addTo(this.mapObject)
@@ -140,8 +140,8 @@ mapViewPage = {
         }
 
         var overlays = {}
-        overlays[this.options.createFacilitiesCountText(countItems(facilities))] = facilityMarkers
-        overlays[this.options.createSupportersCountText(countItems(supporters))] = supporterMarkers
+        overlays[this.options.createBCountText(countItems(facilities))] = facilityMarkers
+        overlays[this.options.createACountText(countItems(supporters))] = supporterMarkers
 
         facilityMarkers.addTo(this.mapObject)
 

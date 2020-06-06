@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% blocktrans %}Thank you{% endblocktrans %}
+{% endblock %}
+
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+
+<script type="text/javascript">
+    window.addEventListener('load', function() {
+        $(window).on("resize", function() {
+
+            var height = $(window).height();
+            var navHeight = $('.navbar').outerHeight();
+            var footerHeight = $('.footer').innerHeight();
+
+            var newHeight = height - navHeight - footerHeight;
+
+            $(".login-form").height(newHeight);
+
+        }).trigger("resize");
+
+    });
+</script>
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <h1>Not yet implemented.</h1>
+
+{% endblock %}

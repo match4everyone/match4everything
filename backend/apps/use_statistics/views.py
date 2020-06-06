@@ -1,5 +1,6 @@
 from functools import lru_cache
 import os
+import time
 
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
@@ -10,7 +11,11 @@ from django.utils.translation import gettext as _
 import django_tables2 as tables
 import pandas as pd
 
-from apps.mapview.views import get_ttl_hash
+
+def get_ttl_hash(seconds=300):
+    """Return the same value withing `seconds` time period."""
+    return round(time.time() / seconds)
+
 
 logged_data_names = ["time", "status_line", "status", "request_time"]
 threshold_to_filter = 50
@@ -25,7 +30,7 @@ def use_statistics(request):
     except FileNotFoundError:
         return HttpResponse(
             _(
-                "<html><body>gunicorn-access.log nicht gefunden oder zugreifbar\
+                "<html><body>gunicorn-access.log not found or accessible\
                             </body></html>"
             )
         )
