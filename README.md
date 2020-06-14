@@ -119,6 +119,54 @@ Student has an attribute for the user, user has an attribute for the student, ..
 These circular references will prevent the log entry from being written.
 Including request is always safe, because the logging formatter contains dedicated code for request logging.
 
+## Javascript & CSS
+
+This project uses webpack to create javascript bundles. Custom Javascript is only added to pages when it is needed to enhance default Django functionality or to create user experience improvements.
+
+Notable examples are
+- Map Views
+- User Profile to hide unneeded blocks
+
+Javascript sources are located in frontend/src folder
+
+For local development node needs to be installed. For pure python development alternatively Docker can be used to build the javascript bundles. At the moment only production builds are supported via docker.
+
+### Build via docker
+
+Run the following commands in the main directory to setup the docker image
+```
+cd frontend
+docker build -t frontend:latest .
+```
+
+Run `docker run -ti -v "$(pwd)/dist:/app/dist" --rm frontend:latest` to build the bundles. They will then be available under the dist directory. Docker-Compose files for the main app use volumes instead to share the files between containers.
+
+### Build (local install) dev & prod
+
+To build locally node needs to be installed. We suggest using [Node Version Manager](https://github.com/nvm-sh/nvm) to install node. Dependencies can be installed using `cd frontend && npm install`
+
+All commands need to be executed in `./frontend`.
+- Build javascript bundles
+`npm run build`
+- Build javascript bundles in devMode and rebuilt when changes are made
+`npm run dev`
+
+### Loading bundles in Python
+
+To load a bundle in a django template add the following tags:
+```
+{% load render_bundle from webpack_loader %}
+{% render_bundle 'student' %}
+```
+
+Django will then use the webpack-stats.json to determine which file from dist folder to include.
+The dist folder has been added to the STATICFILES_DIRS so it will be found automatically
+
+### Adding new bundles
+
+When creating new bundles simply create a new *.js file, this will automatically create an equally named bundle (examples main, map, student). 
+
+New bundles should be created sparingly in the src directory, their modules should be loaded from the sub-directories. A template should only ever load one bundle with the base template loading the main bundle. 
 
 ## Forks
 Thanks for forking our repository. Pay attention that Travis CI doesn't test your code with sendgrid.
