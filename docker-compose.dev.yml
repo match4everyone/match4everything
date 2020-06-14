@@ -11,7 +11,7 @@ services:
       - './backend:/match4everyone-backend'
       - './frontend:/frontend'
     env_file:
-      - backend.dev.env  
+      - backend.dev.env
     ports:
       - '8000:8000'
     tty: true # needed for error output during django startup
@@ -28,6 +28,5 @@ services:
       dockerfile: Dockerfile
     volumes:
       - './frontend/src:/app/src'
-      - './frontend/dist:/app/dist'      
+      - './frontend/dist:/app/dist'
     entrypoint: [ "npm" , "run", "dev" ]
-
