@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "djangocms_video",
     "djangocms_snippet",
     "djangocms_style",
+    "webpack_loader",
 ]
 
 MIDDLEWARE = [
@@ -167,8 +168,8 @@ MEDIA_URL = "/media/"
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(RUN_DIR, "static")
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),os.path.normpath(os.path.join(os.path.join(os.path.dirname(BASE_DIR), "frontend"), "dist")),)
 
 LEAFLET_TILESERVER = os.getenv(
     "LEAFLET_TILESERVER"
@@ -250,10 +251,24 @@ LOGGING = {
         },
         "django.server": {  # Only for development server, all of these are mirrored on django.request anyway
             "level": "ERROR",
-            "handlers": ["null"],
+            "handlers": ["console"],
             "propagate": False,
         },
     },
+}
+
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "CACHE": True,
+        "BUNDLE_DIR_NAME": "/",  # must end with slash
+        "STATS_FILE": os.path.normpath(
+            os.path.join(os.path.join(os.path.join(os.path.dirname(BASE_DIR), "frontend"), "dist"), "webpack-stats.json")
+        ),
+        "POLL_INTERVAL": 0.1,
+        "TIMEOUT": None,
+        # 'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
+        "LOADER_CLASS": "webpack_loader.loader.WebpackLoader",
+    }
 }
 
 # ========== determine wether this is a forked version of m4h ==========#
