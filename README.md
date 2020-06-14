@@ -171,9 +171,9 @@ The dist folder has been added to the STATICFILES_DIRS so it will be found autom
 
 ### Adding new bundles
 
-When creating new bundles simply create a new *.js file, this will automatically create an equally named bundle (examples main, map, student). 
+When creating new bundles simply create a new *.js file, this will automatically create an equally named bundle (examples main, map, student).
 
-New bundles should be created sparingly in the src directory, their modules should be loaded from the sub-directories. A template should only ever load one bundle with the base template loading the main bundle. 
+New bundles should be created sparingly in the src directory, their modules should be loaded from the sub-directories. A template should only ever load one bundle with the base template loading the main bundle.
 
 #### Permissions
 
