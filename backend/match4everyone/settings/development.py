@@ -3,7 +3,7 @@ from os import path
 
 from match4everyone.constants.enum import Environment
 from match4everyone.settings.common import *  # noqa
-from match4everyone.settings.common import RUN_DIR
+from match4everyone.settings.common import RUN_DIR, WEBPACK_LOADER
 
 THIS_ENV = Environment.DEVELOPMENT
 
