@@ -86,3 +86,6 @@ else:
     # TODO: add logger message instead? # noqa: T003
     print("No email option selected")
     exit(1)
+
+# Disable caching of bundles on dev
+WEBPACK_LOADER["DEFAULT"]["CACHE"] = False
