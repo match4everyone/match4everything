@@ -49,7 +49,7 @@ class User(AbstractUser):
             # we can only have either participant a or participant b for one user
             models.CheckConstraint(
                 name="%(app_label)s_%(class)s_has_only_one_participant",
-                check=(~models.Q(is_A=False, is_B=False,)),
+                check=(~models.Q(is_A=True, is_B=True,)),
             ),
             # only either staff or participant
             models.CheckConstraint(
