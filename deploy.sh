@@ -8,7 +8,7 @@ echo "Server started for setup"
 $dc exec backend python3 manage.py migrate
 $dc exec --env PYTHONPATH="/match4everyone-backend:$PYTHONPATH" backend django-admin makemessages --no-location --ignore 00_old_m4h_matching_code
 $dc exec --env PYTHONPATH="/match4everyone-backend:$PYTHONPATH" backend django-admin compilemessages
-
+$dc up frontend
 $dc exec backend python3 manage.py collectstatic --no-input
 $dc exec backend python3 manage.py migrate
 $dc exec backend python3 manage.py check
