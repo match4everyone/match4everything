@@ -51,9 +51,9 @@ class User(AbstractUser):
                 name="%(app_label)s_%(class)s_has_only_one_participant",
                 check=(~(models.Q(is_A=True) & models.Q(is_B=True))),
             ),
-            # only either staff or participant
+            # only either staff or participant or none
             models.CheckConstraint(
-                name="%(app_label)s_%(class)s_only_staff_or_participant",
-                check=(~(models.Q(is_participant=True) & models.Q(is_staff=True))),
+                name="%(app_label)s_%(class)s_only_staff_or_participant_or_none",
+                check=(models.Q(is_participant=False) | models.Q(is_staff=False)),
             ),
         ]
