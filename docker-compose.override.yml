@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+    backend:
+        volumes:
+            - './frontend:/frontend'
+
+    frontend:
+        entrypoint: [ "npm" , "run", "dev" ]
+        volumes:
+            - './frontend/src:/app/src'
+            - './frontend/dist:/app/dist'

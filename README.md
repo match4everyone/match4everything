@@ -13,7 +13,7 @@ Originally developed as [match4healthcare](github.com/match4everyone/match4healt
 ## Install by hand
 ### Development
 - Build images and run containers
-`docker-compose -f docker-compose.dev.yml up --build`
+`docker-compose up --build`
 - Start previously built containers in background
 `docker-compose start`
 - Apply migrations
@@ -26,7 +26,7 @@ Originally developed as [match4healthcare](github.com/match4everyone/match4healt
 File changes in python files trigger an auto-reload of the server.
 Migrations have to be executed with `docker exec backend python3 manage.py migrate`.
 
-After changes to the Docker configuration, you have to restart and build the containers with `docker-compose -f docker-compose.dev.yml up --build`.
+After changes to the Docker configuration, you have to restart and build the containers with `docker-compose up --build`.
 
 ### Production
 Set `SECRET_KEY`, `SENDGRID_API_KEY` and `MAPBOX_TOKEN`in `backend.prod.env` for Django
@@ -39,7 +39,7 @@ If you want to deploy manually follow these steps closly:
 
 1. Build the containers
 (Run `export CURRENT_UID=$(id -u):$(id -g)` if you want to run the backend as non-root)
-`docker-compose -f docker-compose.dev.yml -f docker-compose.prod.yml up -d --build`
+`docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build`
 2. Make messages
 `docker exec --env PYTHONPATH="/match4everyone-backend:$PYTHONPATH" backend django-admin makemessages --no-location`
 3. Compile messages
@@ -51,7 +51,7 @@ If you want to deploy manually follow these steps closly:
 5. Check if all the variables are correct
 `docker exec backend python3 manage.py check`
 6. Restart the backend container (important, whitenoise does not reload static files after it has started)
-`docker-compose -f docker-compose.dev.yml -f docker-compose.prod.yml down && docker-compose -f docker-compose.dev.yml -f docker-compose.prod.yml up -d`
+`docker-compose -f docker-compose.yml -f docker-compose.prod.yml down && docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d`
 
 ## Helpful management commands
 

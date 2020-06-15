@@ -5,6 +5,7 @@ services:
   backend:
     volumes:
       - './backend:/match4everyone-backend'
+      - 'frontend-bundles:/frontend/dist'
     ports:
       - '80:8000'
     networks:
@@ -19,6 +20,9 @@ services:
     depends_on:
       - database
 
+  frontend:
+    volumes:
+      - 'frontend-bundles:/app/dist'
 
   database:
     image: postgres:12
@@ -39,5 +43,5 @@ services:
 networks:
  network:
 
-#volumes:
-#  postgres-data:
+volumes:
+  frontend-bundles:

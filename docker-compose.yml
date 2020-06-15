@@ -9,7 +9,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - './backend:/match4everyone-backend'
-      - './frontend:/frontend'
     env_file:
       - backend.dev.env
     ports:
@@ -26,7 +25,3 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    volumes:
-      - './frontend/src:/app/src'
-      - './frontend/dist:/app/dist'
-    entrypoint: [ "npm" , "run", "dev" ]
