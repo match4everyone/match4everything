@@ -6,8 +6,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    env_file:
-      - backend.dev.env
     ports:
       - '127.0.0.1:8000:8000'
     tty: true # needed for error output during django startup
