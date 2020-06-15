@@ -1,8 +1,8 @@
 FROM node:12-alpine
 
-WORKDIR /app
-COPY package.json package-lock.json /app/
+WORKDIR /frontend
+COPY package.json package-lock.json /frontend/
 RUN ["npm", "install"]
 
-COPY . /app/
+COPY . /frontend/
 ENTRYPOINT [ "npm" , "run", "build" ]

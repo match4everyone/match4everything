@@ -29,7 +29,7 @@ services:
 
   frontend:
     volumes:
-      - 'frontend-bundles:/app/dist'
+      - 'frontend-bundles:/frontend/dist'
 
   database:
     image: postgres:12
