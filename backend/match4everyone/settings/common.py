@@ -206,7 +206,7 @@ LOGGING = {
         },
         "django.server": {  # Only for development server, all of these are mirrored on django.request anyway
             "level": "ERROR",
-            "handlers": ["console"],
+            "handlers": ["null"],
             "propagate": False,
         },
     },
