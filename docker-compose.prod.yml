@@ -32,6 +32,7 @@ services:
      - database.prod.env
     expose:
      -  5432
+    user: postgres
     networks:
      - network
     command: postgres -c config_file=/etc/postgresql.conf
