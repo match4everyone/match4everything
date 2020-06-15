@@ -3,7 +3,6 @@ version: '3.7'
 services:
 
   backend:
-    container_name: backend
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -21,7 +20,6 @@ services:
       - TRAVIS_PULL_REQUEST_SLUG
 
   frontend:
-    container_name: frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
