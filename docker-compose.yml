@@ -8,8 +8,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - './backend:/match4everyone-backend'
-    env_file:
-      - backend.dev.env
     ports:
       - '8000:8000'
     tty: true # needed for error output during django startup
