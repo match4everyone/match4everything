@@ -1,5 +1,5 @@
 import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import './css/app.scss'
 import './css/general.css'
 import $ from 'jquery'
 
