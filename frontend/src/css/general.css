@@ -22,7 +22,6 @@ body {
   font-family: 'proxima-nova', sans-serif !important;
 	-webkit-font-smoothing: antialiased;
   font-weight: 300;
-  color: #4f4f4f;
   margin-top: 100px;
 }
 
@@ -57,9 +56,6 @@ margin-bottom: 0px;
 }
 .home-title h1 {
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
-}
-h1, h2, h3, h4, h5 {
-  color: #000943
 }
 .logo-header {
   margin-bottom: 50px;
