@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+touch backend.dev.env # Empty file needed for production build
+
 echo "POSTGRES_DB=${POSTGRES_DB}" > database.prod.env
 echo "POSTGRES_USER=${POSTGRES_USER}" >> database.prod.env
 echo "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}" >> database.prod.env
