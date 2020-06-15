@@ -9,5 +9,14 @@ services:
   backend:
     volumes:
       - './backend:/backend' # bind mount the code directory
+      - './frontend:/frontend'
     env_file:
       - backend.dev.env
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    entrypoint: [ "npm" , "run", "dev" ]
+    volumes:
+      - './frontend/:/app/'
