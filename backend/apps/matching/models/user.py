@@ -59,8 +59,6 @@ class User(AbstractUser):
             # only be participant if part of a or b
             models.CheckConstraint(
                 name="%(app_label)s_%(class)s_only_participant_if_part_of_a_or_b",
-                check=(
-                    (models.Q(is_A=True) | models.Q(is_B=True)) == models.Q(is_participant=True)
-                ),
+                check=(models.Q(is_participant=(models.Q(is_A=True) | models.Q(is_B=True)))),
             ),
         ]
