@@ -15,5 +15,8 @@ $dc exec backend python3 manage.py migrate
 $dc exec backend python3 manage.py check
 # Restart container AFTER static files have been collected
 $dc down
-$dc up -d
+
+# Only start backend and database (dependency)
+# Restarting frontend would trigger a new bundle-build and clear the volume at the same time when Django might access it
+$dc up -d backend
 echo "Server is ready for you"
