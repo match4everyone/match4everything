@@ -133,7 +133,7 @@ class Migration(migrations.Migration):
         pass
 
     dependencies = [
-        ("matching", "0003_auto_20200615_1222"),
+        ('matching', '0001_initial'),
     ]
 
     operations = [
