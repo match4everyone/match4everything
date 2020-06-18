@@ -8,6 +8,7 @@ from django.urls import reverse
 
 from .participant import Participant
 from .participant_info_properties import create_property
+from .user import User
 
 
 class AbstractParticipantInfo(models.Model):
@@ -66,6 +67,19 @@ class ParticipantInfoB(AbstractParticipantInfo):
 ParticipantInfo = {"A": ParticipantInfoA, "B": ParticipantInfoB}
 
 
+class ParticipantInfoFilterA(models.Model):
+    participant_type = "A"
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class ParticipantInfoFilterB(models.Model):
+    participant_type = "B"
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+ParticipantInfoFilter = {"A": ParticipantInfoFilterA, "B": ParticipantInfoFilterB}
+
+
 def add_participant_specific_info(name, config):
     """
     Generate Info Table fields from config.
@@ -73,6 +87,7 @@ def add_participant_specific_info(name, config):
     Programmatically add fields that are defined in the config for the
     respective participant.
     """
+    # Create the participant info
     info_cls = ParticipantInfo[name]
 
     labels = {c["field_name"]: c["label"] for c in config["info"]}
@@ -85,6 +100,14 @@ def add_participant_specific_info(name, config):
     info_cls.add_to_class(
         "random_generators", {p.field_name: p.get_random_value for p in properties}
     )
+
+    # Create the persistent filter for the participant info
+    filter_cls = ParticipantInfoFilter[name]
+
+    for p in properties:
+        filters = p.get_filters()
+        for filter_lookup, field in filters:
+            filter_cls.add_to_class(p.field_name + "-" + filter_lookup, field)
 
 
 with open(f"{settings.BASE_DIR}/match4everyone/config/participant_info.json") as json_file:

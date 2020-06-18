@@ -28,6 +28,9 @@ class BoolProperty:
             rs = np.random
         return bool(rs.rand())
 
+    def get_filters(self):
+        return [("exact", models.NullBooleanField(default=None))]
+
 
 class ChoiceProperty:
     """
@@ -63,6 +66,18 @@ class ChoiceProperty:
             rs = np.random
         return rs.choice([code for code, label in self.choices])
 
+    def get_filters(self):
+        # an 'in' Multiple Choice field would be nice as well, but we need to think a little more about how to do this
+        # todo # noqa
+        return [
+            (
+                "exact",
+                models.CharField(
+                    default=None, choices=[(None, "--")] + self.choices, max_length=self.max_length
+                ),
+            )
+        ]
+
 
 class OrderedChoiceProperty:
     """
@@ -88,6 +103,8 @@ class OrderedChoiceProperty:
     def __init__(self, field_name, config):
         self.field_name = field_name
         self.choices = [(int(c), _(l)) for c, l in config["choices"].items()]
+        self.min = min([a for a, b in self.choices])
+        self.max = max([a for a, b in self.choices])
         self.default = config.get("default", "")
 
     def get_field(self):
@@ -97,6 +114,24 @@ class OrderedChoiceProperty:
         if rs is None:
             rs = np.random
         return rs.choice([code for code, label in self.choices])
+
+    def get_filters(self):
+        # an 'in' Multiple Choice field would be nice as well, but we need to think a little more about how to do this
+        # todo # noqa
+        return [
+            (
+                "gte",
+                models.IntegerField(
+                    choices=[(self.min - 1, "No choice")] + self.choices, default=self.min - 1
+                ),
+            ),
+            (
+                "lte",
+                models.IntegerField(
+                    choices=[(self.max + 1, "No choice")] + self.choices, default=self.min - 1
+                ),
+            ),
+        ]
 
 
 class TextProperty:
@@ -123,6 +158,10 @@ class TextProperty:
 
     def get_random_value(self, rs=None):
         return "This is a very random string."
+
+    def get_filters(self):
+        # icontains is case insensitive
+        return [("icontains", models.CharField(max_length=self.max_length, default=""))]
 
 
 def create_property(property_config):
