@@ -1,16 +1,17 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
 
-from apps.matching.admin import matching_participant_required
+from apps.matching.admin import participant_check
 from apps.matching.forms import ParticipantEditInfoForm
 from apps.matching.models import ParticipantInfo
 
 
-@method_decorator([login_required, matching_participant_required], name="dispatch")
+@method_decorator([login_required], name="dispatch")
+@user_passes_test(participant_check)
 class ParticipantInfoUpdateView(UpdateView):
     """Updates the information of either participant."""
 
