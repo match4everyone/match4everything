@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+
+{% block title %}
+{{hospital.firmenname}}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<hr>
+<div class="container">
+    <div class="card border-primary">
+        <div class="card-header">
+            <h2>{{hospital.firmenname}} </h2>
+            <div class="font-weight-light">in {{ort}} ({{hospital.plz}})</div>
+            {% if student_ort %}<div class="font-weight-light">{{ distance }}km von dir ({{plz_student}}, {{student_ort}})</div>{% endif %}
+
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{hospital.sonstige_infos}}</li>
+            <li class="list-group-item text-muted">
+                <h5>{% blocktrans %}Gesuch kontaktieren{% endblocktrans %}</h5>
+                {% if user.is_authenticated and user.is_student %}
+                    {% if user.validated_email %}
+
+                    {% crispy email_form email_form.helper%}
+
+                    {% else %}
+
+                    <p>{% blocktrans %}Du hast deine Mail Adresse noch nicht validiert, bitte erledige das!{% endblocktrans %}</p>
+
+
+                    {% endif %}
+                {% else %}
+                {% url 'student_signup' as student_signup_url %}
+                <p>{% blocktrans with firmenname=hospital.firmenname %}Bitte <a target="_blank" href="{{student_signup_url}}">Registriere dich als Helfende_r</a> um die Kontaktdaten von {{firmenname}} zu sehen.{% endblocktrans %}</p>
+
+
+                {% endif %}
+      </ul>
+    </div>
+</div>
+<hr>
+{% endblock %}
