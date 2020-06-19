@@ -1,18 +1,19 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse
-from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
 
-from apps.matching.admin import matching_participant_required
+from apps.matching.admin import participant_check
 from apps.matching.forms import ParticipantEditInfoForm
 from apps.matching.models import ParticipantInfo
 
 
-@method_decorator([login_required, matching_participant_required], name="dispatch")
-class ParticipantInfoUpdateView(UpdateView):
+class ParticipantInfoUpdateView(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     """Updates the information of either participant."""
+
+    def test_func(self):
+        return participant_check(self.request.user)
 
     template_name = "participant/participant_info_edit_form.html"
     slug_url_kwarg = "uuid"

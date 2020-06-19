@@ -1,10 +1,9 @@
 import logging
 
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.base import TemplateView
 
-from apps.matching.admin import matching_participant_required
+from apps.matching.admin import participant_check
 
 logger = logging.getLogger(__name__)
 
@@ -13,8 +12,10 @@ View the dashboard of a participant
 """
 
 
-@method_decorator([login_required, matching_participant_required], name="dispatch")
-class ParticipantDashboard(TemplateView):
+class ParticipantDashboard(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        return participant_check(self.request.user)
+
     template_name = "participant/participant_dashboard.html"
 
     def get_context_data(self, *args, **kwargs):

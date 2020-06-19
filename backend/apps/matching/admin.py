@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
-from django.http import Http404
 
 from .models import User
 
@@ -23,22 +22,5 @@ def participant_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME,
     return actual_decorator
 
 
-def matching_participant_required(function=None):
-    """
-    Check that participant matches url.
-
-    Decorator for views that checks that the user is logged in,
-    and that the user matches to the /<p_type:p_type> url
-    """
-
-    def actual_decorator(function):
-        def new_func(request, p_type, *args, **kwargs):
-            if (request.user.is_A and p_type == "A") or (request.user.is_B and p_type == "B"):
-                return function(request, p_type, *args, **kwargs)
-            raise Http404
-
-        return new_func
-
-    if function:
-        return actual_decorator(function)
-    return actual_decorator
+def participant_check(user):
+    return user.is_participant
