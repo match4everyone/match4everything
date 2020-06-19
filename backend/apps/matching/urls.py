@@ -1,7 +1,10 @@
 from django.conf import settings
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.urls import include, path, register_converter
 from django.views.generic.base import TemplateView
+
+from apps.matching.admin import participant_check
 
 from . import views
 from .src import converters
@@ -15,10 +18,14 @@ urlpatterns = [
     ####################################
     path("<p:p_type>/signup", views.ParticipantSignup.as_view(), name="signup"),
     path("profile_redirect", views.ProfileDashboardRedirect.as_view(), name="profile_redirect"),
-    path("<p:p_type>/profile", views.ParticipantDashboard.as_view(), name="profile"),
+    path(
+        "<p:p_type>/profile",
+        login_required(user_passes_test(participant_check)(views.ParticipantDashboard.as_view())),
+        name="profile",
+    ),
     path(
         "<p:p_type>/info/<str:uuid>/edit/",
-        views.ParticipantInfoUpdateView.as_view(),
+        login_required(views.ParticipantInfoUpdateView.as_view()),
         name="info-edit",
     ),
     path(

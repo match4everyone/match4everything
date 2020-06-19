@@ -1,6 +1,6 @@
 import logging
 
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.views.generic.base import TemplateView
 
 from apps.matching.admin import participant_check
@@ -12,7 +12,7 @@ View the dashboard of a participant
 """
 
 
-class ParticipantDashboard(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
+class ParticipantDashboard(TemplateView, UserPassesTestMixin):
     def test_func(self):
         return participant_check(self.request.user)
 
