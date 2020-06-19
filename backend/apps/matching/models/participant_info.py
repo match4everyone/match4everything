@@ -5,6 +5,7 @@ import uuid
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
+import django_filters
 
 from .participant import Participant
 from .participant_info_properties import create_property
@@ -71,13 +72,38 @@ class ParticipantInfoFilterA(models.Model):
     participant_type = "A"
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def as_get_params(self):
+        get_request = {}
+        for filter_field in self.filter_fields:
+            value = getattr(self, filter_field)
+            if value is not None:
+                lookup_name = filter_field.replace("-", "__")
+                if lookup_name.split("__")[1] == "exact":
+                    get_request[lookup_name.split("__")[0]] = str(value)
+                else:
+                    get_request[filter_field.replace("-", "__")] = str(value)
+        return get_request
+
 
 class ParticipantInfoFilterB(models.Model):
     participant_type = "B"
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def as_get_params(self):
+        get_request = {}
+        for filter_field in self.filter_fields:
+            value = getattr(self, filter_field)
+            if value is not None:
+                lookup_name = filter_field.replace("-", "__")
+                if lookup_name.split("__")[1] == "exact":
+                    get_request[lookup_name.split("__")[0]] = str(value)
+                else:
+                    get_request[filter_field.replace("-", "__")] = str(value)
+        return get_request
+
 
 ParticipantInfoFilter = {"A": ParticipantInfoFilterA, "B": ParticipantInfoFilterB}
+ParticipantInfoFilterSet = {}
 
 
 def add_participant_specific_info(name, config):
@@ -101,13 +127,33 @@ def add_participant_specific_info(name, config):
         "random_generators", {p.field_name: p.get_random_value for p in properties}
     )
 
-    # Create the persistent filter for the participant info
+    # Create the persistent filter and filter set for the participant info
     filter_cls = ParticipantInfoFilter[name]
-
+    filter_fields = []
     for p in properties:
         filters = p.get_filters()
-        for filter_lookup, field in filters:
-            filter_cls.add_to_class(p.field_name + "-" + filter_lookup, field)
+        for filter_props in filters:
+            filter_field_name = p.field_name + "-" + filter_props["lookup_exp"]
+            filter_cls.add_to_class(filter_field_name, filter_props["model_field"])
+            filter_fields.append(filter_field_name)
+
+    filter_cls.add_to_class("filter_fields", filter_fields)
+
+    # refer to https://django-filter.readthedocs.io/en/latest/ref/filterset.html for deeper insight
+    filter_set_fields = {}
+    for p in properties:
+        filter_set_fields[p.field_name] = [props["lookup_exp"] for props in p.get_filters()]
+
+    class ParticipantInfoFilterSetP(django_filters.FilterSet):
+        class Meta:
+            model = ParticipantInfo[name]
+            fields = filter_set_fields
+
+        @classmethod
+        def filter_spec(cls):
+            return filter_set_fields
+
+    ParticipantInfoFilterSet[name] = ParticipantInfoFilterSetP
 
 
 with open(f"{settings.BASE_DIR}/match4everyone/config/participant_info.json") as json_file:

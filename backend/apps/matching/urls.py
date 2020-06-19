@@ -42,6 +42,11 @@ urlpatterns = [
     #  List view/ Filtering
     ####################################
     path(
+        "api/<p:p_type>/info/list",
+        views.ParticipantInfoListAPI.as_view(),
+        name="list_participant_info",
+    ),
+    path(
         "<p:p_type>/filter/create",
         views.ParticipantFilterCreateView.as_view(),
         name="create_participant_filter",

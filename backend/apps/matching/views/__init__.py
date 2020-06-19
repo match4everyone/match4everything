@@ -2,6 +2,7 @@ from .map import map_JSON, map_view  # noqa
 from .participant_change_activation import ChangeActivationAskView, ChangeActivationRedirect  # noqa
 from .participant_dashboard import ParticipantDashboard  # noqa
 from .participant_info_fiter import ParticipantFilterCreateView  # noqa
+from .participant_list import ParticipantInfoListAPI  # noqa
 from .participant_profile_edit import ParticipantInfoUpdateView  # noqa
 from .participant_signup import ParticipantSignup  # noqa
 from .profile_dashboard_redirect import ProfileDashboardRedirect  # noqa

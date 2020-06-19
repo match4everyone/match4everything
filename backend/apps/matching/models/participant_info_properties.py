@@ -17,7 +17,7 @@ class BoolProperty:
     name = "bool"
 
     def __init__(self, field_name, config):
-        self.field_name = field_name
+        self.field_name = field_name.replace(" ", "_")
         self.default = config.get("default", None)
 
     def get_field(self):
@@ -29,7 +29,13 @@ class BoolProperty:
         return bool(rs.rand())
 
     def get_filters(self):
-        return [("exact", models.NullBooleanField(default=None))]
+        return [
+            {
+                "lookup_exp": "exact",
+                "label": "is exactly",
+                "model_field": models.NullBooleanField(default=None),
+            }
+        ]
 
 
 class ChoiceProperty:
@@ -70,12 +76,18 @@ class ChoiceProperty:
         # an 'in' Multiple Choice field would be nice as well, but we need to think a little more about how to do this
         # todo # noqa
         return [
-            (
-                "exact",
-                models.CharField(
-                    default=None, choices=[(None, "--")] + self.choices, max_length=self.max_length
+            {
+                "lookup_exp": "exact",
+                "label": "is exactly",
+                "choices": [(None, "--")] + self.choices,
+                "max_length": self.max_length,
+                "model_field": models.CharField(
+                    blank=True,
+                    null=True,
+                    choices=[(None, "--")] + self.choices,
+                    max_length=self.max_length,
                 ),
-            )
+            }
         ]
 
 
@@ -119,24 +131,28 @@ class OrderedChoiceProperty:
         # an 'in' Multiple Choice field would be nice as well, but we need to think a little more about how to do this
         # todo # noqa
         return [
-            (
-                "gte",
-                models.IntegerField(
-                    choices=[(self.min - 1, "No choice")] + self.choices, default=self.min - 1
+            {
+                "lookup_exp": "gte",
+                "label": _("is greater than"),
+                "choices": [(None, "No choice")] + self.choices,
+                "model_field": models.IntegerField(
+                    null=True, choices=[(None, "No choice")] + self.choices, blank=True
                 ),
-            ),
-            (
-                "lte",
-                models.IntegerField(
-                    choices=[(self.max + 1, "No choice")] + self.choices, default=self.min - 1
+            },
+            {
+                "lookup_exp": "lte",
+                "label": _("is smaller than"),
+                "choices": [(None, "No choice")] + self.choices,
+                "model_field": models.IntegerField(
+                    null=True, choices=[(None, "No choice")] + self.choices, blank=True
                 ),
-            ),
+            },
         ]
 
 
 class TextProperty:
     """
-    Info-Field that allows to specify fee test.
+    Info-Field that allows to specify free test.
 
     Example:
         {
@@ -161,7 +177,13 @@ class TextProperty:
 
     def get_filters(self):
         # icontains is case insensitive
-        return [("icontains", models.CharField(max_length=self.max_length, default=""))]
+        return [
+            {
+                "lookup_exp": "icontains",
+                "label": _("is exactly"),
+                "model_field": models.CharField(max_length=self.max_length, blank=True, null=True),
+            }
+        ]
 
 
 def create_property(property_config):

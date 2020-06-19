@@ -1,7 +1,10 @@
 import logging
+import urllib
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView
 
 from apps.matching.forms import ParticipantFilterForm
@@ -9,11 +12,11 @@ from apps.matching.forms import ParticipantFilterForm
 logger = logging.getLogger(__name__)
 
 
-class ParticipantFilterCreateView(CreateView, LoginRequiredMixin):
+@method_decorator([login_required], name="dispatch")
+class ParticipantFilterCreateView(CreateView):
     """Create a persistent Filter."""
 
-    template_name = "participant/participant_create_form.html"
-    success_url = "/matching/thanks-registration"
+    template_name = "participant/create_info_filter.html"
 
     def get_form_class(self):
         return ParticipantFilterForm[self.kwargs["p_type"]]
@@ -22,4 +25,7 @@ class ParticipantFilterCreateView(CreateView, LoginRequiredMixin):
         info_filter = form.save(commit=False)
         info_filter.created_by = self.request.user
         info_filter.save()
-        return HttpResponseRedirect(self.success_url)
+        print({"p_type": self.kwargs["p_type"]})
+        url = reverse("list_participant_info", kwargs={"p_type": self.kwargs["p_type"]})
+        params = urllib.parse.urlencode(info_filter.as_get_params())
+        return HttpResponseRedirect(url + "?%s" % params)
