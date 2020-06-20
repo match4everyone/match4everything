@@ -2,7 +2,7 @@
 
 Open source project for building a platform that can match anyone.
 
-Originally developed as [match4healthcare](github.com/match4everyone/match4healthcare) and in [production with ~10000 users](match4healthcare.de).
+Originally developed as [match4healthcare](https://github.com/match4everyone/match4healthcare) and in [production with ~10000 users](https://match4healthcare.de).
 
 
 ## Quick install
