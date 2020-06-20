@@ -4,7 +4,7 @@ import time
 
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils.translation import gettext as _
@@ -23,6 +23,7 @@ threshold_to_filter = 50
 
 @login_required
 @staff_member_required
+@permission_required("matching.can_view_access_stats")
 def use_statistics(request):
 
     try:
