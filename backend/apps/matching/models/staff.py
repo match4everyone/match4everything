@@ -7,8 +7,6 @@ class Staff(models.Model):
     """An admin class for organizing the different access classes for maintainers of the platform."""
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    can_validate_participant_a = models.BooleanField(default=True)
-    can_validate_participant_b = models.BooleanField(default=True)
 
     @staticmethod
     def new(mail, pwd):
