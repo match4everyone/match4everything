@@ -49,7 +49,7 @@ class AbstractParticipant(models.Model):
         return self.participant_type
 
     @staticmethod
-    def private_fields():
+    def excluded_fields():
         return ["uuid", "is_approved", "approved_by", "is_activated", "registration_date", "user"]
 
 

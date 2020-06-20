@@ -18,7 +18,7 @@ def make_participant_signup_form(participant_type):
 
         class Meta:
             model = Participant[participant_type]
-            exclude = Participant[participant_type].private_fields()
+            exclude = Participant[participant_type].excluded_fields()
 
         def __init__(self, *args, **kwargs):
             super(ParticipantSignupForm, self).__init__(*args, **kwargs)
