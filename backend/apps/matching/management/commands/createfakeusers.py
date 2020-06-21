@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from tqdm import tqdm
 
 from django.core.management.base import BaseCommand
 import numpy as np
@@ -79,7 +80,7 @@ class Command(BaseCommand):
     def add_fake(self, participant_type, n):
         n_users = User.objects.all().count()
 
-        for i in range(n):
+        for i in tqdm(range(n)):
             m = participant_type + new_mail(i + n_users)
             u = User.new(
                 email=m,
