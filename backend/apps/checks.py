@@ -51,6 +51,7 @@ def does_sendgrid_sandbox_mail_work():
 class Tags(DjangoTags):
     mail_tag = "mails"
     env_tag = "environment"
+    map_tag = "map"
 
 
 @register_check(Tags.env_tag, [Environment.DEVELOPMENT, Environment.PRODUCTION])
@@ -92,19 +93,42 @@ def check_slack_webhook(app_configs=None, **kwargs):
     return errors
 
 
-@register_check(Tags.env_tag, [Environment.DEVELOPMENT, Environment.PRODUCTION], exclude_if_ci=True)
-def check_mapbox_token(app_configs=None, **kwargs):
+@register_check(
+    Tags.mail_tag, [Environment.DEVELOPMENT, Environment.PRODUCTION], exclude_if_ci=True
+)
+def check_map_settings(app_configs=None, **kwargs):
     errors = []
 
-    if settings.MAPBOX_TOKEN is None:
+    if settings.MAPVIEW_BACKEND == "open_street_map":
+        errors.append(
+            Warning(
+                "Usage restricted tile server.",
+                hint="You are using an open street map tile server for viewing the map, which is subject to usage "
+                "restrictions. \nIf you plan to put this system into production, please consider setting up "
+                "your own tile server or using a commercial service, e.g. mapbox."
+                "We readily provide an integration for mapbox, which you can use by setting MAPVIEW_BACKEND='mapbox'"
+                " and adding your API key via 'export MAPBOX_TOKEN=<<yourToken>>'",
+                id="map.W001",
+            )
+        )
+    elif settings.MAPVIEW_BACKEND == "mapbox":
+        if settings.MAPBOX_TOKEN is None:
+            errors.append(
+                Error(
+                    "Mapbox token not found.",
+                    hint=(
+                        "You have to set the Mapbox token in you environment with "
+                        "'export MAPBOX_TOKEN=<<yourToken>>'."
+                    ),
+                    id="map.E001",
+                )
+            )
+    else:
         errors.append(
             Error(
-                "Mapbox token not found.",
-                hint=(
-                    "You have to set the Mapbox token in you environment with "
-                    "'export MAPBOX_TOKEN=<<yourToken>>'."
-                ),
-                id="env.E004",
+                "Map backend not supported.",
+                hint="Please use 'open_street_map' or 'mapbox'.",
+                id="map.E002",
             )
         )
     return errors

@@ -26,6 +26,7 @@
     bURL     : "{% url 'participant_JSON' 'B' %}",
     aListURL  : "{% url 'participant_list' 'A' 'COUNTRYCODE' 'PLZ' 0 %}",
     bListURL   : "{% url 'participant_list' 'B' 'COUNTRYCODE' 'PLZ' 0 %}",
+    tileserver: "{{ tileserver }}",
     mapboxToken       : "{{ mapbox_token }}",
     createPopupTextA :  (countrycode,city, plz, count, url) => `{% blocktrans %}In ${city}, (PLZ ${plz}) there are ${count} A's.\n<a href="${url}" target="_blank">Detail</a>{% endblocktrans %}`,
     createPopupTextB :  (countrycode,city, plz, count, url) => `{% blocktrans %}In ${city}, (PLZ ${plz}) there are ${count} B's.\n<a href="${url}" target="_blank">Detail</a>{% endblocktrans %}`,

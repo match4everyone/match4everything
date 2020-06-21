@@ -128,6 +128,7 @@ STATIC_ROOT = os.path.join(RUN_DIR, "static")
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
+MAPVIEW_BACKEND = os.getenv("MAPVIEW_BACKEND")  # 'mapbox' or 'open_street_map'
 MAPBOX_TOKEN = os.getenv("MAPBOX_TOKEN")
 
 MESSAGE_TAGS = {
