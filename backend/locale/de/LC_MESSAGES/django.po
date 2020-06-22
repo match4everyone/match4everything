@@ -361,7 +361,7 @@ msgstr "Diese Teilnehmer müssen noch freigeschaltet werden."
 
 msgid "These participants are approved, but you can disapprove them any time."
 msgstr ""
-"Diese Teilnehmer sind freigeschaltet, aber Sie können sie jederzeit ablehnen."
+"Diese Teilnehmer sind freigeschaltet, aber Sie können die Freischaltung jederzeit wieder rückgängig machen."
 
 msgid "Staff"
 msgstr "Administrator"
