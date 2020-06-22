@@ -56,7 +56,7 @@ class AbstractParticipant(models.Model):
         # check permission only here in case it was forgotten in the view
         # maybe we can give a nicer message here?
         if not approver.has_perm("matching.perm_approve_%s"):
-            raise ValueError("not allowed")
+            raise ValueError("You currently don't have the permission to approve users.")
 
         approved_participants = Group.objects.get(name="approved_%s" % p_type)
 
