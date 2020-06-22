@@ -357,7 +357,7 @@ msgstr  ""
 "    "
 
 msgid "These participants require approval."
-msgstr "Diese Teilnehmer bedürfen der Freischaltung."
+msgstr "Diese Teilnehmer müssen noch freigeschaltet werden."
 
 msgid "These participants are approved, but you can disapprove them any time."
 msgstr ""
