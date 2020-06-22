@@ -52,6 +52,10 @@ urlpatterns = [
         name="participant_list",
     ),
     ####################################
+    #  Staff
+    ####################################
+    path("profile_staff", views.StaffProfileView.as_view(), name="staff_profile"),
+    ####################################
     #  Authentication
     ####################################
     path(

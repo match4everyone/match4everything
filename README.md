@@ -2,7 +2,7 @@
 
 Open source project for building a platform that can match anyone.
 
-Originally developed as [match4healthcare](github.com/match4everyone/match4healthcare) and in [production with ~10000 users](match4healthcare.de).
+Originally developed as [match4healthcare](https://github.com/match4everyone/match4healthcare) and in [production with ~10000 users](https://match4healthcare.de).
 
 
 ## Quick install
@@ -96,7 +96,9 @@ For executing the tests use `python3 manage.py test`.
 In case you add more required environment variables for productions, please check for their existance in `backend/apps/checks.py`.
 
 
-### Logging
+### Implementation details
+
+#### Logging
 
 Logging should always use the following pattern if possible:
 
@@ -118,6 +120,22 @@ Student has an attribute for the user, user has an attribute for the student, ..
 
 These circular references will prevent the log entry from being written.
 Including request is always safe, because the logging formatter contains dedicated code for request logging.
+
+
+#### Permissions
+
+We use a data migration to add groups and permissions to the database. Groups have permissions assigned and should be used as roles/tags for users, never give permissions directly to users. Permissions can be checked for with the `@permission_required('matching.can_view_access_stats')`. This includes inherited permissions from groups. We currently have the following groups with similarly named permissions:
+```python
+group_list = [
+            "is_a",
+            "is_b",
+            "perm_user_stats",
+            "perm_access_stats",
+            "perm_approve_a",
+            "perm_approve_b",
+]
+```
+Note that django autogenerates lots of permissions, which might fit your requirements, for example `auth.permission.can_change_permission` or `matching.participanta.can_change_participanta`. Have a look in the admin panel if you want to easily check out the generated structure.
 
 
 ## Forks
