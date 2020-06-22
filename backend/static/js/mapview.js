@@ -7,8 +7,8 @@ mapViewPage = {
         bURL : '',
         aListURL  : '',
         bListURL   : '',
-        tileserver: '',
-        mapboxToken: '',
+        tileURL: '',
+        mapAttribution: '',
         isStudent: true,
         isHospital: true,
         createPopupTextA  :  (countrycode, city, plz, count, url) => '',
@@ -65,15 +65,9 @@ mapViewPage = {
             center: [51.13, 10.018],
             zoom: 6
         }
-        let tileLayerURL;
-        if (this.options.tileserver === 'mapbox') {
-            tileLayerURL = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token=' + this.options.mapboxToken
-        } else {
-            tileLayerURL = 'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        }
-
+        let tileLayerURL = this.options.tileURL
         let tileLayerOptions = {
-            attribution: ' <a href="https://www.mapbox.com/about/maps/">© Mapbox</a> | <a href="http://www.openstreetmap.org/copyright">© OpenStreetMap</a> | <a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a> | Icons by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">flaticon.com</a>',
+            attribution:  this.options.mapAttribution + '<a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a> | Icons by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">flaticon.com</a>',
             maxZoom: 18,
             id: 'mapbox/streets-v11',
             tileSize: 512,

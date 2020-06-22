@@ -138,7 +138,8 @@ def check_map_settings(app_configs=None, **kwargs):
         errors.append(
             Error(
                 "Map backend not supported.",
-                hint="Please use 'open_street_map' or 'mapbox'.",
+                hint="Please set the LEAFLET_TILESERVER in the environment to 'open_street_map', 'custom_tile_url'"
+                " or 'mapbox'.",
                 id="map.E002",
             )
         )
