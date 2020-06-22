@@ -84,8 +84,8 @@ def check_slack_webhook(app_configs=None, **kwargs):
                     "This is not necessary, but recommended for production deployment. A key can be generated "
                     "using the documentation at:\n\t"
                     "https://slack.com/intl/en-at/help/articles/115005265063-Incoming-Webhooks-for-Slack\n\t"
-                    "To use Slack Error notifications set the webhook in your environment using "
-                    "'export SLACK_LOG_WEBHOOK=<<webhook URL>>="
+                    "To use Slack Error notifications set the webhook in your environment by "
+                    "setting the environment variable SLACK_LOG_WEBHOOK to your webhook URL."
                 ),
                 id="env.E003",
             )
@@ -104,10 +104,11 @@ def check_map_settings(app_configs=None, **kwargs):
             Warning(
                 "Usage restricted tile server.",
                 hint="You are using an open street map tile server for viewing the map, which is subject to usage "
-                "restrictions. \nIf you plan to put this system into production, please consider setting up "
+                "restrictions (See https://operations.osmfoundation.org/policies/tiles/)."
+                "\nIf you plan to put this system into production, please consider setting up "
                 "your own tile server or using a commercial service, e.g. mapbox."
                 "We readily provide an integration for mapbox, which you can use by setting MAPVIEW_BACKEND='mapbox'"
-                " and adding your API key via 'export MAPBOX_TOKEN=<<yourToken>>'",
+                " and adding your API key by setting the environment variable MAPBOX_TOKEN.",
                 id="map.W001",
             )
         )
@@ -162,8 +163,8 @@ def check_sendgrid_dev(app_configs=None, **kwargs):
                     hint=(
                         "Your are in development mode, and want to use the sendgrid backend. "
                         "We did not find an API key.\n"
-                        "You have to set the Sendgrid API key in you environment with 'export "
-                        "SENDGRID_API_KEY=<<yourKey>>'.\n"
+                        "You have to set the Sendgrid API key in you environment by setting the environment variable "
+                        "SENDGRID_API_KEY.\n"
                         "If you want to use another backend set 'MAIL_RELAY_OPTION' in the development"
                         " settings to another value, e.g. 'file'."
                     ),
@@ -193,8 +194,8 @@ def check_sendgrid_prod(app_configs=None, **kwargs):
             Error(
                 "Sendgrid API key not found.",
                 hint=(
-                    "You have to set the Sendgrid API key in you environment with 'export "
-                    "SENDGRID_API_KEY=<<yourKey>>'."
+                    "You have to set the Sendgrid API key in you environment by setting the environment variable "
+                    "SENDGRID_API_KEY."
                     "If thats "
                 ),
                 id="mails.E001",
