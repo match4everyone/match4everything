@@ -99,7 +99,7 @@ def check_slack_webhook(app_configs=None, **kwargs):
 def check_map_settings(app_configs=None, **kwargs):
     errors = []
 
-    if settings.MAPVIEW_BACKEND == "open_street_map":
+    if settings.LEAFLET_TILESERVER == "open_street_map":
         errors.append(
             Warning(
                 "Usage restricted tile server.",
@@ -107,21 +107,31 @@ def check_map_settings(app_configs=None, **kwargs):
                 "restrictions (See https://operations.osmfoundation.org/policies/tiles/)."
                 "\nIf you plan to put this system into production, please consider setting up "
                 "your own tile server or using a commercial service, e.g. mapbox."
-                "We readily provide an integration for mapbox, which you can use by setting MAPVIEW_BACKEND='mapbox'"
+                "We readily provide an integration for mapbox, which you can use by setting LEAFLET_TILESERVER='mapbox'"
                 " and adding your API key by setting the environment variable MAPBOX_TOKEN.",
                 id="map.W001",
             )
         )
-    elif settings.MAPVIEW_BACKEND == "mapbox":
+    elif settings.LEAFLET_TILESERVER == "mapbox":
         if settings.MAPBOX_TOKEN is None:
             errors.append(
                 Error(
                     "Mapbox token not found.",
                     hint=(
-                        "You have to set the Mapbox token in you environment with "
-                        "'export MAPBOX_TOKEN=<<yourToken>>'."
+                        "You have to set your Mapbox API token by setting the environment variable MAPBOX_TOKEN."
                     ),
                     id="map.E001",
+                )
+            )
+    elif settings.LEAFLET_TILESERVER == "custom_tile_url":
+        if settings.TILE_SERVER_URL is None:
+            errors.append(
+                Error(
+                    "No tile server url found.",
+                    hint="You need to provide a url to a tile server with in the following format:\n"
+                    "\thttps://c.tile.openstreetmap.org/{z}/{x}/{y}.png' and set this using the environment"
+                    " variable TILE_SERVER_URL.",
+                    id="map.E002",
                 )
             )
     else:

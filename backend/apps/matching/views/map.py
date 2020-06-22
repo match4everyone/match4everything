@@ -11,7 +11,7 @@ from apps.matching.src.map import group_by_zip_code
 @gzip_page
 def map_view(request):
     template = loader.get_template("map/map.html")
-    context = {"mapbox_token": settings.MAPBOX_TOKEN, "tileserver": settings.MAPVIEW_BACKEND}
+    context = {"mapbox_token": settings.MAPBOX_TOKEN, "tileserver": settings.LEAFLET_TILESERVER}
     return HttpResponse(template.render(context, request))
 
 
