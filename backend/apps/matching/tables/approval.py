@@ -24,7 +24,7 @@ delete_button = (
     "        </button>"
     "      </div>"
     '      <div class="modal-body">'
-    "        Are you sure you want to delete the user with email {{ record.user__email }}?"
+    "        Are you sure you want to delete the user with email {{record.user}}?"
     "      </div>"
     '      <div class="modal-footer">'
     '        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>'
