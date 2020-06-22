@@ -63,6 +63,8 @@ class ApproveParticipantsView(View):
             p = get_object_or_404(Participant[self.kwargs["p_type"]], uuid=post_params["uuid"])
             p.change_approval(self.request.user)
             name = p.user
-            text = format_lazy(_("You approved the participant with email '{name}'."), name=name)
+            text = format_lazy(
+                _("You changed the approval of the participant with email '{name}'."), name=name
+            )
             messages.add_message(self.request, messages.INFO, text)
         return self.get(request, self.kwargs["p_type"])

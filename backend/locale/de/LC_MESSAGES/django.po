@@ -392,8 +392,8 @@ msgid "You deleted the participant with email '{name}'."
 msgstr "Sie haben den Teilnehmer mit der E-Mail-Adresse '{name}' gelöscht."
 
 #, python-brace-format
-msgid "You approved the participant with email '{name}'."
-msgstr "Sie haben dem Teilnehmer die E-Mail-Adresse '{name}' freigeschaltet."
+msgid "You changed the approval of the participant with email '{name}'."
+msgstr "Sie für den Teilnehmer mit der E-Mail-Adresse '{name}' den Status geändert."
 
 msgid "Access stats"
 msgstr "Website Zugriffe"
