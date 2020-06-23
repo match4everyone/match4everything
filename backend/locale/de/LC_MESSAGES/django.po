@@ -393,7 +393,7 @@ msgstr "Sie haben den Teilnehmer mit der E-Mail-Adresse '{name}' gelöscht."
 
 #, python-brace-format
 msgid "You changed the approval of the participant with email '{name}'."
-msgstr "Sie für den Teilnehmer mit der E-Mail-Adresse '{name}' den Status geändert."
+msgstr "Sie haben für den Teilnehmer mit der E-Mail-Adresse '{name}' den Status geändert."
 
 msgid "Access stats"
 msgstr "Website Zugriffe"
