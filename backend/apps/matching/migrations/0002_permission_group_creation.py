@@ -74,6 +74,8 @@ class Migration(migrations.Migration):
 
         group_is_a, created = Group.objects.get_or_create(name="is_a")
         group_is_b, created = Group.objects.get_or_create(name="is_b")
+        group_is_a_approved, created = Group.objects.get_or_create(name="approved_a")
+        group_is_b_approved, created = Group.objects.get_or_create(name="approved_b")
         group_perm_user_stats, created = Group.objects.get_or_create(name="perm_user_stats")
         group_perm_access_stats, created = Group.objects.get_or_create(name="perm_access_stats")
         group_perm_approve_a, created = Group.objects.get_or_create(name="perm_approve_a")
@@ -97,6 +99,8 @@ class Migration(migrations.Migration):
         group_list = [
             "is_a",
             "is_b",
+            "approved_a",
+            "approved_b",
             "perm_user_stats",
             "perm_access_stats",
             "perm_approve_a",
