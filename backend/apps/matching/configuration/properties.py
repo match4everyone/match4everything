@@ -5,25 +5,37 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 import numpy as np
 
-# default/no default logic
-# every field is not required unless a default value is specified
-# if a default is specified and it is None, blank is allowed.
-
 
 class Property:
 
     properties = None
 
     def __init__(self, label=None, name=None, help_text=None, info_text=None, private=False):
+        """
+        Create a new property of a participant.
+
+        label: Label of the property that is shown in the UI
+        help_text: Help text that should be displayed on hover in the UI
+        info_text: Information that is visible next to the property in the UI
+        private: Is true if only site administrators should be able to view this property
+        """
         if label is None:
-            raise ValueError("Every property needs to have a label.")
+            raise ValueError("You need to set the value for label.")
         self.label = _(label)  # the text that should appear when this property is referenced
         self.name = name if name is not None else label.lower().replace(" ", "_")
+        if "--" in self.name:
+            raise ValueError(
+                f"The field name {self.name} is not allowed, since it contains '--'."
+                " You can explicitly chose a suitable column name by setting the 'name' kwarg."
+            )
+        if len(self.name) > 12:
+            raise ValueError(
+                f"The field name {self.name} is too long. You can use 12 characters at max."
+                f" If you did not set the 'name' before, please set in in the constructor. "
+            )
         self.help_text = help_text
         self.info_text = info_text
         self.private = private
-
-    # we somehow need to define an iterator that can iterate over all properties
 
     def get_model_field_names(self, prefix=None):
         raise NotImplementedError
@@ -35,8 +47,6 @@ class Property:
         raise NotImplementedError
 
     def get_private_fields(self):
-        # alternative: modify properties in constructor of group
-        # private statements propagate to their children regardless of their setting
         if self.private:
             return [True for i in self.get_model_field_names()]
         else:
@@ -45,6 +55,7 @@ class Property:
             else:
                 return [False for i in self.get_model_fields()]
 
+    # use the ideas from playing around with filters in #40
     # def get_filters(self):
     #    raise NotImplementedError
 
@@ -80,7 +91,7 @@ class ConditionalProperty(Property):
         conditional_fields = list(
             chain(*[p.get_model_field_names(model_field_name) for p in self.properties])
         )
-        return [model_field_name + "-condition", *conditional_fields]
+        return [model_field_name + "-cond", *conditional_fields]
 
     def get_model_fields(self):
         conditional_fields = list(chain(*[p.get_model_fields() for p in self.properties]))
@@ -102,7 +113,7 @@ class MultipleChoiceProperty(Property):
     property_type = "multiple_choice"
 
     def __init__(self, choices, **kwargs):
-        # putting a required in this field is a difficult to define behaviour
+        # putting a required in this property is a difficult to define behaviour
         super().__init__(**kwargs)
         self.choices = choices
 

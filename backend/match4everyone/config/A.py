@@ -15,7 +15,7 @@ class A(ParticipantConfig):
 
     properties = [
         m4e.PropertyGroup(
-            name="personal_information",
+            name="pers_info",
             label="Personal information",
             private=True,
             properties=[
@@ -25,11 +25,12 @@ class A(ParticipantConfig):
             ],
         ),
         m4e.PropertyGroup(
-            name="information_about_support",
+            name="info_supp",
             label="Information about your support",
             help_text="We need to know this because it is important for someone.",
             properties=[
                 m4e.MultipleChoiceProperty(
+                    name="pref_area",
                     label="Preferred Area of Help",
                     # no_choice_option=True,
                     # no_choice_label="None, I help where I can",
@@ -45,6 +46,7 @@ class A(ParticipantConfig):
                     ],
                 ),
                 m4e.OrderedSingleChoiceProperty(
+                    name="time_avail",
                     label="Time Availability Per Week",
                     is_required=True,
                     choices=[
@@ -54,18 +56,19 @@ class A(ParticipantConfig):
                         (3, "40h per week"),
                     ],
                 ),
-                m4e.BooleanProperty(label="I need accommodation"),
+                m4e.BooleanProperty(name="accom", label="I need accommodation"),
             ],
         ),
         m4e.PropertyGroup(
-            name="professional_training",
+            name="prof_train",
             label="Professional Training",
             properties=[
                 m4e.ConditionalProperty(
-                    name="medical_student_or_doctor",
+                    name="medstud",
                     label="Medical Student / Doctor",
                     properties=[
                         m4e.OrderedSingleChoiceProperty(
+                            name="experience",
                             label="Experience Level",
                             # no_choice_option=True,
                             # no_choice_label="None chosen",
@@ -78,6 +81,7 @@ class A(ParticipantConfig):
                             default=0,
                         ),
                         m4e.MultipleChoiceProperty(
+                            name="area",
                             label="Area of expertise",
                             info_text="Please enter your previous experience or field of study in the following fields:",
                             choices=[
@@ -90,10 +94,14 @@ class A(ParticipantConfig):
                             ],
                         ),
                         m4e.BooleanProperty(
+                            name="internship",
                             label="Recognition as an internship or other study requirements is important",
                         ),
                         m4e.TextProperty(
-                            label="Other Qualifications", is_required=True, max_length=500
+                            name="other",
+                            label="Other Qualifications",
+                            is_required=True,
+                            max_length=500,
                         ),
                     ],
                 )
