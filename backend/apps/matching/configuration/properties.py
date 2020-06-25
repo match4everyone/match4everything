@@ -1,5 +1,6 @@
 from itertools import chain
 import string
+from typing import List
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -37,21 +38,47 @@ class Property:
         self.info_text = info_text
         self.private = private
 
-    def get_model_field_names(self, prefix=None):
+        # Since properties should be able to generate a hierarchical structure,
+        # they can have their own properties (children) that they act on (e.g. to group them).
+        self.properties = None
+
+    def get_model_field_names(self, prefix=None) -> List[str]:
+        """
+        Return a list of column names that should be used for instantiating a model.
+
+        The prefix should be attached to the front of a name in order to mark the hierarchical structure
+        in a model (i.e. database table) that cannot represent this.
+        """
         raise NotImplementedError
 
-    def get_model_fields(self):
+    def get_model_fields(self) -> List[models.Field]:
+        """
+        Return a list of model fields (from django.models).
+
+        These are used to
+        """
         raise NotImplementedError
 
-    def generate_random_assignment(self, rs=None):
+    def generate_random_assignment(self, rs=None) -> List:
+        """
+        Return a list of values that are valid entries for each model field.
+
+        They are chosen at random.
+        rs: a numpy random seed in case the behaviour should be reproducible. Love science.
+        """
         raise NotImplementedError
 
-    def get_private_fields(self):
+    def get_private_fields(self) -> List[bool]:
+        """
+        Return a list of booleans that indicate the privacy status of a field.
+
+        The value is True, if the field should only be accessible to a site manager/admin.
+        """
         if self.private:
             return [True for i in self.get_model_field_names()]
         else:
-            if hasattr(self, "properties"):
-                return chain(*[p.get_private_fields() for p in self.properties])
+            if self.properties is not None:
+                return list(chain(*[p.get_private_fields() for p in self.properties]))
             else:
                 return [False for i in self.get_model_fields()]
 
@@ -79,10 +106,38 @@ class PropertyGroup(Property):
 
 
 class ConditionalProperty(Property):
+    """
+    A property, that has a BooleanProperty as a condition.
+
+    If this condition is true, this makes a set of other properties editable:
+
+    Example:
+        Only ask for the experience as a medical student,
+        if the participant claims to be a medical student.
+
+    ConditionalProperty(
+        name="medstud",
+        label="Medical Student / Doctor",
+        properties=[
+            m4e.OrderedSingleChoiceProperty(
+                name="experience",
+                label="Experience Level",
+                choices=[
+                    (0, "Preclinical Section"),
+                    (1, "Last Year Student"),
+                    (2, "Assistant Doctor"),
+                    (3, "Consultant"),
+                ],
+                default=0,
+            )])
+    """
+
     property_type = "conditional"
 
     def __init__(self, properties, **kwargs):
-        # putting a required in this field is a difficult to define behaviour on a model basis
+        # If we allowed a 'required' setting for this property,
+        # we would have to insert a custom validator that checks the interdependency between
+        # the  condition and its conditional properties.
         super().__init__(**kwargs)
         self.properties = properties
 
@@ -110,6 +165,25 @@ class ConditionalProperty(Property):
 
 
 class MultipleChoiceProperty(Property):
+    """
+    Choose several of different options, which are unordered.
+
+    Example:
+        A participant can choose several areas of his expertise.
+
+    MultipleChoiceProperty(
+            name="area",
+            label="Areas of expertise",
+            info_text="In which fields to you have previous expertise?",
+            choices=[
+                ("IM", "Internal Medicine"),
+                ("IC", "Intensive Care"),
+                ("EM", "Emergency Medicine"),
+                ("GM", "General Medicine"),
+            ],
+        )
+    """
+
     property_type = "multiple_choice"
 
     def __init__(self, choices, **kwargs):
@@ -133,6 +207,23 @@ class MultipleChoiceProperty(Property):
 
 
 class SingleChoiceProperty(Property):
+    """
+    Choose one option out of many (like a RadioButton).
+
+    Example:
+        A participant lives in a specific type of building.
+
+    SingleChoiceProperty(
+                    name="build_type",
+                    label="Type of object you are living in",
+                    choices=[
+                        ("AP", "Apartment"),
+                        ("HO", "House"),
+                        ("BO", "Boat")
+                    ])
+
+    """
+
     property_type = "single_choice"
 
     def __init__(self, choices, is_required=False, max_length=None, default=None, **kwargs):
@@ -167,6 +258,24 @@ class SingleChoiceProperty(Property):
 
 
 class OrderedSingleChoiceProperty(Property):
+    """
+    A property where only one property can be chosen, but that implies an ordering.
+
+    Example:
+        A participant has a specific amount of time available each week.
+
+    OrderedSingleChoiceProperty(
+                    name="time_avail",
+                    label="Time Availability Per Week",
+                    is_required=True,
+                    choices=[
+                        (0, "10h per week"),
+                        (1, "20h per week"),
+                        (2, "30h per week"),
+                        (3, "40h per week"),
+                    ])
+    """
+
     property_type = "ordered_single_choice"
 
     def __init__(self, choices, is_required=False, default=None, **kwargs):
@@ -195,6 +304,20 @@ class OrderedSingleChoiceProperty(Property):
 
 
 class TextProperty(Property):
+    """
+    A text is describing some more information.
+
+    Example:
+        A participant has some additional requirements that were not asked for in other properties.
+
+    TextProperty(
+            name="other",
+            label="Other Qualifications",
+            is_required=False,
+            max_length=500,
+        )
+    """
+
     property_type = "text"
 
     def __init__(self, is_required=False, max_length=None, default=None, **kwargs):
@@ -222,6 +345,18 @@ class TextProperty(Property):
 
 
 class BooleanProperty(Property):
+    """
+    A boolean value as a property.
+
+    Example:
+        A participant can afford to work without being compensated.
+
+    BooleanProperty(
+            name="compensation",
+            label="I require compensation.",
+        )
+    """
+
     property_name = "boolean"
 
     def __init__(self, is_required=False, default=False, **kwargs):
