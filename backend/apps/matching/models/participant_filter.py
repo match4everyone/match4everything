@@ -8,6 +8,7 @@ import django_filters
 from match4everyone.config.A import A
 
 from .participant_info import ParticipantInfo
+from .user import User
 
 
 class AbstractParticipantInfoFilter(models.Model):
@@ -18,7 +19,7 @@ class AbstractParticipantInfoFilter(models.Model):
 
     @staticmethod
     def excluded_fields():
-        return ["uuid", "registration_date", "participant"]
+        return ["uuid", "registration_date", "created_by"]
 
     class Meta:
         abstract = True
@@ -50,10 +51,12 @@ two instances with the same helper - tha method that is used for forms etc.
 
 class ParticipantInfoFilterA(AbstractParticipantInfoFilter):
     participant_type = "A"
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class ParticipantInfoFilterB(AbstractParticipantInfoFilter):
     participant_type = "B"
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 ParticipantInfoFilter = {"A": ParticipantInfoFilterA, "B": ParticipantInfoFilterB}

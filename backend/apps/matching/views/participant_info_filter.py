@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class ParticipantFilterCreateView(CreateView):
     """Create a persistent Filter."""
 
-    template_name = "participant/create_info_filter.html"
+    template_name = "participant/participant_filter_create.html"
 
     def get_form_class(self):
         return ParticipantFilterForm[self.kwargs["p_type"]]
@@ -25,7 +25,6 @@ class ParticipantFilterCreateView(CreateView):
         info_filter = form.save(commit=False)
         info_filter.created_by = self.request.user
         info_filter.save()
-        print({"p_type": self.kwargs["p_type"]})
         url = reverse("list_participant_info", kwargs={"p_type": self.kwargs["p_type"]})
         params = urllib.parse.urlencode(info_filter.as_get_params())
         return HttpResponseRedirect(url + "?%s" % params)

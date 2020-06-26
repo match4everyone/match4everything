@@ -10,7 +10,7 @@ def make_participant_info_filter_form(participant_type):
     class ParticipantFilterForm(forms.ModelForm):
         class Meta:
             model = ParticipantInfoFilter[participant_type]
-            exclude = ["created_by"]
+            exclude = ParticipantInfoFilter[participant_type].excluded_fields()
 
         def __init__(self, *args, **kwargs):
             super(ParticipantFilterForm, self).__init__(*args, **kwargs)
