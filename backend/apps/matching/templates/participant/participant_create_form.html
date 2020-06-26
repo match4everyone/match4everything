@@ -31,11 +31,38 @@
 
                 <form method="post">
                     {% csrf_token %}
-                    {% crispy form form.helper %}
+                    {% crispy info_form info_form.helper %}
+                    <br>
+                    {{ location_formset.management_form }}
+                    <div id="form_set">
+                        {% for form in location_formset.forms %}
+                            {{ form.non_field_errors }}
+                            {{ form.errors }}
+                            <table class='no_error'>
+                                {{ form }}
+                            </table>
+                        {% endfor %}
+                    </div>
+                    <input type="button" value="+" id="add_more">
+                    <br>
+                    <div id="empty_form" style="display:none">
+                        <table class='no_error'>
+                            {{ location_formset.empty_form }}
+                        </table>
+                    </div>
                 </form>
-
             </div>
         </div>
 
     </div>
+
+    <!-- inspired from : https://simpleit.rocks/python/django/dynamic-add-form-with-add-button-in-django-modelformset-template/ -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $('#add_more').click(function () {
+            var form_idx = $('#id_location-TOTAL_FORMS').val();
+            $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+            $('#id_location-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+        });
+    </script>
 {% endblock %}

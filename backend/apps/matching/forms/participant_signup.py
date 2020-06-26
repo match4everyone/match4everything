@@ -40,9 +40,9 @@ def make_participant_signup_form(participant_type):
                 participant=p, **{k: i for k, i in self.cleaned_data.items() if k != "email"}
             )
             i.save()
-            return p
+            return p, i
 
     return ParticipantSignupForm
 
 
-ParticipantSignupForm = instanciate_for_participants(make_participant_signup_form)
+ParticipantInfoSignupForm = instanciate_for_participants(make_participant_signup_form)
