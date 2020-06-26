@@ -1,19 +1,18 @@
-from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.views.decorators.gzip import gzip_page
 
 from apps.matching.models import ParticipantInfoLocation
 from apps.matching.src.map import group_by_zip_code
+from apps.matching.utils.map import get_tile_info
 
 
 # Should be safe against BREACH attack because we don't have user input in reponse body
 @gzip_page
 def map_view(request):
     template = loader.get_template("map/map.html")
-    context = {
-        "mapbox_token": settings.MAPBOX_TOKEN,
-    }
+    tileserver, attribution = get_tile_info()
+    context = {"tileserver": tileserver, "attribution": attribution}
     return HttpResponse(template.render(context, request))
 
 
