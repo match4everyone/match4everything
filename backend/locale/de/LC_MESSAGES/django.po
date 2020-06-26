@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 2.3.1\n"
 
 msgid "is exactly"
-msgstr ""
+msgstr "is genau"
 
 msgid "is greater than"
 msgstr "ist größer als"
