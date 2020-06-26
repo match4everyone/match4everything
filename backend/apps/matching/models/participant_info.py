@@ -1,13 +1,12 @@
 from datetime import datetime
-import json
 import uuid
 
-from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
+from match4everyone.config.A import A
+
 from .participant import Participant
-from .participant_info_properties import create_property
 
 
 class AbstractParticipantInfo(models.Model):
@@ -22,15 +21,15 @@ class AbstractParticipantInfo(models.Model):
     registration_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
 
     @staticmethod
-    def private_fields():
+    def excluded_fields():
         return ["uuid", "registration_date", "participant"]
 
     @classmethod
     def generate_fake(cls, participant, rs=None):
         """Generate a fake with random data, which is generated according to the p_type of its properties."""
         props = {}
-        for field, generator in cls.random_generators.items():
-            props[field] = generator(rs)
+        for field, value in cls._generate_random_values():
+            props[field] = value
         p = cls.objects.create(participant=participant, **props)
         p.save()
         return p
@@ -45,7 +44,7 @@ class AbstractParticipantInfo(models.Model):
 """
 Unfortunately, primary keys cannot be added programatically,
 which is why we need to explicitly define the classes instead of generating
-two instances with the same helper the is used for forms etc.
+two instances with the same helper - tha method that is used for forms etc.
 """
 
 
@@ -66,7 +65,7 @@ class ParticipantInfoB(AbstractParticipantInfo):
 ParticipantInfo = {"A": ParticipantInfoA, "B": ParticipantInfoB}
 
 
-def add_participant_specific_info(name, config):
+def add_participant_specific_info(name, participant_config):
     """
     Generate Info Table fields from config.
 
@@ -74,21 +73,16 @@ def add_participant_specific_info(name, config):
     respective participant.
     """
     info_cls = ParticipantInfo[name]
+    participant_config = participant_config()
 
-    labels = {c["field_name"]: c["label"] for c in config["info"]}
-    properties = [create_property(c) for c in config["info"]]
+    properties = participant_config.get_model_fields()
 
-    for p in properties:
-        info_cls.add_to_class(p.field_name, p.get_field())
+    for field_name, model_field in properties:
+        info_cls.add_to_class(field_name, model_field)
 
-    info_cls.add_to_class("column_labels", labels)
-    info_cls.add_to_class(
-        "random_generators", {p.field_name: p.get_random_value for p in properties}
-    )
+    info_cls.add_to_class("_generate_random_values", participant_config.generate_random_assignment)
+    info_cls.add_to_class("private_fields", participant_config.get_private_fields)
 
 
-with open(f"{settings.BASE_DIR}/match4everyone/config/participant_info.json") as json_file:
-    info_config = json.load(json_file)
-
-add_participant_specific_info("A", info_config["A"])
-add_participant_specific_info("B", info_config["B"])
+add_participant_specific_info("A", A)
+add_participant_specific_info("B", A)  # add an own file for B as soon as someone writes it

@@ -1,0 +1,94 @@
+{
+  "matching_process": {
+    "permissions": {
+      "public": {
+        "search": [
+          "B"
+        ],
+        "contact": []
+      },
+      "A": {
+        "search": [
+          "B"
+        ],
+        "contact": [
+          {
+            "participant": "B",
+            "max_contacts_per_day": 4
+          }
+        ]
+      },
+      "B": {
+        "search": [],
+        "contact": []
+      }
+    }
+  },
+  "A": {
+    "name": "Crophelper",
+    "needs_approval": false,
+    "location": {
+      "plz": true
+    },
+    "info": [
+      {
+        "field_name": "name",
+        "label": "Name",
+        "property_type": {
+          "name": "text",
+          "max_length": 100,
+          "default": ""
+        }
+      }
+    ]
+  },
+  "B": {
+    "name": "Farm",
+    "needs_approval": false,
+    "location": {
+      "plz": true
+    },
+    "scheduling": {
+      "day": true,
+      "hour": true
+    },
+    "info": [
+      {
+        "field_name": "name_farm",
+        "label": "Name of Farm",
+        "property_type": {
+          "name": "text",
+          "max_length": 100,
+          "default": ""
+        }
+      },
+      {
+        "field_name": "name_contact",
+        "label": "Name of Contact Person",
+        "property_type": {
+          "name": "text",
+          "max_length": 100,
+          "default": ""
+        }
+      },
+      {
+        "field_name": "telephone",
+        "label": "Telephone number",
+        "property_type": {
+          "name": "number",
+          "max_length": 20,
+          "default": ""
+        }
+      },
+      {
+        "field_name": "farm_description",
+        "label": "Short description of the farm",
+        "property_type": {
+          "name": "text",
+          "max_length": 1000,
+          "default": ""
+        }
+      }
+    ]
+  }
+}
