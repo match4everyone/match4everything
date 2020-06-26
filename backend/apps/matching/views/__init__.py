@@ -6,6 +6,7 @@ from .participant_info_filter import ParticipantFilterCreateView  # noqa
 from .participant_profile_edit import ParticipantInfoUpdateView  # noqa
 from .participant_signup import ParticipantSignup  # noqa
 from .profile_dashboard_redirect import ProfileDashboardRedirect  # noqa
+from .staff_approvals import ApproveParticipantsView  # noqa
 from .staff_profile import StaffProfileView  # noqa
 from .user_custom_login import CustomLoginView  # noqa
 from .user_deletion import delete_me, delete_me_ask  # noqa

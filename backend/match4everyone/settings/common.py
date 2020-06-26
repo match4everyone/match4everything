@@ -101,7 +101,7 @@ AUTH_USER_MODEL = "matching.User"
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False  # Until we have proper timezone support, this does not make sense and only generates warnings
 
 # Translations
 # Provide a lists of languages which your site supports.
