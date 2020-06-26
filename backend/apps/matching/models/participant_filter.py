@@ -75,14 +75,17 @@ def add_participant_specific_filters(name, participant_config):
     filter_fields = []
     filter_dict = {}
 
-    for field_name, filters in properties:
-        filter_dict[field_name] = []
-        for f in filters:
-            filter_field_name = field_name + "-" + f["lookup_exp"]
-            filter_cls.add_to_class(filter_field_name, f["model_field"])
-            filter_fields.append(filter_field_name)
+    private_fields = participant_config.get_private_fields()
 
-            filter_dict[field_name].append(f["lookup_exp"])
+    for field_name, filters in properties:
+        if field_name not in private_fields:
+            filter_dict[field_name] = []
+            for f in filters:
+                filter_field_name = field_name + "-" + f["lookup_exp"]
+                filter_cls.add_to_class(filter_field_name, f["model_field"])
+                filter_fields.append(filter_field_name)
+
+                filter_dict[field_name].append(f["lookup_exp"])
 
     filter_cls.add_to_class("filter_fields", filter_fields)
 
