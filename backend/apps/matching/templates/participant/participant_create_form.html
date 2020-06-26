@@ -33,23 +33,47 @@
                     {% csrf_token %}
                     {% crispy info_form info_form.helper %}
                     <br>
+                <hr>
+                    <h5>Your locations</h5>
                     {{ location_formset.management_form }}
                     <div id="form_set">
                         {% for form in location_formset.forms %}
-                            {{ form.non_field_errors }}
-                            {{ form.errors }}
-                            <table class='no_error'>
-                                {{ form }}
-                            </table>
+                            {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                             {{form.non_field_errors }}
+                            </div>
+                            {% endif %}
+                            <div class="form-row">
+                            <div class="form-group col-md-2 mb-0">
+                            {{ form.country_code |as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-6 mb-0">
+                            {{ form.plz |as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-2 mb-0">
+                            {{ form.radius |as_crispy_field }}
+                            </div>
+                            </div>
                         {% endfor %}
                     </div>
-                    <input type="button" value="+" id="add_more">
+                    <input type="button" class="btn btn-sm btn-outline-primary" value="Add another +" id="add_more">
+                    <input type="button" class="btn btn-sm btn-outline-dark" value="Remove last -" id="remove_this">
                     <br>
                     <div id="empty_form" style="display:none">
-                        <table class='no_error'>
-                            {{ location_formset.empty_form }}
-                        </table>
+                            <div class="form-row">
+                            <div class="form-group col-md-2 mb-0">
+                            {{ location_formset.empty_form.country_code |as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-6 mb-0">
+                            {{ location_formset.empty_form.plz |as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-2 mb-0">
+                            {{ location_formset.empty_form.radius |as_crispy_field }}
+                            </div>
+                            </div>
                     </div>
+                <hr>
+                <input type="submit" class="btn btn-success float-right" value="Create a new account">
                 </form>
             </div>
         </div>
@@ -63,6 +87,13 @@
             var form_idx = $('#id_location-TOTAL_FORMS').val();
             $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
             $('#id_location-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+        });
+
+        $('#remove_this').click(function () {
+            var form_idx = $('#id_location-TOTAL_FORMS').val();
+
+            $('#form_set').children().last().remove();
+            $('#id_location-TOTAL_FORMS').val(parseInt(form_idx) - 1);
         });
     </script>
 {% endblock %}
