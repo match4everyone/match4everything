@@ -36,7 +36,7 @@ To run a container in production and in a new environment execute the `deploy.sh
 If you want to deploy manually follow these steps closly:
 
 #### Build the containers
-(Run `export CURRENT_UID=$(id -u):$(id -g)` if you want to run the backend as non-root)
+(Copy `.env.example` to `.env` and adjust variables if you want to run the backend as non-root)
 `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build`
 
 Building containers will run a number of django tasks automatically:
