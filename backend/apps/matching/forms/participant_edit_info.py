@@ -10,7 +10,7 @@ def make_participant_edit_info_form(participant_type):
     class ParticipantEditInfoForm(forms.ModelForm):
         class Meta:
             model = ParticipantInfo[participant_type]
-            exclude = ParticipantInfo[participant_type].private_fields()
+            exclude = ParticipantInfo[participant_type].excluded_fields()
 
         def __init__(self, *args, **kwargs):
             super(ParticipantEditInfoForm, self).__init__(*args, **kwargs)

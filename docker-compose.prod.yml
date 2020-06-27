@@ -4,8 +4,8 @@ services:
 
   backend:
     volumes:
-      - './backend:/match4everyone-backend'
-      - 'frontend-bundles:/frontend/dist'
+      - frontend-bundles:/frontend/dist
+      - backend-run:/backend/run
     ports:
       - '80:8000'
     networks:
@@ -15,15 +15,8 @@ services:
       - database.prod.env
     environment:
      - DJANGO_SETTINGS_MODULE=match4everyone.settings.production
-    user: ${CURRENT_UID:-0}
-    command: |-
-      bash -c '
-        while ! (< /dev/tcp/database/5432) &> /dev/null
-          do echo "Waiting for database..."
-          sleep 1
-        done
-        gunicorn -c /match4everyone-backend/gunicorn.conf.py match4everyone.wsgi
-      '
+     - PRODUCTION=True
+    command: gunicorn -c /backend/gunicorn.conf.py match4everyone.wsgi
     depends_on:
       - database
 
@@ -52,3 +45,4 @@ networks:
 
 volumes:
   frontend-bundles:
+  backend-run:

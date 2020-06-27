@@ -1,14 +1,19 @@
 version: '3.7'
 
-services:
-    backend:
-        env_file:
-            - backend.dev.env
-        volumes:
-            - './frontend:/frontend'
+# This file is automatically merged with docker-compose.yml when docker-compose is called without -f parameter
+# when invoked using docker-compose -f ... -f ... it is not automatically merged into the configuration
+#
+# Options declared here only apply for development mode or when explicitly added to the docker-compose call
 
-    frontend:
-        entrypoint: [ "npm" , "run", "dev" ]
-        volumes:
-            - './frontend/src:/frontend/src'
-            - './frontend/dist:/frontend/dist'
+services:
+  backend:
+    volumes:
+      - './backend:/backend' # bind mount the code directory
+    env_file:
+      - backend.dev.env
+
+  frontend:
+    entrypoint: [ "npm" , "run", "dev" ]
+    volumes:
+        - './frontend/src:/frontend/src'
+        - './frontend/dist:/frontend/dist'

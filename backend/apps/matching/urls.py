@@ -47,6 +47,15 @@ urlpatterns = [
         name="participant_list",
     ),
     ####################################
+    #  Staff
+    ####################################
+    path("profile_staff", views.StaffProfileView.as_view(), name="staff_profile"),
+    path(
+        "staff/<p:p_type>/approve",
+        views.ApproveParticipantsView.as_view(),
+        name="approve_participant",
+    ),
+    ####################################
     #  Authentication
     ####################################
     path(

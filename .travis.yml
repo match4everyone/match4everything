@@ -3,11 +3,10 @@ services:
 
 before_script:
  - ./scripts/write_envs_to_file.sh
- - ./deploy.sh
+ - docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
  - ./scripts/wait_for_backend.sh
  - docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs backend
  - docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs database
-
 
 script:
  - bash scripts/check_website_availability.sh
