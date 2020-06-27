@@ -7,7 +7,8 @@ mapViewPage = {
         bURL : '',
         aListURL  : '',
         bListURL   : '',
-        mapboxToken: '',
+        tileURL: '',
+        mapAttribution: '',
         isStudent: true,
         isHospital: true,
         createPopupTextA  :  (countrycode, city, plz, count, url) => '',
@@ -18,7 +19,7 @@ mapViewPage = {
     },
 
     mapObject: null,
-    
+
     createFacilityIcon: function createFacilityIcon(count) {
         return L.divIcon({
             className: 'leaflet-marker-icon marker-cluster marker-cluster-single leaflet-zoom-animated leaflet-interactive facilityMarker',
@@ -52,8 +53,8 @@ mapViewPage = {
             cssClasses.push(cssClass)
             return new L.DivIcon({
                  html: '<div><span>' + childCount + '</span></div>',
-                 className: cssClasses.join(' '), 
-                 iconSize: new L.Point(40, 40) 
+                 className: cssClasses.join(' '),
+                 iconSize: new L.Point(40, 40)
             })
         })
     },
@@ -64,19 +65,18 @@ mapViewPage = {
             center: [51.13, 10.018],
             zoom: 6
         }
-    
-        let tileLayerURL = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token=' + this.options.mapboxToken
+        let tileLayerURL = this.options.tileURL
         let tileLayerOptions = {
-            attribution: ' <a href="https://www.mapbox.com/about/maps/">© Mapbox</a> | <a href="http://www.openstreetmap.org/copyright">© OpenStreetMap</a> | <a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a> | Icons by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">flaticon.com</a>',
+            attribution:  this.options.mapAttribution + '<a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a> | Icons by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">flaticon.com</a>',
             maxZoom: 18,
             id: 'mapbox/streets-v11',
             tileSize: 512,
             zoomOffset: -1,
             preferCanvas: true,
           }
-    
+
         this.mapObject = L.map(this.options.mapViewContainerId,mapOptions)
-        L.tileLayer(tileLayerURL, tileLayerOptions).addTo(this.mapObject);    
+        L.tileLayer(tileLayerURL, tileLayerOptions).addTo(this.mapObject);
 
         // Enhance MarkerCluster - override getChildCount
         L.MarkerCluster.prototype.getChildCount = function (){
@@ -108,7 +108,7 @@ mapViewPage = {
             iconCreateFunction: this.cssClassedIconCreateFunction('facilityMarker'),
         });
         let facilityMarkers = L.featureGroup.subGroup(facilityClusterMarkerGroup, this.createMapMarkers(facilities,(lat,lon,countrycode,city,plz,count) => {
-            return L.marker([lon,lat],{ 
+            return L.marker([lon,lat],{
                 icon:  this.createFacilityIcon(count),
                 itemCount: count,
            }).bindPopup(this.options.createPopupTextB(countrycode,city, plz, count, this.options.bListURL.replace("COUNTRYCODE",countrycode).replace("PLZ",plz)))
@@ -128,7 +128,7 @@ mapViewPage = {
         supporterMarkers.addTo(this.mapObject)
         facilityClusterMarkerGroup.addTo(this.mapObject)
         facilityMarkers.addTo(this.mapObject)
-        
+
         const countItems = (o) => {
             var count = 0
             for (countryCode in o) {
@@ -150,7 +150,7 @@ mapViewPage = {
 
     createMapMarkers : function addMapMarkers(markers, createMarkerFunction) {
         let markerArray = []
-        
+
         for (countryCode in markers) {
             for (zipCodeKey in markers[countryCode]) {
                 let zipCode = markers[countryCode][zipCodeKey]

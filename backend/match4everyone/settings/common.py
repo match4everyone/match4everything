@@ -100,7 +100,7 @@ AUTH_USER_MODEL = "matching.User"
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False  # Until we have proper timezone support, this does not make sense and only generates warnings
 
 # Translations
 # Provide a lists of languages which your site supports.
@@ -128,7 +128,13 @@ STATIC_ROOT = os.path.join(RUN_DIR, "static")
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
+LEAFLET_TILESERVER = os.getenv(
+    "LEAFLET_TILESERVER"
+)  # 'mapbox', 'open_street_map' or 'custom_tileserver'
 MAPBOX_TOKEN = os.getenv("MAPBOX_TOKEN")
+TILE_SERVER_URL = os.getenv(
+    "TILE_SERVER_URL"
+)  # needs to include coordinates in the form "{x}","{y}","{z}"
 
 MESSAGE_TAGS = {
     messages.DEBUG: "alert-info",

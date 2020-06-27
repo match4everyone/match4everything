@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% blocktrans %}Approvals{% endblocktrans %}
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% load render_table from django_tables2 %}
+
+
+{% block content %}
+<hr>
+
+<div class="container" style="margin-bottom:30px;">
+   {% for message in messages %}
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+{% endfor %}
+    <p style="margin-top:30px;">
+    <h2>
+    {% blocktrans %}
+    Approve
+    {% endblocktrans %}
+    {{ p_type }}
+    </h2>
+    <div class="card border-info" style="margin-top:30px;">
+        <div class="card-header">
+            {% blocktrans %}These participants require approval.{% endblocktrans %}
+        </div>
+        <div class="card-body">
+            {% render_table table_unapproved %}
+        </div>
+    </div>
+    <hr>
+    <div class="card ">
+        <div class="card-header">
+            {% blocktrans %}These participants are approved, but you can disapprove them any time.{% endblocktrans %}
+        </div>
+        <div class="card-body">
+            {% render_table table_approved %}
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
