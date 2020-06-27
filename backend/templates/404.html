@@ -9,6 +9,14 @@
 {% endblock %}
 
 {% block header %}
+    <script type="text/javascript">
+        function decode(a) {
+            return a.replace(/[a-zA-Z]/g, function (c) {
+                return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13)
+                    ? c : c - 26);
+            })
+        };
+    </script>
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
     <style type="text/css">
         .bg-container {
