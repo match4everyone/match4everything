@@ -1,0 +1,13 @@
+version: '3.7'
+
+# This file is automatically merged with docker-compose.yml when docker-compose is called without -f parameter
+# when invoked using docker-compose -f ... -f ... it is not automatically merged into the configuration
+#
+# Options declared here only apply for development mode or when explicitly added to the docker-compose call
+
+services:
+  backend:
+    volumes:
+      - './backend:/backend' # bind mount the code directory
+    env_file:
+      - backend.dev.env

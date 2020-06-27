@@ -7,8 +7,6 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    volumes:
-      - './backend:/match4everyone-backend'
     ports:
       - '8000:8000'
     environment:
