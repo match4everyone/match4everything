@@ -3,6 +3,8 @@ version: '3.7'
 services:
 
   backend:
+    volumes:
+      - backend-run:/match4everyone-backend/run
     ports:
       - '80:8000'
     networks:
@@ -38,5 +40,5 @@ services:
 networks:
  network:
 
-#volumes:
-#  postgres-data:
+volumes:
+  backend-run:
