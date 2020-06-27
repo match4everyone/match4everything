@@ -8,6 +8,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - '8000:8000'
+    tty: true
     environment:
       - DJANGO_SETTINGS_MODULE=match4everyone.settings.development
       - CI
