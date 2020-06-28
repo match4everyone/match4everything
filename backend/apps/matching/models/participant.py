@@ -2,6 +2,7 @@ from datetime import datetime
 import uuid
 
 from django.contrib.auth.models import Group
+from django.core.exceptions import PermissionDenied
 from django.db import models, transaction
 
 from .user import User
@@ -55,8 +56,8 @@ class AbstractParticipant(models.Model):
 
         # check permission only here in case it was forgotten in the view
         # maybe we can give a nicer message here?
-        if not approver.has_perm("matching.perm_approve_%s"):
-            raise ValueError("You currently don't have the permission to approve users.")
+        if not approver.has_perm("matching.perm_approve_%s" % p_type):
+            raise PermissionDenied("You currently don't have the permission to approve users.")
 
         approved_participants = Group.objects.get(name="approved_%s" % p_type)
 
@@ -73,7 +74,7 @@ class AbstractParticipant(models.Model):
         self.save()
 
     @staticmethod
-    def private_fields():
+    def excluded_fields():
         return ["uuid", "is_approved", "approved_by", "is_activated", "registration_date", "user"]
 
 
