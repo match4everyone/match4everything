@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse
 
 from match4everyone.config.A import A
+from match4everyone.config.B import B
 
 from .participant import Participant
 
@@ -85,4 +86,4 @@ def add_participant_specific_info(name, participant_config):
 
 
 add_participant_specific_info("A", A)
-add_participant_specific_info("B", A)  # add an own file for B as soon as someone writes it
+add_participant_specific_info("B", B)
