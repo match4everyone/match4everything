@@ -219,7 +219,7 @@ msgstr ""
 "        Infos editieren"
 
 msgid "Edit Info"
-msgstr ""
+msgstr "Meine Infos editieren"
 
 #, fuzzy
 #| msgid ""
@@ -235,7 +235,7 @@ msgstr ""
 "        Infos editieren"
 
 msgid "View Info"
-msgstr ""
+msgstr "Meine Infos sehen"
 
 msgid "Registration"
 msgstr "Registrierung"
