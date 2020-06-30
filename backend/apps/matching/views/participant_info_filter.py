@@ -25,6 +25,6 @@ class ParticipantFilterCreateView(CreateView):
         info_filter = form.save(commit=False)
         info_filter.created_by = self.request.user
         info_filter.save()
-        url = reverse("list_participant_info", kwargs={"p_type": self.kwargs["p_type"]})
+        url = reverse("api_participant_list", kwargs={"p_type": self.kwargs["p_type"]})
         params = urllib.parse.urlencode(info_filter.as_get_params())
         return HttpResponseRedirect(url + "?%s" % params)

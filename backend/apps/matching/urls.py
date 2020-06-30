@@ -44,8 +44,9 @@ urlpatterns = [
     path(
         "api/<p:p_type>/info/list",
         views.ParticipantInfoListAPI.as_view(),
-        name="list_participant_info",
+        name="api_participant_list",
     ),
+    path("<p:p_type>/", views.FilteredParticipantList.as_view(), name="participant_list",),
     path(
         "<p:p_type>/filter/create",
         views.ParticipantFilterCreateView.as_view(),
