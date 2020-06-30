@@ -445,7 +445,7 @@ msgstr "Diese Seite konnte nicht gefunden werden."
 msgid "Back to homepage"
 msgstr "Zurück zur Homepage."
 
-msgid "Logout"f
+msgid "Logout"
 msgstr "Logout"
 
 msgid "An error occurred."
