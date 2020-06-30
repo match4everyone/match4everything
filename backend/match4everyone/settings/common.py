@@ -158,7 +158,7 @@ LOGGING = {
             "class": "match4everyone.logging.formatters.DjangoRequestJSONFormatter"
         },
         "text": {
-            "class": "match4everyone.logging.formatters.OneLineExceptionFormatter",
+            "class": "match4everyone.logging.formatters.DefaultExceptionFormatter",
             "format": "%(asctime)s: %(name)-12s %(levelname)-8s |%(message)s|",
         },
     },
