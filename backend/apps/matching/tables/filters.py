@@ -7,6 +7,9 @@ from apps.matching.src.dual_factory import instanciate_for_participants
 def make_filter_tables(p_type):
     class FilterTable(tables.Table):
         matches = tables.Column(empty_values=())
+        name = tables.TemplateColumn(
+            template_name="filters/table_name_col.html", extra_context={"p_type": p_type}
+        )
 
         class Meta:
             model = ParticipantInfoFilter[p_type]

@@ -1,3 +1,4 @@
+from .filter_edit import FilterUpdateView  # noqa
 from .filter_list import FilterListView  # noqa
 from .map import map_JSON, map_view  # noqa
 from .participant_change_activation import ChangeActivationAskView, ChangeActivationRedirect  # noqa

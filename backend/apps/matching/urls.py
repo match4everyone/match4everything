@@ -51,6 +51,9 @@ urlpatterns = [
         views.ParticipantFilterCreateView.as_view(),
         name="create_participant_filter",
     ),
+    path(
+        "<p:p_type>/filter/<str:uuid>/edit/", views.FilterUpdateView.as_view(), name="filter-edit",
+    ),
     path("<p:p_type>/filter/list", views.FilterListView.as_view(), name="filter_list",),
     path(
         "<p:p_type>/<countrycode>/<plz>/<float:distance>",

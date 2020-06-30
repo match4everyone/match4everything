@@ -28,7 +28,9 @@ class AbstractParticipantInfoFilter(models.Model):
         ordering = ["-registration_date"]
 
     def get_absolute_url(self):
-        return reverse("info-filter", kwargs={"uuid": self.uuid, "p_type": self.participant_type})
+        return reverse(
+            "info-filter-edit", kwargs={"uuid": self.uuid, "p_type": self.participant_type}
+        )
 
     def get_copy(self):
         """In case a user wants to copy an instance they already created."""
