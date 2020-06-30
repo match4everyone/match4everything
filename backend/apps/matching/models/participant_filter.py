@@ -41,6 +41,9 @@ class AbstractParticipantInfoFilter(models.Model):
                     get_request[fieldname + "__" + lookup_exp] = str(value)
         return get_request
 
+    def matching_infos(self):
+        return ParticipantInfo[self.participant_type].objects.filter(**self.as_get_params()).count()
+
 
 """
 Unfortunately, primary keys cannot be added programatically,
