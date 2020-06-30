@@ -17,15 +17,26 @@ class AbstractParticipantInfoFilter(models.Model):
     uuid = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
     registration_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
 
+    name = models.CharField(max_length=100)
+
     @staticmethod
     def excluded_fields():
         return ["uuid", "registration_date", "created_by"]
 
     class Meta:
         abstract = True
+        ordering = ["-registration_date"]
 
     def get_absolute_url(self):
         return reverse("info-filter", kwargs={"uuid": self.uuid, "p_type": self.participant_type})
+
+    def get_copy(self):
+        """In case a user wants to copy an instance they already created."""
+        copy = self.__class__.objects.get(id=self.id)
+        copy.id = None
+        copy.uuid = None
+        copy.registration_date = None
+        return copy
 
     def as_get_params(self):
         get_request = {}

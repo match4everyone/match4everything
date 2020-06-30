@@ -34,6 +34,15 @@
 
         {% endif %}
 
+        <div class="card" style="margin-bottom:35px;">
+            <div class="card-body">
+
+                <a role="button" class="btn btn-primary btn-lg" href="{% url 'filter_list' 'A' %}">{% blocktrans %}Saved searches for A's{% endblocktrans %}</a>
+                <a role="button" class="btn btn-primary text-white btn-lg" href="{% url 'filter_list' 'B' %}">{% blocktrans %}Saved searches for B's{% endblocktrans %}</a>
+
+            </div>
+        </div>
+
 
 
         <div class="card" style="margin-bottom:35px;">
@@ -69,6 +78,7 @@
             </div>
         </div>
 
+    </div>
     </div>
     <br>
 {% endblock %}

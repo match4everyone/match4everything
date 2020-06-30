@@ -11,7 +11,7 @@ def make_filter_tables(p_type):
         class Meta:
             model = ParticipantInfoFilter[p_type]
             template_name = "django_tables2/bootstrap.html"
-            fields = ["registration_date", "uuid"]
+            fields = ["registration_date", "name"]
 
         def render_matches(self, record):
             return ParticipantInfoFilter[p_type].objects.get(id=record.id).matching_infos()
