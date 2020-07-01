@@ -51,6 +51,7 @@ def does_sendgrid_sandbox_mail_work():
 class Tags(DjangoTags):
     mail_tag = "mails"
     env_tag = "environment"
+    map_tag = "map"
 
 
 @register_check(Tags.env_tag, [Environment.DEVELOPMENT, Environment.PRODUCTION])
@@ -83,8 +84,8 @@ def check_slack_webhook(app_configs=None, **kwargs):
                     "This is not necessary, but recommended for production deployment. A key can be generated "
                     "using the documentation at:\n\t"
                     "https://slack.com/intl/en-at/help/articles/115005265063-Incoming-Webhooks-for-Slack\n\t"
-                    "To use Slack Error notifications set the webhook in your environment using "
-                    "'export SLACK_LOG_WEBHOOK=<<webhook URL>>="
+                    "To use Slack Error notifications set the webhook in your environment by "
+                    "setting the environment variable SLACK_LOG_WEBHOOK to your webhook URL."
                 ),
                 id="env.E003",
             )
@@ -92,19 +93,54 @@ def check_slack_webhook(app_configs=None, **kwargs):
     return errors
 
 
-@register_check(Tags.env_tag, [Environment.DEVELOPMENT, Environment.PRODUCTION], exclude_if_ci=True)
-def check_mapbox_token(app_configs=None, **kwargs):
+@register_check(
+    Tags.mail_tag, [Environment.DEVELOPMENT, Environment.PRODUCTION], exclude_if_ci=True
+)
+def check_map_settings(app_configs=None, **kwargs):
     errors = []
 
-    if settings.MAPBOX_TOKEN is None:
+    if settings.LEAFLET_TILESERVER == "open_street_map":
+        errors.append(
+            Warning(
+                "Usage restricted tile server.",
+                hint="You are using an open street map tile server for viewing the map, which is subject to usage "
+                "restrictions (See https://operations.osmfoundation.org/policies/tiles/)."
+                "\nIf you plan to put this system into production, please consider setting up "
+                "your own tile server or using a commercial service, e.g. mapbox."
+                "We readily provide an integration for mapbox, which you can use by setting LEAFLET_TILESERVER='mapbox'"
+                " and adding your API key by setting the environment variable MAPBOX_TOKEN.",
+                id="map.W001",
+            )
+        )
+    elif settings.LEAFLET_TILESERVER == "mapbox":
+        if settings.MAPBOX_TOKEN is None:
+            errors.append(
+                Error(
+                    "Mapbox token not found.",
+                    hint=(
+                        "You have to set your Mapbox API token by setting the environment variable MAPBOX_TOKEN."
+                    ),
+                    id="map.E001",
+                )
+            )
+    elif settings.LEAFLET_TILESERVER == "custom_tile_url":
+        if settings.TILE_SERVER_URL is None:
+            errors.append(
+                Error(
+                    "No tile server url found.",
+                    hint="You need to provide a url to a tile server with in the following format:\n"
+                    "\thttps://c.tile.openstreetmap.org/{z}/{x}/{y}.png' and set this using the environment"
+                    " variable TILE_SERVER_URL.",
+                    id="map.E002",
+                )
+            )
+    else:
         errors.append(
             Error(
-                "Mapbox token not found.",
-                hint=(
-                    "You have to set the Mapbox token in you environment with "
-                    "'export MAPBOX_TOKEN=<<yourToken>>'."
-                ),
-                id="env.E004",
+                "Map backend not supported.",
+                hint="Please set the LEAFLET_TILESERVER in the environment to 'open_street_map', 'custom_tile_url'"
+                " or 'mapbox'.",
+                id="map.E002",
             )
         )
     return errors
@@ -138,8 +174,8 @@ def check_sendgrid_dev(app_configs=None, **kwargs):
                     hint=(
                         "Your are in development mode, and want to use the sendgrid backend. "
                         "We did not find an API key.\n"
-                        "You have to set the Sendgrid API key in you environment with 'export "
-                        "SENDGRID_API_KEY=<<yourKey>>'.\n"
+                        "You have to set the Sendgrid API key in you environment by setting the environment variable "
+                        "SENDGRID_API_KEY.\n"
                         "If you want to use another backend set 'MAIL_RELAY_OPTION' in the development"
                         " settings to another value, e.g. 'file'."
                     ),
@@ -169,8 +205,8 @@ def check_sendgrid_prod(app_configs=None, **kwargs):
             Error(
                 "Sendgrid API key not found.",
                 hint=(
-                    "You have to set the Sendgrid API key in you environment with 'export "
-                    "SENDGRID_API_KEY=<<yourKey>>'."
+                    "You have to set the Sendgrid API key in you environment by setting the environment variable "
+                    "SENDGRID_API_KEY."
                     "If thats "
                 ),
                 id="mails.E001",
