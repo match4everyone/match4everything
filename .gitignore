@@ -2,6 +2,11 @@
 .vscode
 .venv
 
+backend/apps/migrations/*
+!backend/apps/migrations/__init__.py
+!backend/apps/migrations/0002_permission_group_creation.py
+
+
 # Production environment variables
 .env
 
