@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-16 21:19+0000\n"
-"PO-Revision-Date: 2020-05-30 15:27+0200\n"
+"POT-Creation-Date: 2020-06-30 11:18+0200\n"
+"PO-Revision-Date: 2020-06-21 09:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -218,6 +218,20 @@ msgstr ""
 "\n"
 "        Infos editieren"
 
+msgid "Edit Info"
+msgstr "Meine Infos editieren"
+
+msgid ""
+"\n"
+"        View Info\n"
+"    "
+msgstr ""
+"\n"
+"        Infos editieren"
+
+msgid "View Info"
+msgstr "Meine Infos sehen"
+
 msgid "Registration"
 msgstr "Registrierung"
 
@@ -344,6 +358,26 @@ msgid "Please validate your email by clicking this:"
 msgstr ""
 "Bitte validieren Sie Ihre E-Mail indem Sie den folgenden Link anklicken:"
 
+msgid "Approvals"
+msgstr "Freischalten"
+
+msgid ""
+"\n"
+"    Approve\n"
+"    "
+msgstr ""
+"\n"
+"    Freischalten\n"
+"    "
+
+msgid "These participants require approval."
+msgstr "Diese Teilnehmer müssen noch freigeschaltet werden."
+
+msgid "These participants are approved, but you can disapprove them any time."
+msgstr ""
+"Diese Teilnehmer sind freigeschaltet, aber Sie können die Freischaltung "
+"jederzeit wieder rückgängig machen."
+
 msgid "Staff"
 msgstr "Administrator"
 
@@ -352,6 +386,9 @@ msgstr "Log out"
 
 msgid "Functions for staff members"
 msgstr "Funktionen für Administratoren"
+
+msgid "Approve"
+msgstr "Freischalten"
 
 msgid "Do something"
 msgstr "Mach etwas"
@@ -364,6 +401,16 @@ msgstr "Sie haben Ihr Profil aktiviert."
 
 msgid "Successfully updated info."
 msgstr "Sie haben Ihre Infos aktualisiert."
+
+#, python-brace-format
+msgid "You deleted the participant with email '{name}'."
+msgstr "Sie haben den Teilnehmer mit der E-Mail-Adresse '{name}' gelöscht."
+
+#, python-brace-format
+msgid "You changed the approval of the participant with email '{name}'."
+msgstr ""
+"Sie haben für den Teilnehmer mit der E-Mail-Adresse '{name}' den Status "
+"geändert."
 
 msgid "Access stats"
 msgstr "Website Zugriffe"
