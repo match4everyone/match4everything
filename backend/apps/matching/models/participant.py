@@ -1,9 +1,10 @@
 from datetime import datetime
 import uuid
 
-from django.db import models
+from django.contrib.auth.models import Group
+from django.core.exceptions import PermissionDenied
+from django.db import models, transaction
 
-from .staff import Staff
 from .user import User
 
 
@@ -25,9 +26,10 @@ class AbstractParticipant(models.Model):
     # wants to take part in the matching process
     is_activated = models.BooleanField(default=True)
 
-    # valiFdation of account by staff
+    # validation of account by staff
     is_approved = models.BooleanField(default=False)
-    approved_by = models.ForeignKey(Staff, on_delete=models.SET_NULL, null=True)
+    approved_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    approval_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -48,8 +50,31 @@ class AbstractParticipant(models.Model):
     def p_type(self):
         return self.participant_type
 
+    @transaction.atomic
+    def change_approval(self, approver):
+        p_type = self.p_type().lower()
+
+        # check permission only here in case it was forgotten in the view
+        # maybe we can give a nicer message here?
+        if not approver.has_perm("matching.perm_approve_%s" % p_type):
+            raise PermissionDenied("You currently don't have the permission to approve users.")
+
+        approved_participants = Group.objects.get(name="approved_%s" % p_type)
+
+        if not self.is_approved:
+            self.is_approved = True
+            self.approval_date = datetime.now()
+            self.approved_by = approver
+            approved_participants.user_set.add(self.user)
+        else:
+            self.is_approved = False
+            self.approval_date = None
+            self.approved_by = None
+            approved_participants.user_set.remove(self.user)
+        self.save()
+
     @staticmethod
-    def private_fields():
+    def excluded_fields():
         return ["uuid", "is_approved", "approved_by", "is_activated", "registration_date", "user"]
 
 
