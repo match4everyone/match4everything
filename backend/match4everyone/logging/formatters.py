@@ -18,12 +18,23 @@ class OneLineExceptionFormatter(logging.Formatter):
     def formatException(self, exc_info):
         """Format an exception so that it prints on a single line."""
         result = super(OneLineExceptionFormatter, self).formatException(exc_info)
-        return repr(result)  # or format into one line however you want to
+        return result  # or format into one line however you want to
 
     def format(self, record):  # noqa: A003
         s = super(OneLineExceptionFormatter, self).format(record)
         if record.exc_text:
-            s = s.replace("\n", "") + "|"
+            return s.replace("\n", "") + "|"
+        return s
+
+
+class DefaultExceptionFormatter(logging.Formatter):
+    def formatException(self, exc_info):
+        """Format exceptions as is."""
+        result = super(DefaultExceptionFormatter, self).formatException(exc_info)
+        return result  # or format into one line however you want to
+
+    def format(self, record):  # noqa: A003
+        s = super(DefaultExceptionFormatter, self).format(record)
         return s
 
 
