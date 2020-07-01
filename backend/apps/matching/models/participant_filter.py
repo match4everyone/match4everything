@@ -57,6 +57,29 @@ class AbstractParticipantInfoFilter(models.Model):
     def matching_infos(self):
         return ParticipantInfo[self.participant_type].objects.filter(**self.as_get_params()).count()
 
+    @classmethod
+    def create_from_filterset(cls, filter_kwargs, created_by):
+        filter_kwargs_update = {}
+        import django.forms as forms
+
+        class Filter(forms.ModelForm):
+            class Meta:
+                model = ParticipantInfoFilter[cls.participant_type]
+                exclude = ParticipantInfoFilter[cls.participant_type].excluded_fields() + ["name"]
+
+        for name, value in filter_kwargs["data"].items():
+            if "__" not in name:
+                name = name + "-" + "exact"
+            else:
+                name = name.replace("__", "-")
+
+            filter_kwargs_update[name] = value
+
+        f = Filter(filter_kwargs_update).save(commit=False)
+        f.created_by = created_by
+        return f
+        # return ParticipantInfo[cls.participant_type].objects.create(**filter_kwargs_update)
+
 
 """
 Unfortunately, primary keys cannot be added programatically,

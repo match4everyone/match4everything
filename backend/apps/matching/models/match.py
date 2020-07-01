@@ -25,7 +25,7 @@ class Match(models.Model):
     participantA = models.ForeignKey(ParticipantA, on_delete=models.CASCADE)
     participantB = models.ForeignKey(ParticipantB, on_delete=models.CASCADE)
 
-    initiator = models.CharField(choices=["A", "B"], max_length=1)
+    initiator = models.CharField(choices=[("A", "A"), ("B", "B")], max_length=1)
     match_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
 
     state = models.IntegerField(choices=MATCH_STATE, default=CONTACTED)
@@ -37,8 +37,7 @@ class Match(models.Model):
         ParticipantInfoFilterB, on_delete=models.SET(None), null=True, blank=True
     )
 
-    class Meta:
-        unique_together = [("participantA", "participantB")]
+    contact_text = models.CharField(max_length=500, blank=True)
 
     def contacted_via_filter(self):
         if self.filterA is None:

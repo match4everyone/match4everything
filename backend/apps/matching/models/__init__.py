@@ -1,3 +1,4 @@
+from .match import Match  # noqa
 from .participant import Participant  # noqa
 from .participant_filter import ParticipantInfoFilter, ParticipantInfoFilterSet  # noqa
 from .participant_info import ParticipantInfo  # noqa
