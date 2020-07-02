@@ -26,7 +26,7 @@ failed=False
 URL=localhost:8000
 
 # Log file location
-ERR_LOG_PATH=./run/match4everyone.json.error.log
+ERR_LOG_PATH=./run/log/match4everyone.json.error.log
 
 # docker-compose to run command in backend
 DC_EXEC="docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec backend bash -c "
