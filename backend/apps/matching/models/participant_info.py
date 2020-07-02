@@ -50,7 +50,7 @@ class AbstractParticipantInfo(models.Model):
 """
 Unfortunately, primary keys cannot be added programatically,
 which is why we need to explicitly define the classes instead of generating
-two instances with the same helper - tha method that is used for forms etc.
+two instances with the same helper - the method that is used for forms etc.
 """
 
 
