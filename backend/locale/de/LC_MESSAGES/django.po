@@ -218,6 +218,20 @@ msgstr ""
 "\n"
 "        Infos editieren"
 
+msgid "Edit Info"
+msgstr "Meine Infos editieren"
+
+msgid ""
+"\n"
+"        View Info\n"
+"    "
+msgstr ""
+"\n"
+"        Infos editieren"
+
+msgid "View Info"
+msgstr "Meine Infos sehen"
+
 msgid "Registration"
 msgstr "Registrierung"
 

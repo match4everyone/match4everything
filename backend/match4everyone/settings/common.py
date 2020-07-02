@@ -26,6 +26,7 @@ LOG_DIR = os.path.join(RUN_DIR, "log")
 # Application definition
 
 INSTALLED_APPS = [
+    "djangocms_admin_style",  # for the admin skin. You **must** add 'djangocms_admin_style' in the list **before** 'django.contrib.admin'.
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -38,9 +39,25 @@ INSTALLED_APPS = [
     "django_tables2",
     "apps.matching.apps.MatchingConfig",
     "apps.use_statistics.apps.UseStatisticsConfig",
+    "django.contrib.sites",
+    "cms",  # django CMS itself
+    "treebeard",  # utilities for implementing a tree using materialised paths
+    "menus",  # helper for model independent hierarchical website navigation
+    "sekizai",  # for javascript and css management
+    "filer",
+    "easy_thumbnails",
+    "mptt",
+    "djangocms_text_ckeditor",
+    "djangocms_link",
+    "djangocms_file",
+    "djangocms_picture",
+    "djangocms_video",
+    "djangocms_snippet",
+    "djangocms_style",
 ]
 
 MIDDLEWARE = [
+    # 'cms.middleware.utils.ApphookReloadMiddleware' TODO: Not working right now "ModuleNotFoundError: No module named 'cms.middleware.utils.ApphookReloadMiddlewaredjango'; 'cms.middleware.utils' is not a package"
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -49,6 +66,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "cms.middleware.user.CurrentUserMiddleware",
+    "cms.middleware.page.CurrentPageMiddleware",
+    "cms.middleware.toolbar.ToolbarMiddleware",
+    "cms.middleware.language.LanguageCookieMiddleware",
 ]
 
 ROOT_URLCONF = "match4everyone.urls"
@@ -64,6 +85,9 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "sekizai.context_processors.sekizai",
+                "cms.context_processors.cms_settings",
+                "django.template.context_processors.i18n",
             ],
         },
     },
@@ -87,6 +111,23 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
+
+# django-cms settings
+SITE_ID = 1
+X_FRAME_OPTIONS = "SAMEORIGIN"
+CMS_TEMPLATES = [
+    ("home.html", "Home page template"),
+]
+
+# django-filler config
+THUMBNAIL_HIGH_RESOLUTION = True
+
+THUMBNAIL_PROCESSORS = (
+    "easy_thumbnails.processors.colorspace",
+    "easy_thumbnails.processors.autocrop",
+    "filer.thumbnail_processors.scale_and_crop_with_subject_location",
+    "easy_thumbnails.processors.filters",
+)
 
 
 # Internationalization
@@ -123,6 +164,7 @@ STATIC_URL = "/static/"
 MEDIA_ROOT = os.path.join(RUN_DIR, "media")
 
 MEDIA_URL = "/media/"
+# TODO: Serve media files properly (http://docs.django-cms.org/en/latest/how_to/install.html#media-and-static-file-handling)
 
 STATIC_ROOT = os.path.join(RUN_DIR, "static")
 
@@ -158,7 +200,7 @@ LOGGING = {
             "class": "match4everyone.logging.formatters.DjangoRequestJSONFormatter"
         },
         "text": {
-            "class": "match4everyone.logging.formatters.OneLineExceptionFormatter",
+            "class": "match4everyone.logging.formatters.DefaultExceptionFormatter",
             "format": "%(asctime)s: %(name)-12s %(levelname)-8s |%(message)s|",
         },
     },
