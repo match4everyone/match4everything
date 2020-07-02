@@ -28,6 +28,12 @@ Migrations are automatically executed when the container starts.
 After changes to the Docker configuration, you have to restart and build the containers with `docker-compose up --build`.
 
 ### Production
+
+## Reverse Proxy
+We recommend running the gunicorn server behind a reverse proxy to provide ssl and possibly run multiple services on one server.
+A sample nginx configuration can be found at ./tools/nginx-sample-site.
+
+## Setup
 Copy `backend.prod.env.example` to `backend.prod.env` and set variables as documented in the example file for Django
 Copy `database.prod.env.example` to `database.prod.env` and set variables as documented in the example file for postgres on your host machine.
 
