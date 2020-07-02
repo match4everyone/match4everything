@@ -31,7 +31,7 @@ After changes to the Docker configuration, you have to restart and build the con
 Copy `backend.prod.env.example` to `backend.prod.env` and set variables as documented in the example file for Django
 Copy `database.prod.env.example` to `database.prod.env` and set variables as documented in the example file for postgres on your host machine.
 
-To run a container in production and in a new environment execute the `deploy.sh` script which builds the containers, runs all configurations and starts the web service.
+To run a container in production and in a new environment execute the `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build` script which builds the containers, runs all configurations and starts the web service.
 
 If you want to deploy manually follow these steps closly:
 
