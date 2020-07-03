@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% load cms_tags sekizai_tags %}
 
 <!doctype html>
 <html lang="de">
@@ -47,11 +48,16 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <title>{% block title %} {% endblock %} | match4everyone </title>
+    <!-- TODO: Should be <title>{% page_attribute "page_title" %}</title>  (http://docs.django-cms.org/en/latest/how_to/install.html) -->
+    {% render_block "css" %}
     {% block header %}
     {% endblock %}
 </head>
 
 <body>
+{% cms_toolbar %}
+{% placeholder "content" %}
+{% render_block "js" %}
 <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white">
     <div class="container"><a class="navbar-brand" href="/"><img src="{% static 'img/match4everyone.svg' %}" width="199px"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
