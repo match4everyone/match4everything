@@ -9,6 +9,7 @@ services:
   backend:
     volumes:
       - './backend:/backend' # bind mount the code directory
+      - './frontend/dist:/frontend/dist'
     env_file:
       - backend.dev.env
 
