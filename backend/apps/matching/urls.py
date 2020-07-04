@@ -14,12 +14,17 @@ urlpatterns = [
     #  User signup/editing/dashboards
     ####################################
     path("<p:p_type>/signup", views.ParticipantSignup.as_view(), name="signup"),
-    path("profile_redirect", views.ProfileDashboardRedirect.as_view(), name="profile_redirect"),
+    path("profile_redirect", views.ProfileDashboardRedirect.as_view(), name="profile_redirect",),
     path("<p:p_type>/profile", views.ParticipantDashboard.as_view(), name="profile"),
     path(
         "<p:p_type>/info/<str:uuid>/edit/",
         views.ParticipantInfoUpdateView.as_view(),
         name="info-edit",
+    ),
+    path(
+        "<p:p_type>/info/<str:uuid>/view/",
+        views.ParticipantInfoViewView.as_view(),
+        name="info-view",
     ),
     path(
         "change_activation",
@@ -97,7 +102,8 @@ urlpatterns = [
     path(
         "password_reset/",
         auth_views.PasswordResetView.as_view(
-            template_name="registration/password_reset_form_.html", from_email=settings.NOREPLY_MAIL
+            template_name="registration/password_reset_form_.html",
+            from_email=settings.NOREPLY_MAIL,
         ),
         name="password_reset_form",
     ),
@@ -137,5 +143,4 @@ urlpatterns = [
     path("", include("django.contrib.auth.urls")),
     # language
     path("i18n/", include("django.conf.urls.i18n")),
-    path("filter_poc/", TemplateView.as_view(template_name="filter_poc.html"), name="filter_poc"),
 ]

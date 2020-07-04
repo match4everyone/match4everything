@@ -59,18 +59,22 @@ class AbstractParticipantInfoLocation(models.Model):
         pil.save()
         return pil
 
+    @classmethod
+    def excluded_fields(cls):
+        return ["participant_info", "registration_date", "uuid"]
+
 
 class ParticipantInfoLocationA(AbstractParticipantInfoLocation):
     participant_type = "A"
-    participant_info = models.OneToOneField(
-        ParticipantInfo["A"], on_delete=models.CASCADE, primary_key=True, related_name="location"
+    participant_info = models.ForeignKey(
+        ParticipantInfo["A"], on_delete=models.CASCADE, related_name="location"
     )
 
 
 class ParticipantInfoLocationB(AbstractParticipantInfoLocation):
     participant_type = "B"
-    participant_info = models.OneToOneField(
-        ParticipantInfo["B"], on_delete=models.CASCADE, primary_key=True, related_name="location"
+    participant_info = models.ForeignKey(
+        ParticipantInfo["B"], on_delete=models.CASCADE, related_name="location"
     )
 
 
