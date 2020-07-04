@@ -16,5 +16,4 @@ services:
   frontend:
     entrypoint: [ "npm" , "run", "dev" ]
     volumes:
-        - './frontend/src:/frontend/src'
-        - './frontend/dist:/frontend/dist'
+        - './frontend:/frontend/'
