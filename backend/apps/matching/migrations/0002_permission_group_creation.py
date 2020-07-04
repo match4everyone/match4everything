@@ -90,7 +90,9 @@ class Migration(migrations.Migration):
         can_view_user_stats = Permission.objects.get(codename=NewPermissions.can_view_user_stats)
         group_perm_user_stats.permissions.add(can_view_user_stats)
 
-        can_view_access_stats = Permission.objects.get(codename=NewPermissions.can_view_access_stats)
+        can_view_access_stats = Permission.objects.get(
+            codename=NewPermissions.can_view_access_stats
+        )
         group_perm_access_stats.permissions.add(can_view_access_stats)
 
     def delete_groups(apps, schema_editor):
@@ -137,11 +139,13 @@ class Migration(migrations.Migration):
         pass
 
     dependencies = [
-        ('matching', '0001_initial'),
+        ("matching", "0001_initial"),
     ]
 
     operations = [
         migrations.RunPython(create_permissions, reverse_code=delete_permissions),
         migrations.RunPython(create_groups, reverse_code=delete_groups),
-        migrations.RunPython(update_existing_users_with_group, reverse_code=remove_groups_from_users),
+        migrations.RunPython(
+            update_existing_users_with_group, reverse_code=remove_groups_from_users
+        ),
     ]

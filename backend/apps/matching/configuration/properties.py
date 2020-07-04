@@ -82,9 +82,9 @@ class Property:
             else:
                 return [False for i in self.get_model_fields()]
 
-    # use the ideas from playing around with filters in #40
-    # def get_filters(self):
-    #    raise NotImplementedError
+    def get_filters(self) -> List:
+        """Return a list of model fields that represent values that filters can take on."""
+        return NotImplementedError
 
 
 class PropertyGroup(Property):
@@ -103,6 +103,9 @@ class PropertyGroup(Property):
 
     def generate_random_assignment(self, rs=None):
         return list(chain(*[p.generate_random_assignment(rs) for p in self.properties]))
+
+    def get_filters(self) -> List:
+        return list(chain(*[p.get_filters() for p in self.properties]))
 
 
 class ConditionalProperty(Property):
@@ -163,6 +166,18 @@ class ConditionalProperty(Property):
             *chain(*[p.generate_random_assignment(rs) for p in self.properties]),
         ]
 
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "exact",
+                    "label": _("is exactly"),
+                    "model_field": models.NullBooleanField(blank=True, null=True),
+                }
+            ],
+            *chain(*[[] for p in self.properties]),  # no filters on those properties for now
+        ]
+
 
 class MultipleChoiceProperty(Property):
     """
@@ -204,6 +219,18 @@ class MultipleChoiceProperty(Property):
             rs = np.random
 
         return [rs.choice([True, False]) for i in range(len(self.choices))]
+
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "exact",
+                    "label": _("is exactly"),
+                    "model_field": models.NullBooleanField(blank=True, null=True),
+                }
+            ]
+            for i in range(len(self.choices))
+        ]
 
 
 class SingleChoiceProperty(Property):
@@ -256,6 +283,24 @@ class SingleChoiceProperty(Property):
             rs = np.random
         return [rs.choice([code for code, label in self.choices])]
 
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "exact",
+                    "label": "is exactly",
+                    "choices": [(None, "--")] + self.choices,
+                    "max_length": self.max_length,
+                    "model_field": models.CharField(
+                        blank=True,
+                        null=True,
+                        choices=[(None, "--")] + self.choices,
+                        max_length=self.max_length,
+                    ),
+                }
+            ]
+        ]
+
 
 class OrderedSingleChoiceProperty(Property):
     """
@@ -302,6 +347,28 @@ class OrderedSingleChoiceProperty(Property):
             rs = np.random
         return [rs.choice([code for code, label in self.choices])]
 
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "gte",
+                    "label": _("is greater than"),
+                    "choices": [(None, "No choice")] + self.choices,
+                    "model_field": models.IntegerField(
+                        null=True, choices=[(None, "No choice")] + self.choices, blank=True
+                    ),
+                },
+                {
+                    "lookup_exp": "lte",
+                    "label": _("is smaller than"),
+                    "choices": [(None, "No choice")] + self.choices,
+                    "model_field": models.IntegerField(
+                        null=True, choices=[(None, "No choice")] + self.choices, blank=True
+                    ),
+                },
+            ]
+        ]
+
 
 class TextProperty(Property):
     """
@@ -343,6 +410,19 @@ class TextProperty(Property):
         code = rs.choice([l for l in string.ascii_uppercase], self.max_length)
         return ["".join(code)]
 
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "icontains",
+                    "label": _("contains"),
+                    "model_field": models.CharField(
+                        max_length=self.max_length, blank=True, null=True
+                    ),
+                }
+            ]
+        ]
+
 
 class BooleanProperty(Property):
     """
@@ -377,3 +457,14 @@ class BooleanProperty(Property):
         if rs is None:
             rs = np.random
         return [rs.choice([True, False])]
+
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "exact",
+                    "label": _("is exactly"),
+                    "model_field": models.NullBooleanField(blank=True, null=True),
+                }
+            ]
+        ]

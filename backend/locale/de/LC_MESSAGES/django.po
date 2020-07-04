@@ -18,6 +18,18 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3.1\n"
 
+msgid "is exactly"
+msgstr "is genau"
+
+msgid "is greater than"
+msgstr "ist größer als"
+
+msgid "is smaller than"
+msgstr "ist kleiner als"
+
+msgid "contains"
+msgstr "enthält"
+
 msgid "E-Mail"
 msgstr "E-Mail"
 
@@ -210,6 +222,22 @@ msgid ""
 msgstr ""
 "\n"
 "                    Meine Infos editieren"
+
+msgid ""
+"\n"
+"        Filter\n"
+"    "
+msgstr ""
+"\n"
+"        Filter"
+
+msgid ""
+"\n"
+"        Create a new search\n"
+"        "
+msgstr ""
+"\n"
+"      Erstelle eine neue Suche"
 
 msgid ""
 "\n"

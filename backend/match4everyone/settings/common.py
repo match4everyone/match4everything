@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "crispy_forms",
     "django_tables2",
+    "rest_framework",
     "apps.matching.apps.MatchingConfig",
     "apps.use_statistics.apps.UseStatisticsConfig",
     "webpack_loader",
@@ -147,6 +148,8 @@ MESSAGE_TAGS = {
     messages.WARNING: "alert-warning",
     messages.ERROR: "alert-danger",
 }
+
+REST_FRAMEWORK = {"DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination"}
 
 
 # Configure Logging for all environments

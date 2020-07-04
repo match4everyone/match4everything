@@ -39,8 +39,18 @@ urlpatterns = [
     path("map", views.map_view, name="map"),
     path("<p:p_type>/participant_JSON", views.map_JSON, name="participant_JSON"),
     ####################################
-    #  List view
+    #  List view / filtering
     ####################################
+    path(
+        "api/<p:p_type>/info/list",
+        views.ParticipantInfoListAPI.as_view(),
+        name="list_participant_info",
+    ),
+    path(
+        "<p:p_type>/filter/create",
+        views.ParticipantFilterCreateView.as_view(),
+        name="create_participant_filter",
+    ),
     path(
         "<p:p_type>/<countrycode>/<plz>/<float:distance>",
         TemplateView.as_view(template_name="messages/not_implemented.html"),
