@@ -4,7 +4,6 @@ services:
 
   backend:
     volumes:
-      - frontend-bundles:/frontend/dist
       - backend-logs:/backend/run/log
 #    ports:
 #      Port definitions from the .dev file will be carried on to prod
@@ -21,10 +20,6 @@ services:
     command: gunicorn -c /backend/gunicorn.conf.py match4everyone.wsgi
     depends_on:
       - database
-
-  frontend:
-    volumes:
-      - 'frontend-bundles:/frontend/dist'
 
   database:
     build:
@@ -46,7 +41,6 @@ networks:
  network:
 
 volumes:
-  frontend-bundles:
   backend-logs:
   db-data:
   db-backup:

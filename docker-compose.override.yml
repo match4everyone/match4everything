@@ -14,6 +14,8 @@ services:
       - backend.dev.env
 
   frontend:
-    entrypoint: [ "npm" , "run", "dev" ]
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     volumes:
         - './frontend:/frontend/'

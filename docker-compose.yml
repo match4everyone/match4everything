@@ -16,8 +16,3 @@ services:
       - TRAVIS_PULL_REQUEST_SLUG
       - PYTHONPATH=/backend # needed for django-admin to find the module
     user: ${BACKEND_USER:-0}
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
