@@ -17,6 +17,5 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    entrypoint: [ "npm" , "run", "dev" ]
     volumes:
       - './frontend/:/frontend/'
