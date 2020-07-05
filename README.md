@@ -13,7 +13,7 @@ Originally developed as [match4healthcare](https://github.com/match4everyone/mat
 
 TODO
 
-## Install by hand
+## Manual Install
 ### Development
 - Build images and run containers
 `docker-compose up --build`
@@ -29,14 +29,14 @@ After changes to the Docker configuration, you have to restart and build the con
 
 ### Production
 
-## Reverse Proxy
+#### Reverse Proxy
 
 We recommend running the gunicorn server behind a reverse proxy to provide ssl and possibly run multiple services on one server.
 The default configuration will make the docker container reachable on port 8000 only on 127.0.0.1.
 
 A sample nginx configuration can be found at ./tools/nginx-sample-site.
 
-## Setup
+#### Setup
 Copy `backend.prod.env.example` to `backend.prod.env` and set variables as documented in the example file for Django
 Copy `database.prod.env.example` to `database.prod.env` and set variables as documented in the example file for postgres on your host machine.
 
