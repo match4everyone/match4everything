@@ -134,29 +134,24 @@ Notable examples are
 - Map Views
 - User Profile to hide unneeded blocks
 
-Javascript sources are located in frontend/src folder
+### Develop JavaScript code using Docker (recommended)
 
-For local development node needs to be installed. For pure python development alternatively Docker can be used to build the javascript bundles. At the moment only production builds are supported via docker.
+Javascript sources are located in frontend/src folder and are aggregated to bundles loaded by the django application using webpack.
+For Javascript development a docker container that runs the necessary build environment can be used. Use `docker-compose up --build` to start the frontend and backend dev containers,
+it will automatically watch for changes in the src folder and rebuild the affected bundles. (Every file directly in src/ creates one bundle with the same name). If you add new files
+you need to restart the container as the bundles to build are determined only once on start-up.
 
-### Build via docker
+This is the recommended way to start building the js code. Alternatively you can also run just the backend container `docker-compose up --build backend` and use the following commands to
+setup all required files for creating javascript bundles without the use of docker.
 
-Run the following commands in the main directory to setup the docker image
-```
-cd frontend
-docker build -t frontend:latest .
-```
+### Alternative way to create JS bundles locally
 
-Run `docker run -ti -v "$(pwd)/dist:/app/dist" --rm frontend:latest` to build the bundles. They will then be available under the dist directory. Docker-Compose files for the main app use volumes instead to share the files between containers.
-
-### Build (local install) dev & prod
-
-To build locally node needs to be installed. We suggest using [Node Version Manager](https://github.com/nvm-sh/nvm) to install node. Dependencies can be installed using `cd frontend && npm install`
+To build locally node needs to be installed, for example using [Node Version Manager](https://github.com/nvm-sh/nvm) to install node.
+Dependencies can then be installed using `cd frontend && npm install`
 
 All commands need to be executed in `./frontend`.
-- Build javascript bundles
-`npm run build`
-- Build javascript bundles in devMode and rebuilt when changes are made
-`npm run dev`
+- Build javascript bundles: `npm run build`
+- Build javascript bundles in devMode and rebuilt when changes are made: `npm run dev`
 
 ### Loading bundles in Python
 
@@ -172,8 +167,9 @@ The dist folder has been added to the STATICFILES_DIRS so it will be found autom
 ### Adding new bundles
 
 When creating new bundles simply create a new *.js file, this will automatically create an equally named bundle (examples main, map, student).
+New bundles should be created as needed in the src directory, and load their modules from the sub-directories.
 
-New bundles should be created sparingly in the src directory, their modules should be loaded from the sub-directories. A template should only ever load one bundle with the base template loading the main bundle.
+A Django-template should only load one bundle. The base template will always automatically take care of loading the main bundle. (Bootstrap and CSS)
 
 #### Permissions
 
