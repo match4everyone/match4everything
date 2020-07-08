@@ -7,7 +7,7 @@ Originally developed as [match4healthcare](https://github.com/match4everyone/mat
 
 ## Quick install
 - Copy `backend.prod.env.example` and `database.prod.env.example` to `backend.prod.env` and `database.prod.env` and fill in appropriate values
-- Run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build` (uses Docker) and visit `http://localhost:8000/`
+- Run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build` (uses Docker), `docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec backend python3 manage.py loaddata backend/cms_export.json` and visit `http://localhost:8000/`
 
 ## Environment variables
 
