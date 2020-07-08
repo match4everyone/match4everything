@@ -28,11 +28,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("404/", views.handler404),
     path("500/", views.handler500),
-    path("", views.home),
-    path("about/", views.about),
-    path("impressum/", views.impressum),
-    path("dataprotection/", views.dataprotection),
     path("legal-questions/", views.legal_questions),
-    path("terms-of-use/", views.terms_of_use),
     re_path(r"^", include("cms.urls")),
 ]

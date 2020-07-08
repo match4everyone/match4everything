@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load cms_tags %}
+
 {% block title %}
     Home
 {% endblock %}
@@ -124,7 +126,7 @@
                     <div class="col-md-8 col-xl-5"><img src="{% static 'img/match4everyone-logo-text.svg' %}" width="640px"
                                                         class="logo-header">
                         <h1 class="text-white font-weight-light">
-                            {% blocktrans %}We match for everyone.{% endblocktrans %}</h1>
+                            {% placeholder "slogan" %}</h1>
                     </div>
                 </div>
             </div>
@@ -133,14 +135,13 @@
             <div class="row align-self-center">
                 <div class="col-md-6 text-white">
                     <div class="box-left">
-                        <h2 class="text-white font-weight-light">{% blocktrans %}I am{% endblocktrans %}<br>
-                            <b>{% blocktrans %}A{% endblocktrans %}</b></h2>
-                        <p class="text-white home-box-description">{% blocktrans trimmed %}
-                            I own an ice cream parlor.
-                        {% endblocktrans %}</p>
+                        <h2 class="text-white font-weight-light">
+                            {% placeholder "introduction A" %}<br>
+                            <b>{% placeholder "name A" %}</b></h2>
+                        <p class="text-white home-box-description">{% placeholder "description A" %}</p>
                         <a href="{% url 'signup' 'A' %}">
                             <button type="button" class="btn blue text-white btn-lg">
-                                {% blocktrans %}This is me{% endblocktrans %}
+                                {% placeholder "text button A" %}
                                 <svg class="bi bi-person-plus" style="margin-left:3px;" width="1em" height="1em"
                                      viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
@@ -155,14 +156,14 @@
                 </div>
                 <div class="col-md-6">
                     <div class="box-right">
-                        <h2 class="text-white font-weight-light">{% blocktrans %}I am{% endblocktrans %}<br>
-                            <b>{% blocktrans %}B{% endblocktrans %}</b></h2>
-                        <p class="text-white home-box-description">{% blocktrans %}I feel hungry.{% endblocktrans %}</p>
+                        <h2 class="text-white font-weight-light">
+                            {% placeholder "introduction B" %}<br>
+                            <b>{% placeholder "name B" %}</b></h2>
+                        <p class="text-white home-box-description">{% placeholder "description B" %}</p>
                         {% if user.is_authenticated and user.is_hospital %}
                             {% url 'list_by_plz' user.hospital.countrycode user.hospital.plz 10 as filter_student_url %}
                             <a href="{{ filter_student_url }}"> {% else %} <a href="/matching/signup_b"> {% endif %}
-                        <button type="button" class="btn text-white btn-lg pink">
-                            {% blocktrans %}This is me{% endblocktrans %}
+                        <button type="button" class="btn text-white btn-lg pink">{% placeholder "text button B" %}
                             <svg class="bi bi-search" style="margin-left:3px;" width="1em" height="1em"
                                  viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -183,14 +184,15 @@
                 <div class="col-md-12 col-lg-8" style="text-align: left; margin: 0 auto;">
                     {% static 'img/match4everyone-logo-text.svg' as static_m4h_svg_url %}
                     <h2 style="text-align:center; font-size: 1.5rem; font-weight:600; margin-bottom: 15px">
-                        {% blocktrans %}How does this work?{% endblocktrans %}</h2>
+                        {% placeholder "description heading" %}
                     <hr style="width:60%; margin: 0 auto; margin-bottom:25px; border-width: 2px; ">
                     <p style="text-align:center;">
-                        {% blocktrans %}We match.{% endblocktrans %}</p>
+                        {% placeholder "description website" %}
                 </div>
             </div>
             <div class="col-md-12" style="text-align: left; margin: 0 auto;">
-                <h2 style="text-align:center; font-size: 1.5rem; font-weight:600; margin-bottom: 55px">{% blocktrans %}another open-source project{% endblocktrans %}</h2>
+                <h2 style="text-align:center; font-size: 1.5rem; font-weight:600; margin-bottom: 55px">
+                    {% placeholder "more content" %}</h2>
             </div>
     </main>
 {% endblock %}

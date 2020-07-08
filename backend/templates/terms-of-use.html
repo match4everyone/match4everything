@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load cms_tags %}
 
 {% block title %}
     {% blocktrans %}Terms of Use{% endblocktrans %}
@@ -9,10 +10,9 @@
 {% block content %}
     <div class="container">
         <div style="height:40px"></div>
-        <h2 style="font-weight: 500;">Terms of Use</h2>
+        <h2 style="font-weight: 500;">{% placeholder "terms of use title" %}</h2>
         <hr>
-
-        <h4>Welcome to match4everyone.</h4>
+        {% placeholder "terms of use text" %}
         <div style="height:40px"></div>
 
 
