@@ -70,13 +70,13 @@ mapViewPage = {
         let tileLayerOptions = {
             attribution:  this.options.mapAttribution,
             maxZoom: 18,
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset: -1,
-            preferCanvas: true,
         }
         if (this.options.tileServer == 'mapbox') {
           tileLayerOptions.attribution += '| <a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a> ';
+          tileLayerOptions.id = 'mapbox/streets-v11';
+          tileLayerOptions.tileSize = 512;
+          tileLayerOptions.zoomOffset = -1;
+          tileLayerOptions.preferCanvas = true;
         }
         tileLayerOptions.attribution += '| Icons by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">flaticon.com</a>';
 
