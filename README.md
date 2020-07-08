@@ -9,6 +9,9 @@ Originally developed as [match4healthcare](https://github.com/match4everyone/mat
 - Copy `backend.prod.env.example` and `database.prod.env.example` to `backend.prod.env` and `database.prod.env` and fill in appropriate values
 - Run `./deploy.sh` (uses Docker) and visit `http://localhost:8000/`
 
+## Change pages
+We use the content management system [django-cms](https://www.django-cms.org/) to make the content editable by users which do not have a computer science background.
+The admin interface is accessible at `http://localhost:8000/admin/` with a superuser account.
 
 ## Install by hand
 ### Development
