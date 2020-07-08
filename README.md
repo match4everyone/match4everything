@@ -7,51 +7,56 @@ Originally developed as [match4healthcare](https://github.com/match4everyone/mat
 
 ## Quick install
 - Copy `backend.prod.env.example` and `database.prod.env.example` to `backend.prod.env` and `database.prod.env` and fill in appropriate values
-- Run `./deploy.sh` (uses Docker) and visit `http://localhost:8000/`
+- Run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build` (uses Docker) and visit `http://localhost:8000/`
 
+## Environment variables
+
+TODO
 
 ## Install by hand
 ### Development
 - Build images and run containers
-`docker-compose -f docker-compose.dev.yml up --build`
+`docker-compose up --build`
 - Start previously built containers in background
 `docker-compose start`
-- Apply migrations
-`docker exec backend python3 manage.py migrate`
-- Collect static files
-`docker exec backend python3 manage.py collectstatic`
-- Load test data:
-`docker exec backend python3 manage.py loaddata fixture.json`
+- Load test data (file needs to exist inside backend folder):
+`docker-compose exec backend django-admin loaddata fixture.json`
 
 File changes in python files trigger an auto-reload of the server.
-Migrations have to be executed with `docker exec backend python3 manage.py migrate`.
+Migrations are automatically executed when the container starts.
 
-After changes to the Docker configuration, you have to restart and build the containers with `docker-compose -f docker-compose.dev.yml up --build`.
+After changes to the Docker configuration, you have to restart and build the containers with `docker-compose up --build`.
 
 ### Production
-Set `SECRET_KEY`, `SENDGRID_API_KEY` and `MAPBOX_TOKEN`in `backend.prod.env` for Django
-`POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`  inside `database.prod.env` for postgres on your host machine.
-Also add a `SLACK_LOG_WEBHOOK` to enable slack logging.
 
-To run a container in production and in a new environment execute the `deploy.sh` script which builds the containers, runs all configurations and starts the web service.
+## Reverse Proxy
+
+We recommend running the gunicorn server behind a reverse proxy to provide ssl and possibly run multiple services on one server.
+The default configuration will make the docker container reachable on port 8000 only on 127.0.0.1.
+
+A sample nginx configuration can be found at ./tools/nginx-sample-site.
+
+## Setup
+Copy `backend.prod.env.example` to `backend.prod.env` and set variables as documented in the example file for Django
+Copy `database.prod.env.example` to `database.prod.env` and set variables as documented in the example file for postgres on your host machine.
+
+To run a container in production and in a new environment execute the `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build` script which builds the containers, runs all configurations and starts the web service.
 
 If you want to deploy manually follow these steps closly:
 
-1. Build the containers
-(Run `export CURRENT_UID=$(id -u):$(id -g)` if you want to run the backend as non-root)
-`docker-compose -f docker-compose.dev.yml -f docker-compose.prod.yml up -d --build`
-2. Make messages
-`docker exec --env PYTHONPATH="/match4everyone-backend:$PYTHONPATH" backend django-admin makemessages --no-location`
-3. Compile messages
-`docker exec --env PYTHONPATH="/match4everyone-backend:$PYTHONPATH" backend django-admin compilemessages`
-4. Collect static
-`docker exec backend python3 manage.py collectstatic --no-input`
-5. Migrate
-`docker exec backend python3 manage.py migrate`
-5. Check if all the variables are correct
-`docker exec backend python3 manage.py check`
-6. Restart the backend container (important, whitenoise does not reload static files after it has started)
-`docker-compose -f docker-compose.dev.yml -f docker-compose.prod.yml down && docker-compose -f docker-compose.dev.yml -f docker-compose.prod.yml up -d`
+#### Build the containers
+(Copy `.env.example` to `.env` and adjust variables if you want to run the backend as non-root)
+`docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build`
+
+Building containers will run a number of django tasks automatically:
+- make messages (`django-admin makemessages --no-location`)
+- compile messages (`django-admin compilemessages`)
+- collect static files (`django-admin collectstatic --no-input`)
+
+Starting the containers will run the following django tasks on every backend startup:
+- Perform migrations (`django-admin migrate`)
+- Perform system check (`django-admin check`)
+
 
 ## Helpful management commands
 
@@ -86,7 +91,7 @@ In order to run pre-commit checks every time, please run `pre-commit install` on
 - Add translatable strings in python with `_("Welcome to my site.")` and import `from django.utils.translation import gettext as _` ([Documentation](https://docs.djangoproject.com/en/3.0/topics/i18n/translation/#internationalization-in-python-code))
 - Add translatable strings in templates with `{% blocktrans %}This string will have {{ value }} inside.{% endblocktrans %}` or alternatively with the `trans` block and include `{% load i18n %}` at the top ([Documentation](https://docs.djangoproject.com/en/3.0/topics/i18n/translation/#internationalization-in-template-code))
 - Update the translation file
-`django-admin makemessages -l de --no-location --ignore 00_old_m4h_matching_code` (line numbers omitted to allow nicer merges)
+`django-admin makemessages -l de --no-location` (line numbers omitted to allow nicer merges)
 - Edit translations in `backend/locale/de/LC_MESSAGES/django.po`
 
 ### Testing
