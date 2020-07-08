@@ -21,7 +21,7 @@ RUN python3 manage.py collectstatic --no-input
 # Change permissions on run/ in case app is later run by non-root user
 # and delete log files as these are created during the above commands when django loads the configuration
 # and will be created non writeable by others than root
-RUN rm -v run/log/* && chmod a+rwX run/log
+RUN rm -v run/log/* && chmod a+rwX run/log && chmod a+rwX backups
 
 EXPOSE 8000
 ENTRYPOINT ["./entrypoint.sh"]

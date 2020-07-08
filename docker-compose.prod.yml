@@ -5,6 +5,7 @@ services:
   backend:
     volumes:
       - backend-logs:/backend/run/log
+      - backend-backup:/backend/backups
 #    ports:
 #      Port definitions from the .dev file will be carried on to prod
 #      so even if there is no port defined here, the docker image will be exposed
@@ -47,5 +48,6 @@ networks:
 
 volumes:
   backend-logs:
+  backend-backup:
   db-data:
   db-backup:
