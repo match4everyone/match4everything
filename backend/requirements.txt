@@ -32,3 +32,4 @@ sendgrid==6.2.0
 six==1.15.0
 tqdm==4.46.1
 whitenoise==5.0.1
+whitenoise[brotli]
