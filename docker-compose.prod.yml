@@ -26,7 +26,6 @@ services:
     depends_on:
       - database
 
-
   database:
     build:
       context: ./database

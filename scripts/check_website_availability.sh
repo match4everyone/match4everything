@@ -90,6 +90,8 @@ test "Error log empty" "check_error_log_empty"
 
 # If everything went well we exit with zero, else one
 if [[ $failed = "True" ]]; then
+	echo "Error on check availability, dumping logs..."
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs backend
 	exit 1
 else
 	exit 0
