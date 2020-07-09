@@ -34,7 +34,7 @@ After changes to the Docker configuration, you have to restart and build the con
 We recommend running the gunicorn server behind a reverse proxy to provide ssl and possibly run multiple services on one server.
 The default configuration will make the docker container reachable on port 8000 only on 127.0.0.1.
 
-A sample nginx configuration can be found at ./tools/nginx-sample-site.
+A sample nginx configuration can be found at `./tools/nginx-sample-site`.
 
 #### Setup
 Copy `backend.prod.env.example` to `backend.prod.env` and set variables as documented in the example file for Django
@@ -136,7 +136,7 @@ Notable examples are
 
 #### Develop JavaScript code using Docker (recommended)
 
-Javascript sources are located in frontend/src folder and are aggregated to bundles loaded by the django application using webpack.
+Javascript sources are located in `frontend/src` folder and are aggregated to bundles loaded by the django application using webpack.
 For Javascript development a docker container that runs the necessary build environment can be used. Use `docker-compose up --build` to start the frontend and backend dev containers,
 it will automatically watch for changes in the src folder and rebuild the affected bundles. (Every file directly in src/ creates one bundle with the same name). If you add new files
 you need to restart the container as the bundles to build are determined only once on start-up.
