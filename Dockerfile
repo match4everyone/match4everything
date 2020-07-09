@@ -7,10 +7,16 @@ RUN ["npm", "install"]
 COPY frontend ./
 RUN [ "npm" , "run", "build" ]
 
-# CMD only used in dev dockerfile, where this stage is deployed it's own container
-# in production this container will be thrown away after extracting the files built in the
-# previous step.
+# CMD only used in development context.
 CMD [ "npm" , "run", "dev" ]
+# If started using docker-compose up:
+# docker-compose.yml + docker-compose.override.yml are used and a frontend container is started running the CMD
+# (see docker-compose.override.yml target parameter for service frontend)
+#
+# If started using docker-compose up -f docker-compose.yml -f docker-compose.prod.yml:
+# docker-compose.yml + docker-compose.prod.yml are used *without* docker-compose.override.yml
+# frontend container is never started but the results from npm run build above are copied into the backend container
+# during the second build stage (https://docs.docker.com/develop/develop-images/multistage-build/)
 
 
 FROM ubuntu:18.04 AS backend
