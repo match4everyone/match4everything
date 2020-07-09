@@ -5,7 +5,7 @@ from django.utils.log import DEFAULT_LOGGING
 
 from match4everyone.constants.enum import Environment
 from match4everyone.settings.common import *  # noqa
-from match4everyone.settings.common import IS_FORK, MIDDLEWARE, RUN_DIR
+from match4everyone.settings.common import IS_FORK, RUN_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -41,9 +41,6 @@ DATABASES = {
     }
 }
 
-MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
-
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # =============== MAIL RELAY SERVER CONFIGURATION ===============
 # TODO: add environment variable based detection whether we are on prod or staging # noqa: T003
