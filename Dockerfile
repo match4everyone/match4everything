@@ -21,11 +21,6 @@ RUN pip3 install -r requirements.prod.txt
 COPY --from=frontendbuilder frontend/dist /frontend/dist
 COPY backend .
 
-# Set Django Settings to production, for the built docker image this will use whitenoise to collect the static files
-# Our app will refuse to run without a SECRET_KEY. collectstatic parses the configuration module and fails
-# if no key is set. To prevent this a dummy key is used. In production mode this needs to be supplied
-# using an env file in the docker-compose.yml
-ENV DJANGO_SETTINGS_MODULE="match4everyone.settings.production" SECRET_KEY="CzXG4ItUiwLUfTH2abQQ0qTzMSRiiDni"
 RUN python3 manage.py makemessages --no-location  &&\
     python3 manage.py compilemessages             &&\
     python3 manage.py collectstatic --no-input
