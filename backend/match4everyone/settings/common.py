@@ -171,7 +171,7 @@ STATIC_ROOT = os.path.join(RUN_DIR, "static")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
-    os.path.normpath(os.path.join(os.path.join(os.path.dirname(BASE_DIR), "frontend"), "dist")),
+    os.path.join(os.path.dirname(BASE_DIR), "frontend", "dist"),
 )
 
 LEAFLET_TILESERVER = os.getenv(
@@ -264,11 +264,8 @@ WEBPACK_LOADER = {
     "DEFAULT": {
         "CACHE": True,
         "BUNDLE_DIR_NAME": "/",  # must end with slash
-        "STATS_FILE": os.path.normpath(
-            os.path.join(
-                os.path.join(os.path.join(os.path.dirname(BASE_DIR), "frontend"), "dist"),
-                "webpack-stats.json",
-            )
+        "STATS_FILE": os.path.join(
+            os.path.dirname(BASE_DIR), "frontend", "dist", "webpack-stats.json"
         ),
         "POLL_INTERVAL": 0.1,
         "TIMEOUT": None,
