@@ -57,6 +57,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     # 'cms.middleware.utils.ApphookReloadMiddleware' TODO: Not working right now "ModuleNotFoundError: No module named 'cms.middleware.utils.ApphookReloadMiddlewaredjango'; 'cms.middleware.utils' is not a package"
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -159,16 +160,15 @@ RUN_DIR = os.path.join(BASE_DIR, "run")
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 PROJECT_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(RUN_DIR, "media")
-
 MEDIA_URL = "/media/"
 # TODO: Serve media files properly (http://docs.django-cms.org/en/latest/how_to/install.html#media-and-static-file-handling)
 
+STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(RUN_DIR, "static")
-
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 LEAFLET_TILESERVER = os.getenv(
     "LEAFLET_TILESERVER"
