@@ -146,12 +146,12 @@ setup all required files for creating javascript bundles without the use of dock
 
 #### Alternative way to create JS bundles locally
 
-To build locally node needs to be installed, for example using [Node Version Manager](https://github.com/nvm-sh/nvm) to install node.
+To build locally, node needs to be installed, for example using [Node Version Manager](https://github.com/nvm-sh/nvm) to install node.
 Dependencies can then be installed using `cd frontend && npm install`
 
 All commands need to be executed in `./frontend`.
 - Build javascript bundles: `npm run build`
-- Build javascript bundles in devMode and rebuilt when changes are made: `npm run dev`
+- Build javascript bundles in devMode and rebuild when changes are made: `npm run dev`
 
 #### Loading bundles in Python
 
