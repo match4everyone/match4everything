@@ -7,6 +7,12 @@ RUN ["npm", "install"]
 COPY frontend ./
 RUN [ "npm" , "run", "build" ]
 
+# CMD only used in dev dockerfile, where this stage is deployed it's own container
+# in production this container will be thrown away after extracting the files built in the
+# previous step.
+CMD [ "npm" , "run", "dev" ]
+
+
 FROM ubuntu:18.04 AS backend
 RUN apt-get update && apt-get install -y python3 python3-pip libpq-dev gettext
 
