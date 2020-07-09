@@ -26,7 +26,8 @@
     bURL     : "{% url 'participant_JSON' 'B' %}",
     aListURL  : "{% url 'participant_list' 'A' 'COUNTRYCODE' 'PLZ' 0 %}",
     bListURL   : "{% url 'participant_list' 'B' 'COUNTRYCODE' 'PLZ' 0 %}",
-    tileURL: "{{ tileserver }}",
+    tileURL: "{{ tileserverurl }}",
+    tileServer: "{{ tileserver }}",
     mapAttribution : `{{ attribution |safe }}`,
     createPopupTextA :  (countrycode,city, plz, count, url) => `{% blocktrans %}In ${city}, (PLZ ${plz}) there are ${count} A's.\n<a href="${url}" target="_blank">Detail</a>{% endblocktrans %}`,
     createPopupTextB :  (countrycode,city, plz, count, url) => `{% blocktrans %}In ${city}, (PLZ ${plz}) there are ${count} B's.\n<a href="${url}" target="_blank">Detail</a>{% endblocktrans %}`,
@@ -59,10 +60,13 @@
 </nav>
 {% endif %}
 
-
+{% if tileserver == "mapbox" %}
 <div id="mapContainer" style="z-index:1;">
 	 <a href="http://mapbox.com/about/maps" class="mapbox-wordmark" target="_blank">Mapbox</a>
 </div>
+{% else %}
+<div id="mapContainer" style="z-index:1;"></div>
+{% endif %}
 
 <script type="text/javascript">
   var gototable = function() {
