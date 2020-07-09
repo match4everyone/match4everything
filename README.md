@@ -149,6 +149,6 @@ Thanks for forking our repository. Pay attention that Travis CI doesn't test you
 If you want to use sendgrid for your tests, add your repository name to the list in the if statement for NOT_FORK in `backend/match4everyone/settings/production.py` and specify the `SENDGRID_API_KEY` environment variable in the Travis run settings.
 
 ## Documentation
-We use spinx and Read the Docs for the project documentation.
+We use sphinx and Read the Docs for the project documentation. You need `pip install sphinx`.
 
 Write your documentation in the `docs/` folder in reStructuredText and admire its beauty locally with `cd docs && make html` (`make clean` to clean up)
