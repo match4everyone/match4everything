@@ -4,5 +4,3 @@ psutil==5.7.0
 psycogreen==1.0.2
 psycopg2==2.8.5
 psycopg2==2.8.5
-whitenoise==5.0.1
-whitenoise[brotli]
