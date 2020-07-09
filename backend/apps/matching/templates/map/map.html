@@ -15,14 +15,15 @@
   document.addEventListener("DOMContentLoaded", function domReady() {
     let mapViewPage = new MapViewPage({
       mapViewContainerId: 'mapContainer',
-      aURL     : "{% url 'participant_JSON' 'A' %}",
-      bURL     : "{% url 'participant_JSON' 'B' %}",
-      aListURL  : "{% url 'participant_list' 'A' 'COUNTRYCODE' 'PLZ' 0 %}",
-      bListURL   : "{% url 'participant_list' 'B' 'COUNTRYCODE' 'PLZ' 0 %}",
-      tileURL: "{{ tileserver }}",
-      mapAttribution : `{{ attribution |safe }}`,
-      createPopupTextA :  (countrycode,city, plz, count, url) => `{% blocktrans %}In ${city}, (PLZ ${plz}) there are ${count} As.\n<a href="${url}" target="_blank">Detail</a>{% endblocktrans %}`,
-      createPopupTextB :  (countrycode,city, plz, count, url) => `{% blocktrans %}In ${city}, (PLZ ${plz}) there are ${count} Bs.\n<a href="${url}" target="_blank">Detail</a>{% endblocktrans %}`,
+      aURL: "{% url 'participant_JSON' 'A' %}",
+      bURL: "{% url 'participant_JSON' 'B' %}",
+      aListURL: "{% url 'participant_list' 'A' 'COUNTRYCODE' 'PLZ' 0 %}",
+      bListURL: "{% url 'participant_list' 'B' 'COUNTRYCODE' 'PLZ' 0 %}",
+      tileURL: "{{ tileserverurl }}",
+      tileServer:  "{{ tileserver }}",
+      mapAttribution: `{{ attribution |safe }}`,
+      createPopupTextA : (countrycode,city, plz, count, url) => `{% blocktrans %}In ${city}, (PLZ ${plz}) there are ${count} As.\n<a href="${url}" target="_blank">Detail</a>{% endblocktrans %}`,
+      createPopupTextB : (countrycode,city, plz, count, url) => `{% blocktrans %}In ${city}, (PLZ ${plz}) there are ${count} Bs.\n<a href="${url}" target="_blank">Detail</a>{% endblocktrans %}`,
       createBCountText: (count) => `<img src="{% static 'img/map/b-marker.svg' %}"> ${count} {% trans "Bs" %}`,
       createACountText: (count) => `<img src="{% static 'img/map/a-marker.svg' %}"> ${count} {% trans "As" %}`,
     })
@@ -52,8 +53,11 @@
 </nav>
 {% endif %}
 
-
+{% if tileserver == "mapbox" %}
 <div id="mapContainer" style="z-index:1;">
 	 <a href="http://mapbox.com/about/maps" class="mapbox-wordmark" target="_blank">Mapbox</a>
 </div>
+{% else %}
+<div id="mapContainer" style="z-index:1;"></div>
+{% endif %}
 {% endblock %}

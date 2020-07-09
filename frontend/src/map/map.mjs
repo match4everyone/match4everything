@@ -17,6 +17,7 @@ export class MapViewPage {
             aListURL  : '',
             bListURL   : '',
             tileURL: '',
+            tileServer: '',
             mapAttribution: '',
             // eslint-disable-next-line no-unused-vars
             createPopupTextA :  (countrycode,city, plz, count, url) => '',
@@ -81,18 +82,28 @@ export class MapViewPage {
             zoom: 6
         }
 
-        let tileLayerURL = this.options.tileURL
-        let tileLayerOptions = {
-            attribution: this.options.mapAttribution + '<a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a>',
+        const defaultTileLayerOptions = {
+            attribution: this.options.mapAttribution,
             maxZoom: 18,
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset: -1,
             preferCanvas: true,
         }
 
+        const mapBoxSpecificTileLayerOptions = {
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+        }
+
+        let tileLayerOptions = defaultTileLayerOptions
+        if (this.options.tileServer === 'mapbox') {
+            tileLayerOptions = {
+                ...tileLayerOptions,
+                ...mapBoxSpecificTileLayerOptions,
+            }
+        }
+
         this.mapObject = L.map(this.options.mapViewContainerId,mapOptions)
-        L.tileLayer(tileLayerURL, tileLayerOptions).addTo(this.mapObject)
+        L.tileLayer(this.options.tileURL, tileLayerOptions).addTo(this.mapObject)
 
         // Enhance MarkerCluster - override getChildCount
         L.MarkerCluster.prototype.getChildCount = function (){
