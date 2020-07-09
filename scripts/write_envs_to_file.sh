@@ -14,7 +14,3 @@ done
 for ENVVAR in ${BACKEND_ENV_VARS}; do
     echo "${ENVVAR}=${!ENVVAR}" >> backend.prod.env
 done
-
-for ENVVAR in ${BACKEND_ENV_VARS}; do
-    echo "${ENVVAR}=${!ENVVAR}" >> backend.dev.env
-done

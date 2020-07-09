@@ -8,8 +8,9 @@ def get_tile_info():
             settings.LEAFLET_TILESERVER,
             "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token="
             + settings.MAPBOX_TOKEN,
-            '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> |'
-            ' <a href="http://www.openstreetmap.org/copyright">© OpenStreetMap</a> ',
+            '<a href="https://www.mapbox.com/about/maps/">© Mapbox</a> | '
+            '<a href="http://www.openstreetmap.org/copyright">© OpenStreetMap</a> | '
+            '<a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a>',
         )
 
     elif settings.LEAFLET_TILESERVER == "open_street_map":
