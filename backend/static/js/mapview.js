@@ -78,8 +78,6 @@ mapViewPage = {
         if (this.options.tileServer == 'mapbox') {
           tileLayerOptions.attribution += '| <a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a> ';
         }
-        tileLayerOptions.attribution += '| Icons by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">flaticon.com</a>';
-
 
         this.mapObject = L.map(this.options.mapViewContainerId,mapOptions)
         L.tileLayer(tileLayerURL, tileLayerOptions).addTo(this.mapObject);
