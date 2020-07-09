@@ -1,4 +1,5 @@
 # match4everyone
+[![Documentation Status](https://readthedocs.org/projects/match4everything/badge/?version=latest)](https://match4everything.readthedocs.io/en/latest/?badge=latest)
 
 Open source project for building a platform that can match anyone.
 
@@ -146,3 +147,8 @@ Note that django autogenerates lots of permissions, which might fit your require
 ## Forks
 Thanks for forking our repository. Pay attention that Travis CI doesn't test your code with sendgrid.
 If you want to use sendgrid for your tests, add your repository name to the list in the if statement for NOT_FORK in `backend/match4everyone/settings/production.py` and specify the `SENDGRID_API_KEY` environment variable in the Travis run settings.
+
+## Documentation
+We use spinx and Read the Docs for the project documentation.
+
+Write your documentation in the `docs/` folder in reStructuredText and admire its beauty locally with `cd docs && make html` (`make clean` to clean up)
