@@ -13,7 +13,7 @@ Originally developed as [match4healthcare](https://github.com/match4everyone/mat
 
 TODO
 
-## Install by hand
+## Manual Install
 ### Development
 - Build images and run containers
 `docker-compose up --build`
@@ -29,14 +29,14 @@ After changes to the Docker configuration, you have to restart and build the con
 
 ### Production
 
-## Reverse Proxy
+#### Reverse Proxy
 
 We recommend running the gunicorn server behind a reverse proxy to provide ssl and possibly run multiple services on one server.
 The default configuration will make the docker container reachable on port 8000 only on 127.0.0.1.
 
-A sample nginx configuration can be found at ./tools/nginx-sample-site.
+A sample nginx configuration can be found at `./tools/nginx-sample-site`.
 
-## Setup
+#### Setup
 Copy `backend.prod.env.example` to `backend.prod.env` and set variables as documented in the example file for Django
 Copy `database.prod.env.example` to `database.prod.env` and set variables as documented in the example file for postgres on your host machine.
 
@@ -101,9 +101,9 @@ For executing the tests use `python3 manage.py test`.
 In case you add more required environment variables for productions, please check for their existance in `backend/apps/checks.py`.
 
 
-### Implementation details
+## Implementation details
 
-#### Logging
+### Logging
 
 Logging should always use the following pattern if possible:
 
@@ -126,8 +126,52 @@ Student has an attribute for the user, user has an attribute for the student, ..
 These circular references will prevent the log entry from being written.
 Including request is always safe, because the logging formatter contains dedicated code for request logging.
 
+### Javascript & CSS
 
-#### Permissions
+This project uses webpack to create javascript bundles. Custom Javascript is only added to pages when it is needed to enhance default Django functionality or to create user experience improvements.
+
+Notable examples are
+- Map Views
+- User Profile to hide unneeded blocks
+
+#### Develop JavaScript code using Docker (recommended)
+
+Javascript sources are located in `frontend/src` folder and are aggregated to bundles loaded by the django application using webpack.
+For Javascript development a docker container that runs the necessary build environment can be used. Use `docker-compose up --build` to start the frontend and backend dev containers,
+it will automatically watch for changes in the src folder and rebuild the affected bundles. (Every file directly in src/ creates one bundle with the same name). If you add new files
+you need to restart the container as the bundles to build are determined only once on start-up.
+
+This is the recommended way to start building the js code. Alternatively you can also run just the backend container `docker-compose up --build backend` and use the following commands to
+setup all required files for creating javascript bundles without the use of docker.
+
+#### Alternative way to create JS bundles locally
+
+To build locally, node needs to be installed, for example using [Node Version Manager](https://github.com/nvm-sh/nvm) to install node.
+Dependencies can then be installed using `cd frontend && npm install`
+
+All commands need to be executed in `./frontend`.
+- Build javascript bundles: `npm run build`
+- Build javascript bundles in devMode and rebuild when changes are made: `npm run dev`
+
+#### Loading bundles in Python
+
+To load a bundle in a django template add the following tags:
+```
+{% load render_bundle from webpack_loader %}
+{% render_bundle 'student' %}
+```
+
+Django will then use the webpack-stats.json to determine which file from dist folder to include.
+The dist folder has been added to the STATICFILES_DIRS so it will be found automatically
+
+#### Adding new bundles
+
+When creating new bundles simply create a new *.js file, this will automatically create an equally named bundle (examples main, map, student).
+New bundles should be created as needed in the src directory, and load their modules from the sub-directories.
+
+A Django-template should only load one bundle. The base template will always automatically take care of loading the main bundle. (Bootstrap and CSS)
+
+### Permissions
 
 We use a data migration to add groups and permissions to the database. Groups have permissions assigned and should be used as roles/tags for users, never give permissions directly to users. Permissions can be checked for with the `@permission_required('matching.can_view_access_stats')`. This includes inherited permissions from groups. We currently have the following groups with similarly named permissions:
 ```python
