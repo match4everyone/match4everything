@@ -11,6 +11,7 @@ django-sekizai==1.1.0
 django-sendgrid-v5==0.8.1
 django-tables2==2.3.1
 django-treebeard==4.3.1
+django-webpack-loader==0.7.0
 django-widget-tweaks==1.4.8
 djangocms-admin-style==1.5.0
 djangocms-file==2.4.0
@@ -29,6 +30,7 @@ pre-commit==2.2.0
 requests==2.23.0
 sendgrid==6.2.0
 six==1.15.0
+sphinx==3.1.2
 tqdm==4.46.1
 whitenoise==5.0.1
 whitenoise[brotli]

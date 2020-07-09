@@ -9,5 +9,16 @@ services:
   backend:
     volumes:
       - './backend:/backend' # bind mount the code directory
+      - './frontend:/frontend'
     env_file:
       - backend.dev.env
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontendbuilder
+    volumes:
+      - './frontend/src:/frontend/src'
+      - './frontend/dist:/frontend/dist'
+      - './frontend/webpack.config.js:/frontend/webpack.config.js'
