@@ -46,11 +46,6 @@ server {
             #internal;
         }
 
-        location /admin {
-                allow 127.0.0.1;
-                deny all;
-        }
-
         location / {
                 # First attempt to serve request as file, then
                 # as directory, then fall back to displaying a 404

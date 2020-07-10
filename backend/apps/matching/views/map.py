@@ -11,8 +11,8 @@ from apps.matching.utils.map import get_tile_info
 @gzip_page
 def map_view(request):
     template = loader.get_template("map/map.html")
-    tileserver, attribution = get_tile_info()
-    context = {"tileserver": tileserver, "attribution": attribution}
+    tileserver, tileserverurl, attribution = get_tile_info()
+    context = {"tileserver": tileserver, "tileserverurl": tileserverurl, "attribution": attribution}
     return HttpResponse(template.render(context, request))
 
 
