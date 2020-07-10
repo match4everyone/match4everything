@@ -1,6 +1,7 @@
 import logging
 
 from django.contrib.auth.decorators import login_required
+from django.http import Http404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import UpdateView
@@ -19,6 +20,11 @@ class ParticipantInfoViewView(UpdateView):
     template_name = "participant/participant_info_view_form.html"
     slug_url_kwarg = "uuid"
     slug_field = "uuid"
+
+    def dispatch(self, *args, **kwargs):
+        if self.request.user.participant().info.uuid not in self.request.path:
+            raise Http404
+        return super(ParticipantInfoViewView, self).dispatch(*args, **kwargs)
 
     def get_form_class(self):
         return ParticipantViewInfoForm[self.kwargs["p_type"]]
