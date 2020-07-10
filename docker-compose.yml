@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+
+  backend:
+    build:
+      context: ./
+    restart: always
+    ports:
+      - '127.0.0.1:8000:8000'
+    tty: true # needed for error output during django startup
+    restart: always
+    environment:
+      - DJANGO_SETTINGS_MODULE=match4everyone.settings.development
+      - PYTHONPATH=/backend # needed for django-admin to find the module
+    user: ${BACKEND_USER:-0}
