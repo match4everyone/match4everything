@@ -12,7 +12,7 @@ class DecimalPointFloatConverter:
     - 100,0
     """
 
-    regex = "[0-9]*[.]?[0-9]*"
+    # regex = "[0-9]*[.]?[0-9]*"
 
     def to_python(self, value):
         return float(value)
@@ -29,7 +29,7 @@ class ParticipantTypeConverter:
     participants, e.g "A/profile" and "B/profile" from "<p:p_type>/profile"
     """
 
-    regex = "[AB]"
+    # regex = "[AB]"
 
     def to_python(self, value):
         return value
