@@ -44,7 +44,7 @@ def matching_participant_required(function=None):
     return actual_decorator
 
 
-def no_login_required(function=None, login_url="/"):
+def logged_in_not_permitted(function=None, login_url="/"):
     """
     Decorator for views that checks that the user is not logged in.
 
