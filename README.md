@@ -194,10 +194,11 @@ group_list = [
 ```
 Note that django autogenerates lots of permissions, which might fit your requirements, for example `auth.permission.can_change_permission` or `matching.participanta.can_change_participanta`. Have a look in the admin panel if you want to easily check out the generated structure.
 
-This requires the custom migration `0002_permission_group_creation.py` to be included anytime that the project is rebuilt from the configuration.
-Therefore, if you want to rebuild the project with a new configuration, you will need to delete all migrations except `0002_permission_group_creation.py`,
-move it to a different location, `migrate`, and re-add the moved migration. We have provided a script that rebuilds the project from configuration in
-`scripts/rebuild_from_configuration.sh`.
+### Custom Configuration
+
+TODO!!! #128
+
+If you adjust the configuration, you should delete the migration `0003_...` from the app `matching` and run `python3 manage.py makemigrations matching` again to recreate it. If you change it in a deployed environment, be sure to state default values for newly added fields or make them nullable. Only then it is possible to create an additional migration with `makemigrations`.
 
 
 ## Forks
