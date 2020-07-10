@@ -3,8 +3,10 @@ import logging
 from django.forms import modelformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.views.generic import View
 
+from apps.matching.admin import logged_in_not_permitted
 from apps.matching.forms import ParticipantInfoSignupForm
 from apps.matching.models import ParticipantInfoLocation
 from apps.matching.src.notifications import send_password_set_email
@@ -12,6 +14,7 @@ from apps.matching.src.notifications import send_password_set_email
 logger = logging.getLogger(__name__)
 
 
+@method_decorator(logged_in_not_permitted, name="dispatch")
 class ParticipantSignup(View):
     """Signup a participant."""
 
