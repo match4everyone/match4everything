@@ -118,7 +118,12 @@ AUTH_PASSWORD_VALIDATORS = [
 SITE_ID = 1
 X_FRAME_OPTIONS = "SAMEORIGIN"
 CMS_TEMPLATES = [
+    ("home-without_content.html", "Empty page template"),
     ("home.html", "Home page template"),
+    ("about.html", "About page template"),
+    ("impressum.html", "Imprint page template"),
+    ("dataprotection.html", "Data protection page template"),
+    ("terms-of-use.html", "Terms of use page template"),
 ]
 
 # django-filler config

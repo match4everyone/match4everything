@@ -14,6 +14,10 @@ Originally developed as [match4healthcare](https://github.com/match4everyone/mat
 
 TODO
 
+## Change pages
+We use the content management system [django-cms](https://www.django-cms.org/) to enable quick edits & translations of most text areas in the application.
+The admin interface is accessible at `http://localhost:8000/admin/` with a superuser account.
+
 ## Manual Install
 ### Development
 - Build images and run containers
