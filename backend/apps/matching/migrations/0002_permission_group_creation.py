@@ -109,33 +109,6 @@ class Migration(migrations.Migration):
 
         Group.objects.filter(name__in=group_list).delete()
 
-    def update_existing_users_with_group(apps, schema_editor):
-        User = apps.get_model("matching", "User")
-        Group = apps.get_model("auth", "Group")
-        group_is_a = Group.objects.get(name="is_a")
-        group_is_b = Group.objects.get(name="is_b")
-        group_perm_user_stats = Group.objects.get(name="perm_user_stats")
-        group_perm_access_stats = Group.objects.get(name="perm_access_stats")
-        group_perm_approve_a = Group.objects.get(name="perm_approve_a")
-        group_perm_approve_b = Group.objects.get(name="perm_approve_b")
-
-        users_a = User.objects.filter(is_A=True)
-        users_b = User.objects.filter(is_B=True)
-        users_staff = User.objects.filter(is_staff=True)
-
-        # Quick reminder on python syntax: the star operator unpacks
-        # sequences into positional arguments
-        group_is_a.user_set.add(*users_a)
-        group_is_b.user_set.add(*users_b)
-        group_perm_user_stats.user_set.add(*users_staff)
-        group_perm_access_stats.user_set.add(*users_staff)
-        group_perm_approve_a.user_set.add(*users_staff)
-        group_perm_approve_b.user_set.add(*users_staff)
-
-    def remove_groups_from_users(apps, schema_editor):
-        # Not really necessary since on reverse the groups will get deleted either way
-        pass
-
     dependencies = [
         ('matching', '0001_initial'),
     ]
@@ -143,5 +116,4 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(create_permissions, reverse_code=delete_permissions),
         migrations.RunPython(create_groups, reverse_code=delete_groups),
-        migrations.RunPython(update_existing_users_with_group, reverse_code=remove_groups_from_users),
     ]
