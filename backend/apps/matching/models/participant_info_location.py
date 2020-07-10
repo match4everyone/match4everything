@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 import numpy as np
 
 from apps.matching.files.map_data import plzs
-from apps.matching.src.plzs import BIG_CITY_PLZS
+from apps.matching.utils.plzs import BIG_CITY_PLZS
 
 from .participant_info import ParticipantInfo
 

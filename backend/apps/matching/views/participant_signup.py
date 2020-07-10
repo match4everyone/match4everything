@@ -7,7 +7,7 @@ from django.views.generic import View
 
 from apps.matching.forms import ParticipantInfoSignupForm
 from apps.matching.models import ParticipantInfoLocation
-from apps.matching.src.notifications import send_password_set_email
+from apps.matching.utils.notifications import send_password_set_email
 
 logger = logging.getLogger(__name__)
 
