@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     "djangocms_snippet",
     "djangocms_style",
     "webpack_loader",
+    "meta",
+    "djangocms_page_meta",
 ]
 
 MIDDLEWARE = [
