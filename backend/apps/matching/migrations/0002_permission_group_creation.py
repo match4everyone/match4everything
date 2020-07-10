@@ -12,6 +12,7 @@ class NewPermissions:
     can_approve_type_b = "can_approve_type_b"
     can_view_user_stats = "can_view_user_stats"
     can_view_access_stats = "can_view_access_stats"
+    # TODO: Add 'can_send_newsletter' https://github.com/match4everyone/match4everything/issues/123
 
 
 class Migration(migrations.Migration):
