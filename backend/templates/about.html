@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load cms_tags %}
 
 {% block title %}
     {% blocktrans %}About{% endblocktrans %}
@@ -9,9 +10,9 @@
 {% block content %}
     <div class="container">
         <div style="height:40px"></div>
-        <h1 style="text-align:center; font-weight: 300;">{% blocktrans %}We are the team of match4everyone! Muhahaha{% endblocktrans %}</h1>
+        <h1 style="text-align:center; font-weight: 300;">{% placeholder "introduction" %}</h1>
         <hr>
-        <p class="text-center">match4everyone is free4everyone</p>
+        <p class="text-center">{% placeholder "explanation" %}</p>
         <div style="height:40px"></div>
 
         <!-- dev team -->
