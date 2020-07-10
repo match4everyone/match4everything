@@ -198,7 +198,8 @@ Note that django autogenerates lots of permissions, which might fit your require
 
 TODO!!! #128
 
-If you adjust the configuration, you should delete the migration `0003_...` from the app `matching` and run `python3 manage.py makemigrations matching` again to recreate it. If you change it in a deployed environment, be sure to state default values for newly added fields or make them nullable. Only then it is possible to create an additional migration with `makemigrations`.
+If you adjust the configuration, you should delete the migration `0003_...` from the app `matching` and run `python3 manage.py makemigrations matching` again to recreate it. If you change it in a deployed environment, be sure to state default values for newly added fields or make them nullable. Only then it is possible to create an additional migration with `makemigrations`. We have provided a script that rebuilds the project from configuration in
+`scripts/rebuild_from_configuration.sh`.
 
 
 ## Forks
