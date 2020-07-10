@@ -42,3 +42,15 @@ def matching_participant_required(function=None):
     if function:
         return actual_decorator(function)
     return actual_decorator
+
+
+def logged_in_not_permitted(function=None, login_url="/"):
+    """
+    Decorator for views that checks that the user is not logged in.
+
+    Redirecting to the home page if necessary.
+    """
+    actual_decorator = user_passes_test(lambda u: not u.is_authenticated, login_url="/",)
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
