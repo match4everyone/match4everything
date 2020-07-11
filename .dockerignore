@@ -6,6 +6,7 @@
 !/.dockerignore
 !/backend/
 !/frontend/
+!/docs/
 
 # Remove volatile directories for repeatable builds
 **/dist/*
