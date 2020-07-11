@@ -8,8 +8,20 @@ Originally developed as [match4healthcare](https://github.com/match4everyone/mat
 
 
 ## Quick install
+
+### Using docker
 - Copy `backend.prod.env.example` and `database.prod.env.example` to `backend.prod.env` and `database.prod.env` and fill in appropriate values
-- Run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build` (uses Docker), `docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec backend python3 manage.py loaddata backend/cms_export.json` and visit `http://localhost:8000/`
+- Run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build` (uses Docker), `docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec -it backend python3 manage.py createsuperuser`, `docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec backend python3 manage.py loaddata backend/cms_export.json` and visit `http://localhost:8000/`
+
+### Manually
+- Run
+```bash
+pip3 install -r backend/requirements.txt
+export LEAFLET_TILESERVER=open_street_map
+bash scripts/delete_db_and_setup.sh
+python3 backend/manage.py runserver
+```
+and visit `http://localhost:8000/`. Note that the password you have to enter during the script will become the password for the superuser account with the username `admin`.
 
 ## Environment variables
 
