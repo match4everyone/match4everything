@@ -41,7 +41,8 @@
                 {% blocktrans %}Profile Details{% endblocktrans %}
             </div>
             <div class="card-body">
-
+                <label for="email">{% blocktrans %}Email{% endblocktrans %}:</label>
+                <input type="text" id="email" name="email" value="{{ request.user.email }}" readonly> <br><br>
                 <a role="button" class="btn blue text-white btn-md" href="{% url 'logout' %}">{% blocktrans %}
                     Logout{% endblocktrans %}</a>
                 <a role="button" class="btn blue text-white btn-md" href="/matching/password_change">
