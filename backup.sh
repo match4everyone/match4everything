@@ -15,7 +15,7 @@ DB_CONTAINER="$(docker-compose -f docker-compose.yml -f docker-compose.prod.yml 
 docker run --rm --volumes-from "$DB_CONTAINER" -v "${WORKINGDIR}:/host" alpine sh -c "mv -v backups/* /host/database/backups"
 
 echo -e "\nCreating Django fixtures"
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec backend  sh -c 'django-admin dumpdata > /backend/backups/fixture-$(date +%F_%H%M%S).json'
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec backend  sh -c 'django-admin dumpdata --skip-checks > /backend/backups/fixture-$(date +%F_%H%M%S).json'
 echo "Moving the backups to $WORKINGDIR"
 BACKEND_CONTAINER="$(docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps -q backend)"
 docker run --rm --volumes-from "$BACKEND_CONTAINER" -v "${WORKINGDIR}:/host" alpine sh -c "mv -v /backend/backups/*.json /host/backend/backups"

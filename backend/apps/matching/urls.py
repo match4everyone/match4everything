@@ -4,7 +4,7 @@ from django.urls import include, path, register_converter
 from django.views.generic.base import TemplateView
 
 from . import views
-from .src import converters
+from .utils import converters
 
 register_converter(converters.DecimalPointFloatConverter, "float")
 register_converter(converters.ParticipantTypeConverter, "p")
