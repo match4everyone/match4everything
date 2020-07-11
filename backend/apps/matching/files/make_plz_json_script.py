@@ -5,6 +5,8 @@ from os.path import dirname, abspath, join
 from math import radians, sin, cos, asin, sqrt
 import csv
 
+# plz is german for zipcode
+
 plzs = {}
 
 current_location = dirname(abspath(__file__))
@@ -28,6 +30,6 @@ for countrycode in ["DE", "AT"]:
 
 
 
-with open(join(current_location, "files/plzs_merged.json"), "w") as f:
+with open(join(current_location, "files/zipcodes_merged.json"), "w") as f:
     f.write(json.dumps(plzs))
 """

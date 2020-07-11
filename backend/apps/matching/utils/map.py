@@ -2,35 +2,35 @@ import time
 
 from django.conf import settings
 
-from apps.matching.files.map_data import plzs
+from apps.matching.files.map_data import zipcodes
 
 
-def get_plz_data(countrycode, plz):
-    lat, lon, ort = plzs[countrycode][plz]
+def get_zipcode_data(countrycode, zipcode):
+    lat, lon, ort = zipcodes[countrycode][zipcode]
     return {"latitude": lat, "longitude": lon, "city": ort}
 
 
 def group_by_zip_code(entities):
-    countrycode_plz_details = {}
+    countrycode_zipcode_details = {}
 
     for entity in entities:
         countrycode = entity.country_code
-        plz = entity.plz
+        zipcode = entity.plz
 
-        if countrycode not in countrycode_plz_details:
-            countrycode_plz_details[countrycode] = {}
+        if countrycode not in countrycode_zipcode_details:
+            countrycode_zipcode_details[countrycode] = {}
 
-        country = countrycode_plz_details[countrycode]
-        if plz not in country:
-            country[plz] = {
+        country = countrycode_zipcode_details[countrycode]
+        if zipcode not in country:
+            country[zipcode] = {
                 "countrycode": countrycode,
-                "plz": plz,
+                "plz": zipcode,
                 "count": 0,
-                **get_plz_data(countrycode, plz),
+                **get_zipcode_data(countrycode, zipcode),
             }
 
-        country[plz]["count"] += 1
-    return countrycode_plz_details
+        country[zipcode]["count"] += 1
+    return countrycode_zipcode_details
 
 
 def get_ttl_hash(seconds=300):
