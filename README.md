@@ -1,5 +1,6 @@
 # match4everyone
 [![Documentation Status](https://readthedocs.org/projects/match4everything/badge/?version=latest)](https://match4everything.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.org/match4everyone/match4everything.svg?branch=staging)](https://travis-ci.org/match4everyone/match4everything)
 
 Open source project for building a platform that can match anyone.
 
