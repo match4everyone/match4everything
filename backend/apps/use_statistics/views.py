@@ -22,7 +22,7 @@ threshold_to_filter = 50
 
 
 @login_required
-@staff_member_required
+@staff_member_required(login_url="404")
 @permission_required("matching.can_view_access_stats")
 def use_statistics(request):
 

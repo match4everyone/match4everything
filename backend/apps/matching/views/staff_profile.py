@@ -8,6 +8,6 @@ from django.views.generic.base import TemplateView
 logger = logging.getLogger(__name__)
 
 
-@method_decorator([login_required, staff_member_required], name="dispatch")
+@method_decorator([login_required, staff_member_required(login_url="404")], name="dispatch")
 class StaffProfileView(TemplateView):
     template_name = "staff/staff_profile.html"
