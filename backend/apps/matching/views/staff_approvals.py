@@ -1,7 +1,6 @@
 import logging
 
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, render
@@ -11,13 +10,14 @@ from django.utils.translation import gettext as _
 from django.views import View
 from django_tables2.config import RequestConfig
 
+from apps.matching.admin import m4e_staff_member_required
 from apps.matching.models import Participant
 from apps.matching.tables import ApproveParticipantTable
 
 logger = logging.getLogger(__name__)
 
 
-@method_decorator([login_required, staff_member_required(login_url="404")], name="dispatch")
+@method_decorator([login_required, m4e_staff_member_required], name="dispatch")
 class ApproveParticipantsView(View):
     template_name = "approve_hospitals.html"
 

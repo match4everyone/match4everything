@@ -54,3 +54,17 @@ def logged_in_not_permitted(function=None, login_url="/"):
     if function:
         return actual_decorator(function)
     return actual_decorator
+
+
+def m4e_staff_member_required(function=None, login_url="404"):
+    """
+    Decorator for views that checks that the user is a staff user.
+
+    Redirecting to a 404 page if necessary to not give away admin url structures
+    to regular users. Basically the `staff_member_required` decorator from django
+    with the login_url replaced.
+    """
+    actual_decorator = user_passes_test(lambda u: u.is_staff, login_url=login_url)
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
