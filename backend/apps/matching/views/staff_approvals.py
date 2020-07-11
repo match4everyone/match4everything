@@ -17,7 +17,7 @@ from apps.matching.tables import ApproveParticipantTable
 logger = logging.getLogger(__name__)
 
 
-@method_decorator([login_required, staff_member_required], name="dispatch")
+@method_decorator([login_required, staff_member_required(login_url="404")], name="dispatch")
 class ApproveParticipantsView(View):
     template_name = "approve_hospitals.html"
 
@@ -29,6 +29,7 @@ class ApproveParticipantsView(View):
             or request.user.has_perm("matching.delete_participant%s" % p_type.lower())
         ):
             raise PermissionDenied("You currently don't have the permission to access this page")
+
         table_approved = ApproveParticipantTable[p_type](
             Participant[p_type].objects.filter(is_approved=True)
         )

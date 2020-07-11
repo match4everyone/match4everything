@@ -26,7 +26,7 @@ urlpatterns = [
     path("matching/", include("apps.matching.urls")),
     path("use_statistics/", include("apps.use_statistics.urls")),
     path("admin/", admin.site.urls),
-    path("404/", views.handler404),
+    path("404/", views.handler404, name="404"),
     path("500/", views.handler500),
     path("legal-questions/", views.legal_questions),
     re_path(r"^", include("cms.urls")),
