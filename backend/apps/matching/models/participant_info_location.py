@@ -6,8 +6,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 import numpy as np
 
-from apps.matching.files.map_data import plzs
-from apps.matching.src.plzs import BIG_CITY_PLZS
+from apps.matching.data.map_data import zipcodes
+from apps.matching.utils.zipcodes import GERMAN_BIG_CITY_ZIPCODES
 
 from .participant_info import ParticipantInfo
 
@@ -43,7 +43,7 @@ class AbstractParticipantInfoLocation(models.Model):
     )
 
     def clean(self):
-        if self.plz not in plzs[self.country_code]:
+        if self.plz not in zipcodes[self.country_code]:
             raise ValidationError(
                 str(self.plz) + str(_(" is not a postcode in ")) + self.country_code
             )
@@ -54,7 +54,9 @@ class AbstractParticipantInfoLocation(models.Model):
     @classmethod
     def generate_fake(cls, participant_info, rs=np.random):
         pil = cls.objects.create(
-            participant_info=participant_info, country_code="DE", plz=rs.choice(BIG_CITY_PLZS)
+            participant_info=participant_info,
+            country_code="DE",
+            plz=rs.choice(GERMAN_BIG_CITY_ZIPCODES),
         )
         pil.save()
         return pil
