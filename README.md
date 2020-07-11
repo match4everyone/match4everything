@@ -16,7 +16,7 @@ Originally developed as [match4healthcare](https://github.com/match4everyone/mat
 ### Manually
 - Run
 ```bash
-python3 install -r backend/requirements.txt
+pip3 install -r backend/requirements.txt
 export LEAFLET_TILESERVER=open_street_map
 bash scripts/delete_db_and_setup.sh
 python3 backend/manage.py runserver
