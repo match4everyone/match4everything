@@ -3,6 +3,7 @@ import logging
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.utils.text import format_lazy
@@ -21,6 +22,10 @@ class ApproveParticipantsView(View):
     template_name = "approve_hospitals.html"
 
     def get(self, request, p_type):
+        # If you are not a staff user, the method decorator takes care of showing a 404 page,
+        # so if you are a staff user, we throw a 403 here with an error message
+        if not request.user.has_perm("matching.can_approve_type_%s" % p_type.lower()):
+            raise PermissionDenied("You currently don't have the permission to access this page")
         table_approved = ApproveParticipantTable[p_type](
             Participant[p_type].objects.filter(is_approved=True)
         )
