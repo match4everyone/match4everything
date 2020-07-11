@@ -2,7 +2,7 @@ import time
 
 from django.conf import settings
 
-from apps.matching.files.map_data import zipcodes
+from apps.matching.data.map_data import zipcodes
 
 
 def get_zipcode_data(countrycode, zipcode):
