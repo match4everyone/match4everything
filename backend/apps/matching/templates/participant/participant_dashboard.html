@@ -41,7 +41,7 @@
                 {% blocktrans %}Profile Details{% endblocktrans %}
             </div>
             <div class="card-body">
-                <label for="email">{% blocktrans %}Email{% endblocktrans %}:</label>
+                <label for="email">{% blocktrans %}E-Mail{% endblocktrans %}:</label>
                 <input type="text" id="email" name="email" value="{{ request.user.email }}" class="textinput textInput form-control" disabled=""> <br><br>
                 <a role="button" class="btn blue text-white btn-md" href="{% url 'logout' %}">{% blocktrans %}
                     Logout{% endblocktrans %}</a>
