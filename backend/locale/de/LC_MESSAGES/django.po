@@ -433,6 +433,22 @@ msgstr "Deutsch"
 
 msgid ""
 "\n"
+"        403 Error\n"
+"    "
+msgstr ""
+"\n"
+"        403 Error\n"
+"    "
+
+msgid "You don't have the permissions to access this page."
+msgstr ""
+"Du hast keine ausreichenden Berechtigungen um auf diese Seite zuzugreifen."
+
+msgid "Back to homepage"
+msgstr "Zurück zur Homepage"
+
+msgid ""
+"\n"
 "        404 Error\n"
 "    "
 msgstr ""
@@ -443,9 +459,6 @@ msgstr ""
 msgid "This page could not be found."
 msgstr "Diese Seite konnte nicht gefunden werden."
 
-msgid "Back to homepage"
-msgstr "Zurück zur Homepage"
-
 msgid "Logout"
 msgstr "Logout"
 
@@ -455,13 +468,10 @@ msgstr "Ein Fehler ist aufgetreten."
 msgid "About"
 msgstr "Über uns"
 
-msgid "We are the team of match4everyone! Muhahaha"
-msgstr "M4E Team! Muhahaha"
-
 msgid "Developed by Open Source Team"
 msgstr "Entwickelt von"
 
-msgid "during th hackathon #wirvsvirus"
+msgid "during the hackathon #wirvsvirus"
 msgstr "während #wirvsvirus"
 
 msgid "Signup A"
@@ -494,35 +504,38 @@ msgstr "und"
 msgid "Terms of Use"
 msgstr "AGBs"
 
-msgid "We match for everyone."
-msgstr "Wir matchen jeden."
+#~ msgid "We are the team of match4everyone! Muhahaha"
+#~ msgstr "M4E Team! Muhahaha"
 
-msgid "I am"
-msgstr "Ich bin"
+#~ msgid "We match for everyone."
+#~ msgstr "Wir matchen jeden."
 
-msgid "A"
-msgstr "A"
+#~ msgid "I am"
+#~ msgstr "Ich bin"
 
-msgid "I own an ice cream parlor."
-msgstr "Ich besitze einen Eiscreme Laden."
+#~ msgid "A"
+#~ msgstr "A"
 
-msgid "This is me"
-msgstr "Das bin ich"
+#~ msgid "I own an ice cream parlor."
+#~ msgstr "Ich besitze einen Eiscreme Laden."
 
-msgid "B"
-msgstr "B"
+#~ msgid "This is me"
+#~ msgstr "Das bin ich"
 
-msgid "I feel hungry."
-msgstr "Ich habe Hunger."
+#~ msgid "B"
+#~ msgstr "B"
 
-msgid "How does this work?"
-msgstr "Wie funktioniert das?"
+#~ msgid "I feel hungry."
+#~ msgstr "Ich habe Hunger."
 
-msgid "We match."
-msgstr "Wir matchen."
+#~ msgid "How does this work?"
+#~ msgstr "Wie funktioniert das?"
 
-msgid "another open-source project"
-msgstr "noch ein open-source Projekt"
+#~ msgid "We match."
+#~ msgstr "Wir matchen."
+
+#~ msgid "another open-source project"
+#~ msgstr "noch ein open-source Projekt"
 
 #~ msgid ""
 #~ "\n"
