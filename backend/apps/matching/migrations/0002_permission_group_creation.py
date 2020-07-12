@@ -20,16 +20,16 @@ class Migration(migrations.Migration):
         # We can't import the models directly as they may be a newer
         # version than this migration expects. We use the historical version.
         Permission = apps.get_model("auth", "Permission")
+        User = apps.get_model("auth", "User")
         ContentType = apps.get_model("contenttypes", "ContentType")
-        Staff = apps.get_model("matching", "Staff")
         ParticipantA = apps.get_model("matching", "ParticipantA")
         ParticipantB = apps.get_model("matching", "ParticipantB")
 
         # We have to choose contenttypes for our permissions. For more ideas, refer to
         # https://stackoverflow.com/a/13933002
-        content_type_staff = ContentType.objects.get_for_model(Staff)
         content_type_participanta = ContentType.objects.get_for_model(ParticipantA)
         content_type_participantb = ContentType.objects.get_for_model(ParticipantB)
+        content_type_user = ContentType.objects.get_for_model(User)
 
         permission_list = [
             {
@@ -45,17 +45,17 @@ class Migration(migrations.Migration):
             {
                 "codename": NewPermissions.can_view_user_stats,
                 "name": "Can view user statistics",
-                "content_type": content_type_staff,
+                "content_type": content_type_user,
             },
             {
                 "codename": NewPermissions.can_view_access_stats,
                 "name": "Can view access statistics",
-                "content_type": content_type_staff,
+                "content_type": content_type_user,
             },
             {
                 "codename": NewPermissions.can_send_newsletter,
                 "name": "Can send newsletters to users",
-                "content_type": content_type_staff,
+                "content_type": content_type_user,
             },
         ]
 
