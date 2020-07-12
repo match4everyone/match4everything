@@ -2,7 +2,6 @@ import logging
 
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
-from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic.base import View
 
@@ -15,10 +14,7 @@ class LoginRedirect(View):
         user = request.user
 
         if user.is_participant:
-            return HttpResponseRedirect(
-                reverse("profile", kwargs={"p_type": user.participant().p_type()})
-            )
-
+            return HttpResponseRedirect("profile")
         elif user.is_staff:
             return HttpResponseRedirect("profile_staff")
         else:
