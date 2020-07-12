@@ -12,7 +12,7 @@ class NewPermissions:
     can_approve_type_b = "can_approve_type_b"
     can_view_user_stats = "can_view_user_stats"
     can_view_access_stats = "can_view_access_stats"
-    # TODO: Add 'can_send_newsletter' https://github.com/match4everyone/match4everything/issues/123
+    can_send_newsletter = "can_send_newsletter"
 
 
 class Migration(migrations.Migration):
@@ -52,6 +52,11 @@ class Migration(migrations.Migration):
                 "name": "Can view access statistics",
                 "content_type": content_type_staff,
             },
+            {
+                "codename": NewPermissions.can_send_newsletter,
+                "name": "Can send newsletters to users",
+                "content_type": content_type_staff,
+            },
         ]
 
         for permission in permission_list:
@@ -65,6 +70,7 @@ class Migration(migrations.Migration):
             NewPermissions.can_approve_type_b,
             NewPermissions.can_view_user_stats,
             NewPermissions.can_view_access_stats,
+            NewPermissions.can_send_newsletter,
         ]
 
         Permission.objects.filter(codename__in=permission_list).delete()
@@ -81,6 +87,7 @@ class Migration(migrations.Migration):
         group_perm_access_stats, created = Group.objects.get_or_create(name="perm_access_stats")
         group_perm_approve_a, created = Group.objects.get_or_create(name="perm_approve_a")
         group_perm_approve_b, created = Group.objects.get_or_create(name="perm_approve_b")
+        group_perm_send_newsletter, created = Group.objects.get_or_create(name="perm_send_newsletter")
 
         can_approve_type_a = Permission.objects.get(codename=NewPermissions.can_approve_type_a)
         group_perm_approve_a.permissions.add(can_approve_type_a)
@@ -94,6 +101,9 @@ class Migration(migrations.Migration):
         can_view_access_stats = Permission.objects.get(codename=NewPermissions.can_view_access_stats)
         group_perm_access_stats.permissions.add(can_view_access_stats)
 
+        can_send_newsletter = Permission.objects.get(codename=NewPermissions.can_send_newsletter)
+        group_perm_send_newsletter.permissions.add(can_send_newsletter)
+
     def delete_groups(apps, schema_editor):
         Group = apps.get_model("auth", "Group")
 
@@ -106,6 +116,7 @@ class Migration(migrations.Migration):
             "perm_access_stats",
             "perm_approve_a",
             "perm_approve_b",
+            "perm_send_newsletter"
         ]
 
         Group.objects.filter(name__in=group_list).delete()
@@ -119,6 +130,7 @@ class Migration(migrations.Migration):
         group_perm_access_stats = Group.objects.get(name="perm_access_stats")
         group_perm_approve_a = Group.objects.get(name="perm_approve_a")
         group_perm_approve_b = Group.objects.get(name="perm_approve_b")
+        group_perm_send_newsletter = Group.objects.get(name="perm_send_newsletter")
 
         users_a = User.objects.filter(is_A=True)
         users_b = User.objects.filter(is_B=True)
@@ -132,6 +144,7 @@ class Migration(migrations.Migration):
         group_perm_access_stats.user_set.add(*users_staff)
         group_perm_approve_a.user_set.add(*users_staff)
         group_perm_approve_b.user_set.add(*users_staff)
+        group_perm_send_newsletter.user_set.add(*users_staff)
 
     def remove_groups_from_users(apps, schema_editor):
         # Not really necessary since on reverse the groups will get deleted either way
