@@ -30,15 +30,11 @@ class ProvenBugsTestCase(TestCase):
 
 
 class MigrationTestCase(TransactionTestCase):
-    def test_migration_with_data(self):
+    def test_migration_rollback_for_configuration(self):
         # Migrate to starting point
         output = StringIO()
-        args = ["matching", "0001_initial"]
+        args = ["matching", "0002_permission_group_creation"]
         call_command("migrate", *args, stdout=output)
-
-        # Create testdata, otherwise a data migration would be easy
-        create_superuser()
-        create_fakeusers()
 
         # Test successful migration
         output = StringIO()
@@ -47,9 +43,11 @@ class MigrationTestCase(TransactionTestCase):
         self.assertNotIn("Traceback", output.getvalue())
         self.assertNotIn("Error", output.getvalue())
 
+        create_fakeusers()
+
         # Test successful rollback
         output = StringIO()
-        args = ["matching", "0001_initial"]
+        args = ["matching", "0002_permission_group_creation"]
         call_command("migrate", *args, stdout=output)
 
         self.assertNotIn("Traceback", output.getvalue())
