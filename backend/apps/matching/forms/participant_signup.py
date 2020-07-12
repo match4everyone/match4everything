@@ -4,7 +4,7 @@ from django.db import transaction
 from django.utils.translation import gettext_lazy as _
 
 from apps.matching.models import Participant, ParticipantInfo, User
-from apps.matching.src.dual_factory import instanciate_for_participants
+from apps.matching.utils.dual_factory import instanciate_for_participants
 
 
 def make_participant_signup_form(participant_type):

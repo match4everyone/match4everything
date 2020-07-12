@@ -46,9 +46,9 @@ Are you sure you want to delete your account?
   <div class="card login-card text-center align-items-center">
       <h4>{% blocktrans %}Are you sure you want to delete your account?{% endblocktrans %}</h4>
 
-      <a href="delete_me"><button class="btn blue text-white btn-md" style="margin-top:10px;">{% blocktrans %}Yes, delete my account.{% endblocktrans %}</button></a>
+      <a href="{% url 'delete_me' p_type %}"><button class="btn blue text-white btn-md" style="margin-top:10px;">{% blocktrans %}Yes, delete my account.{% endblocktrans %}</button></a>
 
-      <a href="/"><button class="btn blue text-white btn-md" style="margin-top:10px;">{% blocktrans %}No, return to my dashboard.{% endblocktrans %}</button></a>
+      <a href="{% url 'profile' p_type %}"><button class="btn blue text-white btn-md" style="margin-top:10px;">{% blocktrans %}No, return to my dashboard.{% endblocktrans %}</button></a>
     </div>
 	</div>
   </div>
