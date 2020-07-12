@@ -3,8 +3,7 @@ from django.template import loader
 from django.views.decorators.gzip import gzip_page
 
 from apps.matching.models import ParticipantInfoLocation
-from apps.matching.src.map import group_by_zip_code
-from apps.matching.utils.map import get_tile_info
+from apps.matching.utils.map import get_tile_info, group_by_zip_code
 
 
 # Should be safe against BREACH attack because we don't have user input in reponse body

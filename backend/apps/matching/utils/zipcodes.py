@@ -1,4 +1,4 @@
-BIG_CITY_PLZS = [
+GERMAN_BIG_CITY_ZIPCODES = [
     "01067",
     "01069",
     "01097",
