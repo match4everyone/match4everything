@@ -10,7 +10,7 @@ Could possibly be class based.
 
 
 @login_required
-def delete_me(request, p_type):
+def delete_me(request):
     user = request.user
     logout(request)
     user.delete()
@@ -18,6 +18,5 @@ def delete_me(request, p_type):
 
 
 @login_required
-def delete_me_ask(request, p_type):
-    context = {"p_type": p_type}
-    return render(request, "messages/deleted_user_ask.html", context)
+def delete_me_ask(request):
+    return render(request, "messages/deleted_user_ask.html")
