@@ -5,7 +5,14 @@ from django.http import Http404
 
 from .models import User
 
-admin.site.register(User)
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("email", "first_name", "last_name")
+    list_filter = ("is_staff", "is_superuser")
+    search_fields = ["email"]
+
+
+admin.site.register(User, UserAdmin)
 
 
 def participant_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
