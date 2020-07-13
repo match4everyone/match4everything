@@ -18,8 +18,6 @@ logger = logging.getLogger(__name__)
 
 @method_decorator([login_required, staff_member_required], name="dispatch")
 class ApproveParticipantsView(View):
-    template_name = "approve_hospitals.html"
-
     def get(self, request, p_type):
         table_approved = ApproveParticipantTable[p_type](
             Participant[p_type].objects.filter(is_approved=True)

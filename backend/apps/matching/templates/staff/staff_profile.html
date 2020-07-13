@@ -8,6 +8,7 @@
 
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -40,7 +41,7 @@
         </svg>
         {% blocktrans %}Approve{% endblocktrans %} A</a>
     </p>
-<p>
+    <p>
         <a role="button" class="btn blue text-white btn-md" href="{%  url 'approve_participant' 'B' %}">
         <svg class="bi bi-check-all" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M12.354 3.646a.5.5 0 010 .708l-7 7a.5.5 0 01-.708 0l-3.5-3.5a.5.5 0 11.708-.708L5 10.293l6.646-6.647a.5.5 0 01.708 0z" clip-rule="evenodd"/>
@@ -48,6 +49,20 @@
         </svg>
         {% blocktrans %}Approve{% endblocktrans %} B</a>
     </p>
+    {% if perms.matching.can_change_mail_limit_a %}
+    <p>
+        <a role="button" class="btn blue text-white btn-md" href="{%  url 'mail_limit' 'A' %}">
+        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+        {% blocktrans %}Change mail limit for{% endblocktrans %} A</a>
+    </p>
+    {% endif %}
+    {% if perms.matching.can_change_mail_limit_B %}
+    <p>
+        <a role="button" class="btn blue text-white btn-md" href="{%  url 'mail_limit' 'B' %}">
+        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+        {% blocktrans %}Change mail limit for{% endblocktrans %} B</a>
+    </p>
+    {% endif %}
     <p>
         <a role="button" class="btn blue text-white btn-md" href="/matching/profile_staff">
         <svg class="bi bi-newspaper" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor"

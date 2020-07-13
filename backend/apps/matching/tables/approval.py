@@ -4,7 +4,12 @@ from django_tables2 import TemplateColumn
 from apps.matching.models import Participant
 from apps.matching.utils.dual_factory import instanciate_for_participants
 
-approval_button = '<form>{% csrf_token %}<input type="hidden" value="{{record.uuid}}" name="uuid"> <button type="submit" name="change_approval" formmethod="post" class="btn btn-sm {% if record.is_approved %} btn-warning {% else %} btn-success {%endif%}">{% if record.is_approved %}Disapprove{% else %}  Approve {%endif%}</button></form>'
+approval_button = (
+    "<form>{% csrf_token %}"
+    '<input type="hidden" value="{{record.uuid}}" name="uuid"> '
+    '<button type="submit" name="change_approval" formmethod="post" class="btn btn-sm {% if record.is_approved %} btn-warning {% else %} btn-success {%endif%}">'
+    "{% if record.is_approved %}Disapprove{% else %}  Approve {%endif%}</button></form>"
+)
 # TODO: We ned to link to the profile of that participant on the info https://github.com/match4everyone/match4everything/issues/55
 info_button = '<a class="btn btn-info btn-sm" href="/matching/{{record.uuid }}">More Info </a>'
 delete_button = (
