@@ -54,6 +54,8 @@ class ApproveParticipantsView(View):
                 "table_approved": table_approved,
                 "table_unapproved": table_unapproved,
                 "p_type": p_type,
+                "search_unapproved_mails": search_unapproved_mails,
+                "search_approved_mails": search_approved_mails,
             },
         )
 

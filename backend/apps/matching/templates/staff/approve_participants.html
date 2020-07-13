@@ -41,8 +41,14 @@
         </div>
         <div class="card-body">
             <form>
-                <input type="text" placeholder="Search mails.." name="search_unapproved_mails">
-                <button type="submit" ><i class="fa fa-search"></i></button>
+                {% csrf_token %}
+                <input type="text" placeholder="Search mails..." value="{{search_unapproved_mails}}" name="search_unapproved_mails" id="search_unapproved_mails-original">
+                <input type="hidden" name="search_approved_mails" id="search_approved_mails-hidden"
+                       onsubmit="self.value = document.getElementById('search_approved_mails-original').value;">
+                <button type="submit" onclick="setApproved();">
+                    <i class="fa fa-search"></i></button>
+                <button onclick="clearUnapproved();">
+                    <i class="fa fa-trash" aria-hidden="true"></i></button>
             </form>
             <br><br>
             {% render_table table_unapproved %}
@@ -55,14 +61,40 @@
         </div>
         <div class="card-body">
             <form>
-                <input type="text" placeholder="Search mails.." name="search_approved_mails">
-                <button type="submit" ><i class="fa fa-search"></i></button>
+                {% csrf_token %}
+                <input type="text" placeholder="Search mails..." value="{{search_approved_mails}}" name="search_approved_mails" id="search_approved_mails-original">
+                <input type="hidden" name="search_unapproved_mails" id="search_unapproved_mails-hidden">
+                <button type="submit" onclick="setUnapproved();">
+                    <i class="fa fa-search"></i></button>
+                <button onclick="clearApproved();">
+                    <i class="fa fa-trash" aria-hidden="true"></i></button>
             </form>
             <br><br>
             {% render_table table_approved %}
         </div>
-    </div>
 
+        <script>
+            function setUnapproved() {
+                document.getElementById('search_unapproved_mails-hidden').value = document.getElementById('search_unapproved_mails-original').value;
+            }
+
+            function setApproved() {
+                document.getElementById('search_approved_mails-hidden').value = document.getElementById('search_approved_mails-original').value;
+            }
+
+            function clearApproved() {
+                document.getElementById('search_approved_mails-hidden').value = '';
+                document.getElementById('search_approved_mails-original').value = '';
+                setUnapproved();
+            }
+
+            function clearUnapproved() {
+                document.getElementById('search_unapproved_mails-hidden').value = '';
+                document.getElementById('search_unapproved_mails-original').value = '';
+                setApproved();
+            }
+        </script>
+    </div>
 </div>
 
 {% endblock %}
