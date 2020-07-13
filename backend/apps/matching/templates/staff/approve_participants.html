@@ -8,6 +8,7 @@
 
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -39,15 +40,25 @@
             {% blocktrans %}These participants require approval.{% endblocktrans %}
         </div>
         <div class="card-body">
+            <form>
+                <input type="text" placeholder="Search mails.." name="search_unapproved_mails">
+                <button type="submit" ><i class="fa fa-search"></i></button>
+            </form>
+            <br><br>
             {% render_table table_unapproved %}
         </div>
     </div>
     <hr>
-    <div class="card ">
+    <div class="card">
         <div class="card-header">
             {% blocktrans %}These participants are approved, but you can disapprove them any time.{% endblocktrans %}
         </div>
         <div class="card-body">
+            <form>
+                <input type="text" placeholder="Search mails.." name="search_approved_mails">
+                <button type="submit" ><i class="fa fa-search"></i></button>
+            </form>
+            <br><br>
             {% render_table table_approved %}
         </div>
     </div>
