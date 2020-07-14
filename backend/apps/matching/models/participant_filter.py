@@ -5,7 +5,8 @@ from django.db import models
 from django.urls import reverse
 import django_filters
 
-from match4everyone.config.A import A
+from match4everyone.configuration.A import A
+from match4everyone.configuration.B import B
 
 from .participant_info import ParticipantInfo
 from .user import User
@@ -144,4 +145,4 @@ def add_participant_specific_filters(name, participant_config):
 
 
 add_participant_specific_filters("A", A)
-add_participant_specific_filters("B", A)  # add an own file for B as soon as someone writes it
+add_participant_specific_filters("B", B)

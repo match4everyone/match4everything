@@ -1,7 +1,7 @@
 import django_tables2 as tables
 
 from apps.matching.models import ParticipantInfoFilter
-from apps.matching.src.dual_factory import instanciate_for_participants
+from apps.matching.utils.dual_factory import instanciate_for_participants
 
 
 def make_filter_tables(p_type):

@@ -54,9 +54,7 @@ class FilteredParticipantList(SingleTableMixin, FilterView):
                 )
                 m.save()
 
-        return HttpResponseRedirect(
-            reverse("profile", kwargs={"p_type": request.user.participant().p_type()})
-        )
+        return HttpResponseRedirect(reverse("profile"))
 
     def get_model_class(self):
         return ParticipantInfo[self.kwargs["p_type"]]

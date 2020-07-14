@@ -1,7 +1,7 @@
 import django_tables2 as tables
 
 from apps.matching.models import ParticipantInfo
-from apps.matching.src.dual_factory import instanciate_for_participants
+from apps.matching.utils.dual_factory import instanciate_for_participants
 
 
 def make_participant_info_tables(p_type):
