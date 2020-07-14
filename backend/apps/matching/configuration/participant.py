@@ -27,3 +27,6 @@ class ParticipantConfig:
         names = self.get_model_field_names()
         filters = chain(*[p.get_filters() for p in self.properties])
         return zip(names, filters)
+
+    def to_filter_json(self):
+        return {"properties": list(filter(None, [p.to_filter_json() for p in self.properties]))}

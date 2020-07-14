@@ -1,6 +1,7 @@
 from .filter_edit import FilterUpdateView  # noqa
 from .filter_list import FilterListView  # noqa
 from .filtered_participants import FilteredParticipantList  # noqa
+from .filter_options import view_FilterOptionsJSON  # noqa
 from .mail_limits import IncreaseMailLimitView  # noqa
 from .map import map_JSON, map_view  # noqa
 from .participant_change_activation import ChangeActivationAskView, ChangeActivationRedirect  # noqa
