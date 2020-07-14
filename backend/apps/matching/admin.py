@@ -23,6 +23,42 @@ def participant_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME,
     return actual_decorator
 
 
+def can_approve_type_in_url(function=None):
+    """
+    Check that the user at hand can approve objects of given p_type
+    """
+
+    def actual_decorator(function):
+        def new_func(request, p_type, *args, **kwargs):
+            if request.user.has_perm(p_type):
+                return function(request, p_type, *args, **kwargs)
+            raise Http404
+
+        return new_func
+
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
+
+
+def can_delete_type_in_url(function=None):
+    """
+    Check that the user at hand can approve objects of given p_type
+    """
+
+    def actual_decorator(function):
+        def new_func(request, p_type, *args, **kwargs):
+            if request.user.has_perm(p_type):
+                return function(request, p_type, *args, **kwargs)
+            raise Http404
+
+        return new_func
+
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
+
+
 def matching_participant_required(function=None):
     """
     Check that participant matches url.
