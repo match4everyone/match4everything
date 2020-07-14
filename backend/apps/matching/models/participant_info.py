@@ -4,7 +4,7 @@ import uuid
 from django.db import models
 from django.urls import reverse
 
-from match4everyone.config.A import A
+from match4everyone.configuration.A import A
 
 from .participant import Participant
 
