@@ -1,15 +1,40 @@
 from django.contrib import admin
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.decorators import user_passes_test
 from django.http import Http404
 
 from .models import User
 
 
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(UserAdmin):
     list_display = ("email", "first_name", "last_name")
     list_filter = ("is_staff", "is_superuser")
     search_fields = ["email"]
+
+    fieldsets = ((None, {"fields": ("email", "password", "first_name", "last_name")}),)
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "username",
+                    "email",
+                    "password1",
+                    "password2",
+                    "first_name",
+                    "last_name",
+                    "is_superuser",
+                    "is_staff",
+                    "is_active",
+                    "validated_email",
+                ),
+            },
+        ),
+    )
+
+    filter_horizontal = ()
 
 
 admin.site.register(User, UserAdmin)
