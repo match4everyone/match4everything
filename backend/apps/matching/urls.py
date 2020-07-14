@@ -67,7 +67,7 @@ urlpatterns = [
     path(
         "thanks-registration/",
         TemplateView.as_view(template_name="messages/thanks_for_registering.html"),
-        name="thanks-register",
+        name="thanks-registration",
     ),
     path("login_redirect/", views.LoginRedirect.as_view(), name="login_redirect"),
     path("validate_email/", views.validate_email, name="validate_email"),
@@ -117,7 +117,7 @@ urlpatterns = [
         auth_views.PasswordResetConfirmView.as_view(
             template_name="registration/password_reset_confirm_.html",
             post_reset_login=True,
-            success_url="/matching/validate_email",
+            success_url="/matching/validate_email/",
         ),
         name="password_reset_confirm_",
     ),
