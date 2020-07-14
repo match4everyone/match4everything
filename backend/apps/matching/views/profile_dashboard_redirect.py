@@ -19,7 +19,7 @@ class ProfileDashboardRedirect(View):
         if user.is_participant:
             return HttpResponseRedirect(reverse("profile"))
         elif user.is_staff:
-            return HttpResponseRedirect(reverse("profile_staff"))
+            return HttpResponseRedirect(reverse("staff_profile"))
 
         else:
             logger.warning(
