@@ -28,13 +28,12 @@
   </div>
 {% endfor %}
     <p style="margin-top:30px;">
-    <h2>
-    {% blocktrans %}Your saved searches{% endblocktrans %}
-    </h2>
-<a href="{% url 'create_participant_filter' p_type %}" class="btn btn-outline-primary" role="button" >Add a new search</a>
     <div class="card border-info" style="margin-top:30px;">
         <div class="card-header">
-            {% blocktrans %}Your searches.{% endblocktrans %}
+        <div class="row">
+            <div class="col test-left">{% blocktrans %}Your search history.{% endblocktrans %}</div>
+            <div class="col text-right"><a href="{% url 'participant_list' p_type %}" class="btn btn-sm btn-outline-primary" role="button" >Start a new search</a></div>
+        </div>
         </div>
         <div class="card-body">
             {% render_table table %}

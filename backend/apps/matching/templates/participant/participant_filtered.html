@@ -24,13 +24,18 @@
             <form action="">
             {% csrf_token %}
                 {% if filter %}
-
-
+                    <div class="card" style="margin-bottom:35px;">
+                    <div class="card-header">
+                        {% blocktrans %}What are you looking for?{% endblocktrans %}
+                    </div>
+                    <div class="card-body">
                     {{ filter.form |crispy }}
-                    <input type="submit" formmethod="get" class="btn btn-success" value="Search again">
-
+                    <input type="submit" formmethod="get" class="btn btn-success" value="{% blocktrans %}Apply to search{% endblocktrans %}">
+                    </div>
+                    </div>
                 {% endif %}
-                {% render_table table %}
+            <p>Search results</p>
+            {% render_table table %}
                     <!-- Button to Open the Modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
   Contact selected
@@ -50,8 +55,8 @@
       <!-- Modal body -->
       <div class="modal-body">
           <div class="form-group">
-    <label for="formGroupExampleInput">Search Description</label>
-    <input type="text" class="form-control" name="name" placeholder="My First Search">
+    <label for="formGroupExampleInput">Subject</label>
+    <input type="text" class="form-control" name="name" placeholder="Job offer at my place">
   </div>
         <div class="form-group">
     <label for="exampleFormControlTextarea1">Message</label>

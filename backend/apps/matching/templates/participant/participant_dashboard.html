@@ -41,10 +41,10 @@
             <div class="card-body">
             {% if p_type == 'A' %}
             <a role="button" class="btn btn-primary text-white btn-lg" href="{% url 'participant_list' 'B' %}">{% blocktrans %}Start a new search for B's{% endblocktrans %}</a>
-            <a role="button" class="btn btn-primary text-white btn-lg" href="{% url 'filter_list' 'B' %}">{% blocktrans %}Past searches for B's{% endblocktrans %}</a>
+            <a href="{% url 'filter_list' 'B' %}">{% blocktrans %}My past searches for B's{% endblocktrans %}</a>
             {% elif p_type == 'B' %}
                             <a role="button" class="btn btn-primary text-white btn-lg" href="{% url 'participant_list' 'A' %}">{% blocktrans %}Start a new search for A's{% endblocktrans %}</a>
-                <a role="button" class="btn btn-primary text-white btn-lg" href="{% url 'filter_list' 'A' %}">{% blocktrans %}Saved searches for A's{% endblocktrans %}</a>
+                <a href="{% url 'filter_list' 'A' %}">{% blocktrans %}My past searches for A's{% endblocktrans %}</a>
             {% endif %}
             </div>
         </div>
