@@ -184,8 +184,8 @@ msgid ""
 "Your account is irreversibly linked to your email address. Should you wish "
 "to use another one, please delete your account and register with a new one."
 msgstr ""
-"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere "
-"Emailbenutzen willst, lösche einfach deinen Account und leg einen neuen an."
+"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere Email "
+"benutzen willst, lösche einfach deinen Account und leg einen neuen an."
 
 msgid ""
 "\n"
@@ -297,7 +297,7 @@ msgstr "Passwort setzen"
 msgid " Your password has been set. You can log in anytime."
 msgstr " Das Passwort wurde gesetzt, Sie können sich jederzeit einloggen."
 
-msgid "Succsessful Login"
+msgid "Successful Login"
 msgstr "Login erfolgreich"
 
 msgid "Hi,"
@@ -382,8 +382,7 @@ msgid "Mail limits for"
 msgstr "Maximale Anzahl an E-Mails für"
 
 msgid "You can change the mail limit of these participants."
-msgstr ""
-"Sie können die maximale Anzahl an E-Mails für diese Teilnehmer ändern."
+msgstr "Sie können die maximale Anzahl an E-Mails für diese Teilnehmer ändern."
 
 msgid "Staff"
 msgstr "Administrator"
@@ -400,8 +399,14 @@ msgstr "Freischalten"
 msgid "Change mail limit for"
 msgstr "Ändere maximale Anzahl an E-Mails für"
 
-msgid "Do something"
-msgstr "Mach etwas"
+msgid "Edit newsletter (Not implemented!)"
+msgstr "Newsletter bearbeiten (Nicht implementiert!)"
+
+msgid "View website statistics"
+msgstr "Zugriffsstatistik ansehen"
+
+msgid "View user statistics (Not implemented!)"
+msgstr "Nutzerstatistiken ansehen (Nicht implementiert!)"
 
 #, python-brace-format
 msgid "You increased the mail limit for '{name}'."
@@ -412,6 +417,9 @@ msgstr "Sie haben ihr Profil deaktiviert."
 
 msgid "You successfully reactivated your profile."
 msgstr "Sie haben Ihr Profil aktiviert."
+
+msgid "Your account is currently deactivated."
+msgstr "Ihr Konto ist aktuell deaktiviert."
 
 msgid "Successfully updated info."
 msgstr "Sie haben Ihre Infos aktualisiert."
@@ -504,6 +512,9 @@ msgstr "und"
 msgid "Terms of Use"
 msgstr "AGBs"
 
+#~ msgid "We match for everyone."
+#~ msgstr "Wir matchen jeden."
+
 #~ msgid ""
 #~ "\n"
 #~ "        View Info\n"
@@ -514,9 +525,6 @@ msgstr "AGBs"
 
 #~ msgid "We are the team of match4everyone! Muhahaha"
 #~ msgstr "M4E Team! Muhahaha"
-
-#~ msgid "We match for everyone."
-#~ msgstr "Wir matchen jeden."
 
 #~ msgid "I am"
 #~ msgstr "Ich bin"
