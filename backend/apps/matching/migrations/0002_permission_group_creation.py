@@ -12,6 +12,7 @@ class NewPermissions:
     can_approve_type_b = "can_approve_type_b"
     can_view_user_stats = "can_view_user_stats"
     can_view_access_stats = "can_view_access_stats"
+    can_send_newsletter = "can_send_newsletter"
 
 
 class Migration(migrations.Migration):
@@ -19,16 +20,16 @@ class Migration(migrations.Migration):
         # We can't import the models directly as they may be a newer
         # version than this migration expects. We use the historical version.
         Permission = apps.get_model("auth", "Permission")
+        User = apps.get_model("auth", "User")
         ContentType = apps.get_model("contenttypes", "ContentType")
-        Staff = apps.get_model("matching", "Staff")
         ParticipantA = apps.get_model("matching", "ParticipantA")
         ParticipantB = apps.get_model("matching", "ParticipantB")
 
         # We have to choose contenttypes for our permissions. For more ideas, refer to
         # https://stackoverflow.com/a/13933002
-        content_type_staff = ContentType.objects.get_for_model(Staff)
         content_type_participanta = ContentType.objects.get_for_model(ParticipantA)
         content_type_participantb = ContentType.objects.get_for_model(ParticipantB)
+        content_type_user = ContentType.objects.get_for_model(User)
 
         permission_list = [
             {
@@ -44,12 +45,17 @@ class Migration(migrations.Migration):
             {
                 "codename": NewPermissions.can_view_user_stats,
                 "name": "Can view user statistics",
-                "content_type": content_type_staff,
+                "content_type": content_type_user,
             },
             {
                 "codename": NewPermissions.can_view_access_stats,
                 "name": "Can view access statistics",
-                "content_type": content_type_staff,
+                "content_type": content_type_user,
+            },
+            {
+                "codename": NewPermissions.can_send_newsletter,
+                "name": "Can send newsletters to users",
+                "content_type": content_type_user,
             },
         ]
 
@@ -64,6 +70,7 @@ class Migration(migrations.Migration):
             NewPermissions.can_approve_type_b,
             NewPermissions.can_view_user_stats,
             NewPermissions.can_view_access_stats,
+            NewPermissions.can_send_newsletter,
         ]
 
         Permission.objects.filter(codename__in=permission_list).delete()
@@ -80,6 +87,7 @@ class Migration(migrations.Migration):
         group_perm_access_stats, created = Group.objects.get_or_create(name="perm_access_stats")
         group_perm_approve_a, created = Group.objects.get_or_create(name="perm_approve_a")
         group_perm_approve_b, created = Group.objects.get_or_create(name="perm_approve_b")
+        group_perm_send_newsletter, created = Group.objects.get_or_create(name="perm_send_newsletter")
 
         can_approve_type_a = Permission.objects.get(codename=NewPermissions.can_approve_type_a)
         group_perm_approve_a.permissions.add(can_approve_type_a)
@@ -95,6 +103,9 @@ class Migration(migrations.Migration):
         )
         group_perm_access_stats.permissions.add(can_view_access_stats)
 
+        can_send_newsletter = Permission.objects.get(codename=NewPermissions.can_send_newsletter)
+        group_perm_send_newsletter.permissions.add(can_send_newsletter)
+
     def delete_groups(apps, schema_editor):
         Group = apps.get_model("auth", "Group")
 
@@ -107,6 +118,7 @@ class Migration(migrations.Migration):
             "perm_access_stats",
             "perm_approve_a",
             "perm_approve_b",
+            "perm_send_newsletter"
         ]
 
         Group.objects.filter(name__in=group_list).delete()
