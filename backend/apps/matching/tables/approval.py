@@ -4,9 +4,12 @@ from django_tables2 import TemplateColumn
 from apps.matching.models import Participant
 from apps.matching.utils.dual_factory import instanciate_for_participants
 
-approval_button = '<form>{% csrf_token %}<input type="hidden" value="{{record.uuid}}" name="uuid"> <button type="submit" name="change_approval" formmethod="post" class="btn btn-sm {% if record.is_approved %} btn-warning {% else %} btn-success {%endif%}">{% if record.is_approved %}Disapprove{% else %}  Approve {%endif%}</button></form>'
-# TODO: We ned to link to the profile of that participant on the info https://github.com/match4everyone/match4everything/issues/55
-info_button = '<a class="btn btn-info btn-sm" href="/matching/{{record.uuid }}">More Info </a>'
+approval_button = (
+    "<form>{% csrf_token %}"
+    '<input type="hidden" value="{{record.uuid}}" name="uuid"> '
+    '<button type="submit" name="change_approval" formmethod="post" class="btn btn-sm {% if record.is_approved %} btn-warning {% else %} btn-success {%endif%}">'
+    "{% if record.is_approved %}Disapprove{% else %}  Approve {%endif%}</button></form>"
+)
 delete_button = (
     "<!-- Button trigger modal -->"
     '<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#exampleModal{{record.uuid}}">'
@@ -37,7 +40,9 @@ delete_button = (
 
 def make_staff_approvals_table(p_type):
     class ApproveParticipantTable(tables.Table):
-        info = TemplateColumn(template_code=info_button)
+        info = TemplateColumn(
+            template_name="staff/user_info_button.html", extra_context={"p_type": p_type}
+        )
         status = TemplateColumn(template_code=approval_button)
         delete = TemplateColumn(template_code=delete_button)
 
