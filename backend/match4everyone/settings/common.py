@@ -21,11 +21,12 @@ from django.utils.translation import ugettext_lazy as _
 # add paths here and import: from django.col import settings and use settings.XXX_DIR
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RUN_DIR = os.path.join(BASE_DIR, "run")
-
+LOG_DIR = os.path.join(RUN_DIR, "log")
 
 # Application definition
 
 INSTALLED_APPS = [
+    "djangocms_admin_style",  # for the admin skin. You **must** add 'djangocms_admin_style' in the list **before** 'django.contrib.admin'.
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -39,9 +40,27 @@ INSTALLED_APPS = [
     "rest_framework",
     "apps.matching.apps.MatchingConfig",
     "apps.use_statistics.apps.UseStatisticsConfig",
+    "django.contrib.sites",
+    "cms",  # django CMS itself
+    "treebeard",  # utilities for implementing a tree using materialised paths
+    "menus",  # helper for model independent hierarchical website navigation
+    "sekizai",  # for javascript and css management
+    "filer",
+    "easy_thumbnails",
+    "mptt",
+    "djangocms_text_ckeditor",
+    "djangocms_link",
+    "djangocms_file",
+    "djangocms_picture",
+    "djangocms_video",
+    "djangocms_snippet",
+    "djangocms_style",
+    "webpack_loader",
 ]
 
 MIDDLEWARE = [
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # 'cms.middleware.utils.ApphookReloadMiddleware' TODO: Not working right now "ModuleNotFoundError: No module named 'cms.middleware.utils.ApphookReloadMiddlewaredjango'; 'cms.middleware.utils' is not a package"
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -50,6 +69,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "cms.middleware.user.CurrentUserMiddleware",
+    "cms.middleware.page.CurrentPageMiddleware",
+    "cms.middleware.toolbar.ToolbarMiddleware",
+    "cms.middleware.language.LanguageCookieMiddleware",
 ]
 
 ROOT_URLCONF = "match4everyone.urls"
@@ -65,6 +88,10 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "sekizai.context_processors.sekizai",
+                "cms.context_processors.cms_settings",
+                "django.template.context_processors.i18n",
+                "django_settings_export.settings_export",
             ],
         },
     },
@@ -77,7 +104,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 WSGI_APPLICATION = "match4everyone.wsgi.application"
 
-MAX_EMAILS_PER_HOSPITAL_PER_DAY = 200
+MAX_EMAILS_PER_DAY = 200
 NEWSLETTER_REQUIRED_APPROVERS = 2
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -88,6 +115,28 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
 ]
+
+# django-cms settings
+SITE_ID = 1
+X_FRAME_OPTIONS = "SAMEORIGIN"
+CMS_TEMPLATES = [
+    ("home-without_content.html", "Empty page template"),
+    ("home.html", "Home page template"),
+    ("about.html", "About page template"),
+    ("impressum.html", "Imprint page template"),
+    ("dataprotection.html", "Data protection page template"),
+    ("terms-of-use.html", "Terms of use page template"),
+]
+
+# django-filler config
+THUMBNAIL_HIGH_RESOLUTION = True
+
+THUMBNAIL_PROCESSORS = (
+    "easy_thumbnails.processors.colorspace",
+    "easy_thumbnails.processors.autocrop",
+    "filer.thumbnail_processors.scale_and_crop_with_subject_location",
+    "easy_thumbnails.processors.filters",
+)
 
 
 # Internationalization
@@ -119,15 +168,18 @@ RUN_DIR = os.path.join(BASE_DIR, "run")
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 PROJECT_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(RUN_DIR, "media")
-
 MEDIA_URL = "/media/"
+# TODO: Serve media files properly (http://docs.django-cms.org/en/latest/how_to/install.html#media-and-static-file-handling)
 
+STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(RUN_DIR, "static")
-
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    os.path.join(os.path.dirname(BASE_DIR), "frontend", "dist"),
+)
 
 LEAFLET_TILESERVER = os.getenv(
     "LEAFLET_TILESERVER"
@@ -161,7 +213,7 @@ LOGGING = {
             "class": "match4everyone.logging.formatters.DjangoRequestJSONFormatter"
         },
         "text": {
-            "class": "match4everyone.logging.formatters.OneLineExceptionFormatter",
+            "class": "match4everyone.logging.formatters.DefaultExceptionFormatter",
             "format": "%(asctime)s: %(name)-12s %(levelname)-8s |%(message)s|",
         },
     },
@@ -175,7 +227,7 @@ LOGGING = {
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "json",
             "level": "ERROR",
-            "filename": path.join(RUN_DIR, "match4everyone.json.error.log"),
+            "filename": path.join(LOG_DIR, "match4everyone.json.error.log"),
             "maxBytes": 1024 * 1024 * 15,  # 15MB
             "backupCount": 10,
         },
@@ -183,7 +235,7 @@ LOGGING = {
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "json",
             "level": "INFO",
-            "filename": path.join(RUN_DIR, "match4everyone.json.audit.log"),
+            "filename": path.join(LOG_DIR, "match4everyone.json.audit.log"),
             "maxBytes": 1024 * 1024 * 15,  # 15MB
             "backupCount": 10,
         },
@@ -217,6 +269,20 @@ LOGGING = {
     },
 }
 
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "CACHE": True,
+        "BUNDLE_DIR_NAME": "/",  # must end with slash
+        "STATS_FILE": os.path.join(
+            os.path.dirname(BASE_DIR), "frontend", "dist", "webpack-stats.json"
+        ),
+        "POLL_INTERVAL": 0.1,
+        "TIMEOUT": None,
+        # 'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
+        "LOADER_CLASS": "webpack_loader.loader.WebpackLoader",
+    }
+}
+
 # ========== determine wether this is a forked version of m4h ==========#
 
 IS_TRAVIS = "TRAVIS" in os.environ and bool(os.environ["TRAVIS"])
@@ -227,3 +293,10 @@ IS_FORK = False
 
 if IS_TRAVIS and os.environ["TRAVIS_PULL_REQUEST_SLUG"] not in ["match4everyone/match4everything"]:
     IS_FORK = True
+
+# This is only used in the META tags for facebook's og
+BASE_URL = "https://match4everyone.de"
+
+SETTINGS_EXPORT = [
+    "BASE_URL",
+]

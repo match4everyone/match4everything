@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load cms_tags %}
 
 {% block title %}
     Datenschutzerklärung
@@ -21,23 +22,10 @@
     <div class="container">
         <div style="height:40px"></div>
         <div class="impressum">
-            <h1>Datenschutzerklärung</h1>
+            <h1>{% placeholder "data protection title" %}</h1>
             <div class="row" style="margin-bottom: 55px;">
                 <div class="col-md-12">
-                    <h4><strong>Datenschutzinformationen</strong></h4>
-                    <p>Vielen Dank f&uuml;r Ihr Interesse an unserer Internetseite. Der Schutz Ihrer personenbezogenen
-                        Daten ist uns wichtig. </p>
-                    <p>Sie finden nachfolgend Informationen dazu, welche personenbezogenen Daten bei dem Besuch und der
-                        Nutzung der Angebote auf unserer Seite www.match4everyone.de erhoben und verarbeitet
-                        werden</p>
-                    <p><strong>Name und Kontaktdaten des Verantwortlichen<br>
-                    </strong>Verantwortlicher i.S.d. Art. 4 Abs. 7 DSGVO:</p>
-                    <p><strong>Name</strong><br>
-                        Someone
-                    <p><strong>Kontaktdaten des Datenschutzbeauftragten</strong><br>
-                        Unser Datenschutzbeauftragter:<br>
-                        Someone
-                    </p>
+                    {% placeholder "data protection text" %}
                 </div>
             </div>
         </div>

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-26 16:20+0000\n"
-"PO-Revision-Date: 2020-06-26 17:45+0200\n"
+"POT-Creation-Date: 1900-01-01 00:00+0000\n"
+"PO-Revision-Date: 2020-07-13 18:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,19 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
-
-msgid "is exactly"
-msgstr "is genau"
-
-msgid "is greater than"
-msgstr "ist größer als"
-
-msgid "is smaller than"
-msgstr "ist kleiner als"
-
-msgid "contains"
-msgstr "enthält"
+"X-Generator: Poedit 2.3\n"
 
 msgid "E-Mail"
 msgstr "E-Mail"
@@ -55,7 +43,7 @@ msgid "Austria"
 msgstr "Österreich"
 
 msgid " is not a postcode in "
-msgstr "ist keine Postleitzahl in"
+msgstr " ist keine Postleitzahl in "
 
 msgid "This email is already taken."
 msgstr "Diese E-Mail wurde bereits vergeben."
@@ -65,31 +53,31 @@ msgstr "Karte"
 
 #, python-brace-format
 msgid ""
-"In ${city}, (PLZ ${plz}) there are ${count} A's.\\n<a href=\"${url}\" target="
+"In ${city}, (PLZ ${plz}) there are ${count} As.\\n<a href=\"${url}\" target="
 "\"_blank\">Detail</a>"
 msgstr ""
-"In ${city}, (PLZ ${plz}) gibt es ${count} A's.\\n<a href=\"${url}\" target="
+"In ${city}, (PLZ ${plz}) gibt es ${count} As.\\n<a href=\"${url}\" target="
 "\"_blank\">Detail</a>"
 
 #, python-brace-format
 msgid ""
-"In ${city}, (PLZ ${plz}) there are ${count} B's.\\n<a href=\"${url}\" target="
+"In ${city}, (PLZ ${plz}) there are ${count} Bs.\\n<a href=\"${url}\" target="
 "\"_blank\">Detail</a>"
 msgstr ""
-"In ${city}, (PLZ ${plz}) gibt es ${count} B's.\\n<a href=\"${url}\" target="
+"In ${city}, (PLZ ${plz}) gibt es ${count} Bs.\\n<a href=\"${url}\" target="
 "\"_blank\">Detail</a>"
 
-msgid "B's"
-msgstr "B's"
+msgid "Bs"
+msgstr "Bs"
 
-msgid "A's"
-msgstr "A's"
+msgid "As"
+msgstr "As"
 
 msgid "Direct Search"
 msgstr "Direkte Suche"
 
 msgid " Your account has been deleted. "
-msgstr "Ihr Konto wurde gelöscht."
+msgstr " Ihr Konto wurde gelöscht. "
 
 msgid "Are you sure you want to delete your account?"
 msgstr "Sind Sie sicher, dass Sie Ihr Konto löschen wollen?"
@@ -149,7 +137,8 @@ msgid ""
 "                        "
 msgstr ""
 "\n"
-"Sind Sie sicher, dass Sie Ihr Konto löschen wollen?"
+"Sind Sie sicher, dass Sie Ihr Konto löschen wollen?\n"
+"\t"
 
 msgid "Yes, reactivate my account."
 msgstr "Ja, Account reaktivieren."
@@ -167,13 +156,13 @@ msgstr ""
 "    "
 
 msgid " Already registered? "
-msgstr "Schon registriert?"
+msgstr " Schon registriert? "
 
 msgid "Login"
 msgstr "Login"
 
 msgid " or "
-msgstr "oder"
+msgstr " oder "
 
 msgid "Reset Password"
 msgstr "Password zurücksetzen"
@@ -190,6 +179,13 @@ msgstr ""
 
 msgid "Profile Details"
 msgstr "Profil"
+
+msgid ""
+"Your account is irreversibly linked to your email address. Should you wish "
+"to use another one, please delete your account and register with a new one."
+msgstr ""
+"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere Email "
+"benutzen willst, lösche einfach deinen Account und leg einen neuen an."
 
 msgid ""
 "\n"
@@ -224,27 +220,17 @@ msgstr ""
 
 msgid ""
 "\n"
-"        Filter\n"
-"    "
-msgstr ""
-"\n"
-"        Filter"
-
-msgid ""
-"\n"
-"        Create a new search\n"
-"        "
-msgstr ""
-"\n"
-"      Erstelle eine neue Suche"
-
-msgid ""
-"\n"
 "        Edit Info\n"
 "    "
 msgstr ""
 "\n"
-"        Infos editieren"
+"        Infos editieren "
+
+msgid "Edit Info"
+msgstr "Meine Infos editieren"
+
+msgid "View Info"
+msgstr "Meine Infos sehen"
 
 msgid "Registration"
 msgstr "Registrierung"
@@ -253,7 +239,7 @@ msgid "Sign In"
 msgstr "Einloggen"
 
 msgid "Forgot password?"
-msgstr "Passwort vergessen"
+msgstr "Passwort vergessen?"
 
 msgid "Reset password"
 msgstr "Password zurücksetzen"
@@ -283,7 +269,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        <p>Danke fürs vorbeischauen.</p>\n"
+"        <p>Danke fürs Vorbeischauen.</p>\n"
 "    "
 
 msgid "Log in again"
@@ -297,7 +283,7 @@ msgstr ""
 "Passwort wurde geändert\n"
 
 msgid " Your password has been updated. "
-msgstr "Passwort wurde geändert"
+msgstr " Passwort wurde geändert "
 
 msgid "Please correct the error"
 msgstr "Bitte den Fehler korrigieren"
@@ -309,9 +295,9 @@ msgid "Password set"
 msgstr "Passwort setzen"
 
 msgid " Your password has been set. You can log in anytime."
-msgstr "Das Passwort wurde gesetzt, Sie können sich jederzeit einloggen."
+msgstr " Das Passwort wurde gesetzt, Sie können sich jederzeit einloggen."
 
-msgid "Succsessful Login"
+msgid "Successful Login"
 msgstr "Login erfolgreich"
 
 msgid "Hi,"
@@ -366,7 +352,7 @@ msgid "Forgot your password?"
 msgstr "Passwort vergessen?"
 
 msgid "Thanks for registering!"
-msgstr "Schön, dass Sie sich registriert haben."
+msgstr "Schön, dass Sie sich registriert haben!"
 
 msgid "Please validate your email by clicking this:"
 msgstr ""
@@ -392,6 +378,12 @@ msgstr ""
 "Diese Teilnehmer sind freigeschaltet, aber Sie können die Freischaltung "
 "jederzeit wieder rückgängig machen."
 
+msgid "Mail limits for"
+msgstr "Maximale Anzahl an E-Mails für"
+
+msgid "You can change the mail limit of these participants."
+msgstr "Sie können die maximale Anzahl an E-Mails für diese Teilnehmer ändern."
+
 msgid "Staff"
 msgstr "Administrator"
 
@@ -404,14 +396,30 @@ msgstr "Funktionen für Administratoren"
 msgid "Approve"
 msgstr "Freischalten"
 
-msgid "Do something"
-msgstr "Mach etwas"
+msgid "Change mail limit for"
+msgstr "Ändere maximale Anzahl an E-Mails für"
+
+msgid "Edit newsletter (Not implemented!)"
+msgstr "Newsletter bearbeiten (Nicht implementiert!)"
+
+msgid "View website statistics"
+msgstr "Zugriffsstatistik ansehen"
+
+msgid "View user statistics (Not implemented!)"
+msgstr "Nutzerstatistiken ansehen (Nicht implementiert!)"
+
+#, python-brace-format
+msgid "You increased the mail limit for '{name}'."
+msgstr "Sie haben die maximale Anzahl an E-Mails für '{name}' geändert."
 
 msgid "You successfully deactivated your profile."
 msgstr "Sie haben ihr Profil deaktiviert."
 
 msgid "You successfully reactivated your profile."
 msgstr "Sie haben Ihr Profil aktiviert."
+
+msgid "Your account is currently deactivated."
+msgstr "Ihr Konto ist aktuell deaktiviert."
 
 msgid "Successfully updated info."
 msgstr "Sie haben Ihre Infos aktualisiert."
@@ -457,7 +465,7 @@ msgid "This page could not be found."
 msgstr "Diese Seite konnte nicht gefunden werden."
 
 msgid "Back to homepage"
-msgstr "Zurück zur Homepage."
+msgstr "Zurück zur Homepage"
 
 msgid "Logout"
 msgstr "Logout"
@@ -467,9 +475,6 @@ msgstr "Ein Fehler ist aufgetreten."
 
 msgid "About"
 msgstr "Über uns"
-
-msgid "We are the team of match4everyone! Muhahaha"
-msgstr "M4E Team! Muhahaha"
 
 msgid "Developed by Open Source Team"
 msgstr "Entwickelt von"
@@ -507,32 +512,48 @@ msgstr "und"
 msgid "Terms of Use"
 msgstr "AGBs"
 
-msgid "We match for everyone."
-msgstr "Wir matchen jeden."
+#~ msgid "We match for everyone."
+#~ msgstr "Wir matchen jeden."
 
-msgid "I am"
-msgstr "Ich bin"
+#~ msgid ""
+#~ "\n"
+#~ "        View Info\n"
+#~ "    "
+#~ msgstr ""
+#~ "\n"
+#~ "        Infos editieren"
 
-msgid "A"
-msgstr "A"
+#~ msgid "We are the team of match4everyone! Muhahaha"
+#~ msgstr "M4E Team! Muhahaha"
 
-msgid "I own an ice cream parlor."
-msgstr "Ich besitze einen Eiscreme Laden."
+#~ msgid "I am"
+#~ msgstr "Ich bin"
 
-msgid "This is me"
-msgstr "Das bin ich."
+#~ msgid "A"
+#~ msgstr "A"
 
-msgid "B"
-msgstr "B"
+#~ msgid "I own an ice cream parlor."
+#~ msgstr "Ich besitze einen Eiscreme Laden."
 
-msgid "I feel hungry."
-msgstr "Ich habe Hunger."
+#~ msgid "This is me"
+#~ msgstr "Das bin ich"
 
-msgid "How does this work?"
-msgstr "Wie funktioniert das?"
+#~ msgid "B"
+#~ msgstr "B"
 
-msgid "We match."
-msgstr "Wir matchen."
+#~ msgid "I feel hungry."
+#~ msgstr "Ich habe Hunger."
 
-msgid "another open-source project"
-msgstr "noch ein open-source Projekt"
+#~ msgid "How does this work?"
+#~ msgstr "Wie funktioniert das?"
+
+#~ msgid "We match."
+#~ msgstr "Wir matchen."
+
+#~ msgid "another open-source project"
+#~ msgstr "noch ein open-source Projekt"
+
+#~ msgid ""
+#~ "\n"
+#~ "                and"
+#~ msgstr "und"

@@ -4,7 +4,8 @@ import uuid
 from django.db import models
 from django.urls import reverse
 
-from match4everyone.config.A import A
+from match4everyone.configuration.A import A
+from match4everyone.configuration.B import B
 
 from .participant import Participant
 
@@ -20,9 +21,14 @@ class AbstractParticipantInfo(models.Model):
     uuid = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
     registration_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
 
-    @staticmethod
-    def excluded_fields():
+    @classmethod
+    def excluded_fields(cls):
         return ["uuid", "registration_date", "participant"]
+
+    @classmethod
+    def private_fields(cls):
+        """Fields that should not be seen by other participants."""
+        return cls._private_fields() + cls.excluded_fields()
 
     @classmethod
     def generate_fake(cls, participant, rs=None):
@@ -44,7 +50,7 @@ class AbstractParticipantInfo(models.Model):
 """
 Unfortunately, primary keys cannot be added programatically,
 which is why we need to explicitly define the classes instead of generating
-two instances with the same helper - tha method that is used for forms etc.
+two instances with the same helper - the method that is used for forms etc.
 """
 
 
@@ -81,8 +87,8 @@ def add_participant_specific_info(name, participant_config):
         info_cls.add_to_class(field_name, model_field)
 
     info_cls.add_to_class("_generate_random_values", participant_config.generate_random_assignment)
-    info_cls.add_to_class("private_fields", participant_config.get_private_fields)
+    info_cls.add_to_class("_private_fields", participant_config.get_private_fields)
 
 
 add_participant_specific_info("A", A)
-add_participant_specific_info("B", A)  # add an own file for B as soon as someone writes it
+add_participant_specific_info("B", B)
