@@ -98,7 +98,9 @@ class Migration(migrations.Migration):
         can_view_user_stats = Permission.objects.get(codename=NewPermissions.can_view_user_stats)
         group_perm_user_stats.permissions.add(can_view_user_stats)
 
-        can_view_access_stats = Permission.objects.get(codename=NewPermissions.can_view_access_stats)
+        can_view_access_stats = Permission.objects.get(
+            codename=NewPermissions.can_view_access_stats
+        )
         group_perm_access_stats.permissions.add(can_view_access_stats)
 
         can_send_newsletter = Permission.objects.get(codename=NewPermissions.can_send_newsletter)
@@ -122,7 +124,7 @@ class Migration(migrations.Migration):
         Group.objects.filter(name__in=group_list).delete()
 
     dependencies = [
-        ('matching', '0001_initial'),
+        ("matching", "0001_initial"),
     ]
 
     operations = [

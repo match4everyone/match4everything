@@ -207,6 +207,13 @@ group_list = [
 ```
 Note that django autogenerates lots of permissions, which might fit your requirements, for example `auth.permission.can_change_permission` or `matching.participanta.can_change_participanta`. Have a look in the admin panel if you want to easily check out the generated structure.
 
+### Custom Configuration
+
+TODO!!! #128
+
+If you adjust the configuration, you should delete the migration `0003_...` from the app `matching` and run `python3 manage.py makemigrations matching` again to recreate it. If you change it in a deployed environment, be sure to state default values for newly added fields or make them nullable. Only then it is possible to create an additional migration with `makemigrations`. We have provided a script that rebuilds the project from configuration in
+`scripts/rebuild_from_configuration.sh`.
+
 
 ## Forks
 Thanks for forking our repository. Pay attention that Travis CI doesn't test your code with sendgrid.
