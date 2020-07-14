@@ -54,9 +54,9 @@ urlpatterns = [
     ####################################
     #  Staff
     ####################################
-    path("profile_staff", views.StaffProfileView.as_view(), name="staff_profile"),
+    path("profile_staff/", views.StaffProfileView.as_view(), name="staff_profile"),
     path(
-        "staff/<p:p_type>/approve",
+        "staff/<p:p_type>/approve/",
         views.ApproveParticipantsView.as_view(),
         name="approve_participant",
     ),

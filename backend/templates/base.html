@@ -89,13 +89,13 @@
                         </svg>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <form action="/matching/i18n/setlang/" method="post">
+                        <form action="{% url 'set_language' %}" method="post">
                             {% csrf_token %}
                             <button class="dropdown-item" formmethod="post" type="submit">{% blocktrans %}German{% endblocktrans %}</button>
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <input type="hidden" name="language" value="de">
                         </form>
-                        <form action="/matching/i18n/setlang/" method="post">
+                        <form action="{% url 'set_language' %}" method="post">
                             {% csrf_token %}
                             <button class="dropdown-item" formmethod="post" type="submit">
                                 {% blocktrans %}English{% endblocktrans %}</button>

@@ -81,12 +81,6 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
         ),
-        migrations.CreateModel(
-            name='Staff',
-            fields=[
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
         migrations.AddConstraint(
             model_name='user',
             constraint=models.CheckConstraint(check=models.Q(('is_A', True), ('is_B', True), _negated=True), name='matching_user_has_only_one_participant'),

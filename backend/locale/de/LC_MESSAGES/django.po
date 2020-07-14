@@ -184,8 +184,8 @@ msgid ""
 "Your account is irreversibly linked to your email address. Should you wish "
 "to use another one, please delete your account and register with a new one."
 msgstr ""
-"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere "
-"Emailbenutzen willst, lösche einfach deinen Account und leg einen neuen an."
+"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere Email"
+"benutzen willst, lösche einfach deinen Account und leg einen neuen an."
 
 msgid ""
 "\n"
@@ -297,7 +297,7 @@ msgstr "Passwort setzen"
 msgid " Your password has been set. You can log in anytime."
 msgstr " Das Passwort wurde gesetzt, Sie können sich jederzeit einloggen."
 
-msgid "Succsessful Login"
+msgid "Successful Login"
 msgstr "Login erfolgreich"
 
 msgid "Hi,"
@@ -397,11 +397,17 @@ msgstr "Funktionen für Administratoren"
 msgid "Approve"
 msgstr "Freischalten"
 
+msgid "Edit newsletter (Not implemented!)"
+msgstr "Newsletter bearbeiten (Nicht implementiert!)"
+
+msgid "View website statistics"
+msgstr "Zugriffsstatistik ansehen"
+
+msgid "View user statistics (Not implemented!)"
+msgstr "Nutzerstatistiken ansehen (Nicht implementiert!)"
+
 msgid "Change mail limit for"
 msgstr "Ändere maximale Anzahl an E-Mails für"
-
-msgid "Do something"
-msgstr "Mach etwas"
 
 #, python-brace-format
 msgid "You increased the mail limit for '{name}'."

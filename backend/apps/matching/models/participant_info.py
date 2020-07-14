@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse
 
 from match4everyone.configuration.A import A
+from match4everyone.configuration.B import B
 
 from .participant import Participant
 
@@ -49,7 +50,7 @@ class AbstractParticipantInfo(models.Model):
 """
 Unfortunately, primary keys cannot be added programatically,
 which is why we need to explicitly define the classes instead of generating
-two instances with the same helper - tha method that is used for forms etc.
+two instances with the same helper - the method that is used for forms etc.
 """
 
 
@@ -90,4 +91,4 @@ def add_participant_specific_info(name, participant_config):
 
 
 add_participant_specific_info("A", A)
-add_participant_specific_info("B", A)  # add an own file for B as soon as someone writes it
+add_participant_specific_info("B", B)
