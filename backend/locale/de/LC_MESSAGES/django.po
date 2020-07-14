@@ -184,8 +184,8 @@ msgid ""
 "Your account is irreversibly linked to your email address. Should you wish "
 "to use another one, please delete your account and register with a new one."
 msgstr ""
-"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere "
-"Email benutzen willst, lösche einfach deinen Account und leg einen neuen an."
+"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere Email "
+"benutzen willst, lösche einfach deinen Account und leg einen neuen an."
 
 msgid ""
 "\n"
@@ -418,6 +418,9 @@ msgstr "Sie haben ihr Profil deaktiviert."
 msgid "You successfully reactivated your profile."
 msgstr "Sie haben Ihr Profil aktiviert."
 
+msgid "Your account is currently deactivated."
+msgstr "Ihr Konto ist aktuell deaktiviert."
+
 msgid "Successfully updated info."
 msgstr "Sie haben Ihre Infos aktualisiert."
 
@@ -509,6 +512,9 @@ msgstr "und"
 msgid "Terms of Use"
 msgstr "AGBs"
 
+#~ msgid "We match for everyone."
+#~ msgstr "Wir matchen jeden."
+
 #~ msgid ""
 #~ "\n"
 #~ "        View Info\n"
@@ -519,9 +525,6 @@ msgstr "AGBs"
 
 #~ msgid "We are the team of match4everyone! Muhahaha"
 #~ msgstr "M4E Team! Muhahaha"
-
-#~ msgid "We match for everyone."
-#~ msgstr "Wir matchen jeden."
 
 #~ msgid "I am"
 #~ msgstr "Ich bin"
