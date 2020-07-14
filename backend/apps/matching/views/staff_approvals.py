@@ -16,6 +16,7 @@ from apps.matching.tables import ApproveParticipantTable
 logger = logging.getLogger(__name__)
 
 
+# TODO: Only user with 'can_approve_type_a' or 'can_approve_type_b' should see the corresponding approval interfaces and be able to approve someone https://github.com/match4everyone/match4everything/issues/121
 @method_decorator([login_required, staff_member_required], name="dispatch")
 class ApproveParticipantsView(View):
     template_name = "approve_hospitals.html"
