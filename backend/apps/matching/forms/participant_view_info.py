@@ -2,7 +2,7 @@ from crispy_forms.helper import FormHelper
 from django import forms
 
 from apps.matching.models import ParticipantInfo
-from apps.matching.src.dual_factory import instanciate_for_participants
+from apps.matching.utils.dual_factory import instanciate_for_participants
 
 
 def make_participant_view_info_form(participant_type):
