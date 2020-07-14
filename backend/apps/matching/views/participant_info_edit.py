@@ -25,7 +25,7 @@ class ParticipantInfoUpdateView(UpdateView):
         return ParticipantInfo[self.kwargs["p_type"]].objects.all()
 
     def get_success_url(self):
-        return reverse("profile", kwargs={"p_type": self.kwargs["p_type"]})
+        return reverse("profile")
 
     def form_valid(self, form):
         res = super().form_valid(form)

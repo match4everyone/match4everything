@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 1900-01-01 00:00+0000\n"
-"PO-Revision-Date: 2020-06-21 09:42+0200\n"
+"PO-Revision-Date: 2020-07-13 18:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.3\n"
 
 msgid "E-Mail"
 msgstr "E-Mail"
@@ -184,7 +184,7 @@ msgid ""
 "Your account is irreversibly linked to your email address. Should you wish "
 "to use another one, please delete your account and register with a new one."
 msgstr ""
-"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere Email"
+"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere Email "
 "benutzen willst, lösche einfach deinen Account und leg einen neuen an."
 
 msgid ""
@@ -229,14 +229,6 @@ msgstr ""
 msgid "Edit Info"
 msgstr "Meine Infos editieren"
 
-msgid ""
-"\n"
-"        View Info\n"
-"    "
-msgstr ""
-"\n"
-"        Infos editieren"
-
 msgid "View Info"
 msgstr "Meine Infos sehen"
 
@@ -277,7 +269,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        <p>Danke fürs vorbeischauen.</p>\n"
+"        <p>Danke fürs Vorbeischauen.</p>\n"
 "    "
 
 msgid "Log in again"
@@ -305,7 +297,7 @@ msgstr "Passwort setzen"
 msgid " Your password has been set. You can log in anytime."
 msgstr " Das Passwort wurde gesetzt, Sie können sich jederzeit einloggen."
 
-msgid "Succsessful Login"
+msgid "Successful Login"
 msgstr "Login erfolgreich"
 
 msgid "Hi,"
@@ -386,6 +378,12 @@ msgstr ""
 "Diese Teilnehmer sind freigeschaltet, aber Sie können die Freischaltung "
 "jederzeit wieder rückgängig machen."
 
+msgid "Mail limits for"
+msgstr "Maximale Anzahl an E-Mails für"
+
+msgid "You can change the mail limit of these participants."
+msgstr "Sie können die maximale Anzahl an E-Mails für diese Teilnehmer ändern."
+
 msgid "Staff"
 msgstr "Administrator"
 
@@ -398,14 +396,30 @@ msgstr "Funktionen für Administratoren"
 msgid "Approve"
 msgstr "Freischalten"
 
-msgid "Do something"
-msgstr "Mach etwas"
+msgid "Change mail limit for"
+msgstr "Ändere maximale Anzahl an E-Mails für"
+
+msgid "Edit newsletter (Not implemented!)"
+msgstr "Newsletter bearbeiten (Nicht implementiert!)"
+
+msgid "View website statistics"
+msgstr "Zugriffsstatistik ansehen"
+
+msgid "View user statistics (Not implemented!)"
+msgstr "Nutzerstatistiken ansehen (Nicht implementiert!)"
+
+#, python-brace-format
+msgid "You increased the mail limit for '{name}'."
+msgstr "Sie haben die maximale Anzahl an E-Mails für '{name}' geändert."
 
 msgid "You successfully deactivated your profile."
 msgstr "Sie haben ihr Profil deaktiviert."
 
 msgid "You successfully reactivated your profile."
 msgstr "Sie haben Ihr Profil aktiviert."
+
+msgid "Your account is currently deactivated."
+msgstr "Ihr Konto ist aktuell deaktiviert."
 
 msgid "Successfully updated info."
 msgstr "Sie haben Ihre Infos aktualisiert."
@@ -462,9 +476,6 @@ msgstr "Ein Fehler ist aufgetreten."
 msgid "About"
 msgstr "Über uns"
 
-msgid "We are the team of match4everyone! Muhahaha"
-msgstr "M4E Team! Muhahaha"
-
 msgid "Developed by Open Source Team"
 msgstr "Entwickelt von"
 
@@ -501,35 +512,46 @@ msgstr "und"
 msgid "Terms of Use"
 msgstr "AGBs"
 
-msgid "We match for everyone."
-msgstr "Wir matchen jeden."
+#~ msgid "We match for everyone."
+#~ msgstr "Wir matchen jeden."
 
-msgid "I am"
-msgstr "Ich bin"
+#~ msgid ""
+#~ "\n"
+#~ "        View Info\n"
+#~ "    "
+#~ msgstr ""
+#~ "\n"
+#~ "        Infos editieren"
 
-msgid "A"
-msgstr "A"
+#~ msgid "We are the team of match4everyone! Muhahaha"
+#~ msgstr "M4E Team! Muhahaha"
 
-msgid "I own an ice cream parlor."
-msgstr "Ich besitze einen Eiscreme Laden."
+#~ msgid "I am"
+#~ msgstr "Ich bin"
 
-msgid "This is me"
-msgstr "Das bin ich"
+#~ msgid "A"
+#~ msgstr "A"
 
-msgid "B"
-msgstr "B"
+#~ msgid "I own an ice cream parlor."
+#~ msgstr "Ich besitze einen Eiscreme Laden."
 
-msgid "I feel hungry."
-msgstr "Ich habe Hunger."
+#~ msgid "This is me"
+#~ msgstr "Das bin ich"
 
-msgid "How does this work?"
-msgstr "Wie funktioniert das?"
+#~ msgid "B"
+#~ msgstr "B"
 
-msgid "We match."
-msgstr "Wir matchen."
+#~ msgid "I feel hungry."
+#~ msgstr "Ich habe Hunger."
 
-msgid "another open-source project"
-msgstr "noch ein open-source Projekt"
+#~ msgid "How does this work?"
+#~ msgstr "Wie funktioniert das?"
+
+#~ msgid "We match."
+#~ msgstr "Wir matchen."
+
+#~ msgid "another open-source project"
+#~ msgstr "noch ein open-source Projekt"
 
 #~ msgid ""
 #~ "\n"

@@ -1,6 +1,7 @@
 from datetime import datetime
 import uuid
 
+from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django.db import models, transaction
@@ -31,6 +32,9 @@ class AbstractParticipant(models.Model):
     approved_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     approval_date = models.DateTimeField(blank=True, null=True)
 
+    # number of mails a user can send per day
+    max_mails_per_day = models.IntegerField(default=settings.MAX_EMAILS_PER_DAY)
+
     class Meta:
         abstract = True
 
@@ -56,7 +60,7 @@ class AbstractParticipant(models.Model):
 
         # check permission only here in case it was forgotten in the view
         # maybe we can give a nicer message here?
-        if not approver.has_perm("matching.perm_approve_%s" % p_type):
+        if not approver.has_perm("matching.can_approve_type_%s" % p_type):
             raise PermissionDenied("You currently don't have the permission to approve users.")
 
         approved_participants = Group.objects.get(name="approved_%s" % p_type)
@@ -71,6 +75,11 @@ class AbstractParticipant(models.Model):
             self.approval_date = None
             self.approved_by = None
             approved_participants.user_set.remove(self.user)
+        self.save()
+
+    @transaction.atomic
+    def increase_mail_limit(self, mail_limit):
+        self.max_mails_per_day = mail_limit
         self.save()
 
     @staticmethod
