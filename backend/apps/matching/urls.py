@@ -4,7 +4,7 @@ from django.urls import include, path, register_converter
 from django.views.generic.base import TemplateView
 
 from . import views
-from .src import converters
+from .utils import converters
 
 register_converter(converters.DecimalPointFloatConverter, "float")
 register_converter(converters.ParticipantTypeConverter, "p")
@@ -15,7 +15,7 @@ urlpatterns = [
     ####################################
     path("<p:p_type>/signup", views.ParticipantSignup.as_view(), name="signup"),
     path("profile_redirect", views.ProfileDashboardRedirect.as_view(), name="profile_redirect",),
-    path("<p:p_type>/profile", views.ParticipantDashboard.as_view(), name="profile"),
+    path("profile", views.ParticipantDashboard.as_view(), name="profile"),
     path(
         "<p:p_type>/info/<str:uuid>/edit/",
         views.ParticipantInfoUpdateView.as_view(),

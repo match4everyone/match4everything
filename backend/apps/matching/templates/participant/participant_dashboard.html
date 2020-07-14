@@ -41,7 +41,11 @@
                 {% blocktrans %}Profile Details{% endblocktrans %}
             </div>
             <div class="card-body">
-
+                <label for="email">{% blocktrans %}E-Mail{% endblocktrans %}:</label>
+                <div class="">
+                    <input type="text" id="email" name="email" value="{{ request.user.email }}" class="textinput textInput form-control" disabled="">
+                    <small id="email_change_hint_text" class="form-text text-muted">{% blocktrans %}Your account is irreversibly linked to your email address. Should you wish to use another one, please delete your account and register with a new one.{% endblocktrans %}</small>
+                </div> <br><br>
                 <a role="button" class="btn blue text-white btn-md" href="{% url 'logout' %}">{% blocktrans %}
                     Logout{% endblocktrans %}</a>
                 <a role="button" class="btn blue text-white btn-md" href="/matching/password_change">
