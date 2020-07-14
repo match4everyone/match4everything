@@ -8,6 +8,7 @@
 
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -50,6 +51,20 @@
           <path d="M6.25 8.043l-.896-.897a.5.5 0 10-.708.708l.897.896.707-.707zm1 2.414l.896.897a.5.5 0 00.708 0l7-7a.5.5 0 00-.708-.708L8.5 10.293l-.543-.543-.707.707z"/>
         </svg>
         {% blocktrans %}Approve{% endblocktrans %} B</a>
+    </p>
+    {% endif %}
+    {% if perms.matching.can_change_mail_limit_a %}
+    <p>
+        <a role="button" class="btn blue text-white btn-md" href="{%  url 'mail_limit' 'A' %}">
+        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+        {% blocktrans %}Change mail limit for{% endblocktrans %} A</a>
+    </p>
+    {% endif %}
+    {% if perms.matching.can_change_mail_limit_B %}
+    <p>
+        <a role="button" class="btn blue text-white btn-md" href="{%  url 'mail_limit' 'B' %}">
+        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+        {% blocktrans %}Change mail limit for{% endblocktrans %} B</a>
     </p>
     {% endif %}
     {% if perms.matching.can_send_newsletter %}
