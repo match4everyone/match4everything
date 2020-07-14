@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.3\n"
 
 msgid "E-Mail"
 msgstr "E-Mail"
@@ -184,8 +184,8 @@ msgid ""
 "Your account is irreversibly linked to your email address. Should you wish "
 "to use another one, please delete your account and register with a new one."
 msgstr ""
-"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere Email"
-"benutzen willst, lösche einfach deinen Account und leg einen neuen an."
+"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere "
+"Emailbenutzen willst, lösche einfach deinen Account und leg einen neuen an."
 
 msgid ""
 "\n"
@@ -235,7 +235,8 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        Infos editieren"
+"        Infos anschauen\n"
+"    "
 
 msgid "View Info"
 msgstr "Meine Infos sehen"
@@ -305,7 +306,7 @@ msgstr "Passwort setzen"
 msgid " Your password has been set. You can log in anytime."
 msgstr " Das Passwort wurde gesetzt, Sie können sich jederzeit einloggen."
 
-msgid "Succsessful Login"
+msgid "Successful Login"
 msgstr "Login erfolgreich"
 
 msgid "Hi,"
@@ -504,43 +505,5 @@ msgstr "und"
 msgid "Terms of Use"
 msgstr "AGBs"
 
-#~ msgid "Do something"
-#~ msgstr "Mach etwas"
-
-#~ msgid "We are the team of match4everyone! Muhahaha"
-#~ msgstr "M4E Team! Muhahaha"
-
-#~ msgid "We match for everyone."
-#~ msgstr "Wir matchen jeden."
-
-#~ msgid "I am"
-#~ msgstr "Ich bin"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "I own an ice cream parlor."
-#~ msgstr "Ich besitze einen Eiscreme Laden."
-
-#~ msgid "This is me"
-#~ msgstr "Das bin ich"
-
-#~ msgid "B"
-#~ msgstr "B"
-
-#~ msgid "I feel hungry."
-#~ msgstr "Ich habe Hunger."
-
-#~ msgid "How does this work?"
-#~ msgstr "Wie funktioniert das?"
-
-#~ msgid "We match."
-#~ msgstr "Wir matchen."
-
-#~ msgid "another open-source project"
-#~ msgstr "noch ein open-source Projekt"
-
-#~ msgid ""
-#~ "\n"
-#~ "                and"
-#~ msgstr "und"
+msgid "We match for everyone."
+msgstr "Wir matchen jeden."
