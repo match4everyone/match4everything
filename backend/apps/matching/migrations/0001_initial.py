@@ -61,6 +61,7 @@ class Migration(migrations.Migration):
                 ('approval_date', models.DateTimeField(blank=True, null=True)),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='a', serialize=False, to=settings.AUTH_USER_MODEL)),
                 ('approved_by', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                ('max_mails_per_day', models.IntegerField(default=settings.MAX_EMAILS_PER_DAY)),
             ],
             options={
                 'abstract': False,
@@ -76,6 +77,7 @@ class Migration(migrations.Migration):
                 ('approval_date', models.DateTimeField(blank=True, null=True)),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, primary_key=True, related_name='b', serialize=False, to=settings.AUTH_USER_MODEL)),
                 ('approved_by', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                ('max_mails_per_day', models.IntegerField(default=settings.MAX_EMAILS_PER_DAY)),
             ],
             options={
                 'abstract': False,
