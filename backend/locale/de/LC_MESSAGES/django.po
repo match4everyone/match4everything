@@ -181,6 +181,13 @@ msgid "Profile Details"
 msgstr "Profil"
 
 msgid ""
+"Your account is irreversibly linked to your email address. Should you wish "
+"to use another one, please delete your account and register with a new one."
+msgstr ""
+"Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere Email"
+"benutzen willst, lösche einfach deinen Account und leg einen neuen an."
+
+msgid ""
 "\n"
 "                    Logout"
 msgstr ""
