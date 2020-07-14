@@ -5,13 +5,15 @@ from os.path import dirname, abspath, join
 from math import radians, sin, cos, asin, sqrt
 import csv
 
+# plz is german for zipcode
+
 plzs = {}
 
 current_location = dirname(abspath(__file__))
 from os.path import join
 
 for countrycode in ["DE", "AT"]:
-    with open(join(current_location, f'files/{countrycode}.csv'), encoding='utf-8') as csvfile:
+    with open(join(current_location, f'data/{countrycode}.csv'), encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
         plzs[countrycode] = {}
         for row in reader:
@@ -28,6 +30,6 @@ for countrycode in ["DE", "AT"]:
 
 
 
-with open(join(current_location, "files/plzs_merged.json"), "w") as f:
+with open(join(current_location, "data/zipcodes_merged.json"), "w") as f:
     f.write(json.dumps(plzs))
 """

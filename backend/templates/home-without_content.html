@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+    Home
+{% endblock %}
+
+{% block header %}
+
+    <meta name="description"
+          content="Der Glaube daran Mitmenschen in Not helfen können, die Liebe zum Fach Medizin und der Zusammenhalt untereinander sind in den letzten Wochen und Monaten im Gesundheitswesen noch viel präsenter denn je.">
+    <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://match4everyone.de/">
+    <meta property="og:title" content="match4everyone - Wir vernetzen Helfende mit Hilfesuchenden.">
+    <meta property="og:description"
+          content="Der Glaube daran Mitmenschen in Not helfen können, die Liebe zum Fach Medizin und der Zusammenhalt untereinander sind in den letzten Wochen und Monaten im Gesundheitswesen noch viel präsenter denn je.">
+    <meta property="og:url" content="https://match4everyone.de/">
+    <meta property="og:site_name" content="match4everyone">
+    <meta name="twitter:description"
+          content="Der Glaube daran Mitmenschen in Not helfen können, die Liebe zum Fach Medizin und der Zusammenhalt untereinander sind in den letzten Wochen und Monaten im Gesundheitswesen noch viel präsenter denn je.">
+    <meta name="twitter:title" content="match4everyone - Wir vernetzen Helfende mit Hilfesuchenden.">
+    <style>
+        body {
+            margin-top: 0px;
+        }
+
+        .navbar {
+            background-color: transparent !important;
+        }
+
+        @media only screen and (min-width: 768px) {
+            .navbar-brand {
+                display: none;
+            }
+
+            .home-title {
+
+                padding: 100px 0px 150px 0px;
+
+            }
+        }
+
+        @media only screen and (min-width: 992px) {
+            .home-title {
+                padding: 100px 0px 200px 0px;
+            }
+        }
+
+        @media only screen and (min-width: 1200px) {
+            .home-title {
+                padding: 180px 0px 200px 0px;
+            }
+        }
+
+
+        @media only screen and (max-width: 767px) {
+            .logo-header {
+                display: none;
+            }
+
+            .home-title {
+                background: #bdcbcc;
+                padding: 120px 0px 70px 0px;
+
+            }
+
+            .home-title h1 {
+                font-size: 2rem;
+                color: #000943 !important;
+                text-align: center;
+            }
+
+            .home-box > div > div > div {
+                padding: 30px 10px 30px 30px;
+            }
+
+            .home-box-description {
+                margin-bottom: 15px;
+            }
+
+            .navbar {
+                background-color: #bdcbcc !important;
+            }
+        }
+
+        .navbar {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .hide-home {
+            display: none;
+        }
+
+        .ml-auto {
+            margin-left: 0 !important;
+            margin-right: auto;
+        }
+
+        .navbar.fixed-top {
+            position: absolute;
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 991px) {
+
+            .navbar > .container {
+                width: 100%;
+                max-width: 720px !important;
+                padding-left: 15px;
+                padding-right: 0px;
+            }
+        }
+
+
+    </style>
+{% endblock %}

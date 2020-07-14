@@ -3,7 +3,7 @@ from crispy_forms.layout import Submit
 from django import forms
 
 from apps.matching.models import ParticipantInfo
-from apps.matching.src.dual_factory import instanciate_for_participants
+from apps.matching.utils.dual_factory import instanciate_for_participants
 
 
 def make_participant_edit_info_form(participant_type):
