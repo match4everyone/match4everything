@@ -21,7 +21,8 @@ class UserAdmin(UserAdmin):
                 "fields": (
                     "username",
                     "email",
-                    "password",
+                    "password1",
+                    "password2",
                     "first_name",
                     "last_name",
                     "is_superuser",
