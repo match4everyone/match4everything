@@ -7,8 +7,9 @@
 {% endblock %}
 
 {% block header %}
+{% load render_bundle from webpack_loader %}
+{% render_bundle 'approval' %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% load crispy_forms_tags %}
