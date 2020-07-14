@@ -58,7 +58,7 @@
             <form>
                 {% csrf_token %}
                 <input type="text" placeholder="Search mails.." name="search_approved_mails">
-                <button type="submit" ><i class="fa fa-search"></i></button>
+                <button type="submit" class="btn btn-sm btn-primary" ><i class="fa fa-search"></i></button>
             </form>
             <br><br>
             {% render_table table_approved %}
