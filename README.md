@@ -19,6 +19,7 @@ Originally developed as [match4healthcare](https://github.com/match4everyone/mat
 pip3 install -r backend/requirements.txt
 export LEAFLET_TILESERVER=open_street_map
 bash scripts/delete_db_and_setup.sh
+docker-compose run --rm frontend npm run build # (Re-)Build javascript bundles and gather font-awesome files
 python3 backend/manage.py runserver
 ```
 and visit `http://localhost:8000/`. Note that the password you have to enter during the script will become the password for the superuser account with the username `admin`.
