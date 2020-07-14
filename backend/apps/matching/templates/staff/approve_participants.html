@@ -45,7 +45,7 @@
                 <input type="text" placeholder="Search mails..." value="{{search_unapproved_mails}}" name="search_unapproved_mails" id="search_unapproved_mails-original">
                 <input type="hidden" name="search_approved_mails" id="search_approved_mails-hidden"
                        onsubmit="self.value = document.getElementById('search_approved_mails-original').value;">
-                <button type="submit" onclick="setApproved();">
+                <button type="submit" onclick="setApproved();" class="btn btn-sm btn-primary">
                     <i class="fa fa-search"></i></button>
                 <button onclick="clearUnapproved();" class="btn btn-sm btn-outline-primary">
                     <i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -64,7 +64,7 @@
                 {% csrf_token %}
                 <input type="text" placeholder="Search mails..." value="{{search_approved_mails}}" name="search_approved_mails" id="search_approved_mails-original">
                 <input type="hidden" name="search_unapproved_mails" id="search_unapproved_mails-hidden">
-                <button type="submit" onclick="setUnapproved();">
+                <button type="submit" class="btn btn-sm btn-primary" onclick="setUnapproved();">
                     <i class="fa fa-search"></i></button>
                 <button onclick="clearApproved();" class="btn btn-sm btn-outline-primary">
                     <i class="fa fa-trash" aria-hidden="true"></i></button>

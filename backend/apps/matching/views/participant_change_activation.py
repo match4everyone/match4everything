@@ -31,7 +31,7 @@ class ChangeActivationRedirect(RedirectView):
             messages.add_message(
                 self.request, messages.INFO, _("You successfully reactivated your profile."),
             )
-        return reverse("profile", kwargs={"p_type": p.p_type()})
+        return reverse("profile")
 
 
 @method_decorator([login_required, participant_required], name="dispatch")
@@ -41,5 +41,4 @@ class ChangeActivationAskView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["is_activated"] = self.request.user.participant().is_activated
-        context["p_type"] = self.request.user.participant().participant_type
         return context

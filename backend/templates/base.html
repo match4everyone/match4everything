@@ -31,10 +31,10 @@
     <meta name="theme-color" content="#ffffff">
 
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://match4everyone.de{% static 'img/share_icons/facebook-share.jpg' %}">
+    <meta property="og:image" content="{{ settings.BASE_URL }}{% static 'img/share_icons/facebook-share.jpg' %}">
     <meta property="og:image:secure_url"
-          content="https://match4everyone.de{% static 'img/share_icons/facebook-share.jpg' %}">
-    <meta name="twitter:image" content="https://match4everyone.de{% static 'img/share_icons/facebook-share.jpg' %}">
+          content="{{ settings.BASE_URL }}{% static 'img/share_icons/facebook-share.jpg' %}">
+    <meta name="twitter:image" content="{{ settings.BASE_URL }}{% static 'img/share_icons/facebook-share.jpg' %}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <title>{% block title %} {% endblock %} | match4everyone </title>
@@ -89,13 +89,13 @@
                         </svg>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <form action="/matching/i18n/setlang/" method="post">
+                        <form action="{% url 'set_language' %}" method="post">
                             {% csrf_token %}
                             <button class="dropdown-item" formmethod="post" type="submit">{% blocktrans %}German{% endblocktrans %}</button>
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <input type="hidden" name="language" value="de">
                         </form>
-                        <form action="/matching/i18n/setlang/" method="post">
+                        <form action="{% url 'set_language' %}" method="post">
                             {% csrf_token %}
                             <button class="dropdown-item" formmethod="post" type="submit">
                                 {% blocktrans %}English{% endblocktrans %}</button>

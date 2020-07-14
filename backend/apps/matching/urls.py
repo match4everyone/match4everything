@@ -27,17 +27,17 @@ urlpatterns = [
         name="info-view",
     ),
     path(
-        "<p:p_type>/change_activation/",
+        "change_activation",
         views.ChangeActivationAskView.as_view(),
         name="activate_participant_ask",
     ),
     path(
-        "<p:p_type>/change_activation_confirm",
+        "change_activation_confirm",
         views.ChangeActivationRedirect.as_view(),
         name="activate_participant",
     ),
-    path("<p:p_type>/delete_me_ask/", views.delete_me_ask, name="delete_me_ask"),
-    path("<p:p_type>/delete_me/", views.delete_me, name="delete_me"),
+    path("delete_me_ask", views.delete_me_ask, name="delete_me_ask"),
+    path("delete_me", views.delete_me, name="delete_me"),
     ####################################
     #  Map view
     ####################################
@@ -54,7 +54,7 @@ urlpatterns = [
     ####################################
     #  Staff
     ####################################
-    path("profile_staff", views.StaffProfileView.as_view(), name="staff_profile"),
+    path("profile_staff/", views.StaffProfileView.as_view(), name="staff_profile"),
     path(
         "staff/<p:p_type>/approve/",
         views.ApproveParticipantsView.as_view(),
