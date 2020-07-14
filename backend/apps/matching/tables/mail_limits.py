@@ -13,13 +13,13 @@ mail_limit_field = (
     "</button>"
     "</form>"
 )  # noqa
-# TODO: We ned to link to the profile of that participant on the info https://github.com/match4everyone/match4everything/issues/55
-info_button = '<a class="btn btn-info btn-sm" href="/matching/{{record.uuid }}">More Info </a>'
 
 
 def make_mail_limits_table(p_type):
     class MailLimitsTable(tables.Table):
-        info = TemplateColumn(template_code=info_button)
+        info = TemplateColumn(
+            template_name="staff/user_info_button.html", extra_context={"p_type": p_type}
+        )
         mail_limit_field = TemplateColumn(template_code=mail_limit_field)
 
         class Meta:
