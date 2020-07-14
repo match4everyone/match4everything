@@ -19,9 +19,6 @@ from django.urls import include, path
 
 from match4everyone import views
 
-handler404 = views.handler404
-handler500 = views.handler500
-
 urlpatterns = [
     path("matching/", include("apps.matching.urls")),
     path("use_statistics/", include("apps.use_statistics.urls")),
