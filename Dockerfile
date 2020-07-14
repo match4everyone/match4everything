@@ -27,8 +27,6 @@ COPY backend/requirements.txt /backend/requirements.txt
 RUN pip3 install -r requirements.txt
 COPY backend/requirements.prod.txt /backend/requirements.prod.txt
 RUN pip3 install -r requirements.prod.txt
-COPY docs/requirements.readthedocs.txt /backend/requirements.readthedocs.txt
-RUN pip3 install -r requirements.readthedocs.txt
 
 # Copy the JS Bundle from the intermediate stage over into the backend container
 # Important: Do this before collecting static, otherwise the bundles won't be found

@@ -25,7 +25,7 @@ handler500 = views.handler500
 urlpatterns = [
     path("matching/", include("apps.matching.urls")),
     path("use_statistics/", include("apps.use_statistics.urls")),
-    path("admin/", admin.site.urls),
+    path("django-administration/", admin.site.urls),
     path("403/", views.handler403, name="403"),
     path("404/", views.handler404, name="404"),
     path("500/", views.handler500, name="500"),

@@ -7,11 +7,11 @@ class A(ParticipantConfig):
     name = "Helper"
 
     # todo: use this # noqa
-    # requires_approval = True
-
-    # todo: use this # noqa
     # enable_location = True
     # enable_time = False
+    # permissions = [
+    #    NewPermissions.can_contact_type_b,
+    # ]
 
     properties = [
         m4e.PropertyGroup(

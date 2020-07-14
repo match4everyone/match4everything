@@ -31,7 +31,7 @@ class ChangeActivationRedirect(RedirectView):
             messages.add_message(
                 self.request, messages.INFO, _("You successfully reactivated your profile."),
             )
-        return reverse("profile", kwargs={"p_type": p.p_type()})
+        return reverse("profile")
 
 
 @method_decorator([login_required, participant_required], name="dispatch")

@@ -20,9 +20,9 @@
     <div class="container" style="margin-bottom: 55px;">
 
         {% blocktrans %} Already registered? {% endblocktrans %}
-        <a href="/matching/login_redirect">{% blocktrans %}Login{% endblocktrans %}</a>
+        <a href="{% url 'login_redirect' %}">{% blocktrans %}Login{% endblocktrans %}</a>
         {% blocktrans %} or {% endblocktrans %}
-        <a href="/matching/password_reset">{% blocktrans %}Reset Password{% endblocktrans %}</a>
+        <a href="{% url 'password_reset' %}">{% blocktrans %}Reset Password{% endblocktrans %}</a>
         <hr>
 
 

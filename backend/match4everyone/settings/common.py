@@ -90,6 +90,7 @@ TEMPLATES = [
                 "sekizai.context_processors.sekizai",
                 "cms.context_processors.cms_settings",
                 "django.template.context_processors.i18n",
+                "django_settings_export.settings_export",
             ],
         },
     },
@@ -102,7 +103,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 WSGI_APPLICATION = "match4everyone.wsgi.application"
 
-MAX_EMAILS_PER_HOSPITAL_PER_DAY = 200
+MAX_EMAILS_PER_DAY = 200
 NEWSLETTER_REQUIRED_APPROVERS = 2
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -289,3 +290,10 @@ IS_FORK = False
 
 if IS_TRAVIS and os.environ["TRAVIS_PULL_REQUEST_SLUG"] not in ["match4everyone/match4everything"]:
     IS_FORK = True
+
+# This is only used in the META tags for facebook's og
+BASE_URL = "https://match4everyone.de"
+
+SETTINGS_EXPORT = [
+    "BASE_URL",
+]

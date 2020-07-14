@@ -34,7 +34,11 @@ repos:
 -   repo: https://github.com/timothycrosley/isort
     rev: 4.3.21
     hooks:
-      - id: isort
+    -   id: isort
+        exclude: |
+                (?x)(
+                    ^backend/apps/[a-z]*/migrations/[0-9A-z_]*.py|
+                )
         # args: [--filter-files]
 # use black or autopep8 to automatically format files to pep8
 -   repo: https://github.com/psf/black
@@ -60,7 +64,7 @@ repos:
         exclude: |
                 (?x)(
                     ^00_old_m4h_matching_code/|
-                    ^backend/apps/[a-z]*/migrations/[0-9A-z]*.py|
+                    ^backend/apps/[a-z]*/migrations/[0-9A-z_]*.py|
                     ^backend/backups/|
                     ^backend/run/|
                     ^database/backups/|
