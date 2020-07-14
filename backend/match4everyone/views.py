@@ -1,4 +1,9 @@
-from django.http import HttpResponse
+from django.http import (
+    HttpResponse,
+    HttpResponseForbidden,
+    HttpResponseNotFound,
+    HttpResponseServerError,
+)
 from django.template import loader
 
 
@@ -45,11 +50,16 @@ def terms_of_use(request):
     return HttpResponse(template.render(context, request))
 
 
+def handler403(request, exception=None):
+    template = loader.get_template("403.html")
+    return HttpResponseForbidden(template.render({}, request))
+
+
 def handler404(request, exception=None):
     template = loader.get_template("404.html")
-    return HttpResponse(template.render({}, request), status=404)
+    return HttpResponseNotFound(template.render({}, request))
 
 
 def handler500(request):
     template = loader.get_template("500.html")
-    return HttpResponse(template.render({}, request), status=500)
+    return HttpResponseServerError(template.render({}, request))
