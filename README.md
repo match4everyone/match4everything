@@ -19,6 +19,7 @@ Originally developed as [match4healthcare](https://github.com/match4everyone/mat
 pip3 install -r backend/requirements.txt
 export LEAFLET_TILESERVER=open_street_map
 bash scripts/delete_db_and_setup.sh
+docker-compose run --rm frontend npm run build # (Re-)Build javascript bundles and gather font-awesome files
 python3 backend/manage.py runserver
 ```
 and visit `http://localhost:8000/`. Note that the password you have to enter during the script will become the password for the superuser account with the username `admin`.
@@ -220,6 +221,6 @@ Thanks for forking our repository. Pay attention that Travis CI doesn't test you
 If you want to use sendgrid for your tests, add your repository name to the list in the if statement for NOT_FORK in `backend/match4everyone/settings/production.py` and specify the `SENDGRID_API_KEY` environment variable in the Travis run settings.
 
 ## Documentation
-We use sphinx and Read the Docs for the project documentation. You need `pip install sphinx`.
+We use sphinx and Read the Docs for the project documentation. You need `pip install -r docs/requirements.readthedocs.txt` to make them.
 
-Write your documentation in the `docs/` folder in reStructuredText and admire its beauty locally with `cd docs && make html` (`make clean` to clean up)
+Write your documentation in the `docs/` folder in reStructuredText and admire its beauty locally with `cd docs && make html` (`make clean` to clean up) or `docker-compose up && docker-compose run documentation make html` in `docs/_build`

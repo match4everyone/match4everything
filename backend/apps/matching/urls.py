@@ -60,6 +60,7 @@ urlpatterns = [
         views.ApproveParticipantsView.as_view(),
         name="approve_participant",
     ),
+    path("staff/<p:p_type>/mail_limit", views.IncreaseMailLimitView.as_view(), name="mail_limit",),
     ####################################
     #  Authentication
     ####################################

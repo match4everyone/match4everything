@@ -1,3 +1,4 @@
+from .mail_limits import IncreaseMailLimitView  # noqa
 from .map import map_JSON, map_view  # noqa
 from .participant_change_activation import ChangeActivationAskView, ChangeActivationRedirect  # noqa
 from .participant_dashboard import ParticipantDashboard  # noqa
