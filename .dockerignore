@@ -1,0 +1,19 @@
+# Ignore everything
+**
+
+# Keep backend and frontend
+!/Dockerfile
+!/.dockerignore
+!/backend/
+!/frontend/
+!/docs/
+
+# Remove volatile directories for repeatable builds
+**/dist/*
+**/node_modules
+**/__pycache__
+**/.gitkeep
+**/.gitignore
+**/run/*
+!/backend/run/log
+/backend/run/log/*

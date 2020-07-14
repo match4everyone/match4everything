@@ -21,7 +21,7 @@ Logout
 	}
 
 </style>
-<script type="text/javascript">
+<script>
     window.addEventListener('load', function() {
         $(window).on("resize", function() {
 
@@ -58,7 +58,7 @@ Logout
     {% blocktrans %}
         <p>Thanks for dropping by.</p>
     {% endblocktrans %}
-		<a href="/matching/login_redirect">
+		<a href="{% url 'login_redirect' %}">
             <button type="submit" class="btn blue text-white btn-md" style="margin-top:35px;">
                 {% blocktrans %}Log in again{% endblocktrans %}
             </button>

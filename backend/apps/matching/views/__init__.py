@@ -1,12 +1,14 @@
 from .filter_edit import FilterUpdateView  # noqa
 from .filter_list import FilterListView  # noqa
 from .filtered_participants import FilteredParticipantList  # noqa
+from .mail_limits import IncreaseMailLimitView  # noqa
 from .map import map_JSON, map_view  # noqa
 from .participant_change_activation import ChangeActivationAskView, ChangeActivationRedirect  # noqa
 from .participant_dashboard import ParticipantDashboard  # noqa
 from .participant_filter_api import ParticipantInfoListAPI  # noqa
 from .participant_info_filter import ParticipantFilterCreateView  # noqa
-from .participant_profile_edit import ParticipantInfoUpdateView  # noqa
+from .participant_info_edit import ParticipantInfoUpdateView  # noqa
+from .participant_info_view import ParticipantInfoViewView  # noqa
 from .participant_signup import ParticipantSignup  # noqa
 from .profile_dashboard_redirect import ProfileDashboardRedirect  # noqa
 from .staff_approvals import ApproveParticipantsView  # noqa

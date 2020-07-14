@@ -23,7 +23,7 @@
         }
 
     </style>
-    <script type="text/javascript">
+    <script>
         window.addEventListener('load', function () {
             $(window).on("resize", function () {
 
@@ -52,7 +52,7 @@
                         <h4>{% blocktrans %}
                            Are you sure, that you want to deactivate your account? (This is not deleting, you can always reactivate it.)
                         {% endblocktrans %}</h4>
-                        <a href="change_activation_confirm">
+                        <a href="{% url 'activate_participant' %}">
                             <button class="btn blue text-white btn-md" style="margin-top:10px;">{% blocktrans %}
                                 Yes, deactivate my account.
                             {% endblocktrans %}</button>
@@ -61,11 +61,11 @@
                         <h4>{% blocktrans %}
                          Are you sure, that you want to reactivate your account?
                         {% endblocktrans %}</h4>
-                        <a href="change_activation_confirm">
+                        <a href="{% url 'activate_participant' %}">
                             <button class="btn blue text-white btn-md" style="margin-top:10px;">{% blocktrans %}Yes, reactivate my account.{% endblocktrans %}</button>
                         </a>
                     {% endif %}
-                    <a href="/">
+                    <a href="{% url 'profile' %}">
                         <button class="btn blue text-white btn-md" style="margin-top:10px;">{% blocktrans %}No, take me back to the dashboard.{% endblocktrans %}</button>
                     </a>
                 </div>

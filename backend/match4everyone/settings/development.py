@@ -3,7 +3,7 @@ from os import path
 
 from match4everyone.constants.enum import Environment
 from match4everyone.settings.common import *  # noqa
-from match4everyone.settings.common import RUN_DIR
+from match4everyone.settings.common import RUN_DIR, WEBPACK_LOADER
 
 THIS_ENV = Environment.DEVELOPMENT
 
@@ -86,3 +86,6 @@ else:
     # TODO: add logger message instead? # noqa: T003
     print("No email option selected")
     exit(1)
+
+# Disable caching of bundles on dev
+WEBPACK_LOADER["DEFAULT"]["CACHE"] = False

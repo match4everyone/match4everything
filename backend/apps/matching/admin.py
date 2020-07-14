@@ -5,7 +5,14 @@ from django.http import Http404
 
 from .models import User
 
-admin.site.register(User)
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("email", "first_name", "last_name")
+    list_filter = ("is_staff", "is_superuser")
+    search_fields = ["email"]
+
+
+admin.site.register(User, UserAdmin)
 
 
 def participant_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
@@ -39,6 +46,18 @@ def matching_participant_required(function=None):
 
         return new_func
 
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
+
+
+def logged_in_not_permitted(function=None, login_url="/"):
+    """
+    Decorator for views that checks that the user is not logged in.
+
+    Redirecting to the home page if necessary.
+    """
+    actual_decorator = user_passes_test(lambda u: not u.is_authenticated, login_url="/",)
     if function:
         return actual_decorator(function)
     return actual_decorator

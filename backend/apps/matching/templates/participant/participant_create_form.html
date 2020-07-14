@@ -20,9 +20,9 @@
     <div class="container" style="margin-bottom: 55px;">
 
         {% blocktrans %} Already registered? {% endblocktrans %}
-        <a href="/matching/login_redirect">{% blocktrans %}Login{% endblocktrans %}</a>
+        <a href="{% url 'login_redirect' %}">{% blocktrans %}Login{% endblocktrans %}</a>
         {% blocktrans %} or {% endblocktrans %}
-        <a href="/matching/password_reset">{% blocktrans %}Reset Password{% endblocktrans %}</a>
+        <a href="{% url 'password_reset' %}">{% blocktrans %}Reset Password{% endblocktrans %}</a>
         <hr>
 
 
@@ -31,11 +31,69 @@
 
                 <form method="post">
                     {% csrf_token %}
-                    {% crispy form form.helper %}
+                    {% crispy info_form info_form.helper %}
+                    <br>
+                <hr>
+                    <h5>Your locations</h5>
+                    {{ location_formset.management_form }}
+                    <div id="form_set">
+                        {% for form in location_formset.forms %}
+                            {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                             {{form.non_field_errors }}
+                            </div>
+                            {% endif %}
+                            <div class="form-row">
+                            <div class="form-group col-md-2 mb-0">
+                            {{ form.country_code |as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-6 mb-0">
+                            {{ form.plz |as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-2 mb-0">
+                            {{ form.radius |as_crispy_field }}
+                            </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <input type="button" class="btn btn-sm btn-outline-primary" value="Add another +" id="add_more">
+                    <input type="button" class="btn btn-sm btn-outline-dark" value="Remove last -" id="remove_this">
+                    <br>
+                    <div id="empty_form" style="display:none">
+                            <div class="form-row">
+                            <div class="form-group col-md-2 mb-0">
+                            {{ location_formset.empty_form.country_code |as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-6 mb-0">
+                            {{ location_formset.empty_form.plz |as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-2 mb-0">
+                            {{ location_formset.empty_form.radius |as_crispy_field }}
+                            </div>
+                            </div>
+                    </div>
+                <hr>
+                <input type="submit" class="btn btn-success float-right" value="Create a new account">
                 </form>
-
             </div>
         </div>
 
     </div>
+
+    <!-- inspired from : https://simpleit.rocks/python/django/dynamic-add-form-with-add-button-in-django-modelformset-template/ -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $('#add_more').click(function () {
+            var form_idx = $('#id_location-TOTAL_FORMS').val();
+            $('#form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+            $('#id_location-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+        });
+
+        $('#remove_this').click(function () {
+            var form_idx = $('#id_location-TOTAL_FORMS').val();
+
+            $('#form_set').children().last().remove();
+            $('#id_location-TOTAL_FORMS').val(parseInt(form_idx) - 1);
+        });
+    </script>
 {% endblock %}
