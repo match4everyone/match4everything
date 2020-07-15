@@ -530,23 +530,24 @@ msgstr "Englisch"
 msgid "German"
 msgstr "Deutsch"
 
-msgid ""
-"\n"
-"        404 Error\n"
-"    "
-msgstr ""
-"\n"
-"        404 Error\n"
-"    "
+msgid "403 Error"
+msgstr "403 Error"
 
-msgid "This page could not be found."
-msgstr "Diese Seite konnte nicht gefunden werden."
+msgid "You don't have the permissions to access this page."
+msgstr ""
+"Du hast keine ausreichenden Berechtigungen um auf diese Seite zuzugreifen."
 
 msgid "Back to homepage"
 msgstr "Zurück zur Homepage"
 
-msgid "Logout"
-msgstr "Logout"
+msgid "404 Error"
+msgstr "404 Error"
+
+msgid "This page could not be found."
+msgstr "Diese Seite konnte nicht gefunden werden."
+
+msgid "500 Error"
+msgstr "500 Error"
 
 msgid "An error occurred."
 msgstr "Ein Fehler ist aufgetreten."
@@ -557,7 +558,7 @@ msgstr "Über uns"
 msgid "Developed by Open Source Team"
 msgstr "Entwickelt von"
 
-msgid "during th hackathon #wirvsvirus"
+msgid "during the hackathon #wirvsvirus"
 msgstr "während #wirvsvirus"
 
 msgid "Signup A"
@@ -589,49 +590,3 @@ msgstr "und"
 
 msgid "Terms of Use"
 msgstr "AGBs"
-
-#~ msgid "We match for everyone."
-#~ msgstr "Wir matchen jeden."
-
-#~ msgid ""
-#~ "\n"
-#~ "        View Info\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "        Infos editieren"
-
-#~ msgid "We are the team of match4everyone! Muhahaha"
-#~ msgstr "M4E Team! Muhahaha"
-
-#~ msgid "I am"
-#~ msgstr "Ich bin"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "I own an ice cream parlor."
-#~ msgstr "Ich besitze einen Eiscreme Laden."
-
-#~ msgid "This is me"
-#~ msgstr "Das bin ich"
-
-#~ msgid "B"
-#~ msgstr "B"
-
-#~ msgid "I feel hungry."
-#~ msgstr "Ich habe Hunger."
-
-#~ msgid "How does this work?"
-#~ msgstr "Wie funktioniert das?"
-
-#~ msgid "We match."
-#~ msgstr "Wir matchen."
-
-#~ msgid "another open-source project"
-#~ msgstr "noch ein open-source Projekt"
-
-#~ msgid ""
-#~ "\n"
-#~ "                and"
-#~ msgstr "und"
