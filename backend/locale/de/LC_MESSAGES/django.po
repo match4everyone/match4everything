@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 1900-01-01 00:00+0000\n"
-"PO-Revision-Date: 2020-07-13 18:38+0200\n"
+"PO-Revision-Date: 2020-07-14 23:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,13 +16,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
+
+msgid "is exactly"
+msgstr "ist genau"
+
+msgid "is greater than"
+msgstr "ist größer als"
+
+msgid "is smaller than"
+msgstr "ist kleiner als"
+
+msgid "contains"
+msgstr "enthält"
 
 msgid "E-Mail"
 msgstr "E-Mail"
 
 msgid "Email adress for your account."
 msgstr "E-Mail-Adresse für Ihr Konto."
+
+msgid "contacted"
+msgstr "kontaktiert"
+
+msgid "successful"
+msgstr "erfolgreich"
+
+msgid "not successful"
+msgstr "nicht erfolgreich"
+
+msgid "blocked"
+msgstr "blockiert"
 
 msgid "<10 km"
 msgstr "<10 km"
@@ -47,6 +71,15 @@ msgstr " ist keine Postleitzahl in "
 
 msgid "This email is already taken."
 msgstr "Diese E-Mail wurde bereits vergeben."
+
+msgid "Edit your search"
+msgstr "Bearbeiten Sie Ihre Suche"
+
+msgid "Your searches"
+msgstr "Ihre Suchanfragen"
+
+msgid "Your search history."
+msgstr "Ihr Suchverlauf."
 
 msgid "Map"
 msgstr "Karte"
@@ -177,6 +210,21 @@ msgstr ""
 "        Mein Profil %(p_type)s\n"
 "    "
 
+msgid "Your Dashboard"
+msgstr "Ihr Dashboard"
+
+msgid "Start a new search for B's"
+msgstr "Erstelle eine neue Suche nach B's"
+
+msgid "My past searches for B's"
+msgstr "Mein Suchverlauf für B's"
+
+msgid "Start a new search for A's"
+msgstr "Erstelle eine neue Suche nach A's"
+
+msgid "My past searches for A's"
+msgstr "Mein Suchverlauf für A's"
+
 msgid "Profile Details"
 msgstr "Profil"
 
@@ -217,6 +265,33 @@ msgid ""
 msgstr ""
 "\n"
 "                    Meine Infos editieren"
+
+msgid ""
+"\n"
+"        Filter\n"
+"    "
+msgstr ""
+"\n"
+"        Filter\n"
+"    "
+
+msgid ""
+"\n"
+"        Create a new search\n"
+"        "
+msgstr ""
+"\n"
+"        Erstelle eine neue Suche\n"
+"        "
+
+msgid "Search results"
+msgstr "Suchergebnisse"
+
+msgid "What are you looking for?"
+msgstr "Wonach suchen Sie?"
+
+msgid "Apply to search"
+msgstr "Filter anwenden"
 
 msgid ""
 "\n"
@@ -408,6 +483,9 @@ msgstr "Zugriffsstatistik ansehen"
 msgid "View user statistics (Not implemented!)"
 msgstr "Nutzerstatistiken ansehen (Nicht implementiert!)"
 
+msgid "Successfully updated your filter."
+msgstr "Ihr Filter wurde aktualisiert."
+
 #, python-brace-format
 msgid "You increased the mail limit for '{name}'."
 msgstr "Sie haben die maximale Anzahl an E-Mails für '{name}' geändert."
@@ -452,23 +530,24 @@ msgstr "Englisch"
 msgid "German"
 msgstr "Deutsch"
 
-msgid ""
-"\n"
-"        404 Error\n"
-"    "
-msgstr ""
-"\n"
-"        404 Error\n"
-"    "
+msgid "403 Error"
+msgstr "403 Error"
 
-msgid "This page could not be found."
-msgstr "Diese Seite konnte nicht gefunden werden."
+msgid "You don't have the permissions to access this page."
+msgstr ""
+"Du hast keine ausreichenden Berechtigungen um auf diese Seite zuzugreifen."
 
 msgid "Back to homepage"
 msgstr "Zurück zur Homepage"
 
-msgid "Logout"
-msgstr "Logout"
+msgid "404 Error"
+msgstr "404 Error"
+
+msgid "This page could not be found."
+msgstr "Diese Seite konnte nicht gefunden werden."
+
+msgid "500 Error"
+msgstr "500 Error"
 
 msgid "An error occurred."
 msgstr "Ein Fehler ist aufgetreten."
@@ -479,7 +558,7 @@ msgstr "Über uns"
 msgid "Developed by Open Source Team"
 msgstr "Entwickelt von"
 
-msgid "during th hackathon #wirvsvirus"
+msgid "during the hackathon #wirvsvirus"
 msgstr "während #wirvsvirus"
 
 msgid "Signup A"
@@ -511,49 +590,3 @@ msgstr "und"
 
 msgid "Terms of Use"
 msgstr "AGBs"
-
-#~ msgid "We match for everyone."
-#~ msgstr "Wir matchen jeden."
-
-#~ msgid ""
-#~ "\n"
-#~ "        View Info\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "        Infos editieren"
-
-#~ msgid "We are the team of match4everyone! Muhahaha"
-#~ msgstr "M4E Team! Muhahaha"
-
-#~ msgid "I am"
-#~ msgstr "Ich bin"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "I own an ice cream parlor."
-#~ msgstr "Ich besitze einen Eiscreme Laden."
-
-#~ msgid "This is me"
-#~ msgstr "Das bin ich"
-
-#~ msgid "B"
-#~ msgstr "B"
-
-#~ msgid "I feel hungry."
-#~ msgstr "Ich habe Hunger."
-
-#~ msgid "How does this work?"
-#~ msgstr "Wie funktioniert das?"
-
-#~ msgid "We match."
-#~ msgstr "Wir matchen."
-
-#~ msgid "another open-source project"
-#~ msgstr "noch ein open-source Projekt"
-
-#~ msgid ""
-#~ "\n"
-#~ "                and"
-#~ msgstr "und"

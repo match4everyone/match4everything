@@ -19,15 +19,13 @@ from django.urls import include, path
 
 from match4everyone import views
 
-handler404 = views.handler404
-handler500 = views.handler500
-
 urlpatterns = [
     path("matching/", include("apps.matching.urls")),
     path("use_statistics/", include("apps.use_statistics.urls")),
     path("django-administration/", admin.site.urls),
-    path("404/", views.handler404),
-    path("500/", views.handler500),
+    path("403/", views.handler403, name="403"),
+    path("404/", views.handler404, name="404"),
+    path("500/", views.handler500, name="500"),
     path("legal-questions/", views.legal_questions),
     re_path(r"^", include("cms.urls")),
 ]

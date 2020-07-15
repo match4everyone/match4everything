@@ -13,9 +13,9 @@ urlpatterns = [
     ####################################
     #  User signup/editing/dashboards
     ####################################
-    path("<p:p_type>/signup", views.ParticipantSignup.as_view(), name="signup"),
-    path("profile_redirect", views.ProfileDashboardRedirect.as_view(), name="profile_redirect",),
-    path("profile", views.ParticipantDashboard.as_view(), name="profile"),
+    path("<p:p_type>/signup/", views.ParticipantSignup.as_view(), name="signup"),
+    path("profile_redirect/", views.ProfileDashboardRedirect.as_view(), name="profile_redirect",),
+    path("profile/", views.ParticipantDashboard.as_view(), name="profile"),
     path(
         "<p:p_type>/info/<str:uuid>/edit/",
         views.ParticipantInfoUpdateView.as_view(),
@@ -27,27 +27,27 @@ urlpatterns = [
         name="info-view",
     ),
     path(
-        "change_activation",
+        "change_activation/",
         views.ChangeActivationAskView.as_view(),
         name="activate_participant_ask",
     ),
     path(
-        "change_activation_confirm",
+        "change_activation_confirm/",
         views.ChangeActivationRedirect.as_view(),
         name="activate_participant",
     ),
-    path("delete_me_ask", views.delete_me_ask, name="delete_me_ask"),
-    path("delete_me", views.delete_me, name="delete_me"),
+    path("delete_me_ask/", views.delete_me_ask, name="delete_me_ask"),
+    path("delete_me/", views.delete_me, name="delete_me"),
     ####################################
     #  Map view
     ####################################
-    path("map", views.map_view, name="map"),
-    path("<p:p_type>/participant_JSON", views.map_JSON, name="participant_JSON"),
+    path("map/", views.map_view, name="map"),
+    path("<p:p_type>/participant_JSON/", views.map_JSON, name="participant_JSON"),
     ####################################
     #  List view / filtering
     ####################################
     path(
-        "api/<p:p_type>/info/list",
+        "api/<p:p_type>/info/list/",
         views.ParticipantInfoListAPI.as_view(),
         name="api_participant_list",
     ),
@@ -58,23 +58,23 @@ urlpatterns = [
     ),
     path("<p:p_type>/", views.FilteredParticipantList.as_view(), name="participant_list",),
     path(
-        "<p:p_type>/filter/create",
+        "<p:p_type>/filter/create/",
         views.ParticipantFilterCreateView.as_view(),
         name="create_participant_filter",
     ),
     path(
         "<p:p_type>/filter/<str:uuid>/edit/", views.FilterUpdateView.as_view(), name="filter-edit",
     ),
-    path("<p:p_type>/filter/list", views.FilterListView.as_view(), name="filter_list",),
+    path("<p:p_type>/filter/list/", views.FilterListView.as_view(), name="filter_list",),
     path(
-        "<p:p_type>/<countrycode>/<plz>/<float:distance>",
+        "<p:p_type>/<countrycode>/<plz>/<float:distance>/",
         TemplateView.as_view(template_name="messages/not_implemented.html"),
         name="participant_list",
     ),
     ####################################
     #  Staff
     ####################################
-    path("profile_staff/", views.StaffProfileView.as_view(), name="staff_profile"),
+    path("staff_profile/", views.StaffProfileView.as_view(), name="staff_profile"),
     path(
         "staff/<p:p_type>/approve/",
         views.ApproveParticipantsView.as_view(),
@@ -85,12 +85,12 @@ urlpatterns = [
     #  Authentication
     ####################################
     path(
-        "thanks-registration",
+        "thanks-registration/",
         TemplateView.as_view(template_name="messages/thanks_for_registering.html"),
-        name="thanks-register",
+        name="thanks-registration",
     ),
-    path("login_redirect", views.LoginRedirect.as_view(), name="login_redirect"),
-    path("validate_email", views.validate_email, name="validate_email"),
+    path("login_redirect/", views.LoginRedirect.as_view(), name="login_redirect"),
+    path("validate_email/", views.validate_email, name="validate_email"),
     path(
         "logout/",
         auth_views.LogoutView.as_view(template_name="registration/logout.html"),
@@ -104,7 +104,7 @@ urlpatterns = [
         name="password_change_done",
     ),
     path(
-        "password_change",
+        "password_change/",
         auth_views.PasswordChangeView.as_view(
             template_name="registration/password_change_form_.html"
         ),
@@ -137,12 +137,12 @@ urlpatterns = [
         auth_views.PasswordResetConfirmView.as_view(
             template_name="registration/password_reset_confirm_.html",
             post_reset_login=True,
-            success_url="/matching/validate_email",
+            success_url="/matching/validate_email/",
         ),
         name="password_reset_confirm_",
     ),
     path(
-        "resend_validation_email/<email>",
+        "resend_validation_email/<email>/",
         views.resend_validation_email,
         name="resend_validation_email",
     ),
