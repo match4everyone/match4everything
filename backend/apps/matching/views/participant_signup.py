@@ -3,6 +3,7 @@ import logging
 from django.forms import modelformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
@@ -20,7 +21,7 @@ class ParticipantSignup(View):
 
     # inspired by : https://medium.com/all-about-django/adding-forms-dynamically-to-a-django-formset-375f1090c2b0
     template_name = "participant/participant_create_form.html"
-    success_url = "/matching/thanks-registration"
+    success_url = reverse_lazy("thanks-registration")
     subject_template = "registration/password_reset_email_subject.txt"
     mail_template = "registration/password_set_email.html"
 

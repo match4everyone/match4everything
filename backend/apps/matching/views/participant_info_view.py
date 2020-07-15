@@ -27,4 +27,4 @@ class ParticipantInfoViewView(UpdateView):
         return ParticipantInfo[self.kwargs["p_type"]].objects.all()
 
     def get_success_url(self):
-        return reverse("profile", kwargs={"p_type": self.kwargs["p_type"]})
+        return reverse("profile")
