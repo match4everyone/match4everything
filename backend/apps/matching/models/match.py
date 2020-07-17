@@ -59,6 +59,34 @@ class Match(models.Model):
             return self.participantB
 
     @classmethod
+    def contact_all_not_matched_to(cls, this_filter):
+        filter_params = {"info__" + k: v for k, v in this_filter.as_get_params().items()}
+
+        matches = Participant[this_filter.participant_type].objects.filter(**filter_params)
+        if this_filter.participant_type == "A":
+            not_yet_contacted = matches.filter(~models.Q(match__filterA=this_filter))
+
+            for participant in not_yet_contacted:
+                m = Match.objects.create(
+                    participantA=participant,
+                    participantB=this_filter.created_by.participant(),
+                    filterA=this_filter,
+                    initiator="B",
+                )
+                m.save()
+        else:
+            not_yet_contacted = matches.filter(~models.Q(match__filterB=this_filter))
+
+            for participant in not_yet_contacted:
+                m = Match.objects.create(
+                    participantB=participant,
+                    participantA=this_filter.created_by.participant(),
+                    filterB=this_filter,
+                    initiator="A",
+                )
+                m.save()
+
+    @classmethod
     def matches_to(cls, this_filter):
 
         filter_params = {"info__" + k: v for k, v in this_filter.as_get_params().items()}
@@ -73,8 +101,10 @@ class Match(models.Model):
 
         else:
             already_contacted_with_via_filter = matches.filter(match__filterB=this_filter).count()
-            already_in_contact_with = matches.filter(
-                match__participantA=this_filter.created_by.participant()
-            ).count()
+            already_in_contact_with = (
+                matches.filter(match__participantA=this_filter.created_by.participant())
+                .distinct()
+                .count()
+            )
 
         return (already_in_contact_with, already_contacted_with_via_filter, available_matches)

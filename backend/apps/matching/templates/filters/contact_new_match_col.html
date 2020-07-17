@@ -1,5 +1,4 @@
-
-    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#contactModal{{ record.id }}">
+<button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#contactModal{{ record.id }}">
   Contact all new matches
 </button>
 
@@ -10,29 +9,25 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Contact Form</h4>
+        <h4 class="modal-title">Contact new candidates as well</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-          <form>
-          <div class="form-group">
-    <label for="formGroupExampleInput">Subject</label>
-    <input type="text" class="form-control" name="msg-only-subject" value="{{ record.subject }}">
-  </div>
-        <div class="form-group">
-    <label for="exampleFormControlTextarea1">Message</label>
-    <textarea class="form-control" name="msg-only-contact_text" rows="3" value="{{ record.contact_text }}"></textarea>
-  </div>
-          </form>
+
+            <p>Subject: {{ record.subject }}</p>
+          <hr>
+          <p>{{ record.contact_text }}</p>
+
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-          <input type="submit"  formmethod="post" class="btn btn-primary" value="Contact all selected">
-
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <form action="{% url 'contact_all_new_matches' p_type record.uuid %}">
+              {%  csrf_token %}
+          <input type="submit"  formmethod="post" class="btn btn-primary" value="Send">
+          </form>
       </div>
 
     </div>

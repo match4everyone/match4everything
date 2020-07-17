@@ -1,5 +1,7 @@
 from .filter_edit import FilterUpdateView  # noqa
 from .filter_list import FilterListView  # noqa
+from .filter_search_again import ParticipantFilterSearchAgain  # noqa
+from .filter_new_matches import FilterContactNewMatchView  # noqa
 from .filtered_participants import FilteredParticipantList  # noqa
 from .mail_limits import IncreaseMailLimitView  # noqa
 from .map import map_JSON, map_view  # noqa

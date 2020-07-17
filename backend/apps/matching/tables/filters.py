@@ -15,7 +15,11 @@ def make_filter_tables(p_type):
         new_matches_you_did_not_contact = tables.TemplateColumn(
             template_name="filters/contact_new_match_col.html", verbose_name="", empty_values=()
         )
-        search_again = tables.Column(empty_values=())
+        search_again = tables.TemplateColumn(
+            template_name="filters/search_again_col.html",
+            verbose_name="",
+            extra_context={"p_type": p_type},
+        )
 
         class Meta:
             model = ParticipantInfoFilter[p_type]
@@ -26,9 +30,6 @@ def make_filter_tables(p_type):
             filter_ = ParticipantInfoFilter[p_type].objects.get(id=record.id)
             matches = Match.matches_to(filter_)
             return matches
-
-        def render_search_again(self, record):
-            return "(button: search again)"
 
     return FilterTable
 
