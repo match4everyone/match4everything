@@ -4,7 +4,7 @@ import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .participant import ParticipantA, ParticipantB
+from .participant import Participant, ParticipantA, ParticipantB
 from .participant_filter import ParticipantInfoFilterA, ParticipantInfoFilterB
 
 CONTACTED = 1
@@ -22,8 +22,8 @@ MATCH_STATE = [
 class Match(models.Model):
     uuid = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
 
-    participantA = models.ForeignKey(ParticipantA, on_delete=models.CASCADE)
-    participantB = models.ForeignKey(ParticipantB, on_delete=models.CASCADE)
+    participantA = models.ForeignKey(ParticipantA, on_delete=models.CASCADE, related_name="match")
+    participantB = models.ForeignKey(ParticipantB, on_delete=models.CASCADE, related_name="match")
 
     initiator = models.CharField(choices=[("A", "A"), ("B", "B")], max_length=1)
     match_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
@@ -36,8 +36,6 @@ class Match(models.Model):
     filterB = models.ForeignKey(
         ParticipantInfoFilterB, on_delete=models.SET(None), null=True, blank=True
     )
-
-    contact_text = models.CharField(max_length=500, blank=True)
 
     def contacted_via_filter(self):
         if self.filterA is None:
@@ -59,3 +57,24 @@ class Match(models.Model):
             return self.participantA
         else:
             return self.participantB
+
+    @classmethod
+    def matches_to(cls, this_filter):
+
+        filter_params = {"info__" + k: v for k, v in this_filter.as_get_params().items()}
+
+        matches = Participant[this_filter.participant_type].objects.filter(**filter_params)
+        available_matches = matches.count()
+        if this_filter.participant_type == "A":
+            already_contacted_with_via_filter = matches.filter(match__filterA=this_filter).count()
+            already_in_contact_with = matches.filter(
+                match__participantB=this_filter.created_by.participant()
+            ).count()
+
+        else:
+            already_contacted_with_via_filter = matches.filter(match__filterB=this_filter).count()
+            already_in_contact_with = matches.filter(
+                match__participantA=this_filter.created_by.participant()
+            ).count()
+
+        return (already_in_contact_with, already_contacted_with_via_filter, available_matches)

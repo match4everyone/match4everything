@@ -26,12 +26,13 @@ class FilteredParticipantList(SingleTableMixin, FilterView):
         uuids = request.POST.getlist("uuid")
         filtered_p_type = p_type
 
-        filterset = self.get_filterset_kwargs(self.get_filterset_class())
+        filterset = self.get_filterset_kwargs(self.get_filterset_class())["data"].copy()
+
         filter_ = ParticipantInfoFilter[p_type].create_from_filterset(
             filter_kwargs=filterset, created_by=request.user
         )
-        filter_.name = request.POST["name"]
-        filter_.contact_text = request.POST["contact_text"]
+        filter_.contact_text = request.POST["msg-only-subject"]
+        filter_.subject = request.POST["msg-only-contact_text"]
         filter_.save()
         # save filter before
         for uuid in uuids:

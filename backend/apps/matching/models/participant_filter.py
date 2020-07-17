@@ -12,13 +12,20 @@ from .participant_info import ParticipantInfo
 from .user import User
 
 
+def filter_name():
+    """Return a default value for a filter name."""
+    return "Old contact request"
+
+
 class AbstractParticipantInfoFilter(models.Model):
     """A filter that contains information with which the info of a participant can be filtered."""
 
     uuid = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
     registration_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
 
-    name = models.CharField(max_length=100)
+    filter_name = models.CharField(max_length=100, default=filter_name)
+    subject = models.CharField(max_length=300, blank=True)
+    contact_text = models.CharField(max_length=500, blank=True)
 
     @staticmethod
     def excluded_fields():
@@ -55,9 +62,6 @@ class AbstractParticipantInfoFilter(models.Model):
                     get_request[fieldname + "__" + lookup_exp] = str(value)
         return get_request
 
-    def matching_infos(self):
-        return ParticipantInfo[self.participant_type].objects.filter(**self.as_get_params()).count()
-
     @classmethod
     def create_from_filterset(cls, filter_kwargs, created_by):
         filter_kwargs_update = {}
@@ -66,9 +70,13 @@ class AbstractParticipantInfoFilter(models.Model):
         class Filter(forms.ModelForm):
             class Meta:
                 model = ParticipantInfoFilter[cls.participant_type]
-                exclude = ParticipantInfoFilter[cls.participant_type].excluded_fields() + ["name"]
+                exclude = ParticipantInfoFilter[cls.participant_type].excluded_fields() + [
+                    "subject",
+                    "contact_text",
+                    "filter_name",
+                ]
 
-        for name, value in filter_kwargs["data"].items():
+        for name, value in filter_kwargs.items():
             if "__" not in name:
                 name = name + "-" + "exact"
             else:
@@ -79,7 +87,6 @@ class AbstractParticipantInfoFilter(models.Model):
         f = Filter(filter_kwargs_update).save(commit=False)
         f.created_by = created_by
         return f
-        # return ParticipantInfo[cls.participant_type].objects.create(**filter_kwargs_update)
 
 
 """

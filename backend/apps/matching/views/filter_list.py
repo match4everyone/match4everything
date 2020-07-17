@@ -1,4 +1,7 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django_tables2 import SingleTableView
 
@@ -22,3 +25,12 @@ class FilterListView(SingleTableView):
         context = super().get_context_data(**kwargs)
         context["p_type"] = self.kwargs["p_type"]
         return context
+
+    def post(self, request, p_type):
+        filter_ = get_object_or_404(
+            ParticipantInfoFilter[p_type], uuid=request.POST.get("uuid", None)
+        )
+        if "" != request.POST.get("filter_name", ""):
+            filter_.filter_name = request.POST["filter_name"]
+            filter_.save()
+        return HttpResponseRedirect(reverse("filter_list", kwargs={"p_type": p_type}))
