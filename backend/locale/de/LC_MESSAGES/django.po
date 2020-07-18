@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 1900-01-01 00:00+0000\n"
-"PO-Revision-Date: 2020-07-14 23:44+0200\n"
+"PO-Revision-Date: 2020-07-18 16:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 2.3\n"
 
 msgid "is exactly"
 msgstr "ist genau"
@@ -485,6 +485,9 @@ msgstr "Nutzerstatistiken ansehen (Nicht implementiert!)"
 
 msgid "Successfully updated your filter."
 msgstr "Ihr Filter wurde aktualisiert."
+
+msgid "You contacted new people."
+msgstr "Sie haben neue Teilnehmer kontaktiert."
 
 #, python-brace-format
 msgid "You increased the mail limit for '{name}'."
