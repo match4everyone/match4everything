@@ -55,20 +55,25 @@ two instances with the same helper - the method that is used for forms etc.
 
 
 class ParticipantInfoA(AbstractParticipantInfo):
-    participant_type = "A"
+    participant_type = A.url_name
     participant = models.OneToOneField(
         Participant["A"], on_delete=models.CASCADE, primary_key=True, related_name="info"
     )
 
 
 class ParticipantInfoB(AbstractParticipantInfo):
-    participant_type = "B"
+    participant_type = B.url_name
     participant = models.OneToOneField(
         Participant["B"], on_delete=models.CASCADE, primary_key=True, related_name="info"
     )
 
 
-ParticipantInfo = {"A": ParticipantInfoA, "B": ParticipantInfoB}
+ParticipantInfo = {
+    "A": ParticipantInfoA,
+    A.url_name: ParticipantInfoA,
+    "B": ParticipantInfoB,
+    B.url_name: ParticipantInfoB,
+}
 
 
 def add_participant_specific_info(name, participant_config):

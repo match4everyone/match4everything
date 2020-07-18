@@ -3,6 +3,9 @@ from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
 from django.http import Http404
 
+from match4everyone.configuration.A import A
+from match4everyone.configuration.B import B
+
 from .models import User
 
 
@@ -40,7 +43,9 @@ def matching_participant_required(function=None):
 
     def actual_decorator(function):
         def new_func(request, p_type, *args, **kwargs):
-            if (request.user.is_A and p_type == "A") or (request.user.is_B and p_type == "B"):
+            if (request.user.is_A and p_type == A.url_name) or (
+                request.user.is_B and p_type == B.url_name
+            ):
                 return function(request, p_type, *args, **kwargs)
             raise Http404
 

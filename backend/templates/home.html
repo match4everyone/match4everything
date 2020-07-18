@@ -139,7 +139,7 @@
                             {% placeholder "introduction A" %}<br>
                             <b>{% placeholder "name A" %}</b></h2>
                         <p class="text-white home-box-description">{% placeholder "description A" %}</p>
-                        <a href="{% url 'signup' 'A' %}">
+                        <a href="{% url 'signup' settings.A %}">
                             <button type="button" class="btn blue text-white btn-lg">
                                 {% placeholder "text register button A" %}
                                 <svg class="bi bi-person-plus" style="margin-left:3px;" width="1em" height="1em"
@@ -160,7 +160,7 @@
                             {% placeholder "introduction B" %}<br>
                             <b>{% placeholder "name B" %}</b></h2>
                         <p class="text-white home-box-description">{% placeholder "description B" %}</p>
-                        <a href="{% url 'signup' 'B' %}">
+                        <a href="{% url 'signup' settings.B %}">
                         <button type="button" class="btn text-white btn-lg pink">{% placeholder "text register button B" %}
                             <svg class="bi bi-search" style="margin-left:3px;" width="1em" height="1em"
                                  viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

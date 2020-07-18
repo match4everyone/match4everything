@@ -58,20 +58,20 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item {% if "about" in request.path %}active{% endif %}"><a class="nav-link"
+                <li class="nav-item {% if 'about' in request.path %}active{% endif %}"><a class="nav-link"
                                                                                           href="/about">
                     {% blocktrans %}About{% endblocktrans %}</a></li>
                 <li class="nav-item {% if "mapview" in request.path %}active{% endif %}"> <a class="nav-link" href="{% url 'map' %}">
                     {% blocktrans %}Map{% endblocktrans %}
                 </a> </li>
                 {% if not user.is_authenticated %}
-                    <li class="nav-item {% if "A/signup" in request.path %}active{% endif %} hide-home"><a
-                            class="nav-link" href="{% url 'signup' "A" %}">{% blocktrans %}Signup A{% endblocktrans %}</a></li>
-                    <li class="nav-item  {% if "B/signup" in request.path %}active{% endif %} hide-home"><a
-                            class="nav-link" href="{% url 'signup' "B" %}">{% blocktrans %}Signup B{% endblocktrans %}</a></li>
+                    <li class="nav-item {% if settings.A|add:'/signup' in request.path %}active{% endif %} hide-home"><a
+                            class="nav-link" href="{% url 'signup' settings.A %}">{% blocktrans %}Signup{% endblocktrans %} {{ settings.A_NAME }}</a></li>
+                    <li class="nav-item  {% if settings.B|add:'/signup' in request.path %}active{% endif %} hide-home"><a
+                            class="nav-link" href="{% url 'signup' settings.B %}">{% blocktrans %}Signup{% endblocktrans %} {{ settings.B_NAME }}</a></li>
                 {% endif %}
                 {% if user.is_authenticated %}
-                    <li class="nav-item {% if "profile" in request.path %}active{% endif %}">
+                    <li class="nav-item {% if 'profile' in request.path %}active{% endif %}">
                         <a class="nav-link" href="{% url 'profile_redirect' %}">
                         {% blocktrans %}My Profile{% endblocktrans %}</a></li>
                 {% else %}
