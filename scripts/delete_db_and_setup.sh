@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # To run script in Docker call for example "delete_db_and_setup.sh 'docker-compose exec backend'"
 EXEC_ENV="$*"
 
