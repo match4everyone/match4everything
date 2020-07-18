@@ -6,11 +6,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 import numpy as np
 
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
-
 from apps.matching.data.map_data import zipcodes
 from apps.matching.utils.zipcodes import GERMAN_BIG_CITY_ZIPCODES
+from match4everyone.configuration.A import A
+from match4everyone.configuration.B import B
 
 from .participant_info import ParticipantInfo
 

@@ -4,10 +4,9 @@ from django.core.management.base import BaseCommand
 import numpy as np
 from tqdm import tqdm
 
+from apps.matching.models import Participant, ParticipantInfo, ParticipantInfoLocation, User
 from match4everyone.configuration.A import A
 from match4everyone.configuration.B import B
-
-from apps.matching.models import Participant, ParticipantInfo, ParticipantInfoLocation, User
 
 FAKE_MAIL = "@example.com"
 
