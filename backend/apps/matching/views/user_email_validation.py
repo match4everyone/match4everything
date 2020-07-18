@@ -3,6 +3,7 @@ import logging
 
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from apps.matching.models import User
 from apps.matching.utils.notifications import send_password_set_email
@@ -16,7 +17,7 @@ def validate_email(request):
         request.user.validated_email = True
         request.user.email_validation_date = datetime.now()
         request.user.save()
-    return HttpResponseRedirect("login_redirect")
+    return HttpResponseRedirect(reverse("login_redirect"))
 
 
 def resend_validation_email(request, email):
@@ -28,5 +29,5 @@ def resend_validation_email(request, email):
                 template="registration/password_set_email.html",
                 subject_template="registration/password_reset_email_subject.txt",
             )
-            return HttpResponseRedirect("/matching/password_reset/done")
+            return HttpResponseRedirect(reverse("password_reset_done"))
     return HttpResponseRedirect("/")
