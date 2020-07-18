@@ -61,3 +61,46 @@ def logged_in_not_permitted(function=None, login_url="/"):
     if function:
         return actual_decorator(function)
     return actual_decorator
+
+
+def profile_visible_for_B(u):
+    return u.is_B
+
+
+def profile_visible_for_other_A(u):
+    return u.is_A
+
+
+def profile_visible_for_A(u):
+    return u.is_A
+
+
+def profile_visible_for_other_B(u):
+    return u.is_B
+
+
+def profile_own(uuid_accessed, uuid_own):
+    return uuid_accessed == uuid_own
+
+
+def required_at_least_one(restrictions_A, restrictions_B, function=None):
+    def actual_decorator(function):
+        def test(request, p_type, uuid, *args, **kwargs):
+            u = request.user
+            passes_test = False
+            if p_type == "A":
+                for restriction in restrictions_A:
+                    passes_test += restriction(u)
+            elif p_type == "B":
+                for restriction in restrictions_B:
+                    passes_test += restriction(u)
+            passes_test += profile_own(uuid_accessed=uuid, uuid_own=u.participant().info.uuid)
+            if passes_test > 0:
+                return function(request, p_type, uuid, *args, **kwargs)
+            raise Http404
+
+        return test
+
+    if function:
+        return actual_decorator(function)
+    return actual_decorator

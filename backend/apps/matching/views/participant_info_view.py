@@ -5,6 +5,13 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import UpdateView
 
+from apps.matching.admin import (
+    profile_visible_for_A,
+    profile_visible_for_B,
+    profile_visible_for_other_A,
+    profile_visible_for_other_B,
+    required_at_least_one,
+)
 from apps.matching.forms import ParticipantViewInfoForm
 from apps.matching.models import ParticipantInfo
 from match4everyone.configuration.A import A
@@ -12,15 +19,19 @@ from match4everyone.configuration.B import B
 
 logger = logging.getLogger(__name__)
 
-decorators = [login_required]
+restrictions_A = []
+restrictions_B = []
 if A.profile_visible_for_B:
-    decorators.append(None)
+    restrictions_A.append(profile_visible_for_B)
 if A.profile_visible_for_other_A:
-    decorators.append(None)
+    restrictions_A.append(profile_visible_for_other_A)
+
 if B.profile_visible_for_A:
-    decorators.append(None)
+    restrictions_B.append(profile_visible_for_A)
 if B.profile_visible_for_other_B:
-    decorators.append(None)
+    restrictions_B.append(profile_visible_for_other_B)
+
+decorators = [login_required, required_at_least_one(restrictions_A, restrictions_B)]
 
 
 @method_decorator(decorators, name="dispatch")
