@@ -99,6 +99,9 @@ module.exports = {
                     loader: 'style-loader', // inject CSS to page
                 }, {
                     loader: 'css-loader', // translates CSS into CommonJS modules
+                    options: {
+                        sourceMap: true,
+                    },
                 }, {
                     loader: 'postcss-loader', // Run post css actions
                     options: {
@@ -110,7 +113,10 @@ module.exports = {
                         }
                     }
                 }, {
-                    loader: 'sass-loader' // compiles Sass to CSS
+                    loader: 'sass-loader', // compiles Sass to CSS
+                    options: {
+                        sourceMap: true,
+                    },
                 }]
             },
             {
@@ -165,4 +171,5 @@ module.exports = {
         new CompressionPlugin(),
         new VueLoaderPlugin(),
     ],
+    devtool: 'eval-source-map',
 }
