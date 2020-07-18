@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% blocktrans %}Your searches{% endblocktrans %}
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% load render_table from django_tables2 %}
+
+
+{% block content %}
+<hr>
+
+<div class="container" style="margin-bottom:30px;">
+   {% for message in messages %}
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+{% endfor %}
+    <p style="margin-top:30px;">
+    <div class="card border-info" style="margin-top:30px;">
+        <div class="card-header">
+        <div class="row">
+            <div class="col test-left">{% blocktrans %}Other participants you contacted.{% endblocktrans %}</div>
+        </div>
+        </div>
+        <div class="card-body">
+            {% render_table table %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

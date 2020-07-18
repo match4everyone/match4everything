@@ -46,6 +46,11 @@
                             <a role="button" class="btn btn-primary text-white btn-lg" href="{% url 'participant_list' 'A' %}">{% blocktrans %}Start a new search for A's{% endblocktrans %}</a>
                 <a href="{% url 'filter_list' 'A' %}">{% blocktrans %}My past searches for A's{% endblocktrans %}</a>
             {% endif %}
+            <hr>
+            <a role="button" class="btn btn-outline-primary btn-sm" href="{% url 'matches-requests-from-me' %}">{% blocktrans %}Requests to others{% endblocktrans %}</a>
+            <a role="button" class="btn btn-outline-primary btn-sm" href="{% url 'matches-requests-to-me' %}">{% blocktrans %}Requests to me{% endblocktrans %}</a>
+
+
             </div>
         </div>
 

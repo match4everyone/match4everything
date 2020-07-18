@@ -1,4 +1,5 @@
 from datetime import datetime
+import urllib
 import uuid
 
 from django.db import models
@@ -87,6 +88,11 @@ class AbstractParticipantInfoFilter(models.Model):
         f = Filter(filter_kwargs_update).save(commit=False)
         f.created_by = created_by
         return f
+
+    def search_url(self):
+        url = reverse("participant_list", kwargs={"p_type": self.participant_type})
+        params = urllib.parse.urlencode(self.as_get_params())
+        return url + "?%s" % params
 
 
 """

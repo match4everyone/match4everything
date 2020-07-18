@@ -1,0 +1,23 @@
+<button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#mailModal{{ record.id }}">
+    <i class="fa fa-envelope-o" aria-hidden="true"></i> {{ value.0 }}
+</button>
+
+<!-- The Modal -->
+<div class="modal" id="mailModal{{ record.id }}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Subject: {{ value.0 }}</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+          <p>{{ value.1 }}</p>
+
+      </div>
+    </div>
+  </div>
+</div>

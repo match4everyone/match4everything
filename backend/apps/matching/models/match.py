@@ -2,20 +2,25 @@ from datetime import datetime
 import uuid
 
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from .participant import Participant, ParticipantA, ParticipantB
 from .participant_filter import ParticipantInfoFilterA, ParticipantInfoFilterB
 
-CONTACTED = 1
-SUCCESSFUL = 2
-NOT_SUCCESSFUL = 3
-BLOCKED = 4
+
+class MATCH_STATE_OPTIONS:
+    CONTACTED = 1
+    SUCCESSFUL = 2
+    NOT_SUCCESSFUL = 3
+    BLOCKED = 4
+
+
 MATCH_STATE = [
-    (CONTACTED, _("contacted")),
-    (SUCCESSFUL, _("successful")),
-    (NOT_SUCCESSFUL, _("not successful")),
-    (BLOCKED, _("blocked")),
+    (MATCH_STATE_OPTIONS.CONTACTED, _("contacted")),
+    (MATCH_STATE_OPTIONS.SUCCESSFUL, _("successful")),
+    (MATCH_STATE_OPTIONS.NOT_SUCCESSFUL, _("not successful")),
+    (MATCH_STATE_OPTIONS.BLOCKED, _("blocked")),
 ]
 
 
@@ -28,7 +33,7 @@ class Match(models.Model):
     initiator = models.CharField(choices=[("A", "A"), ("B", "B")], max_length=1)
     match_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
 
-    state = models.IntegerField(choices=MATCH_STATE, default=CONTACTED)
+    state = models.IntegerField(choices=MATCH_STATE, default=MATCH_STATE_OPTIONS.CONTACTED)
 
     filterA = models.ForeignKey(
         ParticipantInfoFilterA, on_delete=models.SET(None), null=True, blank=True
@@ -37,14 +42,22 @@ class Match(models.Model):
         ParticipantInfoFilterB, on_delete=models.SET(None), null=True, blank=True
     )
 
+    @property
     def contacted_via_filter(self):
-        if self.filterA is None:
+        if self.filterA is not None:
             return self.filterA, "A"
-        if self.filterB is None:
+        if self.filterB is not None:
             return self.filterB, "B"
         # filter was deleted after the match
         # or not used for finding the match
         return None, None
+
+    @property
+    def filter_url(self):
+        filter_, p_type = self.contacted_via_filter
+        if filter_ is not None:
+            return filter_.search_url()
+        return ""
 
     def initiator_participant(self):
         if self.initiator == "A":
@@ -108,3 +121,27 @@ class Match(models.Model):
             )
 
         return (already_in_contact_with, already_contacted_with_via_filter, available_matches)
+
+    @property
+    def email_initiator(self):
+        return self.initiator_participant().user.email
+
+    @property
+    def email_initiator_url(self):
+        p = self.initiator_participant().user.participant()
+        return reverse("info-view", kwargs={"uuid": p.info.uuid, "p_type": p.participant_type})
+
+    @property
+    def email_receiver(self):
+        if self.state in [MATCH_STATE_OPTIONS.SUCCESSFUL, MATCH_STATE_OPTIONS.NOT_SUCCESSFUL]:
+            return self.requested_participant().user.email
+        elif self.state == MATCH_STATE_OPTIONS.BLOCKED:
+            return _("the other participant is not interested")
+        return _("waiting for response")
+
+    @property
+    def inital_message(self):
+        filter_, participant = self.contacted_via_filter
+        if filter_ is None:
+            return "", ""
+        return filter_.subject, filter_.contact_text

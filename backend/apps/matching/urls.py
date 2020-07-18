@@ -26,6 +26,8 @@ urlpatterns = [
         views.ParticipantInfoViewView.as_view(),
         name="info-view",
     ),
+    path("matches/to_me/", views.MatchesFromOthersView.as_view(), name="matches-requests-to-me",),
+    path("matches/from_me/", views.MatchesToOthersView.as_view(), name="matches-requests-from-me",),
     path(
         "change_activation/",
         views.ChangeActivationAskView.as_view(),
