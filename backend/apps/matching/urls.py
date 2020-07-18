@@ -164,4 +164,5 @@ urlpatterns = [
     path("", include("django.contrib.auth.urls")),
     # language
     path("i18n/", include("django.conf.urls.i18n")),
+    path("filter_poc/", TemplateView.as_view(template_name="filter_poc.html"), name="filter_poc"),
 ]

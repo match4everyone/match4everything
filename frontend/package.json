@@ -37,6 +37,9 @@
     "style-loader": "^1.2.0",
     "terser-webpack-plugin": "^2.3.5",
     "url-loader": "^4.1.0",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.11",
     "webpack": "^4.42.1",
     "webpack-bundle-tracker": "^0.4.3",
     "webpack-cli": "^3.3.11"
