@@ -16,5 +16,5 @@ class FilterContactNewMatchView(View):
     def post(self, request, p_type, uuid):
         filter_ = get_object_or_404(ParticipantInfoFilter[p_type], uuid=uuid)
         Match.contact_all_not_matched_to(filter_)
-        messages.add_message(self.request, messages.SUCCESS, _("You contacted new peoples."))
+        messages.add_message(self.request, messages.SUCCESS, _("You contacted new people."))
         return HttpResponseRedirect(reverse("profile"))
