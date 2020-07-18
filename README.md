@@ -148,6 +148,13 @@ Student has an attribute for the user, user has an attribute for the student, ..
 These circular references will prevent the log entry from being written.
 Including request is always safe, because the logging formatter contains dedicated code for request logging.
 
+### Debugging
+
+#### Backend errors
+
+The first time, run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec backend bash -c "apt-get update && apt-get install -y npm && npm install --global json-log-viewer && jv run/log/match4everyone.json.error.log"` and grab a coffee.
+Afterwards you can just use `docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec backend jv run/log/match4everyone.json.error.log`.
+
 ### Javascript & CSS
 
 This project uses webpack to create javascript bundles. Custom Javascript is only added to pages when it is needed to enhance default Django functionality or to create user experience improvements.
