@@ -51,6 +51,11 @@ urlpatterns = [
         views.ParticipantInfoListAPI.as_view(),
         name="api_participant_list",
     ),
+    path(
+        "api/<p:p_type>/info/filter-options/",
+        views.view_FilterOptionsJSON,
+        name="api_filter_options",
+    ),
     path("<p:p_type>/", views.FilteredParticipantList.as_view(), name="participant_list",),
     path(
         "<p:p_type>/filter/create/",
