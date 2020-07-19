@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.http import HttpResponseForbidden
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -20,8 +20,14 @@ class ParticipantInfoUpdateView(UpdateView):
     slug_field = "uuid"
 
     def dispatch(self, *args, **kwargs):
-        if self.request.user.participant().info.uuid not in self.request.path:
-            raise Http404
+        user_from_url = (
+            ParticipantInfo[kwargs["p_type"]]
+            .objects.get_or_404(uuid=kwargs["uuid"])
+            .participant.user
+        )
+        user_from_request = self.request.user
+        if user_from_request != user_from_url:
+            return HttpResponseForbidden()
         return super(ParticipantInfoUpdateView, self).dispatch(*args, **kwargs)
 
     def get_form_class(self):
