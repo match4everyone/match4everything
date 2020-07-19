@@ -86,5 +86,5 @@ ParticipantInfoLocation = {
     "A": ParticipantInfoLocationA,
     A.url_name: ParticipantInfoLocationA,
     "B": ParticipantInfoLocationB,
-    B.url_name: ParticipantInfoLocationA,
+    B.url_name: ParticipantInfoLocationB,
 }
