@@ -17,7 +17,7 @@ class Command(BaseCommand):
     # has to be "help" because we inherit from django manage.py Command, thus ignore A003
     help = (  # noqa
         "Populates the database with fake users or deletes them."
-        "Every user has their email as their password."
+        "Every user has type (A|B) as their password."
     )
 
     def add_arguments(self, parser):
@@ -84,6 +84,7 @@ class Command(BaseCommand):
             m = participant_type + new_mail(i + n_users)
             u = User.new(
                 email=m,
+                pwd=participant_type,
                 is_A=participant_type == "A",
                 is_B=participant_type == "B",
                 is_participant=True,
