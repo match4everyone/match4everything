@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
 
 from apps.matching.admin import matching_participant_required
-from apps.matching.forms import ParticipantEditInfoForm
+from apps.matching.forms import ParticipantInfoEditForm
 from apps.matching.models import ParticipantInfo
 
 
@@ -31,7 +31,7 @@ class ParticipantInfoUpdateView(UpdateView):
         return super(ParticipantInfoUpdateView, self).dispatch(*args, **kwargs)
 
     def get_form_class(self):
-        return ParticipantEditInfoForm[self.kwargs["p_type"]]
+        return ParticipantInfoEditForm[self.kwargs["p_type"]]
 
     def get_queryset(self):
         return ParticipantInfo[self.kwargs["p_type"]].objects.all()

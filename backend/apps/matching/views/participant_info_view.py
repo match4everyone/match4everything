@@ -7,7 +7,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic.edit import UpdateView
 
 from apps.matching.admin import matching_participant_required
-from apps.matching.forms import ParticipantViewInfoForm
+from apps.matching.forms import ParticipantInfoViewForm
 from apps.matching.models import ParticipantInfo
 
 logger = logging.getLogger(__name__)
@@ -38,7 +38,7 @@ class ParticipantInfoViewView(UpdateView):
         return super(ParticipantInfoViewView, self).dispatch(*args, **kwargs)
 
     def get_form_class(self):
-        return ParticipantViewInfoForm[self.kwargs["p_type"]]
+        return ParticipantInfoViewForm[self.kwargs["p_type"]]
 
     def get_queryset(self):
         return ParticipantInfo[self.kwargs["p_type"]].objects.all()
