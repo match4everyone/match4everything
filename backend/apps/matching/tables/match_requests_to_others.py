@@ -16,7 +16,7 @@ def make_matches_to_others(p_type):
         mail = Column(accessor="email_receiver", verbose_name=_("Email"))
         message = TemplateColumn(
             accessor="inital_message",
-            template_name="filters/mail_of_match_col.html",
+            template_name="filters/mail_of_match_no_reply_col.html",
             verbose_name=_("Your message"),
         )
         filter_ = TemplateColumn(
