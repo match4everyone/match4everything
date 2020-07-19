@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.template.loader import get_template
 from django.utils.translation import gettext as _
 import django_tables2 as tables
@@ -38,7 +39,9 @@ def make_matches_from_others(p_type):
             )
 
         def render_message(self, record):
-            context = {}
+            m = get_object_or_404(Match, uuid=record.uuid)
+            subj, mess = m.inital_message
+            context = {"uuid": record.uuid, "subject": subj, "message": mess}
             return get_template("filters/mail_of_match_col.html").render(
                 context, request=self.request
             )

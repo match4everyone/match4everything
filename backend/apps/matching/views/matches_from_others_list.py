@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, Http404
@@ -48,4 +49,10 @@ class MatchesFromOthersView(SingleTableView):
             # send_mail(to=match.initiator_participant().user.email, cc=match.receriver().user.email,
             # POst subject und post message...
             match.save()
+            messages.add_message(
+                self.request,
+                messages.INFO,
+                f"You responded to {match.initiator_participant().user.email}. A copy was sent to your own email.",
+            )
+            return HttpResponseRedirect(reverse("matches-requests-to-me"))
         raise Http404
