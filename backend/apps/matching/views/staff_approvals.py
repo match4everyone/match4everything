@@ -19,11 +19,13 @@ logger = logging.getLogger(__name__)
 # TODO: Only user with 'can_approve_type_a' or 'can_approve_type_b' should see the corresponding approval interfaces and be able to approve someone https://github.com/match4everyone/match4everything/issues/121
 @method_decorator([login_required, staff_member_required], name="dispatch")
 class ApproveParticipantsView(View):
-    template_name = "approve_hospitals.html"
-
     def get(self, request, p_type):
+        search_unapproved_mails = request.GET.get("search_unapproved_mails", "")
+        search_approved_mails = request.GET.get("search_approved_mails", "")
         table_approved = ApproveParticipantTable[p_type](
-            Participant[p_type].objects.filter(is_approved=True)
+            Participant[p_type].objects.filter(
+                is_approved=True, user__email__icontains=search_approved_mails
+            )
         )
         table_approved.prefix = "approved"
         RequestConfig(
@@ -34,7 +36,9 @@ class ApproveParticipantsView(View):
         # table_approved.paginate(page=request.GET.get(table_approved.prefix + "page", 1), per_page=5)
 
         table_unapproved = ApproveParticipantTable[p_type](
-            Participant[p_type].objects.filter(is_approved=False)
+            Participant[p_type].objects.filter(
+                is_approved=False, user__email__icontains=search_unapproved_mails
+            )
         )
         table_unapproved.prefix = "unapproved"
         RequestConfig(
@@ -49,6 +53,8 @@ class ApproveParticipantsView(View):
                 "table_approved": table_approved,
                 "table_unapproved": table_unapproved,
                 "p_type": p_type,
+                "search_unapproved_mails": search_unapproved_mails,
+                "search_approved_mails": search_approved_mails,
             },
         )
 
