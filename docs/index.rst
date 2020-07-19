@@ -10,6 +10,8 @@ Welcome to match4everything's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   getting_started
+   first_steps
    development
    deployment
 
@@ -21,3 +23,13 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+How can I write this documentation?
+===================================
+Have a look at the `primer`_ and the `quick rst guide`_.
+You can build it with cd docs && docker-compose up -d --build && docker-compose run documentation make html
+and find the html files in docs/_build.
+
+.. _`quick rst guide`: https://docutils.sourceforge.io/docs/user/rst/quickref.html
+.. _primer: https://docutils.sourceforge.io/docs/user/rst/quickstart.html
