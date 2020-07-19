@@ -3,6 +3,7 @@ import logging
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger(__name__)
@@ -34,7 +35,7 @@ class User(AbstractUser):
         if pwd is not None:
             user.set_password(pwd)
         else:
-            user.set_password(email)
+            user.set_password(get_random_string(length=32))
         user.save()
         return user
 
