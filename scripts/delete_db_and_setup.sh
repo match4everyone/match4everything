@@ -7,7 +7,7 @@ if [[  $MODE != 'DEV' && $MODE != 'PROD' ]]; then
   exit 1
 fi
 if [ $MODE == 'DEV' ]; then
-  echo "DO NOT USE THIS SCRIPT IN PRODUCTION"
+  echo "DO NOT USE THE 'DEV' MODE IN PRODUCTION"
   echo "THIS SCRIPT SETS AN INSECURE ADMIN PASSWORD"
   DJANGO_SUPERUSER_PASSWORD="admin"
 fi
