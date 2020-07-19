@@ -38,7 +38,14 @@ class MatchesFromOthersView(SingleTableView):
             match.save()
             return HttpResponseRedirect(reverse("matches-requests-to-me"))
         elif "block" in request.POST:
-            match.state = MATCH_STATE_OPTIONS.BLOCKED
+            match.state = MATCH_STATE_OPTIONS.DECLINE
             match.save()
             return HttpResponseRedirect(reverse("matches-requests-to-me"))
+        elif "send_message" in request.POST:
+            # send a message to the participant who contacted me and set the email to shared
+            match.state = MATCH_STATE_OPTIONS.SUCCESSFUL
+            # SEND MAIL with cc
+            # send_mail(to=match.initiator_participant().user.email, cc=match.receriver().user.email,
+            # POst subject und post message...
+            match.save()
         raise Http404

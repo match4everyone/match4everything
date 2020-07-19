@@ -8,6 +8,7 @@
 
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/form.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -32,7 +33,10 @@
         <div class="card-header">
         <div class="row">
             <div class="col test-left">{% blocktrans %}Your search history.{% endblocktrans %}</div>
-            <div class="col text-right"><a href="{% url 'participant_list' p_type %}" class="btn btn-sm btn-outline-primary" role="button" >Start a new search</a></div>
+            <div class="col text-right"><a href="{% url 'participant_list' p_type %}" class="btn btn-sm btn-outline-primary" role="button" >
+                <i class="fa fa-search-plus" aria-hidden="true"></i>
+                Start a new search
+            </a></div>
         </div>
         </div>
         <div class="card-body">

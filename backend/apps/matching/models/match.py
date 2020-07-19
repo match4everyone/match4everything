@@ -13,14 +13,14 @@ class MATCH_STATE_OPTIONS:
     CONTACTED = 1
     SUCCESSFUL = 2
     NOT_SUCCESSFUL = 3
-    BLOCKED = 4
+    DECLINE = 4
 
 
 MATCH_STATE = [
     (MATCH_STATE_OPTIONS.CONTACTED, _("contacted")),
     (MATCH_STATE_OPTIONS.SUCCESSFUL, _("successful")),
     (MATCH_STATE_OPTIONS.NOT_SUCCESSFUL, _("not successful")),
-    (MATCH_STATE_OPTIONS.BLOCKED, _("blocked")),
+    (MATCH_STATE_OPTIONS.DECLINE, _("declined")),
 ]
 
 
@@ -135,9 +135,17 @@ class Match(models.Model):
     def email_receiver(self):
         if self.state in [MATCH_STATE_OPTIONS.SUCCESSFUL, MATCH_STATE_OPTIONS.NOT_SUCCESSFUL]:
             return self.requested_participant().user.email
-        elif self.state == MATCH_STATE_OPTIONS.BLOCKED:
-            return _("the other participant is not interested")
+        elif self.state == MATCH_STATE_OPTIONS.DECLINE:
+            return _("the other participant declined your offer")
         return _("waiting for response")
+
+    @property
+    def email_receiver_url(self):
+        p = self.requested_participant().user.participant()
+        return (
+            True,
+            reverse("info-view", kwargs={"uuid": p.info.uuid, "p_type": p.participant_type}),
+        )
 
     @property
     def inital_message(self):

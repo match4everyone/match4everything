@@ -1,6 +1,7 @@
-  {{record.filter_name}}<a href="#" id="edit-name-{{ record.id }}" data-toggle="modal" data-target="#nameChangeModal{{ record.id }}">
-Edit
-</a>
+  {{record.filter_name}}
+  <a href="#" id="edit-name-{{ record.id }}" data-toggle="modal" data-target="#nameChangeModal{{ record.id }}">
+    <i class="fa fa-pencil" aria-hidden="true"></i>
+  </a>
 
 
 <div class="modal fade" id="nameChangeModal{{ record.id }}" tabindex="-1" role="dialog" aria-labelledby="nameChangeModalLabel{{ record.id }}" aria-hidden="true">
