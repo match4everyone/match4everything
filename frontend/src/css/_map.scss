@@ -8,98 +8,9 @@
   }
 }
 
-.map-dropdown {
-  height: 2.35rem;
-  padding: .375rem .75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: .25rem;
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-
-.map-input {
-  height: calc(2.25rem + 2px);
-  padding: .375rem .75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: .25rem;
-  transition: border-color 0.15s ease-in-out, box-;
-}
-
-head {
-  Background-color: #7dd1c5;
-  font-family: 'proxima-nova', sans-serif;
-}
-
-.mt-2 {
-  background-color: black;
-  color: white;
-  text-align: center;
-  font-family: 'proxima-nova', sans-serif;
-}
-
 h2 {
   font-family: 'proxima-nova', sans-serif;
   text-align: center;
-}
-
-/*form {
-	font-family:'Open Sans', sans-serif;
-  margin: 2%;
-	text-align:left;
-	border-left: 10px solid #36a0d9;
-	border-radius: 5px;
-	background-color:#7eaac2;
-	padding-top:15px;
-	padding-bottom:15px;
-	padding-right:10px;
-	padding-left:10px;
-}
-
-
-label[for=id_gender]::before {
-	content: "\A \A Allgemeines \A";
-
-    white-space: pre;
-}
-
-label[for=id_gender] {
-	margin-right:2px;
-
-    white-space: pre;
-}
-
-label[for=id_famulaturreife]::before {
-	content: "\A \A Skills  \A ";
-    white-space: pre;
-}
-
-label[for=id_availability_start]::before {
-	content: "\A \A Verfügbarkeit  \A";
-    white-space: pre;
-}
-
-label[for=id_phone_number]::before {
-	content: "\A ";
-    white-space: pre;
-}
-
-label[for=id_braucht_bezahlung]::before {
-	content: "\A \A Bezahlung  \A";
-    white-space: pre;
-    text-align:center;
-}*/
-
-body {
-  background-color: #cfdce3;
 }
 
 .leaflet-container a {
@@ -219,26 +130,26 @@ div.leaflet-control-layers-overlays {
 
 .supporterMarker {
   &.marker-cluster-small, &.marker-cluster-medium, &.marker-cluster-large {
-    background-color: rgba(237, 10, 113, 0.4);
+    background-color: rgba(theme-color("secondary"), 0.4);
   }
 
   &.marker-cluster-single div, &.marker-cluster-small div, &.marker-cluster-medium div, &.marker-cluster-large div {
-    background-color: rgba(237, 10, 113, 1);
+    background-color: rgba(theme-color("secondary"), 1);
   }
 }
 
 .facilityMarker {
   &.marker-cluster-small, &.marker-cluster-medium, &.marker-cluster-large {
-    background-color: rgba(0, 9, 67, 0.4);
+    background-color: rgba(theme-color("primary"), 0.4);
   }
 
   &.marker-cluster-single div, &.marker-cluster-small div, &.marker-cluster-medium div, &.marker-cluster-large div {
-    background-color: rgba(0, 9, 67, 1);
+    background-color: rgba(theme-color("primary"), 1);
   }
 }
 
 .marker-cluster-single div, .marker-cluster-small div, .marker-cluster-medium div, .marker-cluster-large div {
-  color: white;
+  color: theme-color("light");
 }
 
 .supporterMarker.marker-cluster div, .facilityMarker.marker-cluster div {
