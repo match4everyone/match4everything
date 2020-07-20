@@ -1,6 +1,6 @@
 import 'bootstrap'
 import './css/app.scss'
-import './css/general.css'
+import './css/general.scss'
 import $ from 'jquery'
 
 /* Globally export jQuery */
