@@ -5,7 +5,7 @@ import 'leaflet.featuregroup.subgroup'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.markercluster/dist/MarkerCluster.css'
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
-import '../css/map.scss'
+/* map customization is included through main bundle in general.scss */
 
 export class MapViewPage {
 
