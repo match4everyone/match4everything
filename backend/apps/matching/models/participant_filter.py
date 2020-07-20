@@ -4,12 +4,17 @@ import uuid
 
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext as _
 import django_filters
 
 from match4everyone.configuration.A import A
 from match4everyone.configuration.B import B
 
+from apps.matching.data.map_data import zipcodes  # noqa
+from apps.matching.utils.map import get_plzs_close_to
+
 from .participant_info import ParticipantInfo
+from .participant_info_location import CountryCode, ParticipantInfoLocation, RadiusChoices
 from .user import User
 
 
@@ -54,13 +59,17 @@ class AbstractParticipantInfoFilter(models.Model):
         for filter_field in self.filter_fields:
             value = getattr(self, filter_field)
             if value is not None:
-                split_vers = filter_field.split("-")
-                fieldname = "-".join(split_vers[:-1])
-                lookup_exp = split_vers[-1]
-                if lookup_exp == "exact":
-                    get_request[fieldname] = str(value)
+                if "location_" in filter_field:
+                    get_request[filter_field] = value
                 else:
-                    get_request[fieldname + "__" + lookup_exp] = str(value)
+                    split_vers = filter_field.split("-")
+                    fieldname = "-".join(split_vers[:-1])
+                    lookup_exp = split_vers[-1]
+                    if lookup_exp == "exact":
+                        get_request[fieldname] = str(value)
+                    else:
+                        get_request[fieldname + "__" + lookup_exp] = str(value)
+
         return get_request
 
     @classmethod
@@ -78,7 +87,7 @@ class AbstractParticipantInfoFilter(models.Model):
                 ]
 
         for name, value in filter_kwargs.items():
-            if "__" not in name:
+            if "__" not in name and "location_" not in name:
                 name = name + "-" + "exact"
             else:
                 name = name.replace("__", "-")
@@ -117,14 +126,62 @@ ParticipantInfoFilter = {"A": ParticipantInfoFilterA, "B": ParticipantInfoFilter
 ParticipantInfoFilterSet = {}
 
 
-def add_participant_specific_filters(name, participant_config):
+class LocationFilter:
+    location_prefix = "location_"
+
+    def is_valid(self, form, p_type):
+        prefix = self.location_prefix
+        if form.cleaned_data[prefix + "country_code"] not in CountryCode.values:
+            form.add_error(prefix + "country_code", _("You need to provide a valid country code."))
+            return False
+
+        if (
+            form.cleaned_data[prefix + "zipcode"]
+            not in zipcodes[form.cleaned_data[prefix + "country_code"]]
+        ):
+            form.add_error(
+                prefix + "zipcode",
+                str(form.cleaned_data[prefix + "zipcode"])
+                + str(_(" is not a postcode in "))
+                + form.cleaned_data[prefix + "country_code"],
+            )
+            return False
+
+        if int(form.cleaned_data[prefix + "distance"]) > ParticipantInfoLocation[p_type].MAX_RADIUS:
+            distance = form.cleaned_data[prefix + "distance"]
+            form.add_error(
+                prefix + "distance",
+                _(
+                    f"You can only search within a radius of {distance} km. Please decrease the radius or change your position."
+                ),
+            )
+            return False
+        return True
+
+    def filter_queryset(self, location_query, p_type, qs):
+        country_code = location_query[self.location_prefix + "country_code"]
+        zipcode = location_query[self.location_prefix + "zipcode"]
+        distance = location_query[self.location_prefix + "distance"]
+
+        if qs is None:
+            qs = ParticipantInfo[p_type].objects.all()
+        if distance == RadiusChoices.ONLY_HERE.value:
+            close_zipcodes = [zipcode]
+        else:
+            distance_in_km = int(distance)
+            close_zipcodes = get_plzs_close_to(country_code, zipcode, distance_in_km)
+
+        return qs.filter(location__plz__in=close_zipcodes, location__country_code=country_code)
+
+
+def add_participant_specific_filters(p_type, participant_config):
     """
     Generate filter fields from config.
 
     Programmatically add fields that are defined in the config for the
     respective participant.
     """
-    filter_cls = ParticipantInfoFilter[name]
+    filter_cls = ParticipantInfoFilter[p_type]
     participant_config = participant_config()
 
     properties = participant_config.get_filter_fields()
@@ -143,18 +200,76 @@ def add_participant_specific_filters(name, participant_config):
 
                 filter_dict[field_name].append(f["lookup_exp"])
 
-    filter_cls.add_to_class("filter_fields", filter_fields)
+    filter_fields = filter_fields + [
+        "location_country_code",
+        "location_zipcode",
+        "location_distance",
+    ]
 
-    class ParticipantInfoFilterSetP(django_filters.FilterSet):
+    filter_cls.add_to_class("filter_fields", filter_fields)
+    filter_cls.add_to_class(
+        "location_country_code", models.CharField(choices=CountryCode.choices, max_length=2)
+    )
+    filter_cls.add_to_class("location_zipcode", models.IntegerField())
+    filter_cls.add_to_class("location_distance", models.IntegerField(choices=RadiusChoices.choices))
+
+    class ParticipantInfoFilterSetP(django_filters.rest_framework.FilterSet):
+        # so far I could not find another method to integrate fields from the filter into the
+        # filterset automatically
+        location_country_code = django_filters.ChoiceFilter(
+            field_name="country_code",
+            lookup_expr="exact",
+            label="Countrycode",
+            choices=CountryCode.choices,
+            initial=CountryCode.GERMANY,
+            required=True,
+        )
+        location_zipcode = django_filters.CharFilter(
+            field_name="plz", lookup_expr="exact", label="Zipcode", initial="14482", required=True
+        )
+        location_distance = django_filters.ChoiceFilter(
+            field_name="distance",
+            label="distance",
+            required=True,
+            initial=RadiusChoices.LESSTEN,
+            choices=RadiusChoices.choices,
+        )
+
+        location_filter = LocationFilter()
+
         class Meta:
-            model = ParticipantInfo[name]
+            model = ParticipantInfo[p_type]
             fields = filter_dict
 
         @classmethod
         def filter_spec(cls):
             return filter_dict
 
-    ParticipantInfoFilterSet[name] = ParticipantInfoFilterSetP
+        @classmethod
+        def add_to_class(cls, value, name):
+            return setattr(cls, value, name)
+
+        def is_valid(self):
+            valid = super().is_valid()
+            if valid:
+                return self.location_filter.is_valid(self.form, p_type)
+            return valid
+
+        def filter_queryset(self, queryset):
+            location_query = {}
+            for name, value in self.form.cleaned_data.items():
+                # ignore the values that belong to the filter
+                if not str.startswith(name, self.location_filter.location_prefix):
+                    queryset = self.filters[name].filter(queryset, value)
+                    assert isinstance(queryset, models.QuerySet), (
+                        "Expected '%s.%s' to return a QuerySet, but got a %s instead."
+                        % (type(self).__name__, name, type(queryset).__name__)
+                    )
+                else:
+                    location_query[name] = value
+            return self.location_filter.filter_queryset(location_query, p_type=p_type, qs=queryset)
+
+    ParticipantInfoFilterSet[p_type] = ParticipantInfoFilterSetP
 
 
 add_participant_specific_filters("A", A)

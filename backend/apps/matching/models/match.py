@@ -5,8 +5,13 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from .participant import Participant, ParticipantA, ParticipantB
-from .participant_filter import ParticipantInfoFilterA, ParticipantInfoFilterB
+from .participant import ParticipantA, ParticipantB
+from .participant_filter import (
+    ParticipantInfo,
+    ParticipantInfoFilterA,
+    ParticipantInfoFilterB,
+    ParticipantInfoFilterSet,
+)
 
 
 class MATCH_STATE_OPTIONS:
@@ -73,26 +78,31 @@ class Match(models.Model):
 
     @classmethod
     def contact_all_not_matched_to(cls, this_filter):
-        filter_params = {"info__" + k: v for k, v in this_filter.as_get_params().items()}
+        filterer = ParticipantInfoFilterSet[this_filter.participant_type](
+            data=this_filter.as_get_params()
+        )
+        filterer.is_valid()
+        matches = filterer.filter_queryset(
+            ParticipantInfo[this_filter.participant_type].objects.all()
+        )
 
-        matches = Participant[this_filter.participant_type].objects.filter(**filter_params)
         if this_filter.participant_type == "A":
-            not_yet_contacted = matches.filter(~models.Q(match__filterA=this_filter))
+            not_yet_contacted = matches.filter(~models.Q(participant__match__filterA=this_filter))
 
-            for participant in not_yet_contacted:
+            for participant_info in not_yet_contacted:
                 m = Match.objects.create(
-                    participantA=participant,
+                    participantA=participant_info.participant,
                     participantB=this_filter.created_by.participant(),
                     filterA=this_filter,
                     initiator="B",
                 )
                 m.save()
         else:
-            not_yet_contacted = matches.filter(~models.Q(match__filterB=this_filter))
+            not_yet_contacted = matches.filter(~models.Q(participant__match__filterB=this_filter))
 
-            for participant in not_yet_contacted:
+            for participant_info in not_yet_contacted:
                 m = Match.objects.create(
-                    participantB=participant,
+                    participantB=participant_info.participant,
                     participantA=this_filter.created_by.participant(),
                     filterB=this_filter,
                     initiator="A",
@@ -102,20 +112,31 @@ class Match(models.Model):
     @classmethod
     def matches_to(cls, this_filter):
 
-        filter_params = {"info__" + k: v for k, v in this_filter.as_get_params().items()}
+        filterer = ParticipantInfoFilterSet[this_filter.participant_type](
+            data=this_filter.as_get_params()
+        )
+        filterer.is_valid()
+        matches = filterer.filter_queryset(
+            ParticipantInfo[this_filter.participant_type].objects.all()
+        )
 
-        matches = Participant[this_filter.participant_type].objects.filter(**filter_params)
         available_matches = matches.count()
         if this_filter.participant_type == "A":
-            already_contacted_with_via_filter = matches.filter(match__filterA=this_filter).count()
+            already_contacted_with_via_filter = matches.filter(
+                participant__match__filterA=this_filter
+            ).count()
             already_in_contact_with = matches.filter(
-                match__participantB=this_filter.created_by.participant()
+                participant__match__participantB=this_filter.created_by.participant()
             ).count()
 
         else:
-            already_contacted_with_via_filter = matches.filter(match__filterB=this_filter).count()
+            already_contacted_with_via_filter = matches.filter(
+                participant__match__filterB=this_filter
+            ).count()
             already_in_contact_with = (
-                matches.filter(match__participantA=this_filter.created_by.participant())
+                matches.filter(
+                    participant__match__participantA=this_filter.created_by.participant()
+                )
                 .distinct()
                 .count()
             )

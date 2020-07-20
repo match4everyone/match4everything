@@ -13,10 +13,11 @@ from .participant_info import ParticipantInfo
 
 
 class RadiusChoices(models.IntegerChoices):
+    ONLY_HERE = 0, _("0 km")
     LESSTEN = 10, _("<10 km")
     LESSTWENTY = 20, _("<20 km")
-    LESSFOURTY = 30, _("<40 km")
-    MOREFOURTY = 40, _(">40 km")
+    LESSFOURTY = 40, _("<40 km")
+    MOREFOURTY = 50, _("<50 km")
 
 
 class CountryCode(models.TextChoices):
@@ -30,6 +31,8 @@ class AbstractParticipantInfoLocation(models.Model):
 
     Only for Germany and Austria.
     """
+
+    MAX_RADIUS = 100  # km - limits the search APIs radius
 
     uuid = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
     registration_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
