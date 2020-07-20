@@ -24,6 +24,10 @@ html, body {
   flex-shrink: none;
 }
 
+.language-switcher-globe {
+  stroke: var(--primary);
+}
+
 body {
   font-family: 'proxima-nova', sans-serif !important;
   -webkit-font-smoothing: antialiased;
@@ -36,7 +40,7 @@ body {
 }
 
 a {
-  color: var(--secondary-color);
+  color: var(--secondary);
 
   &:hover {
     color: #8c0442;
@@ -45,7 +49,7 @@ a {
 }
 
 h2.match4hc-title {
-  color: var(--secondary-color);
+  color: var(--secondary);
   font-size: 1.3rem;
 }
 
@@ -107,7 +111,7 @@ h1.match4hc-title {
 }
 
 .box-left {
-  background-color: var(--secondary-color);
+  background-color: var(--secondary);
 }
 
 .box-right {
@@ -138,19 +142,19 @@ b {
 }
 
 .btn-md.blue {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
+  background-color: var(--primary);
+  border-color: var(--primary);
   border: 0px;
 
   &:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--secondary);
   }
 }
 
 .btn-lg {
   &.blue {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+    background-color: var(--primary);
+    border-color: var(--primary);
     border: 0px;
 
     &:hover {
@@ -159,8 +163,8 @@ b {
   }
 
   &.pink {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
+    background-color: var(--secondary);
+    border-color: var(--secondary);
     border: 0px;
 
     &:hover {
@@ -212,24 +216,24 @@ div.boxed {
 
 .navbar-light .navbar-nav {
   .active > .nav-link {
-    color: var(--secondary-color);
+    color: var(--secondary);
   }
 
   .nav-link {
     &.active, &.show {
-      color: var(--secondary-color);
+      color: var(--secondary);
     }
   }
 
   .show > .nav-link {
-    color: var(--secondary-color);
+    color: var(--secondary);
   }
 
   .nav-link {
-    color: var(--primary-color);
+    color: var(--primary);
 
     &:hover {
-      color: var(--secondary-color);
+      color: var(--secondary);
     }
   }
 }
@@ -250,29 +254,29 @@ div.boxed {
 }
 
 h5.card-title {
-  color: var(--primary-color);
+  color: var(--primary);
   font-weight: 300;
   font-size: 1.1rem;
 }
 
 .btn-info:not(:disabled):not(.disabled) {
   &.active, &:active {
-    background-color: var(--secondary-color) !important;
-    border-color: var(--secondary-color) !important;
+    background-color: var(--secondary) !important;
+    border-color: var(--secondary) !important;
     border: 0px;
   }
 }
 
 .show > .btn-info.dropdown-toggle {
-  background-color: var(--secondary-color) !important;
-  border-color: var(--secondary-color) !important;
+  background-color: var(--secondary) !important;
+  border-color: var(--secondary) !important;
   border: 0px;
 }
 
 .btn-info {
   &:hover {
-    background-color: var(--secondary-color) !important;
-    border-color: var(--secondary-color) !important;
+    background-color: var(--secondary) !important;
+    border-color: var(--secondary) !important;
     border: 0px;
   }
 
@@ -396,16 +400,16 @@ textarea.form-control {
 
 .invalid-feedback {
   margin-bottom: .5rem;
-  color: var(--secondary-color);
+  color: var(--secondary);
 }
 
 .custom-select.is-invalid, .form-control.is-invalid {
-  border-color: var(--secondary-color);
+  border-color: var(--secondary);
 }
 
 .was-validated {
   .custom-select:invalid, .form-control:invalid {
-    border-color: var(--secondary-color);
+    border-color: var(--secondary);
   }
 }
 
@@ -437,7 +441,7 @@ input {
 
 .dropdown-toggle {
   &:hover > svg {
-    stroke: var(--secondary-color) !important;
+    stroke: var(--secondary) !important;
   }
 
   cursor: pointer;
@@ -445,12 +449,12 @@ input {
 
 .dropdown-item {
   cursor: pointer;
-  color: var(--primary-color);
+  color: var(--primary);
 
   &:active, &:hover {
     background-color: none !important;
     background: none !important;
-    color: var(--secondary-color);
+    color: var(--secondary);
   }
 }
 
