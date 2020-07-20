@@ -3,11 +3,15 @@
 
 $body-color: #4f4f4f;
 $blue: #000943;
+$blue-light: #00138f;
 $pink: #ed0a71;
+$pink-dark: #8c0442;
 $headings-color: $blue;
 
 
 $theme-colors: (
     "primary": $blue,
-    "secondary": $pink
+    "primary-light": $blue-light,
+    "secondary": $pink,
+    "secondary-dark": $pink-dark,
 )

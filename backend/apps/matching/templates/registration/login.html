@@ -54,12 +54,12 @@
                 </div>
                 {% endif %}
                 <hr style="margin-top:25px;">
-                <p style="margin-bottom:0px; font-weight:300; color:#000943;">{% blocktrans %}Forgot password?{% endblocktrans %}
+                <p class="text-primary" style="margin-bottom:0px; font-weight:300;">{% blocktrans %}Forgot password?{% endblocktrans %}
                 </p>
                 <a href="{% url 'password_reset_form' %}">
                     <p style="font-size:.9rem;">{% blocktrans %}Reset password{% endblocktrans %}</p>
                 </a>
-                <p style="margin-bottom:0px; font-weight:300; color: #000943;">{% blocktrans %}Not registered?{% endblocktrans %}
+                <p class="text-primary" style="margin-bottom:0px; font-weight:300;">{% blocktrans %}Not registered?{% endblocktrans %}
                 </p>
                 <a href="{% url 'signup' 'A' %}">
                     <p style="margin-bottom: 0px; font-size:.9rem;">{% blocktrans %}I am A{% endblocktrans %}</p>

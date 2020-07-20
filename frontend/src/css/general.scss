@@ -1,11 +1,5 @@
 @import url("https://use.typekit.net/sxd4iee.css");
 
-:root {
-  --primary-color: #000943;
-  --primary-color-shade: #111111;
-  --secondary-color: #ed0a71;
-}
-
 @font-face {
   font-family: 'proxima-nova';
   font-style: normal;
@@ -28,6 +22,10 @@ html, body {
   stroke: var(--primary);
 }
 
+.bi-check-circle {
+  color: var(--secondary);
+}
+
 body {
   font-family: 'proxima-nova', sans-serif !important;
   -webkit-font-smoothing: antialiased;
@@ -43,7 +41,7 @@ a {
   color: var(--secondary);
 
   &:hover {
-    color: #8c0442;
+    color: var(--secondary-dark);
     text-decoration: none;
   }
 }
@@ -158,7 +156,7 @@ b {
     border: 0px;
 
     &:hover {
-      background-color: #000839;
+      background-color: var(--primary-light);
     }
   }
 
@@ -168,7 +166,7 @@ b {
     border: 0px;
 
     &:hover {
-      background-color: #c0085b;
+      background-color: var(--secondary-dark);
     }
   }
 }
@@ -239,7 +237,7 @@ div.boxed {
 }
 
 .footer {
-  background: rgb(0, 9, 67);
+  background: var(--primary);
   padding: 15px 0;
   text-align: center;
   font-size: .9rem;
