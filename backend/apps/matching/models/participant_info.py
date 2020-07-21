@@ -68,7 +68,10 @@ class ParticipantInfoB(AbstractParticipantInfo):
     )
 
 
-ParticipantInfo = {"A": ParticipantInfoA, "B": ParticipantInfoB}
+ParticipantInfo = {
+    "A": ParticipantInfoA,
+    "B": ParticipantInfoB,
+}
 
 
 def add_participant_specific_info(name, participant_config):
@@ -79,7 +82,7 @@ def add_participant_specific_info(name, participant_config):
     respective participant.
     """
     info_cls = ParticipantInfo[name]
-    participant_config = participant_config()
+    participant_config = participant_config
 
     properties = participant_config.get_model_fields()
 

@@ -3,3 +3,7 @@
 
 /* Load bootstrap */
 @import "~bootstrap/scss/bootstrap";
+
+/* Load our scss */
+@import "_general";
+@import "_map";
