@@ -14,11 +14,7 @@ h2 {
 }
 
 .leaflet-container a {
-  color: var(--secondary);
-
-  &:hover {
-    color: var(--secondary-shade);
-  }
+  color: theme-color("secondary");
 }
 
 .leaflet-popup-content-wrapper {
@@ -44,7 +40,7 @@ h2 {
   position: absolute;
   top: 8px;
   right: 8px;
-  color: var(--primary);
+  color: theme-color("primary");
   z-index: 99999;
   padding: 10px 15px;
   font-weight: 700;
@@ -53,7 +49,7 @@ h2 {
 }
 
 .leaflet-control-layers-expanded {
-  color: var(--primary);
+  color: theme-color("primary");
   z-index: 99999;
   padding: 10px 15px;
   font-weight: 700;
@@ -71,14 +67,14 @@ h2 {
 
 /* Disable css that would overwrite JS color
 path.leaflet-interactive  {
-	stroke: var(--secondary);
-	fill: var(--secondary);
+	stroke: theme-color("secondary");
+	fill: theme-color("secondary");
 }
 */
 
 a {
   &.leaflet-control-zoom-in, &.leaflet-control-zoom-out {
-    color: var(--primary) !important;
+    color: theme-color("primary") !important;
   }
 }
 

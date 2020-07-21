@@ -19,11 +19,11 @@ html, body {
 }
 
 .language-switcher-globe {
-  stroke: var(--primary);
+  stroke: theme-color("primary");
 }
 
 .bi-check-circle {
-  color: var(--secondary);
+  color: theme-color("secondary");
 }
 
 body {
@@ -38,16 +38,15 @@ body {
 }
 
 a {
-  color: var(--secondary);
+  color: theme-color("secondary");
 
   &:hover {
-    color: var(--secondary-shade);
     text-decoration: none;
   }
 }
 
 h2.match4hc-title {
-  color: var(--secondary);
+  color: theme-color("secondary");
   font-size: 1.3rem;
 }
 
@@ -109,7 +108,7 @@ h1.match4hc-title {
 }
 
 .box-left {
-  background-color: var(--secondary);
+  background-color: theme-color("secondary");
 }
 
 .box-right {
@@ -137,38 +136,6 @@ b {
   font-size: 1rem;
   font-weight: 300;
   padding: .9rem 1rem;
-}
-
-.btn-md.blue {
-  background-color: var(--primary);
-  border-color: var(--primary);
-  border: 0px;
-
-  &:hover {
-    background-color: var(--secondary);
-  }
-}
-
-.btn-lg {
-  &.blue {
-    background-color: var(--primary);
-    border-color: var(--primary);
-    border: 0px;
-
-    &:hover {
-      background-color: var(--primary-shade);
-    }
-  }
-
-  &.pink {
-    background-color: var(--secondary);
-    border-color: var(--secondary);
-    border: 0px;
-
-    &:hover {
-      background-color: var(--secondary-shade);
-    }
-  }
 }
 
 div.boxed {
@@ -214,30 +181,30 @@ div.boxed {
 
 .navbar-light .navbar-nav {
   .active > .nav-link {
-    color: var(--secondary);
+    color: theme-color("secondary");
   }
 
   .nav-link {
     &.active, &.show {
-      color: var(--secondary);
+      color: theme-color("secondary");
     }
   }
 
   .show > .nav-link {
-    color: var(--secondary);
+    color: theme-color("secondary");
   }
 
   .nav-link {
-    color: var(--primary);
+    color: theme-color("primary");
 
     &:hover {
-      color: var(--secondary);
+      color: theme-color("secondary");
     }
   }
 }
 
 .footer {
-  background: var(--primary);
+  background: theme-color("primary");
   padding: 15px 0;
   text-align: center;
   font-size: .9rem;
@@ -252,29 +219,29 @@ div.boxed {
 }
 
 h5.card-title {
-  color: var(--primary);
+  color: theme-color("primary");
   font-weight: 300;
   font-size: 1.1rem;
 }
 
 .btn-info:not(:disabled):not(.disabled) {
   &.active, &:active {
-    background-color: var(--secondary) !important;
-    border-color: var(--secondary) !important;
+    background-color: theme-color("secondary") !important;
+    border-color: theme-color("secondary") !important;
     border: 0px;
   }
 }
 
 .show > .btn-info.dropdown-toggle {
-  background-color: var(--secondary) !important;
-  border-color: var(--secondary) !important;
+  background-color: theme-color("secondary") !important;
+  border-color: theme-color("secondary") !important;
   border: 0px;
 }
 
 .btn-info {
   &:hover {
-    background-color: var(--secondary) !important;
-    border-color: var(--secondary) !important;
+    background-color: theme-color("secondary") !important;
+    border-color: theme-color("secondary") !important;
     border: 0px;
   }
 
@@ -398,16 +365,16 @@ textarea.form-control {
 
 .invalid-feedback {
   margin-bottom: .5rem;
-  color: var(--secondary);
+  color: theme-color("secondary");
 }
 
 .custom-select.is-invalid, .form-control.is-invalid {
-  border-color: var(--secondary);
+  border-color: theme-color("secondary");
 }
 
 .was-validated {
   .custom-select:invalid, .form-control:invalid {
-    border-color: var(--secondary);
+    border-color: theme-color("secondary");
   }
 }
 
@@ -439,7 +406,7 @@ input {
 
 .dropdown-toggle {
   &:hover > svg {
-    stroke: var(--secondary) !important;
+    stroke: theme-color("secondary") !important;
   }
 
   cursor: pointer;
@@ -447,12 +414,12 @@ input {
 
 .dropdown-item {
   cursor: pointer;
-  color: var(--primary);
+  color: theme-color("primary");
 
   &:active, &:hover {
     background-color: none !important;
     background: none !important;
-    color: var(--secondary);
+    color: theme-color("secondary");
   }
 }
 
