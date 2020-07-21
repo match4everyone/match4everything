@@ -197,7 +197,16 @@ MESSAGE_TAGS = {
     messages.ERROR: "alert-danger",
 }
 
-REST_FRAMEWORK = {"DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination"}
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "apps.matching.utils.rest_framework.pagination.StrictLimitOffsetPagination",
+    "PAGE_SIZE": 15,
+    "DEFAULT_THROTTLE_CLASSES": [
+        "apps.matching.utils.rest_framework.throttling.UserMinRateThrottle",
+        "apps.matching.utils.rest_framework.throttling.UserHRateThrottle",
+        "apps.matching.utils.rest_framework.throttling.UserDayRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {"user_min": "15/min", "user_h": "100/h", "user_day": "100/day",},
+}
 
 
 # Configure Logging for all environments
