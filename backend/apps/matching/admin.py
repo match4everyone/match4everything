@@ -1,3 +1,5 @@
+from typing import List
+
 from django.contrib import admin
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
@@ -84,7 +86,7 @@ def profile_own(uuid_accessed, uuid_own):
     return uuid_accessed == uuid_own
 
 
-def required_at_least_one(restrictions_A, restrictions_B, function=None):
+def required_at_least_one(restrictions_A: List, restrictions_B: List, function=None):
     def actual_decorator(function):
         def test(request, p_type, uuid, *args, **kwargs):
             u = request.user
