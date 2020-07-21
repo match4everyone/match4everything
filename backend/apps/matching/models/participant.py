@@ -97,4 +97,7 @@ class ParticipantB(AbstractParticipant):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="b")
 
 
-Participant = {"A": ParticipantA, "B": ParticipantB}
+Participant = {
+    "A": ParticipantA,
+    "B": ParticipantB,
+}

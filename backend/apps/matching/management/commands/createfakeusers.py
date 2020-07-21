@@ -5,6 +5,8 @@ import numpy as np
 from tqdm import tqdm
 
 from apps.matching.models import Participant, ParticipantInfo, ParticipantInfoLocation, User
+from match4everyone.configuration.A import A
+from match4everyone.configuration.B import B
 
 FAKE_MAIL = "@example.com"
 
@@ -29,11 +31,15 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--add-a", nargs=1, help="Add [N] new students to the poll",
+            "--add-{a}".format(a=A.url_name),
+            nargs=1,
+            help="Add [N] new {a} to the dataset".format(a=A.name),
         )
 
         parser.add_argument(
-            "--add-b", nargs=1, help="Add [N] new hospitals to the poll",
+            "--add-{b}".format(b=B.url_name),
+            nargs=1,
+            help="Add [N] new {b} to the dataset".format(b=B.name),
         )
 
         parser.add_argument(
@@ -41,7 +47,11 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        if not options["delete"] and options["add_a"] is None and options["add_b"] is None:
+        if (
+            not options["delete"]
+            and options["add_{a}".format(a=A.url_name)] is None
+            and options["add_{b}".format(b=B.url_name)] is None
+        ):
             self.print_help("", "")
             return None
 
@@ -49,10 +59,10 @@ class Command(BaseCommand):
 
         if options["delete"]:
             self.delete_all_fakes()
-        if options["add_a"] is not None:
-            self.add_fake("A", int(options["add_a"][0]))
-        if options["add_b"] is not None:
-            self.add_fake("B", int(options["add_b"][0]))
+        if options["add_{a}".format(a=A.url_name)] is not None:
+            self.add_fake("A", int(options["add_{a}".format(a=A.url_name)][0]))
+        if options["add_{b}".format(b=B.url_name)] is not None:
+            self.add_fake("B", int(options["add_{b}".format(b=B.url_name)][0]))
 
     def delete_all_fakes(self):
         qs = User.objects.filter(email__contains=FAKE_MAIL)
@@ -84,8 +94,8 @@ class Command(BaseCommand):
             m = participant_type + new_mail(i + n_users)
             u = User.new(
                 email=m,
-                is_A=participant_type == "A",
-                is_B=participant_type == "B",
+                is_A=participant_type == A.url_name,
+                is_B=participant_type == B.url_name,
                 is_participant=True,
                 validated_email=True,
                 date_joined=datetime.now() - timedelta(days=np.random.randint(0, 30)),
