@@ -6,8 +6,11 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 import numpy as np
 
-from apps.matching.data.map_data import zipcodes
-from apps.matching.utils.zipcodes import GERMAN_BIG_CITY_ZIPCODES
+from match4everyone.configuration.A import A  # noqa
+from match4everyone.configuration.B import B  # noqa
+
+from apps.matching.data.map_data import zipcodes  # noqa
+from apps.matching.utils.zipcodes import GERMAN_BIG_CITY_ZIPCODES  # noqa
 
 from .participant_info import ParticipantInfo
 
@@ -31,8 +34,6 @@ class AbstractParticipantInfoLocation(models.Model):
 
     Only for Germany and Austria.
     """
-
-    MAX_RADIUS = 100  # km - limits the search APIs radius
 
     uuid = models.CharField(max_length=100, blank=True, unique=True, default=uuid.uuid4)
     registration_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
@@ -74,6 +75,7 @@ class ParticipantInfoLocationA(AbstractParticipantInfoLocation):
     participant_info = models.ForeignKey(
         ParticipantInfo["A"], on_delete=models.CASCADE, related_name="location"
     )
+    MAX_RADIUS = A.LOCATION_SEARCH_MAX_RADIUS
 
 
 class ParticipantInfoLocationB(AbstractParticipantInfoLocation):
@@ -81,6 +83,7 @@ class ParticipantInfoLocationB(AbstractParticipantInfoLocation):
     participant_info = models.ForeignKey(
         ParticipantInfo["B"], on_delete=models.CASCADE, related_name="location"
     )
+    MAX_RADIUS = B.LOCATION_SEARCH_MAX_RADIUS
 
 
 ParticipantInfoLocation = {"A": ParticipantInfoLocationA, "B": ParticipantInfoLocationB}

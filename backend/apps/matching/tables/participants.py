@@ -10,7 +10,7 @@ def make_participant_info_tables(p_type):
         info = tables.TemplateColumn(
             template_name="staff/user_info_button.html", extra_context={"p_type": p_type}
         )
-        uuid = tables.CheckBoxColumn()
+        uuid = tables.CheckBoxColumn(attrs={"th": {"id": "select_all"}})
 
         class Meta:
             model = ParticipantInfo[p_type]

@@ -42,7 +42,10 @@ def make_matches_from_others(p_type):
         def render_message(self, record):
             m = get_object_or_404(Match, uuid=record.uuid)
             subj, mess = m.inital_message
-            context = {"uuid": record.uuid, "subject": subj, "message": mess}
+
+            context = {"options": MATCH_STATE_OPTIONS, "value": record.state, "uuid": record.uuid}
+
+            context = {**context, "uuid": record.uuid, "subject": subj, "message": mess}
             return get_template("filters/mail_of_match_col.html").render(
                 context, request=self.request
             )

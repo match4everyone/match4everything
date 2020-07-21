@@ -6,6 +6,8 @@ import apps.matching.configuration.properties as m4e
 class A(ParticipantConfig):
     name = "Helper"
 
+    LOCATION_SEARCH_MAX_RADIUS = 100  # km
+
     # todo: use this # noqa
     # enable_location = True
     # enable_time = False

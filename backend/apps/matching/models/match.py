@@ -88,7 +88,9 @@ class Match(models.Model):
         matches = LocationFilter.filter_location(location_filter, qs)
 
         if this_filter.participant_type == "A":
-            not_yet_contacted = matches.filter(~models.Q(participant__match__filterA=this_filter))
+            not_yet_contacted = matches.filter(
+                ~models.Q(participant__match__participantB=this_filter.created_by.participant())
+            )
 
             for participant_info in not_yet_contacted:
                 m = Match.objects.create(
@@ -99,7 +101,9 @@ class Match(models.Model):
                 )
                 m.save()
         else:
-            not_yet_contacted = matches.filter(~models.Q(participant__match__filterB=this_filter))
+            not_yet_contacted = matches.filter(
+                ~models.Q(participant__match__participantA=this_filter.created_by.participant())
+            )
 
             for participant_info in not_yet_contacted:
                 m = Match.objects.create(
