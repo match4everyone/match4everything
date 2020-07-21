@@ -7,11 +7,10 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 import django_filters
 
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
-
 from apps.matching.data.map_data import zipcodes  # noqa
 from apps.matching.utils.map import get_plzs_close_to
+from match4everyone.configuration.A import A
+from match4everyone.configuration.B import B
 
 from .participant_info import ParticipantInfo
 from .participant_info_location import CountryCode, ParticipantInfoLocation, RadiusChoices
@@ -189,7 +188,6 @@ def add_participant_specific_filters(p_type, participant_config):
     respective participant.
     """
     filter_cls = ParticipantInfoFilter[p_type]
-    participant_config = participant_config()
 
     properties = participant_config.get_filter_fields()
     filter_fields = []
