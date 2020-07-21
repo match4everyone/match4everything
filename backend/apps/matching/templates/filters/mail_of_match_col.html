@@ -1,3 +1,4 @@
+{% load i18n %}
 <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#mailModal{{ uuid }}">
     <i class="fa fa-envelope-o" aria-hidden="true"></i> {{ subject }}
 </button>
@@ -9,7 +10,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Message</h4>
+                <h4 class="modal-title">{% blocktrans %}Message{% endblocktrans %}</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -18,18 +19,18 @@
                 <p class="h3">{{ subject }}</p>
                 <p>{{ message }}</p>
                 <hr>
-                Answer to this request:
+                {% blocktrans %}Answer to this request:{% endblocktrans %}
                 <hr>
                 <form method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="uuid" value="{{ uuid }}">
-                    <input class="form-control" type="text" name="subject" placeholder="Subject">
+                    <input class="form-control" type="text" name="subject" placeholder="{% blocktrans %}Subject{% endblocktrans %}">
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1"></label>
                         <textarea class="form-control" name="message" id="exampleFormControlTextarea1"
                                   rows="3"></textarea>
                     </div>
-                    <button type="submit" name="send_message" class="btn btn-primary mb-2 float-right">Share my email and send</button>
+                    <button type="submit" name="send_message" class="btn btn-primary mb-2 float-right">{% blocktrans %}Share my email and send{% endblocktrans %}</button>
                 </form>
             </div>
         </div>

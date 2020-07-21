@@ -1,14 +1,16 @@
+{% load i18n %}
 <form method="POST">
 {% csrf_token %}
 {% if value == options.CONTACTED %}
     <input type="hidden" name="uuid" value="{{ uuid }}">
 <div class="btn-group mr-2" role="group" aria-label="First group">
-    <input type="submit" class="btn btn-sm btn-success" name="interested" value="share my email">
-    <input type="submit" class="btn btn-sm btn-danger" name="block" value="not interested">
+    <input type="submit" class="btn btn-sm btn-success" name="interested" value="{% blocktrans %}share my email{% endblocktrans %}">
+    <input type="submit" class="btn btn-sm btn-danger" name="block" value="{% blocktrans %}not interested{% endblocktrans %}">
 </div>
 {% elif value == options.DECLINE %}
     <i class="fa fa-ban" aria-hidden="true"></i> declined
 {% elif value == options.SUCCESSFUL %}
-    <i class="fa fa-check-circle-o"  data-toggle="tooltip" data-placement="bottom" title="You have already shared your email adress with this user." aria-hidden="true"></i> email shared
+    <i class="fa fa-check-circle-o"  data-toggle="tooltip" data-placement="bottom" title="{% blocktrans %}You have already shared your email adress with this user.{% endblocktrans %}" aria-hidden="true"></i>
+    {% blocktrans %}email shared{% endblocktrans %}
 {% endif %}
 </form>

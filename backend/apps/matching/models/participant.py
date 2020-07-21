@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django.db import models, transaction
+from django.utils.translation import gettext as _
 
 from .user import User
 
@@ -61,7 +62,7 @@ class AbstractParticipant(models.Model):
         # check permission only here in case it was forgotten in the view
         # maybe we can give a nicer message here?
         if not approver.has_perm("matching.can_approve_type_%s" % p_type):
-            raise PermissionDenied("You currently don't have the permission to approve users.")
+            raise PermissionDenied(_("You currently don't have the permission to approve users."))
 
         approved_participants = Group.objects.get(name="approved_%s" % p_type)
 

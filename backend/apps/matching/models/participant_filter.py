@@ -226,17 +226,21 @@ def add_participant_specific_filters(p_type, participant_config):
         location_country_code = django_filters.ChoiceFilter(
             field_name="country_code",
             lookup_expr="exact",
-            label="Countrycode",
+            label=_("Countrycode"),
             choices=CountryCode.choices,
             initial=CountryCode.GERMANY,
             required=True,
         )
         location_zipcode = django_filters.CharFilter(
-            field_name="plz", lookup_expr="exact", label="Zipcode", initial="14482", required=True
+            field_name="plz",
+            lookup_expr="exact",
+            label=_("Zipcode"),
+            initial="14482",
+            required=True,
         )
         location_distance = django_filters.ChoiceFilter(
             field_name="distance",
-            label="distance",
+            label=_("Distance"),
             required=True,
             initial=RadiusChoices.LESSTEN,
             choices=RadiusChoices.choices,

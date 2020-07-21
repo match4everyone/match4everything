@@ -34,7 +34,7 @@
                     {% crispy info_form info_form.helper %}
                     <br>
                 <hr>
-                    <h5>Your locations</h5>
+                    <h5>{% blocktrans %}Your locations{% endblocktrans %}</h5>
                     {{ location_formset.management_form }}
                     <div id="form_set">
                         {% for form in location_formset.forms %}
@@ -56,8 +56,8 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <input type="button" class="btn btn-sm btn-outline-primary" value="Add another +" id="add_more">
-                    <input type="button" class="btn btn-sm btn-outline-dark" value="Remove last -" id="remove_this">
+                    <input type="button" class="btn btn-sm btn-outline-primary" value="{% blocktrans %}Add another +{% endblocktrans %}" id="add_more">
+                    <input type="button" class="btn btn-sm btn-outline-dark" value="{% blocktrans %}Remove last -{% endblocktrans %}" id="remove_this">
                     <br>
                     <div id="empty_form" style="display:none">
                             <div class="form-row">
@@ -73,7 +73,7 @@
                             </div>
                     </div>
                 <hr>
-                <input type="submit" class="btn btn-success float-right" value="Create a new account">
+                <input type="submit" class="btn btn-success float-right" value="{% blocktrans %}Create a new account{% endblocktrans %}">
                 </form>
             </div>
         </div>
