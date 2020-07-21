@@ -3,12 +3,8 @@ import apps.matching.configuration.properties as m4e
 
 
 # todo: required and private properties # noqa
-class A(ParticipantConfig):
+class AConfig(ParticipantConfig):
     name = "Helper"
-    url_name = name.lower()
-    assert (
-        " " not in url_name
-    ), "A: url_name cannot contain a space, either remove the space or use a separate url_name"
 
     # todo: use this # noqa
     # enable_location = True
@@ -112,3 +108,6 @@ class A(ParticipantConfig):
             ],
         ),
     ]
+
+
+A = AConfig()
