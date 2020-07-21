@@ -55,14 +55,14 @@ two instances with the same helper - the method that is used for forms etc.
 
 
 class ParticipantInfoA(AbstractParticipantInfo):
-    participant_type = A.url_name
+    participant_type = "A"
     participant = models.OneToOneField(
         Participant["A"], on_delete=models.CASCADE, primary_key=True, related_name="info"
     )
 
 
 class ParticipantInfoB(AbstractParticipantInfo):
-    participant_type = B.url_name
+    participant_type = "B"
     participant = models.OneToOneField(
         Participant["B"], on_delete=models.CASCADE, primary_key=True, related_name="info"
     )
@@ -70,9 +70,7 @@ class ParticipantInfoB(AbstractParticipantInfo):
 
 ParticipantInfo = {
     "A": ParticipantInfoA,
-    A.url_name: ParticipantInfoA,
     "B": ParticipantInfoB,
-    B.url_name: ParticipantInfoB,
 }
 
 

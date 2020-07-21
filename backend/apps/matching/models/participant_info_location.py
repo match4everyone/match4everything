@@ -8,8 +8,6 @@ import numpy as np
 
 from apps.matching.data.map_data import zipcodes
 from apps.matching.utils.zipcodes import GERMAN_BIG_CITY_ZIPCODES
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
 
 from .participant_info import ParticipantInfo
 
@@ -84,7 +82,5 @@ class ParticipantInfoLocationB(AbstractParticipantInfoLocation):
 
 ParticipantInfoLocation = {
     "A": ParticipantInfoLocationA,
-    A.url_name: ParticipantInfoLocationA,
     "B": ParticipantInfoLocationB,
-    B.url_name: ParticipantInfoLocationB,
 }

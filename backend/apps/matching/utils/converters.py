@@ -1,3 +1,5 @@
+from django.shortcuts import Http404
+
 from match4everyone.configuration.A import A
 from match4everyone.configuration.B import B
 
@@ -7,7 +9,7 @@ class DecimalPointFloatConverter:
     Custom Django converter for URLs.
 
     Parses floats with a decimal point (not with a comma!)
-    Allows for integers too, parses values in this or similar form:
+    Allows for integers too, ciateparses values in this or similar form:
     - 100.0
     - 100
 
@@ -36,7 +38,15 @@ class ParticipantTypeConverter:
     regex = "{A}|{B}".format(A=A.url_name, B=B.url_name)
 
     def to_python(self, value):
-        return value
+        if value == A.url_name:
+            return "A"
+        if value == B.url_name:
+            return "B"
+        raise Http404
 
     def to_url(self, value):
-        return value
+        if value == "A":
+            return A.url_name
+        if value == "B":
+            return B.url_name
+        raise Http404

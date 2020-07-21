@@ -15,10 +15,10 @@
   document.addEventListener("DOMContentLoaded", function domReady() {
     let mapViewPage = new MapViewPage({
       mapViewContainerId: 'mapContainer',
-      aURL: "{% url 'participant_JSON' settings.A %}",
-      bURL: "{% url 'participant_JSON' settings.B %}",
-      aListURL: "{% url 'participant_list' settings.A 'COUNTRYCODE' 'PLZ' 0 %}",
-      bListURL: "{% url 'participant_list' settings.B 'COUNTRYCODE' 'PLZ' 0 %}",
+      aURL: "{% url 'participant_JSON' 'A' %}",
+      bURL: "{% url 'participant_JSON' 'B' %}",
+      aListURL: "{% url 'participant_list' 'A' 'COUNTRYCODE' 'PLZ' 0 %}",
+      bListURL: "{% url 'participant_list' 'B' 'COUNTRYCODE' 'PLZ' 0 %}",
       tileURL: "{{ tileserverurl }}",
       tileServer:  "{{ tileserver }}",
       mapAttribution: `{{ attribution |safe }}`,

@@ -6,9 +6,6 @@ from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django.db import models, transaction
 
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
-
 from .user import User
 
 
@@ -91,18 +88,16 @@ class AbstractParticipant(models.Model):
 
 
 class ParticipantA(AbstractParticipant):
-    participant_type = A.url_name
+    participant_type = "A"
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="a")
 
 
 class ParticipantB(AbstractParticipant):
-    participant_type = B.url_name
+    participant_type = "B"
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="b")
 
 
 Participant = {
     "A": ParticipantA,
-    A.url_name: ParticipantA,
     "B": ParticipantB,
-    B.url_name: ParticipantB,
 }

@@ -65,10 +65,10 @@
                     {% blocktrans %}Map{% endblocktrans %}
                 </a> </li>
                 {% if not user.is_authenticated %}
-                    <li class="nav-item {% if settings.A|add:'/signup' in request.path %}active{% endif %} hide-home"><a
-                            class="nav-link" href="{% url 'signup' settings.A %}">{% blocktrans %}Signup{% endblocktrans %} {{ settings.A_NAME }}</a></li>
-                    <li class="nav-item  {% if settings.B|add:'/signup' in request.path %}active{% endif %} hide-home"><a
-                            class="nav-link" href="{% url 'signup' settings.B %}">{% blocktrans %}Signup{% endblocktrans %} {{ settings.B_NAME }}</a></li>
+                    <li class="nav-item {% if 'A'|add:'/signup' in request.path %}active{% endif %} hide-home"><a
+                            class="nav-link" href="{% url 'signup' 'A' %}">{% blocktrans %}Signup{% endblocktrans %} {{ settings.A_NAME }}</a></li>
+                    <li class="nav-item  {% if 'B'|add:'/signup' in request.path %}active{% endif %} hide-home"><a
+                            class="nav-link" href="{% url 'signup' 'B' %}">{% blocktrans %}Signup{% endblocktrans %} {{ settings.B_NAME }}</a></li>
                 {% endif %}
                 {% if user.is_authenticated %}
                     <li class="nav-item {% if 'profile' in request.path %}active{% endif %}">
