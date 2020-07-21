@@ -58,7 +58,7 @@ class ParticipantInfoUpdateView(View):
             messages.add_message(self.request, messages.INFO, _("Successfully updated info."))
             return HttpResponseRedirect(self.success_url)
         messages.add_message(
-            self.request, messages.ERROR, _("Oh no, there ware some errors in the form below.")
+            self.request, messages.ERROR, _("Oh no, there were some errors in the form below.")
         )
         return render(
             request,
