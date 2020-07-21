@@ -3,7 +3,7 @@ import apps.matching.configuration.properties as m4e
 
 
 # todo: required and private properties # noqa
-class B(ParticipantConfig):
+class BConfig(ParticipantConfig):
     name = "Institution"
 
     LOCATION_SEARCH_MAX_RADIUS = 100  # km
@@ -35,3 +35,6 @@ class B(ParticipantConfig):
             max_length=100,
         ),
     ]
+
+
+B = BConfig()

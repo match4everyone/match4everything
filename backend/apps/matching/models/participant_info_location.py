@@ -6,11 +6,10 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 import numpy as np
 
-from match4everyone.configuration.A import A  # noqa
-from match4everyone.configuration.B import B  # noqa
-
 from apps.matching.data.map_data import zipcodes  # noqa
 from apps.matching.utils.zipcodes import GERMAN_BIG_CITY_ZIPCODES  # noqa
+from match4everyone.configuration.A import A  # noqa
+from match4everyone.configuration.B import B  # noqa
 
 from .participant_info import ParticipantInfo
 
@@ -86,4 +85,7 @@ class ParticipantInfoLocationB(AbstractParticipantInfoLocation):
     MAX_RADIUS = B.LOCATION_SEARCH_MAX_RADIUS
 
 
-ParticipantInfoLocation = {"A": ParticipantInfoLocationA, "B": ParticipantInfoLocationB}
+ParticipantInfoLocation = {
+    "A": ParticipantInfoLocationA,
+    "B": ParticipantInfoLocationB,
+}

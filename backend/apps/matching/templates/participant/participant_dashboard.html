@@ -10,7 +10,6 @@
 
 {% block header %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -98,9 +97,9 @@
                         your account and register with a new one.{% endblocktrans %}</small>
                 </div>
                 <br><br>
-                <a role="button" class="btn blue text-white btn-md" href="{% url 'logout' %}">{% blocktrans %}
+                <a role="button" class="btn btn-primary text-white btn-md" href="{% url 'logout' %}">{% blocktrans %}
                     Logout{% endblocktrans %}</a>
-                <a role="button" class="btn blue text-white btn-md" href="{% url 'password_change' %}">
+                <a role="button" class="btn btn-primary text-white btn-md" href="{% url 'password_change' %}">
                     {% blocktrans %}Change Password{% endblocktrans %}</a>
                 <a role="button" class="btn btn-info" href="{% url 'delete_me_ask' %}">{% blocktrans %}Delete my
                     profile{% endblocktrans %}</a>
@@ -119,7 +118,7 @@
             </div>
             <div class="card-body">
 
-                <a role="button" class="btn blue text-white btn-md" href="{% url 'info-edit' p_type uuid %}">
+                <a role="button" class="btn btn-primary text-white btn-md" href="{% url 'info-edit' p_type uuid %}">
                     {% blocktrans %}Edit my profile{% endblocktrans %}</a>
             </div>
         </div>
