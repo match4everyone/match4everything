@@ -205,7 +205,7 @@ REST_FRAMEWORK = {
         "apps.matching.utils.rest_framework.throttling.UserHRateThrottle",
         "apps.matching.utils.rest_framework.throttling.UserDayRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {"user_min": "5/min", "user_h": "100/h", "user_day": "100/day",},
+    "DEFAULT_THROTTLE_RATES": {"user_min": "15/min", "user_h": "100/h", "user_day": "100/day",},
 }
 
 
