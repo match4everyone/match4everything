@@ -20,9 +20,10 @@ def make_matches_to_others(p_type):
             verbose_name=_("Your message"),
         )
         filter_ = TemplateColumn(
-            template_code='<a class="link" href="{{value}}">view search</a>',
-            accessor="filter_url",
+            template_name="matches/search_again_column.html",
+            accessor="filter_uuid",
             verbose_name=_("Search criteria"),
+            extra_context={"p_type": "B" if p_type == "A" else "A"},
         )
 
         class Meta:

@@ -60,6 +60,9 @@ urlpatterns = [
         name="create_participant_filter",
     ),
     path(
+        "<p:p_type>/filter/<str:uuid>/view/", views.FilterDetailView.as_view(), name="filter_detail"
+    ),
+    path(
         "<p:p_type>/filter/<str:uuid>/search_again/",
         views.ParticipantFilterSearchAgain.as_view(),
         name="filter_search_again",

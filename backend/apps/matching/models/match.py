@@ -64,6 +64,10 @@ class Match(models.Model):
             return filter_.search_url()
         return ""
 
+    @property
+    def filter_uuid(self):
+        return self.contacted_via_filter[0].uuid
+
     def initiator_participant(self):
         if self.initiator == "A":
             return self.participantA

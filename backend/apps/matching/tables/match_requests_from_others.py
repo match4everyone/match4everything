@@ -22,9 +22,10 @@ def make_matches_from_others(p_type):
         message = Column(accessor="inital_message", verbose_name=_("Contact Request"),)
         state = Column(accessor="state", empty_values=(), verbose_name="")
         filter_ = TemplateColumn(
-            template_code='<a class="link" href="{{value}}">view search</a>',
-            accessor="filter_url",
-            verbose_name=_("Match criteria"),
+            template_name="matches/search_again_column.html",
+            accessor="filter_uuid",
+            verbose_name=_("Search criteria"),
+            extra_context={"p_type": p_type},
         )
 
         class Meta:

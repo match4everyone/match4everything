@@ -1,3 +1,4 @@
+from .filter_detail import FilterDetailView  # noqa
 from .filter_edit import FilterUpdateView  # noqa
 from .filter_list import FilterListView  # noqa
 from .filter_new_matches import FilterContactNewMatchView  # noqa
