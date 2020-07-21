@@ -90,12 +90,12 @@ def required_at_least_one(restrictions_A, restrictions_B, function=None):
             passes_test = False
             if p_type == "A":
                 for restriction in restrictions_A:
-                    passes_test += restriction(u)
+                    passes_test |= restriction(u)
             elif p_type == "B":
                 for restriction in restrictions_B:
-                    passes_test += restriction(u)
-            passes_test += profile_own(uuid_accessed=uuid, uuid_own=u.participant().info.uuid)
-            if passes_test > 0:
+                    passes_test |= restriction(u)
+            passes_test |= profile_own(uuid_accessed=uuid, uuid_own=u.participant().info.uuid)
+            if passes_test:
                 return function(request, p_type, uuid, *args, **kwargs)
             raise Http404
 
