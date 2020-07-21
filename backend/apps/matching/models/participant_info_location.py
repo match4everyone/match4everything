@@ -80,4 +80,7 @@ class ParticipantInfoLocationB(AbstractParticipantInfoLocation):
     )
 
 
-ParticipantInfoLocation = {"A": ParticipantInfoLocationA, "B": ParticipantInfoLocationB}
+ParticipantInfoLocation = {
+    "A": ParticipantInfoLocationA,
+    "B": ParticipantInfoLocationB,
+}
