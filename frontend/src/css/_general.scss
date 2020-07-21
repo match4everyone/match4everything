@@ -41,7 +41,7 @@ a {
   color: var(--secondary);
 
   &:hover {
-    color: var(--secondary-dark);
+    color: var(--secondary-shade);
     text-decoration: none;
   }
 }
@@ -156,7 +156,7 @@ b {
     border: 0px;
 
     &:hover {
-      background-color: var(--primary-light);
+      background-color: var(--primary-shade);
     }
   }
 
@@ -166,7 +166,7 @@ b {
     border: 0px;
 
     &:hover {
-      background-color: var(--secondary-dark);
+      background-color: var(--secondary-shade);
     }
   }
 }

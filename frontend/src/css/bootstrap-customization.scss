@@ -3,15 +3,18 @@
 
 $body-color: #4f4f4f;
 $blue: #000943;
-$blue-light: #00138f;
 $pink: #ed0a71;
-$pink-dark: #8c0442;
+
+// Inspired by bootstraps link hover color, see line 181 of bootstrap/scss/_variables.scss
+// Adjust the percentage or replace with `lighten` for your custom colors
+$blue-dark: darken($blue, 15%);
+$pink-dark: darken($pink, 15%);
 $headings-color: $blue;
 
 
 $theme-colors: (
     "primary": $blue,
-    "primary-light": $blue-light,
+    "primary-shade": $blue-dark,
     "secondary": $pink,
-    "secondary-dark": $pink-dark,
+    "secondary-shade": $pink-dark,
 )
