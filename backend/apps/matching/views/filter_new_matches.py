@@ -7,7 +7,6 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import View
 
-
 from apps.matching.models import Match, ParticipantInfoFilter
 
 
