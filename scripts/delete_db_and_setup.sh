@@ -21,7 +21,7 @@ if [ $MODE == 'PROD' ]; then
   echo "Please enter your desired email and password."
   $EXEC_ENV python3 manage.py createsuperuser --username admin
 else
-  $EXEC_ENV python3 manage.py createsuperuser --username admin --email admin@examplee.com --no-input
+  $EXEC_ENV python3 manage.py createsuperuser --username admin --email admin@example.com --no-input
   $EXEC_ENV python3 manage.py createfakeusers --add-a=40 --add-b=20
   echo "Created admin account and fake accounts"
 fi
