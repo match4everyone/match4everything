@@ -17,7 +17,7 @@ class RadiusChoices(models.IntegerChoices):
     LESSTEN = 10, _("<10 km")
     LESSTWENTY = 20, _("<20 km")
     LESSFOURTY = 40, _("<40 km")
-    MOREFOURTY = 50, _("<50 km")
+    LESSFIFTY = 50, _("<50 km")
 
 
 class CountryCode(models.TextChoices):
