@@ -16,6 +16,19 @@
 
     <div style="height:40px"></div>
     <div class="container" style="margin-bottom: 55px;">
+        {% if messages %}
+
+
+            {% for message in messages %}
+                <div class="alert {{ message.tags }} fade show alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+        {% endif %}
         <div class="row" style="margin-top:30px;">
             <div class="col-lg-10 col-sm-12 col-12">
 

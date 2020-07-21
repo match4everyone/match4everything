@@ -11,7 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
 from apps.matching.admin import matching_participant_required
-from apps.matching.forms import ParticipantEditInfoForm, ParticipantInfoSignupForm
+from apps.matching.forms import ParticipantEditInfoForm
 from apps.matching.models import ParticipantInfo, ParticipantInfoLocation
 
 logger = logging.getLogger(__name__)
@@ -23,9 +23,6 @@ class ParticipantInfoUpdateView(View):
 
     template_name = "participant/participant_info_edit_form.html"
     success_url = reverse_lazy("profile")
-
-    def get_form_class(self):
-        return ParticipantInfoSignupForm[self.kwargs["p_type"]]
 
     def get(self, request, p_type, uuid):
         info = get_object_or_404(ParticipantInfo[p_type], uuid=uuid)
@@ -60,6 +57,9 @@ class ParticipantInfoUpdateView(View):
             location_formset.save()
             messages.add_message(self.request, messages.INFO, _("Successfully updated info."))
             return HttpResponseRedirect(self.success_url)
+        messages.add_message(
+            self.request, messages.ERROR, _("Oh no, there ware some errors in the form below.")
+        )
         return render(
             request,
             self.template_name,
