@@ -7,10 +7,10 @@ from django.utils.translation import gettext_lazy as _
 
 from .participant import ParticipantA, ParticipantB
 from .participant_filter import (
+    LocationFilter,
     ParticipantInfo,
     ParticipantInfoFilterA,
     ParticipantInfoFilterB,
-    ParticipantInfoFilterSet,
 )
 
 
@@ -78,13 +78,10 @@ class Match(models.Model):
 
     @classmethod
     def contact_all_not_matched_to(cls, this_filter):
-        filterer = ParticipantInfoFilterSet[this_filter.participant_type](
-            data=this_filter.as_get_params()
-        )
-        filterer.is_valid()
-        matches = filterer.filter_queryset(
-            ParticipantInfo[this_filter.participant_type].objects.all()
-        )
+        normal_filter, location_filter = this_filter.as_get_params(seperate_location=True)
+
+        qs = ParticipantInfo[this_filter.participant_type].objects.filter(**normal_filter)
+        matches = LocationFilter.filter_location(location_filter, qs)
 
         if this_filter.participant_type == "A":
             not_yet_contacted = matches.filter(~models.Q(participant__match__filterA=this_filter))
@@ -112,13 +109,9 @@ class Match(models.Model):
     @classmethod
     def matches_to(cls, this_filter):
 
-        filterer = ParticipantInfoFilterSet[this_filter.participant_type](
-            data=this_filter.as_get_params()
-        )
-        filterer.is_valid()
-        matches = filterer.filter_queryset(
-            ParticipantInfo[this_filter.participant_type].objects.all()
-        )
+        normal_filter, location_filter = this_filter.as_get_params(seperate_location=True)
+        qs = ParticipantInfo[this_filter.participant_type].objects.filter(**normal_filter)
+        matches = LocationFilter.filter_location(location_filter, qs)
 
         available_matches = matches.count()
         if this_filter.participant_type == "A":

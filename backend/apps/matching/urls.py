@@ -72,12 +72,7 @@ urlpatterns = [
     path(
         "<p:p_type>/filter/<str:uuid>/edit/", views.FilterUpdateView.as_view(), name="filter-edit",
     ),
-    path("<p:p_type>/filter/list/", views.FilterListView.as_view(), name="filter_list",),
-    path(
-        "<p:p_type>/<countrycode>/<plz>/<float:distance>/",
-        TemplateView.as_view(template_name="messages/not_implemented.html"),
-        name="participant_list",
-    ),
+    path("<p:p_type>/filter/list/", views.FilterListView.as_view(), name="filter_list"),
     ####################################
     #  Staff
     ####################################

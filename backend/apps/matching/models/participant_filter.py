@@ -54,13 +54,14 @@ class AbstractParticipantInfoFilter(models.Model):
         copy.registration_date = None
         return copy
 
-    def as_get_params(self):
+    def as_get_params(self, seperate_location=False):
         get_request = {}
+        location = {}
         for filter_field in self.filter_fields:
             value = getattr(self, filter_field)
             if value is not None:
                 if "location_" in filter_field:
-                    get_request[filter_field] = value
+                    location[filter_field] = value
                 else:
                     split_vers = filter_field.split("-")
                     fieldname = "-".join(split_vers[:-1])
@@ -69,8 +70,9 @@ class AbstractParticipantInfoFilter(models.Model):
                         get_request[fieldname] = str(value)
                     else:
                         get_request[fieldname + "__" + lookup_exp] = str(value)
-
-        return get_request
+        if seperate_location:
+            return get_request, location
+        return {**get_request, **location}
 
     @classmethod
     def create_from_filterset(cls, filter_kwargs, created_by):
@@ -159,18 +161,23 @@ class LocationFilter:
         return True
 
     def filter_queryset(self, location_query, p_type, qs):
-        country_code = location_query[self.location_prefix + "country_code"]
-        zipcode = location_query[self.location_prefix + "zipcode"]
-        distance = location_query[self.location_prefix + "distance"]
-
         if qs is None:
             qs = ParticipantInfo[p_type].objects.all()
-        if distance == RadiusChoices.ONLY_HERE.value:
+
+        return self.__class__.filter_location(location_query, qs=qs)
+
+    @classmethod
+    def filter_location(cls, location_query, qs):
+
+        country_code = location_query[cls.location_prefix + "country_code"]
+        zipcode = location_query[cls.location_prefix + "zipcode"]
+        distance = int(location_query[cls.location_prefix + "distance"])
+
+        if distance == 0:
             close_zipcodes = [zipcode]
         else:
-            distance_in_km = int(distance)
+            distance_in_km = distance
             close_zipcodes = get_plzs_close_to(country_code, zipcode, distance_in_km)
-
         return qs.filter(location__plz__in=close_zipcodes, location__country_code=country_code)
 
 

@@ -15,6 +15,8 @@ def haversine(lon1, lat1, lon2, lat2):
 
 
 def get_plzs_close_to(countrycode, plz, distance_in_km):
+    if type(plz) == int:
+        plz = str(plz)
     lon1, lat1, _ = zipcodes[countrycode][plz]
 
     close = []
