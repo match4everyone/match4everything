@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import user_passes_test
+from django.core.exceptions import PermissionDenied
 from django.http import Http404
 
 from .models import User
@@ -97,7 +98,8 @@ def required_at_least_one(restrictions_A, restrictions_B, function=None):
             passes_test |= profile_own(uuid_accessed=uuid, uuid_own=u.participant().info.uuid)
             if passes_test:
                 return function(request, p_type, uuid, *args, **kwargs)
-            raise Http404
+            else:
+                raise PermissionDenied()
 
         return test
 
