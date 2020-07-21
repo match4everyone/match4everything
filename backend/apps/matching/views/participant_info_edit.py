@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
@@ -20,14 +21,12 @@ class ParticipantInfoUpdateView(UpdateView):
     slug_field = "uuid"
 
     def dispatch(self, *args, **kwargs):
-        user_from_url = (
-            ParticipantInfo[kwargs["p_type"]]
-            .objects.get_or_404(uuid=kwargs["uuid"])
-            .participant.user
-        )
+        user_from_url = get_object_or_404(
+            ParticipantInfo[self.kwargs["p_type"]], uuid=kwargs["uuid"]
+        ).participant.user
         user_from_request = self.request.user
         if user_from_request != user_from_url:
-            return HttpResponseForbidden()
+            raise PermissionDenied
         return super(ParticipantInfoUpdateView, self).dispatch(*args, **kwargs)
 
     def get_form_class(self):
