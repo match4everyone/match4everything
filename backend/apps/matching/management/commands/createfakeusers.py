@@ -60,9 +60,9 @@ class Command(BaseCommand):
         if options["delete"]:
             self.delete_all_fakes()
         if options["add_{a}".format(a=A.url_name)] is not None:
-            self.add_fake("A", int(options["add_{a}".format(a=A.url_name)][0]))
+            self.add_fake(participant_type="A", n=int(options["add_{a}".format(a=A.url_name)][0]))
         if options["add_{b}".format(b=B.url_name)] is not None:
-            self.add_fake("B", int(options["add_{b}".format(b=B.url_name)][0]))
+            self.add_fake(participant_type="B", n=int(options["add_{b}".format(b=B.url_name)][0]))
 
     def delete_all_fakes(self):
         qs = User.objects.filter(email__contains=FAKE_MAIL)
@@ -94,8 +94,8 @@ class Command(BaseCommand):
             m = participant_type + new_mail(i + n_users)
             u = User.new(
                 email=m,
-                is_A=participant_type == A.url_name,
-                is_B=participant_type == B.url_name,
+                is_A=participant_type == "A",
+                is_B=participant_type == "B",
                 is_participant=True,
                 validated_email=True,
                 date_joined=datetime.now() - timedelta(days=np.random.randint(0, 30)),
