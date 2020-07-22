@@ -4,6 +4,7 @@ const BundleTracker = require('webpack-bundle-tracker')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 // Generate entry points from all .js files in src root
 const srcDir = path.resolve(__dirname, 'src')
@@ -148,5 +149,34 @@ module.exports = {
             indent: '\t',
         }),
         new CompressionPlugin(),
+        new FaviconsWebpackPlugin({
+            logo: '../backend/static/img/logo.svg',
+            cache: false,
+            //publicPath: './../../backend/static',
+            outputPath: './../../backend/static/img/favicon',
+            // Prefix path for generated assets
+            prefix: 'img/favicon',
+            inject: false,
+
+            // Favicons configuration options (see below)
+            favicons: {
+                appName: 'match4everyone',
+                appShortName: 'm4e',
+                appDescription: 'We match everyone',
+                background: '#fff',
+                theme_color: '#fff', // In theory, importing vars from scss should be easy, but I can't get it to work.
+                // Idea in: https://medium.com/tarkalabs-til/use-sass-variables-in-javascript-8ce60b5e5e56
+                //path: '/static/img/favicons/',
+                url: 'http://m4h.com/',
+                //manifestRelativePaths: true,
+                display: 'browser',
+                scope: '/',
+                start_url: '/',
+                version: 1.0,
+                html: '../../../../backend/templates/favicons.html',
+                pipeHTML: true,
+                replace: true
+            }
+        })
     ],
 }
