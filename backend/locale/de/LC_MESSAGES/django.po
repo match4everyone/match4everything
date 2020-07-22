@@ -247,11 +247,8 @@ msgstr "Password zurücksetzen"
 msgid "Not registered?"
 msgstr "Noch nicht registriert?"
 
-msgid "I am A"
-msgstr "Ich bin A"
-
-msgid "I am B"
-msgstr "Ich bin B"
+msgid "I am"
+msgstr "Ich bin"
 
 msgid ""
 "\n"
@@ -483,11 +480,8 @@ msgstr "Entwickelt von"
 msgid "during the hackathon #wirvsvirus"
 msgstr "während #wirvsvirus"
 
-msgid "Signup A"
-msgstr "Signup A"
-
-msgid "Signup B"
-msgstr "Signup B"
+msgid "Signup"
+msgstr "Signup"
 
 msgid "My Profile"
 msgstr "Mein Profil"
