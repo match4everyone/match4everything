@@ -12,6 +12,10 @@ Welcome to match4everything's documentation!
 
    getting_started
    first_steps
+   installation
+   configuration
+   architecture
+   cookbook
    development
    deployment
 
