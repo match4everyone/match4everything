@@ -3,7 +3,7 @@ import apps.matching.configuration.properties as m4e
 
 
 # todo: required and private properties # noqa
-class B(ParticipantConfig):
+class BConfig(ParticipantConfig):
     name = "Institution"
 
     # todo: use this # noqa
@@ -12,6 +12,9 @@ class B(ParticipantConfig):
     # permissions = [
     #    NewPermissions.can_contact_type_a_if_approved,
     # ]
+
+    profile_visible_for_A = True
+    profile_visible_for_other_B = False
 
     properties = [
         m4e.TextProperty(
@@ -33,3 +36,6 @@ class B(ParticipantConfig):
             max_length=100,
         ),
     ]
+
+
+B = BConfig()

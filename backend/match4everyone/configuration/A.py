@@ -3,7 +3,7 @@ import apps.matching.configuration.properties as m4e
 
 
 # todo: required and private properties # noqa
-class A(ParticipantConfig):
+class AConfig(ParticipantConfig):
     name = "Helper"
 
     # todo: use this # noqa
@@ -12,6 +12,8 @@ class A(ParticipantConfig):
     # permissions = [
     #    NewPermissions.can_contact_type_b,
     # ]
+    profile_visible_for_B = True
+    profile_visible_for_other_A = False
 
     properties = [
         m4e.PropertyGroup(
@@ -108,3 +110,6 @@ class A(ParticipantConfig):
             ],
         ),
     ]
+
+
+A = AConfig()

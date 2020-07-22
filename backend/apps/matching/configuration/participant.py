@@ -1,9 +1,14 @@
 from itertools import chain
+import urllib
 
 
 class ParticipantConfig:
 
     properties = None
+
+    @property
+    def url_name(self):
+        return urllib.parse.quote(self.name.lower())
 
     def get_model_field_names(self):
         return chain(*[p.get_model_field_names() for p in self.properties])
