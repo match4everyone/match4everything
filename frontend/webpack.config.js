@@ -151,7 +151,7 @@ module.exports = {
         new CompressionPlugin(),
         new FaviconsWebpackPlugin({
             logo: '../backend/static/img/logo.svg',
-            cache: false,
+            cache: true,
             outputPath: './../../backend/static/img/favicon',
             // Prefix path for generated assets in generated html
             prefix: 'img/favicon',
