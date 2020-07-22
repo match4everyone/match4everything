@@ -66,6 +66,12 @@ class User(AbstractUser):
         if self.is_B:
             return self.b
 
+    def is_approved(self):
+        if self.is_staff:
+            return True
+        p_type = self.participant().p_type()
+        return self.groups.filter(name="approved_%s" % p_type.lower()).exists()
+
     class Meta(AbstractUser.Meta):
         constraints = [
             # we can only have either participant a or participant b for one user

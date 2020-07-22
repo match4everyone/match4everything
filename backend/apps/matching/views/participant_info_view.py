@@ -23,22 +23,24 @@ class ParticipantInfoViewView(UpdateView):
     slug_field = "uuid"
 
     def dispatch(self, *args, **kwargs):
+        url_p_type = self.kwargs["p_type"]
         user_from_url = get_object_or_404(
-            ParticipantInfo[self.kwargs["p_type"]], uuid=kwargs["uuid"]
+            ParticipantInfo[url_p_type], uuid=kwargs["uuid"]
         ).participant.user
         user = self.request.user
-        # if user_from_request != user_from_url:
-        is_own_profile = user == user_from_url
-        has_explicit_permission = user.has_perm("matching.participant.can_view")
-        is_other_type_and_approved = False  # TODO
-        is_same_type_and_setting_says_so = False  # TODO
 
-        if (
-            is_own_profile
-            or has_explicit_permission
-            or is_other_type_and_approved
-            or is_same_type_and_setting_says_so
-        ):
+        # One can view this profile if either:
+        # it's yourself
+        is_own_profile = user == user_from_url
+        # or the configuration in match4everyone/configuration/[A|B] allows it for this type
+        # and you are approved (in systems without approval strategies, everyone is approved)
+        # or you have the permission to approve or delete users and were given access to also
+        # view the details
+        has_permission_to_view = (
+            user.has_perm("matching.view_participant%s" % url_p_type.lower()) and user.is_approved()
+        )
+
+        if is_own_profile or has_permission_to_view:
             return super(ParticipantInfoViewView, self).dispatch(*args, **kwargs)
         else:
             raise PermissionDenied
