@@ -152,13 +152,10 @@ module.exports = {
         new FaviconsWebpackPlugin({
             logo: '../backend/static/img/logo.svg',
             cache: false,
-            //publicPath: './../../backend/static',
             outputPath: './../../backend/static/img/favicon',
-            // Prefix path for generated assets
+            // Prefix path for generated assets in generated html
             prefix: 'img/favicon',
             inject: false,
-
-            // Favicons configuration options (see below)
             favicons: {
                 appName: 'match4everyone',
                 appShortName: 'm4e',
@@ -166,9 +163,7 @@ module.exports = {
                 background: '#fff',
                 theme_color: '#fff', // In theory, importing vars from scss should be easy, but I can't get it to work.
                 // Idea in: https://medium.com/tarkalabs-til/use-sass-variables-in-javascript-8ce60b5e5e56
-                //path: '/static/img/favicons/',
                 url: 'http://m4h.com/',
-                //manifestRelativePaths: true,
                 display: 'browser',
                 scope: '/',
                 start_url: '/',
