@@ -2,6 +2,10 @@
 # To run script in Docker call for example "delete_db_and_setup.sh 'docker-compose exec backend'"
 #MODE={$1:-"None"}
 MODE=$1
+if [[  $MODE == '' ]]; then
+  echo "You have to put either 'DEV' or 'PROD' as argument"
+  exit 1
+fi
 if [[  $MODE != 'DEV' && $MODE != 'PROD' ]]; then
   echo "Supplied mode is not supported. We only support 'DEV' and 'PROD'"
   exit 1
