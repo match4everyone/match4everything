@@ -152,9 +152,9 @@ module.exports = {
         new FaviconsWebpackPlugin({
             logo: '../backend/static/img/logo.svg',
             cache: true,
-            outputPath: './../../backend/static/img/favicon',
+            outputPath: './favicon',
             // Prefix path for generated assets in generated html
-            prefix: 'img/favicon',
+            prefix: 'favicon',
             inject: false,
             favicons: {
                 appName: 'match4everyone',
@@ -168,7 +168,8 @@ module.exports = {
                 scope: '/',
                 start_url: '/',
                 version: 1.0,
-                html: '../../../../backend/templates/favicons.html',
+                // Note that this is relative to outputPath from Plugin above
+                html: 'favicons.html',
                 pipeHTML: true,
                 replace: true
             }
