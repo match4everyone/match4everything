@@ -13,7 +13,7 @@ if [ $MODE == 'DEV' ]; then
 fi
 shift
 EXEC_ENV="$*"
-
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" && cd $DIR/../
 $EXEC_ENV python3 manage.py reset_db
 $EXEC_ENV python3 manage.py migrate
 echo "Creating account with username \"admin\". "
