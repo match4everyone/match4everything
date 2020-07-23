@@ -1,5 +1,4 @@
 import 'bootstrap'
-import 'font-awesome/scss/font-awesome.scss'
 import './css/app.scss'
 import $ from 'jquery'
 
