@@ -82,3 +82,11 @@ repos:
                     ^frontend/webpack\.config\.js|
                     ^frontend/src/
                 )
+-   repo: https://github.com/myint/rstcheck
+    rev: '3f92957'  # Use the sha / tag you want to point at
+    hooks:
+    -   id: rstcheck
+        files: >
+                (?x)(
+                    ^docs/
+                )

@@ -94,6 +94,7 @@ class Command(BaseCommand):
             m = participant_type + new_mail(i + n_users)
             u = User.new(
                 email=m,
+                pwd=m,
                 is_A=participant_type == A.url_name,
                 is_B=participant_type == B.url_name,
                 is_participant=True,
