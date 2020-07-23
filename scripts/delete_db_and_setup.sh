@@ -18,16 +18,16 @@ fi
 shift
 EXEC_ENV="$*"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" && cd $DIR/../
-$EXEC_ENV python3 backend/manage.py reset_db
-$EXEC_ENV python3 backend/manage.py migrate
+$EXEC_ENV python3 backend/manage.py reset_db --skip-checks
+$EXEC_ENV python3 backend/manage.py migrate --skip-checks
 echo "Creating account with username \"admin\". "
 if [ $MODE == 'PROD' ]; then
   echo "Please enter your desired email and password."
-  $EXEC_ENV python3 backend/manage.py createsuperuser --username admin
+  $EXEC_ENV python3 backend/manage.py createsuperuser --username admin --skip-checks
 else
-  $EXEC_ENV python3 backend/manage.py createsuperuser --username admin --email admin@example.com --no-input
-  $EXEC_ENV python3 backend/manage.py createfakeusers --add-a=40 --add-b=20
+  $EXEC_ENV python3 backend/manage.py createsuperuser --username admin --email admin@example.com --no-input --skip-checks
+  $EXEC_ENV python3 backend/manage.py createfakeusers --add-helper=40 --add-institution=20 --skip-checks
   echo "Created admin account and fake accounts"
 fi
-$EXEC_ENV python3 backend/manage.py loaddata cms_export.json
+$EXEC_ENV python3 backend/manage.py loaddata backend/cms_export.json
 echo "Site successfully set up"
