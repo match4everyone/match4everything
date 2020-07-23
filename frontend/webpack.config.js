@@ -150,9 +150,10 @@ module.exports = {
         }),
         new CompressionPlugin(),
         new FaviconsWebpackPlugin({
-            logo: '../backend/static/img/logo.svg',
+            logo: path.resolve(__dirname, 'src', 'logo', 'logo.svg'),
             cache: true,
-            outputPath: './favicon',
+            // path relative to webpack dir, find it in frontend/dist folder
+            outputPath: 'favicon',
             // Prefix path for generated assets in generated html
             prefix: 'favicon',
             inject: false,
