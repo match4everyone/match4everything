@@ -83,7 +83,12 @@ ROOT_URLCONF = "match4everyone.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [
+            # all regular templates
+            os.path.join(BASE_DIR, "templates"),
+            # used only for the generated favicon html
+            os.path.join(BASE_DIR, "../frontend/dist/favicon"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
