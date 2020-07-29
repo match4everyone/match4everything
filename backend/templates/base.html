@@ -7,29 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Generate your favicons in this format on https://favicomatic.com/ -->
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{% static 'img/favicon/apple-touch-icon-57x57.png' %}" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'img/favicon/apple-touch-icon-114x114.png' %}" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'img/favicon/apple-touch-icon-72x72.png' %}" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'img/favicon/apple-touch-icon-144x144.png' %}" />
-    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="{% static 'img/favicon/apple-touch-icon-60x60.png' %}" />
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="{% static 'img/favicon/apple-touch-icon-120x120.png' %}" />
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{% static 'img/favicon/apple-touch-icon-76x76.png' %}" />
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="{% static 'img/favicon/apple-touch-icon-152x152.png' %}" />
-    <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-196x196.png' %}" sizes="196x196" />
-    <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-96x96.png' %}" sizes="96x96" />
-    <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-32x32.png' %}" sizes="32x32" />
-    <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-16x16.png' %}" sizes="16x16" />
-    <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-128.png' %}" sizes="128x128" />
-    <meta name="application-name" content="&nbsp;"/>
-    <meta name="msapplication-TileColor" content="#FFFFFF" />
-    <meta name="msapplication-TileImage" content="{% static 'img/favicon/mstile-144x144.png' %}" />
-    <meta name="msapplication-square70x70logo" content="{% static 'img/favicon/mstile-70x70.png' %}" />
-    <meta name="msapplication-square150x150logo" content="{% static 'img/favicon/mstile-150x150.png' %}" />
-    <meta name="msapplication-wide310x150logo" content="{% static 'img/favicon/mstile-310x150.png' %}" />
-    <meta name="msapplication-square310x310logo" content="{% static 'img/favicon/mstile-310x310.png' %}" />
-    <meta name="theme-color" content="#ffffff">
-
+    {% include "favicons.html" %}
     <meta property="og:type" content="website">
     <meta property="og:image" content="{{ settings.BASE_URL }}{% static 'img/share_icons/facebook-share.jpg' %}">
     <meta property="og:image:secure_url"
@@ -58,20 +36,20 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item {% if "about" in request.path %}active{% endif %}"><a class="nav-link"
+                <li class="nav-item {% if 'about' in request.path %}active{% endif %}"><a class="nav-link"
                                                                                           href="/about">
                     {% blocktrans %}About{% endblocktrans %}</a></li>
                 <li class="nav-item {% if "mapview" in request.path %}active{% endif %}"> <a class="nav-link" href="{% url 'map' %}">
                     {% blocktrans %}Map{% endblocktrans %}
                 </a> </li>
                 {% if not user.is_authenticated %}
-                    <li class="nav-item {% if "A/signup" in request.path %}active{% endif %} hide-home"><a
-                            class="nav-link" href="{% url 'signup' "A" %}">{% blocktrans %}Signup A{% endblocktrans %}</a></li>
-                    <li class="nav-item  {% if "B/signup" in request.path %}active{% endif %} hide-home"><a
-                            class="nav-link" href="{% url 'signup' "B" %}">{% blocktrans %}Signup B{% endblocktrans %}</a></li>
+                    <li class="nav-item {% if 'A'|add:'/signup' in request.path %}active{% endif %} hide-home"><a
+                            class="nav-link" href="{% url 'signup' 'A' %}">{% blocktrans %}Signup{% endblocktrans %} {{ settings.A_NAME }}</a></li>
+                    <li class="nav-item  {% if 'B'|add:'/signup' in request.path %}active{% endif %} hide-home"><a
+                            class="nav-link" href="{% url 'signup' 'B' %}">{% blocktrans %}Signup{% endblocktrans %} {{ settings.B_NAME }}</a></li>
                 {% endif %}
                 {% if user.is_authenticated %}
-                    <li class="nav-item {% if "profile" in request.path %}active{% endif %}">
+                    <li class="nav-item {% if 'profile' in request.path %}active{% endif %}">
                         <a class="nav-link" href="{% url 'profile_redirect' %}">
                         {% blocktrans %}My Profile{% endblocktrans %}</a></li>
                 {% else %}
@@ -81,7 +59,7 @@
                 {% endif %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" stroke="#000943" fill="none"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="language-switcher-globe" width="20" height="20" fill="none"
                              viewBox="0 0 420 420">
                             <path stroke-width="26" d="M209,15a195,195 0 1,0 2,0z"/>
                             <path stroke-width="18"

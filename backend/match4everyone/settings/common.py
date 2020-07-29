@@ -16,6 +16,9 @@ from os import path
 from django.contrib.messages import constants as messages
 from django.utils.translation import ugettext_lazy as _
 
+from match4everyone.configuration.A import A
+from match4everyone.configuration.B import B
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # or better:
 # add paths here and import: from django.col import settings and use settings.XXX_DIR
@@ -33,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
     "django_filters",
     "widget_tweaks",
     "crispy_forms",
@@ -79,7 +83,12 @@ ROOT_URLCONF = "match4everyone.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [
+            # all regular templates
+            os.path.join(BASE_DIR, "templates"),
+            # used only for the generated favicon html
+            os.path.join(BASE_DIR, "../frontend/dist/favicon"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -294,6 +303,15 @@ if IS_TRAVIS and os.environ["TRAVIS_PULL_REQUEST_SLUG"] not in ["match4everyone/
 # This is only used in the META tags for facebook's og
 BASE_URL = "https://match4everyone.de"
 
+A_NAME = A.name
+B_NAME = B.name
+A = A.url_name
+B = B.url_name
+
 SETTINGS_EXPORT = [
     "BASE_URL",
+    "A",
+    "B",
+    "A_NAME",
+    "B_NAME",
 ]
