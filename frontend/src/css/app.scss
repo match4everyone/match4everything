@@ -4,6 +4,11 @@
 /* Load bootstrap */
 @import "~bootstrap/scss/bootstrap";
 
+// This SO answer did the trick: https://stackoverflow.com/a/46910838
+// Without the var, it can't seem to resolve the font dir path.
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
 /* Load our scss */
 @import "_general";
 @import "_map";
