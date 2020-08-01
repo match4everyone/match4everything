@@ -1,33 +1,43 @@
 <template>
-<div>
-    <label :for="id">{{ caption }}</label>
-    <select :id="id" v-model="selected" @change="valueSelected" class="form-control">
-        <option v-for="option in options" :key="option.value" :value="option.value">{{ option.caption }}</option>
-    </select>
-</div>
+  <div class="form-group">
+    {{ options.label }}
+    <div v-for="option in options.choices" class="form-check" :key="option.value">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        @change="valueSelected"
+        :name="namePath"
+        :id="`${ namePath }-${ option.value }`"
+        :value="option.value" >
+      <label
+        class="form-check-label"
+        :for="`${ namePath }-${ option.value }`"
+        :key="`label-${ option.value }`">
+        {{ option.caption }}
+      </label>
+    </div>
+    </div>
 </template>
 
 <script>
+import BaseProperty from './BaseProperty'
+
 export default {
-    name : 'MultipleChoiceProperty',
-    props: [
-        'id',
-        'caption',
-        'options',
-    ],
-    data: function () {
-        return {
-            selected: null
-        }
-    },
-    methods: {
-        valueSelected: function () {
-            this.$emit('input',{
-                id: this.id,
-                selected: this.selected
-            })
-        }
+  extends: BaseProperty,
+  name : 'MultipleChoiceProperty',
+  data: function () {
+    return {
+      selected: null
     }
+  },
+  methods: {
+    valueSelected: function (event) {
+      this.$emit('input',{
+        id: this.id,
+        selected: event.target.value
+      })
+    }
+  }
 
 }
 </script>

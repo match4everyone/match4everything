@@ -1,53 +1,45 @@
 <template>
   <div id="app">
     <p>
-      <img alt="Vue logo" src="../assets/logo.png">
+      <img alt="Vue logo" src="../assets/logo.png" width="100px" />
     </p>
-    <p>
-      Liebe Grüße an die Pythons und schönen Urlaub!
-    </p>
+    <p>Liebe Grüße an die Pythons und schönen Urlaub!</p>
     <form>
       <div class="form-group">
-      <multiple-choice-property
-        :options="mockOptions"
-        caption="Please choose a Prefered area of help:"
-        id="sampleFieldPoCNr1MyDearestPropertyofThemAll"
-        @input="valueSelected"
-      ></multiple-choice-property>
+        <component
+          v-for="property in mockOptions"
+          :is="convertTypeToComponentName(property.type)"
+          :key="property.name"
+          :options="property">
+        </component>
       </div>
     </form>
-  </div>
+    </div>
 </template>
 
 <script>
-
-import mockOptions from '../mockUpData/MultipleChoicePropertyOptions'
+import { mockOptions } from '../mockUpData/MockFilterOptions'
+import { KebabCaseConverter } from '../utils/KebabCaseConverter'
 
 export default {
   name: 'App',
-  data: function () {
+  data() {
     return {
-      mockOptions : mockOptions,
+      mockOptions: mockOptions
     }
   },
   methods: {
-    valueSelected: function (value) {
+    valueSelected(value) {
       console.log(value)
+    },
+    convertTypeToComponentName(typeName) {
+      return KebabCaseConverter.convertFromPascalCase(typeName)
     }
+
   },
-  mounted: function () {
-    console.log(mockOptions)
-  }
-};
+  mounted() {}
+}
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
