@@ -8,8 +8,8 @@ from match4everyone.configuration.B import B
 def view_FilterOptionsJSON(request, p_type):
 
     if p_type == "A":
-        return JsonResponse(A().to_filter_json())
+        return JsonResponse(A.to_filter_json())
     elif p_type == "B":
-        return JsonResponse(B().to_filter_json())
+        return JsonResponse(B.to_filter_json())
 
     raise Http404
