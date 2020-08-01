@@ -5,6 +5,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 
 // Generate entry points from all .js files in src root
 const srcDir = path.resolve(__dirname, 'src')
@@ -27,11 +29,21 @@ module.exports = {
         maxEntrypointSize: 600000,
         maxAssetSize: 400000
     },
+    resolve: {
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js' // 'vue/dist/vue.common.js' for webpack 1
+        }
+    },
     module: {
         rules: [
             {
+                test: /\.vue$/,
+                loader: 'vue-loader'
+            },
+            {
                 test: /\.css$/,
                 use: [
+                    'vue-style-loader',
                     'style-loader',
                     'css-loader'
                 ]
@@ -43,12 +55,13 @@ module.exports = {
                         loader: 'url-loader',
                         options: {
                             limit: 8192,
+                            esModule: false,
                         },
                     },
                 ],
             },
             {
-                test: /\.,?js$/,
+                test: /\.m?js$/,
                 enforce: 'pre',
                 loader: 'eslint-loader',
                 exclude: /node_modules/,
@@ -113,9 +126,10 @@ module.exports = {
             }
         ]
     },
-    entry: Object.assign({
-        vendor: ['bootstrap','jquery','leaflet','leaflet.markercluster','leaflet.featuregroup.subgroup']
-    },entryPoints), // generated from src/*.js
+    entry: {
+        vendor: ['bootstrap','jquery','leaflet','leaflet.markercluster','leaflet.featuregroup.subgroup'],
+        ...entryPoints,  // generated from src/*.js
+    },
     output: {
         filename: '[name]-[hash].js',
         chunkFilename: '[name]-[hash].js',
@@ -182,6 +196,7 @@ module.exports = {
                 pipeHTML: true,
                 replace: true
             }
-        })
+        }),
+        new VueLoaderPlugin(),
     ],
 }
