@@ -1,5 +1,5 @@
 import $ from 'jquery'
-import { ProfileHelper } from './profile/ProfileHelper.mjs'
+import { ProfileHelper } from './profile/ProfileHelper'
 
 
 document.addEventListener('DOMContentLoaded', function() {
