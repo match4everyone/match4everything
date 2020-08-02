@@ -141,7 +141,13 @@ module.exports = {
         })],
     },
     plugins: [
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin({
+            verbose: true,
+            cleanOnceBeforeBuildPatterns: [
+                '**/*',                 // Remove all files
+                '!favicon'              // Except for favicon stuff, that is expensive to build and only built on production run
+            ],
+        }),
         new BundleTracker({
             path: path.resolve(__dirname, 'dist'),
             filename: 'webpack-stats.json',
@@ -157,6 +163,8 @@ module.exports = {
             // Prefix path for generated assets in generated html
             prefix: 'favicon',
             inject: false,
+            devMode: 'webapp',
+            mode: 'webapp',
             favicons: {
                 appName: 'match4everyone',
                 appShortName: 'm4e',
