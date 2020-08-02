@@ -28,13 +28,10 @@ class User(AbstractUser):
         return value
 
     @staticmethod
-    def new(email, pwd=None, **kwargs):
+    def new(email, pwd, **kwargs):
         username = email
         user = User.objects.create(username=username, email=username, **kwargs)
-        if pwd is not None:
-            user.set_password(pwd)
-        else:
-            user.set_password(email)
+        user.set_password(pwd)
         user.save()
         return user
 
