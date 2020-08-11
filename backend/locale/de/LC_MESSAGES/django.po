@@ -351,8 +351,8 @@ msgstr "Erstelle eine neue Suche nach"
 msgid "Respond to incoming contact requests"
 msgstr "Auf eingehende Anfragen antworten"
 
-msgid "Manage outgoing contact requests"
-msgstr "Ausgehende Anfragen verwalten"
+msgid "View outgoing contact requests"
+msgstr "Ausgehende Anfragen ansehen"
 
 msgid "Follow up past searches "
 msgstr "Mein Suchverlauf"
