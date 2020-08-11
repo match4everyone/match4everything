@@ -47,6 +47,12 @@ class Match(models.Model):
         ParticipantInfoFilterB, on_delete=models.SET(None), null=True, blank=True
     )
 
+    response_subject = models.CharField(max_length=300, blank=True, null=True)
+    response_message = models.CharField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        ordering = ["state", "match_date"]
+
     @property
     def contacted_via_filter(self):
         if self.filterA is not None:

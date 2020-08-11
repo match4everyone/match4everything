@@ -9,16 +9,16 @@ def make_filter_tables(p_type):
     class FilterTable(tables.Table):
         registration_date = tables.Column(accessor="registration_date", verbose_name=_("Created"))
         filter_name = tables.TemplateColumn(
-            template_name="filters/table_name_col.html",
+            template_name="matches/col-edit_search_name.html",
             extra_context={"p_type": p_type},
             verbose_name=_("Name"),
         )
         matches = tables.Column(empty_values=(), verbose_name=_("New matches"))
         new_matches_you_did_not_contact = tables.TemplateColumn(
-            template_name="filters/contact_new_match_col.html", verbose_name="", empty_values=()
+            template_name="matches/col-contact_new_match.html", verbose_name="", empty_values=()
         )
         search_again = tables.TemplateColumn(
-            template_name="filters/search_again_col.html",
+            template_name="matches/col-search_again.html",
             verbose_name="",
             extra_context={"p_type": p_type},
         )

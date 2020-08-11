@@ -1,3 +1,4 @@
+from .contact_form import ContactForm  # noqa
 from .custom_auth import CustomAuthenticationForm  # noqa
 from .filter_edit import FilterEditForm  # noqa
 from .participant_edit_info import ParticipantEditInfoForm  # noqa
