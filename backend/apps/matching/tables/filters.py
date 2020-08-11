@@ -1,3 +1,4 @@
+from django.template.loader import get_template
 from django.utils.translation import gettext as _
 import django_tables2 as tables
 
@@ -13,10 +14,7 @@ def make_filter_tables(p_type):
             extra_context={"p_type": p_type},
             verbose_name=_("Name"),
         )
-        matches = tables.Column(empty_values=(), verbose_name=_("New matches"))
-        new_matches_you_did_not_contact = tables.TemplateColumn(
-            template_name="matches/col-contact_new_match.html", verbose_name="", empty_values=()
-        )
+        new_matches_you_did_not_contact = tables.Column(verbose_name="", empty_values=())
         search_again = tables.TemplateColumn(
             template_name="matches/col-search_again.html",
             verbose_name="",
@@ -28,7 +26,7 @@ def make_filter_tables(p_type):
             template_name = "django_tables2/bootstrap.html"
             fields = []
 
-        def render_matches(self, record):
+        def render_new_matches_you_did_not_contact(self, record):
             filter_ = ParticipantInfoFilter[p_type].objects.get(id=record.id)
             (
                 already_in_contact_with,
@@ -36,7 +34,11 @@ def make_filter_tables(p_type):
                 available_matches,
             ) = Match.matches_to(filter_)
 
-            return f"{available_matches - already_in_contact_with}"
+            new_matches = available_matches - already_in_contact_with
+            context = {"record": record, "new_matches": new_matches, "p_type": p_type}
+            return get_template("matches/col-contact_new_match.html").render(
+                context, request=self.request
+            )
 
     return FilterTable
 
