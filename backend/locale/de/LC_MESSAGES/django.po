@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 1900-01-01 00:00+0000\n"
-"PO-Revision-Date: 2020-07-21 15:22+0200\n"
+"PO-Revision-Date: 2020-07-13 18:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -429,15 +429,7 @@ msgstr "Kontaktiere alle ausgewählten"
 msgid "Close"
 msgstr "Schließen"
 
-msgid ""
-"\n"
-"        Edit Info\n"
-"    "
-msgstr ""
-"\n"
-"        Infos editieren "
-
-msgid "Edit Info"
+msgid "Edit"
 msgstr "Meine Infos editieren"
 
 msgid "View Info"
@@ -641,6 +633,9 @@ msgstr "Ihr Konto ist aktuell deaktiviert."
 msgid "Successfully updated info."
 msgstr "Sie haben Ihre Infos aktualisiert."
 
+msgid "Oh no, there were some errors in the form below."
+msgstr "Oh nein, es gab einige Fehler in der Form unten."
+
 #, python-brace-format
 msgid "You deleted the participant with email '{name}'."
 msgstr "Sie haben den Teilnehmer mit der E-Mail-Adresse '{name}' gelöscht."
@@ -726,31 +721,3 @@ msgstr "und"
 
 msgid "Terms of Use"
 msgstr "AGBs"
-
-#~ msgid "blocked"
-#~ msgstr "blockiert"
-
-#~ msgid ">40 km"
-#~ msgstr ">40 km"
-
-#~ msgid "Start a new search for A's"
-#~ msgstr "Erstelle eine neue Suche nach A's"
-
-#~ msgid "My past searches for A's"
-#~ msgstr "Mein Suchverlauf für A's"
-
-#~ msgid ""
-#~ "\n"
-#~ "                    Edit my profile"
-#~ msgstr ""
-#~ "\n"
-#~ "                    Meine Infos editieren"
-
-#~ msgid ""
-#~ "\n"
-#~ "        Filter\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "        Filter\n"
-#~ "    "
