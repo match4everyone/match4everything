@@ -20,7 +20,7 @@
     "bootstrap": "^4.5.2",
     "clean-webpack-plugin": "^3.0.0",
     "compression-webpack-plugin": "^4.0.1",
-    "css-loader": "^4.2.1",
+    "css-loader": "^3.6.0",
     "eslint": "^7.7.0",
     "eslint-loader": "^4.0.2",
     "expose-loader": "^1.0.0",
