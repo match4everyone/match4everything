@@ -5,6 +5,7 @@ import urllib
 class ParticipantConfig:
 
     properties = None
+    signup_layout = None
 
     @property
     def url_name(self):
@@ -27,3 +28,8 @@ class ParticipantConfig:
         names = self.get_model_field_names()
         privates = chain(*[p.get_private_fields() for p in self.properties])
         return [name for name, private in zip(names, privates) if private]
+
+    def get_signup_layout(self):
+        if self.signup_layout is None:
+            self.signup_layout = [p._get_signup_layout() for p in self.properties]
+        return self.signup_layout
