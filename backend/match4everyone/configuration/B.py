@@ -13,6 +13,9 @@ class BConfig(ParticipantConfig):
     #    NewPermissions.can_contact_type_a_if_approved,
     # ]
 
+    profile_visible_for_A = True
+    profile_visible_for_other_B = False
+
     properties = [
         m4e.PropertyGroup(
             name="pers_info",
