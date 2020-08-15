@@ -19,9 +19,9 @@ def make_participant_info_edit_form(participant_type):
             self.helper = FormHelper()
             self.helper.form_tag = False
             if participant_type == "A":
-                self.helper.layout = Layout(*A.get_signup_layout())
+                self.helper.layout = Layout(*A.signup_and_edit_layout())
             else:
-                self.helper.layout = Layout(*B.get_signup_layout())
+                self.helper.layout = Layout(*B.signup_and_edit_layout())
 
     return ParticipantInfoEditForm
 
