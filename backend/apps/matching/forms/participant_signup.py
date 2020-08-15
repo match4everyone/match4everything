@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Row
+from crispy_forms.layout import Column, Div, HTML, Layout, Row
 from django import forms
 from django.db import transaction
 from django.utils.translation import gettext_lazy as _
@@ -27,9 +27,17 @@ def make_participant_signup_form(participant_type):
             self.helper = FormHelper()
             self.helper.form_tag = False
             if participant_type == "A":
-                self.helper.layout = Layout(Row("email"), *A.get_signup_layout())
+                self.helper.layout = Layout(
+                    Div(Div(Row(Column("email")), css_class="card-body"), css_class="card"),
+                    HTML("<br>"),
+                    *A.get_signup_layout()
+                )
             else:
-                self.helper.layout = Layout(Row("email"), *B.get_signup_layout())
+                self.helper.layout = Layout(
+                    Div(Div(Row(Column("email")), css_class="card-body"), css_class="card"),
+                    HTML("<br>"),
+                    *B.get_signup_layout()
+                )
 
         @transaction.atomic
         def save(self):

@@ -14,24 +14,30 @@ class BConfig(ParticipantConfig):
     # ]
 
     properties = [
-        m4e.TextProperty(
-            name="name",
-            label="Official name of your institution",
-            is_required=True,
-            max_length=100,
-        ),
-        m4e.TextProperty(
-            name="contact",
-            label="Full name of the person to contact",
-            is_required=True,
-            max_length=100,
-        ),
-        m4e.TextProperty(
-            name="phone_number",
-            label="Phone number of contact person",
-            is_required=True,
-            max_length=100,
-        ),
+        m4e.PropertyGroup(
+            name="pers_info",
+            label="Personal information",
+            properties=[
+                m4e.TextProperty(
+                    name="name",
+                    label="Official name of your institution",
+                    is_required=True,
+                    max_length=100,
+                ),
+                m4e.TextProperty(
+                    name="contact",
+                    label="Full name of the person to contact",
+                    is_required=True,
+                    max_length=100,
+                ),
+                m4e.TextProperty(
+                    name="phone_number",
+                    label="Phone number of contact person",
+                    is_required=True,
+                    max_length=100,
+                ),
+            ],
+        )
     ]
 
 

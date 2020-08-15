@@ -120,20 +120,23 @@ class PropertyGroup(Property):
     def _get_signup_layout(self, prefix=None):
         return Div(
             Div(
-                HTML(
-                    f"<h5>{self.label}</h5>"
-                    + (self.help_text if self.help_text is not None else "")
+                Div(
+                    HTML(
+                        f"<h5>{self.label}</h5>"
+                        + (self.help_text if self.help_text is not None else "")
+                    ),
+                    css_class="card-header",
                 ),
-                css_class="card-header",
+                Div(
+                    *[
+                        Column(p.get_signup_layout(prefix=self.extend_prefix(prefix)))
+                        for p in self.properties
+                    ],
+                    css_class="card-body",
+                ),
+                css_class="card border-primary",
             ),
-            Div(
-                *[
-                    Column(p.get_signup_layout(prefix=self.extend_prefix(prefix)))
-                    for p in self.properties
-                ],
-                css_class="card-body",
-            ),
-            css_class="card border-primary",
+            HTML("<br>"),
         )
 
 
@@ -203,7 +206,6 @@ class ConditionalProperty(Property):
     def _get_signup_layout(self, prefix=None):
         field_names = self.get_model_field_names(prefix)
         conditional_field = field_names[0]
-        print(field_names)
         return Div(
             Row(
                 Column(conditional_field),
@@ -217,15 +219,23 @@ class ConditionalProperty(Property):
                     css_id=conditional_field,
                 ),
                 HTML(
-                    "<script>$('#id_info-"
-                    + conditional_field
-                    + "').change(function () {if ($('#id_info-"
+                    "<script>"
+                    "function do_" + conditional_field.replace("-", "") + "(){"
+                    "if ($('#id_info-"
                     + conditional_field
                     + "')[0].checked) {$('#"
                     + conditional_field
                     + "').fadeIn(300);} else {$('#"
                     + conditional_field
-                    + "').fadeOut(300);}});</script>"
+                    + "').fadeOut(300);}}"
+                    "$(document).ready(function () { do_"
+                    + conditional_field.replace("-", "")
+                    + "();});"
+                    "$('#id_info-"
+                    + conditional_field
+                    + "').change(function (){ do_"
+                    + conditional_field.replace("-", "")
+                    + "();});</script>"
                 ),
             )
         )
