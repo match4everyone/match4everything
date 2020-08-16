@@ -41,7 +41,9 @@ delete_button = (
 def make_staff_approvals_table(p_type):
     class ApproveParticipantTable(tables.Table):
         info = TemplateColumn(
-            template_name="staff/user_info_button.html", extra_context={"p_type": p_type}
+            template_name="staff/user_info_button.html",
+            extra_context={"p_type": p_type},
+            accessor="info_uuid",
         )
         status = TemplateColumn(template_code=approval_button)
         delete = TemplateColumn(template_code=delete_button)
