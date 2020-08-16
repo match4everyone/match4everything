@@ -10,11 +10,7 @@ from django.utils.translation import gettext as _
 from django.views import View
 from django_tables2.config import RequestConfig
 
-from apps.matching.admin import (
-    can_approve_type_in_url,
-    can_delete_type_in_url,
-    m4e_staff_member_required,
-)
+from apps.matching.admin import m4e_staff_member_required
 from apps.matching.models import Participant
 from apps.matching.tables import ApproveParticipantTable
 
@@ -22,9 +18,13 @@ logger = logging.getLogger(__name__)
 
 
 @method_decorator([login_required, m4e_staff_member_required], name="dispatch")
-# TODO: Only user with 'can_approve_type_a' or 'can_approve_type_b' should see the corresponding approval interfaces and be able to approve someone https://github.com/match4everyone/match4everything/issues/121
 class ApproveParticipantsView(View):
     def get(self, request, p_type):
+        can_appove_these_users = request.user.has_perm("perm_approve_%s" % p_type.lower())
+        can_delete_these_users = request.user.has_perm("delete_participant%s" % p_type.lower())
+        if not (can_appove_these_users or can_delete_these_users):
+            raise PermissionDenied
+
         search_unapproved_mails = request.GET.get("search_unapproved_mails", "")
         search_approved_mails = request.GET.get("search_approved_mails", "")
         table_approved = ApproveParticipantTable[p_type](
@@ -72,6 +72,9 @@ class ApproveParticipantsView(View):
         return self.get(request, p_type)
 
     def post_delete(self, request, p_type, *args, **kwargs):
+        if not request.user.has_perm("delete_participant%s" % p_type.lower()):
+            raise PermissionDenied
+
         post_params = self.request.POST
 
         p = get_object_or_404(Participant[p_type], uuid=post_params["uuid"])
@@ -82,6 +85,9 @@ class ApproveParticipantsView(View):
         return self.get(request, p_type)
 
     def post_approve(self, request, p_type, *args, **kwargs):
+        if not request.user.has_perm("perm_approve_%s" % p_type.lower()):
+            raise PermissionDenied
+
         post_params = self.request.POST
         p = get_object_or_404(Participant[p_type], uuid=post_params["uuid"])
         p.change_approval(self.request.user)
