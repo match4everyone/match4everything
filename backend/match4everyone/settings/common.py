@@ -297,7 +297,7 @@ IS_CI = "CI" in os.environ and bool(os.environ["CI"])
 
 IS_FORK = False
 
-if IS_TRAVIS and os.environ["TRAVIS_PULL_REQUEST_SLUG"] not in ["match4everyone/match4everything"]:
+if IS_TRAVIS and os.environ["TRAVIS_REPO_SLUG"] not in ["match4everyone/match4everything"]:
     IS_FORK = True
 
 # This is only used in the META tags for facebook's og
