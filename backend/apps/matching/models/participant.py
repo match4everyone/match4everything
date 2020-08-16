@@ -102,6 +102,10 @@ class AbstractParticipant(models.Model):
     def excluded_fields():
         return ["uuid", "is_approved", "approved_by", "is_activated", "registration_date", "user"]
 
+    @property
+    def info_uuid(self):
+        return self.info.uuid
+
 
 class ParticipantA(AbstractParticipant):
     participant_type = "A"
