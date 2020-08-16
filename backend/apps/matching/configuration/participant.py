@@ -4,8 +4,12 @@ import urllib
 
 class ParticipantConfig:
 
-    properties = None
-    signup_layout = None
+    # the participant requires manual approval by a staff member
+    needs_manual_approval_from_staff = True
+
+    # wether the profiles can be accessed from other participant types
+    profile_visible_for_participants_of_different_type = True
+    profile_visible_for_participants_of_same_type = False
 
     @property
     def url_name(self):
@@ -33,3 +37,7 @@ class ParticipantConfig:
         if self.signup_layout is None:
             self.signup_layout = [p._get_signup_layout() for p in self.properties]
         return self.signup_layout
+
+    # internal variables
+    properties = None
+    signup_layout = None
