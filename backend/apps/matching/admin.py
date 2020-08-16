@@ -5,7 +5,14 @@ from django.http import Http404
 
 from .models import User
 
-admin.site.register(User)
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("email", "first_name", "last_name")
+    list_filter = ("is_staff", "is_superuser")
+    search_fields = ["email"]
+
+
+admin.site.register(User, UserAdmin)
 
 
 def participant_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
@@ -24,9 +31,7 @@ def participant_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME,
 
 
 def can_approve_type_in_url(function=None):
-    """
-    Check that the user at hand can approve objects of given p_type
-    """
+    """Check that the user at hand can approve objects of given p_type."""
 
     def actual_decorator(function):
         def new_func(request, p_type, *args, **kwargs):
@@ -42,9 +47,7 @@ def can_approve_type_in_url(function=None):
 
 
 def can_delete_type_in_url(function=None):
-    """
-    Check that the user at hand can approve objects of given p_type
-    """
+    """Check that the user at hand can approve objects of given p_type."""
 
     def actual_decorator(function):
         def new_func(request, p_type, *args, **kwargs):

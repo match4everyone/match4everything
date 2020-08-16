@@ -1,6 +1,7 @@
 from datetime import datetime
 import uuid
 
+from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.exceptions import PermissionDenied
 from django.db import models, transaction
@@ -30,6 +31,9 @@ class AbstractParticipant(models.Model):
     is_approved = models.BooleanField(default=False)
     approved_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     approval_date = models.DateTimeField(blank=True, null=True)
+
+    # number of mails a user can send per day
+    max_mails_per_day = models.IntegerField(default=settings.MAX_EMAILS_PER_DAY)
 
     class Meta:
         abstract = True
@@ -73,6 +77,11 @@ class AbstractParticipant(models.Model):
             approved_participants.user_set.remove(self.user)
         self.save()
 
+    @transaction.atomic
+    def increase_mail_limit(self, mail_limit):
+        self.max_mails_per_day = mail_limit
+        self.save()
+
     @staticmethod
     def excluded_fields():
         return ["uuid", "is_approved", "approved_by", "is_activated", "registration_date", "user"]
@@ -88,4 +97,7 @@ class ParticipantB(AbstractParticipant):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name="b")
 
 
-Participant = {"A": ParticipantA, "B": ParticipantB}
+Participant = {
+    "A": ParticipantA,
+    "B": ParticipantB,
+}

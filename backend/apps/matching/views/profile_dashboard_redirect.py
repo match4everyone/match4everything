@@ -17,12 +17,9 @@ class ProfileDashboardRedirect(View):
         user = request.user
 
         if user.is_participant:
-            return HttpResponseRedirect(
-                reverse("profile", kwargs={"p_type": request.user.participant().p_type()})
-            )
-
+            return HttpResponseRedirect(reverse("profile"))
         elif user.is_staff:
-            return HttpResponseRedirect("profile_staff")
+            return HttpResponseRedirect(reverse("staff_profile"))
 
         else:
             logger.warning(

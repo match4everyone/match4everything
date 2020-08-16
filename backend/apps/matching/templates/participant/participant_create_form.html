@@ -20,9 +20,9 @@
     <div class="container" style="margin-bottom: 55px;">
 
         {% blocktrans %} Already registered? {% endblocktrans %}
-        <a href="/matching/login_redirect">{% blocktrans %}Login{% endblocktrans %}</a>
+        <a href="{% url 'login_redirect' %}">{% blocktrans %}Login{% endblocktrans %}</a>
         {% blocktrans %} or {% endblocktrans %}
-        <a href="/matching/password_reset">{% blocktrans %}Reset Password{% endblocktrans %}</a>
+        <a href="{% url 'password_reset' %}">{% blocktrans %}Reset Password{% endblocktrans %}</a>
         <hr>
 
 
@@ -32,9 +32,10 @@
                 <form method="post">
                     {% csrf_token %}
                     {% crispy info_form info_form.helper %}
-                    <br>
-                <hr>
-                    <h5>Your locations</h5>
+
+                <div class="card">
+                    <div class="card-header"><h5>Your locations</h5></div>
+                <div class="card-body">
                     {{ location_formset.management_form }}
                     <div id="form_set">
                         {% for form in location_formset.forms %}
@@ -72,7 +73,8 @@
                             </div>
                             </div>
                     </div>
-                <hr>
+                </div></div>
+                <br>
                 <input type="submit" class="btn btn-success float-right" value="Create a new account">
                 </form>
             </div>

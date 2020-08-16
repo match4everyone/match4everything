@@ -1,5 +1,3 @@
-from . import checks  # noqa: F401
-
 # According to [1], somthing like:
 #
 # from .my_class import MyClass

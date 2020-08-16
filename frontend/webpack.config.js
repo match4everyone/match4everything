@@ -4,6 +4,7 @@ const BundleTracker = require('webpack-bundle-tracker')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 // Generate entry points from all .js files in src root
 const srcDir = path.resolve(__dirname, 'src')
@@ -99,6 +100,17 @@ module.exports = {
                     loader: 'sass-loader' // compiles Sass to CSS
                 }]
             },
+            {
+                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192,
+                        },
+                    }
+                ]
+            }
         ]
     },
     entry: Object.assign({
@@ -129,7 +141,13 @@ module.exports = {
         })],
     },
     plugins: [
-        new CleanWebpackPlugin(),
+        new CleanWebpackPlugin({
+            verbose: true,
+            cleanOnceBeforeBuildPatterns: [
+                '**/*',                 // Remove all files
+                '!favicon'              // Except for favicon stuff, that is expensive to build and only built on production run
+            ],
+        }),
         new BundleTracker({
             path: path.resolve(__dirname, 'dist'),
             filename: 'webpack-stats.json',
@@ -137,5 +155,33 @@ module.exports = {
             indent: '\t',
         }),
         new CompressionPlugin(),
+        new FaviconsWebpackPlugin({
+            logo: path.resolve(__dirname, 'src', 'logo', 'logo.svg'),
+            cache: true,
+            // path relative to webpack dir, find it in frontend/dist folder
+            outputPath: 'favicon',
+            // Prefix path for generated assets in generated html
+            prefix: 'favicon',
+            inject: false,
+            devMode: 'webapp',
+            mode: 'webapp',
+            favicons: {
+                appName: 'match4everyone',
+                appShortName: 'm4e',
+                appDescription: 'We match everyone',
+                background: '#fff',
+                theme_color: '#fff', // In theory, importing vars from scss should be easy, but I can't get it to work.
+                // Idea in: https://medium.com/tarkalabs-til/use-sass-variables-in-javascript-8ce60b5e5e56
+                url: 'http://m4h.com/',
+                display: 'browser',
+                scope: '/',
+                start_url: '/',
+                version: 1.0,
+                // Note that this is relative to outputPath from Plugin above
+                html: 'favicons.html',
+                pipeHTML: true,
+                replace: true
+            }
+        })
     ],
 }
