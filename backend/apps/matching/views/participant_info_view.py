@@ -7,14 +7,13 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import UpdateView
 
-from apps.matching.admin import matching_participant_required
 from apps.matching.forms import ParticipantInfoViewForm
 from apps.matching.models import ParticipantInfo
 
 logger = logging.getLogger(__name__)
 
 
-@method_decorator([login_required, matching_participant_required], name="dispatch")
+@method_decorator([login_required], name="dispatch")
 class ParticipantInfoViewView(UpdateView):
     """Updates the information of either participant."""
 

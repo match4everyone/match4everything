@@ -108,10 +108,10 @@ class Migration(migrations.Migration):
         can_send_newsletter = Permission.objects.get(codename=NewPermissions.can_send_newsletter)
         group_perm_send_newsletter.permissions.add(can_send_newsletter)
 
-        can_view_a = Permission.objects.get(codename="matching.view_participanta")
+        can_view_a = Permission.objects.get(codename="matching.view_participanta") # This is a built-in permission
         group_can_view_a.permissions.add(can_view_a)
 
-        can_view_b = Permission.objects.get(codename="matching.view_participantb")
+        can_view_b = Permission.objects.get(codename="matching.view_participantb") # This is a built-in permission
         group_can_view_b.permissions.add(can_view_b)
 
     def delete_groups(apps, schema_editor):
