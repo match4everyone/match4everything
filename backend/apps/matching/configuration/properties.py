@@ -11,7 +11,7 @@ import numpy as np
 class Property:
     properties = None
 
-    def __init__(self, label=None, name=None, help_text=None, info_text=None, private=False):
+    def __init__(self, label=None, name=None, help_text="", info_text="", private=False):
         """
         Create a new property of a participant.
 
@@ -95,6 +95,24 @@ class Property:
     def get_filters(self) -> List:
         """Return a list of model fields that represent values that filters can take on."""
         raise NotImplementedError(self.__class__.__name__)
+
+    def to_filter_json(self):
+        """Return a json that can be used by the frontend to view the filters."""
+        if self.private:
+            return None
+
+        json = {
+            "name": self.name,
+            "label": self.label,
+            "help_text": self.help_text,
+            "info_text": self.info_text,
+            "type": self.property_type,  # should be set by all subclasses
+        }
+
+        if self.properties is not None:
+            json["properties"] = list(filter(None, [p.to_filter_json() for p in self.properties]))
+
+        return json
 
 
 class PropertyGroup(Property):
@@ -266,6 +284,11 @@ class ConditionalProperty(Property):
             )
         )
 
+    def to_filter_json(self):
+        json = super().to_filter_json()
+        json["conditional_field_name"] = self.get_model_field_names()[0]
+        return json
+
 
 class MultipleChoiceProperty(Property):
     """
@@ -336,6 +359,11 @@ class MultipleChoiceProperty(Property):
                 ]
             ),
         )
+
+    def to_filter_json(self):
+        json = super().to_filter_json()
+        json["choices"] = {choice: label for choice, label in self.choices}
+        return json
 
 
 class SingleChoiceProperty(Property):
@@ -415,6 +443,11 @@ class SingleChoiceProperty(Property):
     def _get_signup_layout(self, prefix=None, ignore_private=None):
         return self.get_model_field_names(prefix=prefix)
 
+    def to_filter_json(self):
+        json = super().to_filter_json()
+        json["choices"] = {choice: label for choice, label in self.choices}
+        return json
+
 
 class OrderedSingleChoiceProperty(Property):
     """
@@ -492,6 +525,11 @@ class OrderedSingleChoiceProperty(Property):
             ]
         ]
 
+    def to_filter_json(self):
+        json = super().to_filter_json()
+        json["choices"] = {choice: label for choice, label in self.choices}
+        return json
+
 
 class TextProperty(Property):
     """
@@ -557,6 +595,11 @@ class TextProperty(Property):
     def _get_signup_layout(self, prefix=None, ignore_private=None):
         return self.get_model_field_names(prefix=prefix)[0]
 
+    def to_filter_json(self):
+        json = super().to_filter_json()
+        json["max_length"] = self.max_length
+        return json
+
 
 class BooleanProperty(Property):
     """
@@ -571,7 +614,7 @@ class BooleanProperty(Property):
         )
     """
 
-    property_name = "boolean"
+    property_type = "boolean"
 
     def __init__(self, is_required=False, default=False, **kwargs):
         super().__init__(**kwargs)

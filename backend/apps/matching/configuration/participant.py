@@ -61,3 +61,6 @@ class ParticipantConfig:
     properties = None
     signup_layout_all = None
     signup_layout_private = None
+
+    def to_filter_json(self):
+        return {"properties": list(filter(None, [p.to_filter_json() for p in self.properties]))}
