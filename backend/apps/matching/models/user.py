@@ -50,7 +50,7 @@ class User(AbstractUser):
                 user.groups.add(group_can_view_b)
             if A.profile_visible_for_other_A:
                 user.groups.add(group_can_view_a)
-        elif kwargs["is_B"]:
+        elif kwargs["B"]:
             user.groups.add(group_is_b)
             if A.profile_visible_for_B:
                 user.groups.add(group_can_view_a)

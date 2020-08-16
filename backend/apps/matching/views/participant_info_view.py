@@ -7,13 +7,14 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import UpdateView
 
+from apps.matching.admin import matching_participant_required
 from apps.matching.forms import ParticipantInfoViewForm
 from apps.matching.models import ParticipantInfo
 
 logger = logging.getLogger(__name__)
 
 
-@method_decorator([login_required], name="dispatch")
+@method_decorator([login_required, matching_participant_required], name="dispatch")
 class ParticipantInfoViewView(UpdateView):
     """Updates the information of either participant."""
 
@@ -36,7 +37,7 @@ class ParticipantInfoViewView(UpdateView):
         # or you have the permission to approve or delete users and were given access to also
         # view the details
         has_permission_to_view = (
-            user.has_perm("matching.can_view_%s" % url_p_type.lower()) and user.is_approved()
+            user.has_perm("matching.view_participant%s" % url_p_type.lower()) and user.is_approved()
         )
 
         if is_own_profile or has_permission_to_view:
