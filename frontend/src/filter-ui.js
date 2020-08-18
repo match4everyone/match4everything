@@ -7,6 +7,10 @@ import BooleanProperty from './components/filter/BooleanProperty'
 import TextProperty from './components/filter/TextProperty'
 import { KebabCaseConverter } from './utils/KebabCaseConverter'
 
+fetch('/matching/api/helper/info/filter-options/')
+    .then( response => response.json() )
+    .then( jsonData => Vue.prototype.$propertyConfiguration = jsonData)
+
 registerComponents({
     PropertyGroup,
     MultipleChoiceProperty,
@@ -15,7 +19,6 @@ registerComponents({
     TextProperty
 })
 
-// Vue.config.productionTip = false
 document.addEventListener('DOMContentLoaded', () => {
     new Vue({
         render: (h) => h(App),
