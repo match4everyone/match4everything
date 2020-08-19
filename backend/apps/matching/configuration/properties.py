@@ -310,7 +310,7 @@ class MultipleChoiceProperty(Property):
         )
     """
 
-    property_type = "multiple_choice"
+    property_type = "multiple-choice"
 
     def __init__(self, choices, **kwargs):
         # putting a required in this property is a difficult to define behaviour
@@ -384,7 +384,7 @@ class SingleChoiceProperty(Property):
 
     """
 
-    property_type = "single_choice"
+    property_type = "single-choice"
 
     def __init__(self, choices, is_required=False, max_length=None, default=None, **kwargs):
         super().__init__(**kwargs)
@@ -468,7 +468,7 @@ class OrderedSingleChoiceProperty(Property):
                     ])
     """
 
-    property_type = "ordered_single_choice"
+    property_type = "ordered-single-choice"
 
     def __init__(self, choices, is_required=False, default=None, **kwargs):
         super().__init__(**kwargs)
