@@ -13,6 +13,8 @@ class NewPermissions:
     can_view_user_stats = "can_view_user_stats"
     can_view_access_stats = "can_view_access_stats"
     can_send_newsletter = "can_send_newsletter"
+    can_view_a = "can_view_a"
+    can_view_b = "can_view_b"
 
 
 class Migration(migrations.Migration):
@@ -40,6 +42,16 @@ class Migration(migrations.Migration):
             {
                 "codename": NewPermissions.can_approve_type_b,
                 "name": "Can approve type B users",
+                "content_type": content_type_participantb,
+            },
+            {
+                "codename": NewPermissions.can_view_a,
+                "name": "Can view information of type A users",
+                "content_type": content_type_participanta,
+            },
+            {
+                "codename": NewPermissions.can_view_b,
+                "name": "Can view information of type B users",
                 "content_type": content_type_participantb,
             },
             {
@@ -71,6 +83,8 @@ class Migration(migrations.Migration):
             NewPermissions.can_view_user_stats,
             NewPermissions.can_view_access_stats,
             NewPermissions.can_send_newsletter,
+            NewPermissions.can_view_a,
+            NewPermissions.can_view_b
         ]
 
         Permission.objects.filter(codename__in=permission_list).delete()
@@ -81,6 +95,8 @@ class Migration(migrations.Migration):
 
         group_is_a, created = Group.objects.get_or_create(name="is_a")
         group_is_b, created = Group.objects.get_or_create(name="is_b")
+        group_can_view_a, created = Group.objects.get_or_create(name="can_view_a")
+        group_can_view_b, created = Group.objects.get_or_create(name="can_view_b")
         group_is_a_approved, created = Group.objects.get_or_create(name="approved_a")
         group_is_b_approved, created = Group.objects.get_or_create(name="approved_b")
         group_perm_user_stats, created = Group.objects.get_or_create(name="perm_user_stats")
@@ -106,12 +122,20 @@ class Migration(migrations.Migration):
         can_send_newsletter = Permission.objects.get(codename=NewPermissions.can_send_newsletter)
         group_perm_send_newsletter.permissions.add(can_send_newsletter)
 
+        can_view_a = Permission.objects.get(codename=NewPermissions.can_view_a)
+        group_can_view_a.permissions.add(can_view_a)
+
+        can_view_b = Permission.objects.get(codename=NewPermissions.can_view_b)
+        group_can_view_b.permissions.add(can_view_b)
+
     def delete_groups(apps, schema_editor):
         Group = apps.get_model("auth", "Group")
 
         group_list = [
             "is_a",
             "is_b",
+            "can_view_a",
+            "can_view_b",
             "approved_a",
             "approved_b",
             "perm_user_stats",

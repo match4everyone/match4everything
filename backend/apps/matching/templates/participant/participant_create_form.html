@@ -32,9 +32,10 @@
                 <form method="post">
                     {% csrf_token %}
                     {% crispy info_form info_form.helper %}
-                    <br>
-                <hr>
-                    <h5>{% blocktrans %}Your locations{% endblocktrans %}</h5>
+
+                <div class="card">
+                    <div class="card-header"><h5>{% blocktrans %}Your locations{% endblocktrans %}</h5></div>
+                <div class="card-body">
                     {{ location_formset.management_form }}
                     <div id="form_set">
                         {% for form in location_formset.forms %}
@@ -72,8 +73,9 @@
                             </div>
                             </div>
                     </div>
-                <hr>
-                <input type="submit" class="btn btn-success float-right" value="{% blocktrans %}Create a new account{% endblocktrans %}">
+                </div></div>
+                <br>
+                <input type="submit" class="btn btn-success float-right" value="Create a new account">
                 </form>
             </div>
         </div>
