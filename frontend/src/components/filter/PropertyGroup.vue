@@ -1,11 +1,19 @@
 <template>
-  <div>
-      Template PropertyGroup<br>
-      Child Components:<br>
-      <ul>
-        <li v-for="child_property in options.properties" :key="child_property.name">{{ child_property.name }}:
-          <component :is="convertTypeToComponentName(child_property.type)" :options="child_property" :parent_name="namePath">
-          </component>
+  <div class="my-3">
+      <h2>{{ options.label }}</h2>
+      {{ options.help_text }}
+
+      <ul class="list-group">
+        <li
+          v-for="child_property in options.properties"
+          :key="child_property.name"
+          class="list-group-item p-0"
+        >
+          <div class="p-2" @click="toggleCollapse">{{ child_property.label }}</div>
+          <div class="collapse p-2">
+            <component :is="convertTypeToComponentName(child_property.type)" :options="child_property" :parent_name="namePath">
+            </component>
+          </div>
         </li>
       </ul>
   </div>
@@ -14,6 +22,11 @@
 import BaseProperty from './BaseProperty'
 
 export default {
-  extends: BaseProperty
+  extends: BaseProperty,
+  methods: {
+    toggleCollapse(event) {
+      this.$jQuery(event.currentTarget.nextElementSibling).collapse('toggle')
+    }
+  }
 }
 </script>
