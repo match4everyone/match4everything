@@ -1,22 +1,21 @@
 <template>
-  <div class="form-group">
-    {{ options.label }}
-    <div v-for="option in options.choices" class="form-check" :key="option.value">
+  <div>
+    <div v-for="(value, key) in options.choices" class="form-check" :key="key">
       <input
         class="form-check-input"
         type="checkbox"
         @change="valueSelected"
         :name="namePath"
-        :id="`${ namePath }-${ option.value }`"
-        :value="option.value" >
+        :id="`${ namePath }-${ key }`"
+        :value="value" >
       <label
         class="form-check-label"
-        :for="`${ namePath }-${ option.value }`"
-        :key="`label-${ option.value }`">
-        {{ option.caption }}
+        :for="`${ namePath }-${ key }`"
+        :key="`label-${ value }`">
+        {{ value }}
       </label>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
