@@ -1,6 +1,6 @@
 <script>
 
-import { KebabCaseConverter } from '../../utils/KebabCaseConverter'
+import { FilterComponentManager } from '../../utils/FilterComponentManager'
 
 export default {
   props: [ 'options', 'parent_name' ],
@@ -17,7 +17,7 @@ export default {
      * for converting a Python Class to the corresponding Vue.js component
      */
     convertTypeToComponentName(typeName) {
-      return KebabCaseConverter.convertFromPascalCase(typeName)
+      return FilterComponentManager.getComponentForType(typeName)
     }
   }
 }
