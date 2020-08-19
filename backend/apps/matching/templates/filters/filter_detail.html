@@ -17,14 +17,19 @@
 
     <div style="height:40px"></div>
     <div class="container" style="margin-bottom: 55px;">
-
-        <div class="row" style="margin-top:30px;">
-            <div class="col-lg-10 col-sm-12 col-12">
-
-                {{ object }}
-
+        <div class="card">
+            <div class="card-header">
+                {{ object.filter_name }}
+                <div class="float-right">{% blocktrans %}created by{% endblocktrans %} {{ object.created_by.email }}</div>
+            </div>
+            <div class="card-body">
+                <p>{% blocktrans %}The other participant found you because the following criteria matched:{% endblocktrans %}</p>
+                {{ object.as_HTML|safe }}
             </div>
         </div>
+
+
+
 
     </div>
 {% endblock %}

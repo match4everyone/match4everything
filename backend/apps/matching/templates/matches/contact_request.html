@@ -39,10 +39,7 @@
                     </div>
 
                     <div class="card-body">
-                    Currently view to search criteria, but should look nicer.
-                        <a href="{% url 'filter_search_again' p_type_own uuid %}" type="button" class="btn btn-outline-info btn-sm">
-  {% blocktrans %}view search{% endblocktrans %}
-</a>
+                    {{ filter.as_HTML|safe }}
                     </div>
                 </div>
             </div>

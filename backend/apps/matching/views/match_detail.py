@@ -37,6 +37,7 @@ class MatchDetailView(View):
             "filter_criteria": self.match.filter_uuid,
             "p_type_own": self.match.contacted_via_filter[1],
             "form": ContactForm(),
+            "filter": self.match.contacted_via_filter[0],
         }
         return context
 

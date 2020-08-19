@@ -104,6 +104,35 @@ class AbstractParticipantInfoFilter(models.Model):
         params = urllib.parse.urlencode(self.as_get_params())
         return url + "?%s" % params
 
+    @property
+    def as_HTML(self):
+        general_properties_html = '<ul class="list-group">'
+        for filter_field in self.filter_fields:
+            if getattr(self, filter_field) is not None:
+                try:
+                    # there might be an explicit name for the filter_field
+                    value = getattr(self, "get_" + filter_field + "_display")()
+                except AttributeError:
+                    value = getattr(self, filter_field)
+                if "location_" in filter_field:
+                    pass
+                else:
+                    general_properties_html += '<li class="list-group-item">'
+                    general_properties_html += (
+                        self.filter_field_descriptors[filter_field]
+                        + " "
+                        + str(self.filter_field_labels[filter_field])
+                        + ' "'
+                        + str(value)
+                        + '".'
+                    )
+                    general_properties_html += "</li>"
+
+        general_properties_html += f'<li class="list-group-item">The location was not further than {self.location_distance}km from {self.location_zipcode} in {self.location_country_code}.</li>'
+        general_properties_html += "</ul>"
+
+        return general_properties_html
+
 
 """
 Unfortunately, primary keys cannot be added programatically,
@@ -190,7 +219,10 @@ def add_participant_specific_filters(p_type, participant_config):
     filter_cls = ParticipantInfoFilter[p_type]
 
     properties = participant_config.get_filter_fields()
+
     filter_fields = []
+    filter_field_labels = {}
+    filter_field_descriptors = {}
     filter_dict = {}
 
     private_fields = participant_config.get_private_fields()
@@ -200,6 +232,8 @@ def add_participant_specific_filters(p_type, participant_config):
             filter_dict[field_name] = []
             for f in filters:
                 filter_field_name = field_name + "-" + f["lookup_exp"]
+                filter_field_descriptors[filter_field_name] = f["description"]
+                filter_field_labels[filter_field_name] = f["label"]
                 filter_cls.add_to_class(filter_field_name, f["model_field"])
                 filter_fields.append(filter_field_name)
 
@@ -212,6 +246,8 @@ def add_participant_specific_filters(p_type, participant_config):
     ]
 
     filter_cls.add_to_class("filter_fields", filter_fields)
+    filter_cls.add_to_class("filter_field_labels", filter_field_labels)
+    filter_cls.add_to_class("filter_field_descriptors", filter_field_descriptors)
     filter_cls.add_to_class(
         "location_country_code", models.CharField(choices=CountryCode.choices, max_length=2)
     )

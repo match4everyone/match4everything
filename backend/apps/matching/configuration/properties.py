@@ -213,6 +213,7 @@ class ConditionalProperty(Property):
                     "lookup_exp": "exact",
                     "label": _("is exactly"),
                     "model_field": models.NullBooleanField(blank=True, null=True),
+                    "description": self.label,
                 }
             ],
             *chain(*[[] for p in self.properties]),  # no filters on those properties for now
@@ -308,6 +309,7 @@ class MultipleChoiceProperty(Property):
                 {
                     "lookup_exp": "exact",
                     "label": _("is exactly"),
+                    "description": self.label,
                     "model_field": models.NullBooleanField(blank=True, null=True),
                 }
             ]
@@ -387,6 +389,7 @@ class SingleChoiceProperty(Property):
                 {
                     "lookup_exp": "exact",
                     "label": "is exactly",
+                    "description": self.label,
                     "choices": [(None, "--")] + self.choices,
                     "max_length": self.max_length,
                     "model_field": models.CharField(
@@ -461,6 +464,7 @@ class OrderedSingleChoiceProperty(Property):
                 {
                     "lookup_exp": "gte",
                     "label": _("is greater than"),
+                    "description": self.label,
                     "choices": [(None, "No choice")] + self.choices,
                     "model_field": models.IntegerField(
                         null=True, choices=[(None, "No choice")] + self.choices, blank=True
@@ -469,6 +473,7 @@ class OrderedSingleChoiceProperty(Property):
                 {
                     "lookup_exp": "lte",
                     "label": _("is smaller than"),
+                    "description": self.label,
                     "choices": [(None, "No choice")] + self.choices,
                     "model_field": models.IntegerField(
                         null=True, choices=[(None, "No choice")] + self.choices, blank=True
@@ -531,6 +536,7 @@ class TextProperty(Property):
                 {
                     "lookup_exp": "icontains",
                     "label": _("contains"),
+                    "description": self.label,
                     "model_field": models.CharField(
                         max_length=self.max_length, blank=True, null=True
                     ),
@@ -585,6 +591,7 @@ class BooleanProperty(Property):
                 {
                     "lookup_exp": "exact",
                     "label": _("is exactly"),
+                    "description": self.label,
                     "model_field": models.NullBooleanField(blank=True, null=True),
                 }
             ]
