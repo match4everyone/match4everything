@@ -11,7 +11,7 @@
         >
           <div class="p-2" @click="toggleCollapse">{{ child_property.label }}</div>
           <div class="collapse p-2">
-            <component :is="convertTypeToComponentName(child_property.type)" :options="child_property" :parent_name="namePath">
+            <component :is="convertTypeToComponentName(child_property.type)" :options="child_property" :parent_name="namePath" @updateQuery="forwardEvent">
             </component>
           </div>
         </li>
@@ -26,6 +26,9 @@ export default {
   methods: {
     toggleCollapse(event) {
       this.$jQuery(event.currentTarget.nextElementSibling).collapse('toggle')
+    },
+    forwardEvent(event) {
+      this.$emit('updateQuery',event)
     }
   }
 }

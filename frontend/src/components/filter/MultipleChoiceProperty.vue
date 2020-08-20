@@ -4,10 +4,11 @@
       <input
         class="form-check-input"
         type="checkbox"
-        @change="valueSelected"
         :name="namePath"
         :id="`${ namePath }-${ key }`"
-        :value="value" >
+        :value="key"
+        v-model="selected"
+        @change="selectionChanged">
       <label
         class="form-check-label"
         :for="`${ namePath }-${ key }`"
@@ -26,14 +27,14 @@ export default {
   name : 'MultipleChoiceProperty',
   data: function () {
     return {
-      selected: null
+      selected: []
     }
   },
   methods: {
-    valueSelected: function (event) {
-      this.$emit('input',{
-        id: this.id,
-        selected: event.target.value
+    selectionChanged: function () {
+      this.$emit('updateQuery',{
+        path: this.namePath,
+        queryString: this.selected
       })
     }
   }
