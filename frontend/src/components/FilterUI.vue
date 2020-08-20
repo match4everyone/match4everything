@@ -31,14 +31,15 @@
           v-for="property in filterModel.properties"
           :is="convertTypeToComponentName(property.type)"
           :key="property.name"
-          :options="property">
+          :options="property"
+          @updateQuery="updateQuery">
         </component>
       </div>
       <div class="col-lg-9 filter-search-results">
         <div class="card">
           <h5 class="card-header">Results</h5>
           <div class="card-body">
-            Bla bla bla
+            <pre>{{ results | pretty }}</pre>
           </div>
         </div>
       </div>
@@ -48,6 +49,8 @@
 
 <script>
 import { FilterComponentManager } from '../utils/FilterComponentManager'
+const abortController = new AbortController() // Used to cancel fetch requests
+
 
 export default {
   name: 'FilterUI',
@@ -59,6 +62,13 @@ export default {
       countryCode: 'DE',
       zipCode: '',
       distance: 10,
+      componentQueryStrings: {},
+      results: null,
+      urls: {
+        filterModel: '',
+        participantList: '',
+      },
+      lastFetchRequestAbortController: new AbortController(),
     }
   },
   methods: {
@@ -67,14 +77,46 @@ export default {
     },
     convertTypeToComponentName(typeName) {
       return FilterComponentManager.getComponentForType(typeName)
+    },
+    updateQuery(event) {
+      this.componentQueryStrings[event.path] = event.queryString
+      console.log('Updated queryString from component',event)
+      this.fetchResults()
+    },
+    fetchResults() {
+      this.lastFetchRequestAbortController.abort() // abort old requests
+      this.lastFetchRequestAbortController = new AbortController()
+      let signal = abortController.signal
+
+      let mandatoryParameters = {
+        location_country_code: this.countryCode,
+        location_zipcode: this.zipCode,
+        location_distance: this.distance,
+      }
+
+      const parameters = new URLSearchParams({
+        ...mandatoryParameters
+      })
+
+      fetch(`${ this.urls.participantList }?${ parameters.toString() }`, { signal })
+        .then( response => response.json() )
+        .then( jsonData => this.results = jsonData)
     }
   },
   beforeMount() {
-    fetch(this.$el.getAttribute('data-filter-model-url'))
+
+    this.urls.filterModel = this.$el.getAttribute('data-filter-model-url')
+    this.urls.participantList = this.$el.getAttribute('data-get-participant-url')
+
+    fetch(this.urls.filterModel)
       .then( response => response.json() )
       .then( jsonData => this.filterModel = jsonData)
+  },
+  filters: {
+    pretty: function(value) {
+      return JSON.stringify(value, null, 2)
+    },
   }
-
 }
 </script>
 
