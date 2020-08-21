@@ -63,13 +63,9 @@ class MatchDetailView(View):
             form = ContactForm(request.POST)
             if form.is_valid():
                 # send a message to the participant who contacted me and set the email to shared
-                self.match.state = MATCH_STATE_OPTIONS.SUCCESSFUL
-                self.match.response_subject = form.cleaned_data["subject"]
-                self.match.response_message = form.cleaned_data["message"]
-                # SEND MAIL with cc
-                # send_mail(to=match.initiator_participant().user.email, cc=match.receriver().user.email,
-                # POst subject und post message...
-                self.match.save()
+                self.match.send_response(
+                    subject=form.cleaned_data["subject"], message=form.cleaned_data["message"]
+                )
 
                 messages.add_message(
                     self.request,

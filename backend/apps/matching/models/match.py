@@ -5,6 +5,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from apps.matching.dummy_mail.mail import send_email
+
 from .participant import ParticipantA, ParticipantB
 from .participant_filter import (
     LocationFilter,
@@ -86,6 +88,13 @@ class Match(models.Model):
         else:
             return self.participantB
 
+    def send_contact_request(self):
+        send_email(
+            to=self.requested_participant().user.email,
+            cc=self.initiator_participant().user.email,
+            message="hi wanna match",
+        )
+
     @classmethod
     def contact_all_not_matched_to(cls, this_filter):
         normal_filter, location_filter = this_filter.as_get_params(seperate_location=True)
@@ -106,6 +115,7 @@ class Match(models.Model):
                     initiator="B",
                 )
                 m.save()
+                m.send_contact_request()
         else:
             not_yet_contacted = matches.filter(
                 ~models.Q(participant__match__participantA=this_filter.created_by.participant())
@@ -119,6 +129,14 @@ class Match(models.Model):
                     initiator="A",
                 )
                 m.save()
+                m.send_contact_request()
+
+    def send_response(self, subject, message):
+        self.state = MATCH_STATE_OPTIONS.SUCCESSFUL
+        self.response_subject = subject
+        self.response_message = message
+        send_email(to=self.initiator_participant().user.email, cc=self.receriver().user.email)
+        self.save()
 
     @classmethod
     def matches_to(cls, this_filter):
