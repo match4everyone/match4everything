@@ -47,9 +47,25 @@ class AbstractParticipant(models.Model):
     def new(cls, participant_type, email, **kwargs):
         is_A = participant_type == "A"
         is_B = participant_type == "B"
+
         user = cls._consistent_user(email, is_A, is_B)
         participant = cls.objects.create(user=user, **kwargs)
+
+        # if we do not require approvals, add everyone to the approved group on creation
+        if is_A and not settings.PARTICIPANT_SETTINGS["A"].needs_manual_approval_from_staff:
+            approved_participants = Group.objects.get(name="approved_a")
+            participant.is_approved = True
+            participant.approval_date = datetime.now()
+            approved_participants.user_set.add(user)
+        if is_B and not settings.PARTICIPANT_SETTINGS["B"].needs_manual_approval_from_staff:
+            approved_participants = Group.objects.get(name="approved_b")
+            participant.is_approved = True
+            participant.approval_date = datetime.now()
+            approved_participants.user_set.add(user)
+
+        user.save()
         participant.save()
+
         return participant
 
     def p_type(self):
@@ -86,6 +102,10 @@ class AbstractParticipant(models.Model):
     @staticmethod
     def excluded_fields():
         return ["uuid", "is_approved", "approved_by", "is_activated", "registration_date", "user"]
+
+    @property
+    def info_uuid(self):
+        return self.info.uuid
 
 
 class ParticipantA(AbstractParticipant):

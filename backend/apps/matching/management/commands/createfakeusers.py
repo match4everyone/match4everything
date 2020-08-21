@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
 
+from django.conf import settings
+from django.contrib.auth.models import Group
 from django.core.management.base import BaseCommand
 import numpy as np
 from tqdm import tqdm
@@ -105,6 +107,25 @@ class Command(BaseCommand):
             p = Participant[participant_type].objects.create(user=u, is_activated=True)
             pi = ParticipantInfo[participant_type].generate_fake(participant=p)
             ParticipantInfoLocation[participant_type].generate_fake(participant_info=pi)
+
+            # if we do not require approvals, add everyone to the approved group on creation
+            if (
+                participant_type == "A"
+                and not settings.PARTICIPANT_SETTINGS["A"].needs_manual_approval_from_staff
+            ):
+                approved_participants = Group.objects.get(name="approved_a")
+                p.is_approved = True
+                p.approval_date = datetime.now()
+                approved_participants.user_set.add(u)
+            if (
+                participant_type == "B"
+                and not settings.PARTICIPANT_SETTINGS["B"].needs_manual_approval_from_staff
+            ):
+                approved_participants = Group.objects.get(name="approved_b")
+                p.is_approved = True
+                p.approval_date = datetime.now()
+                approved_participants.user_set.add(u)
+            p.save()
 
         self.stdout.write(
             self.style.SUCCESS("Created %s participants of p_type %s." % (n, participant_type))
