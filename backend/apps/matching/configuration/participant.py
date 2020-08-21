@@ -25,12 +25,19 @@ class ParticipantConfig:
             ]
         return self.signup_layout_private
 
+    def __init__(self):
+        # initialize th prefixes
+        self.get_model_field_names()
+
     @property
     def url_name(self):
         return urllib.parse.quote(self.name.lower())
 
     def get_model_field_names(self):
         return chain(*[p.get_model_field_names() for p in self.properties])
+
+    def get_labels(self):
+        return chain(*[p.get_labels() for p in self.properties])
 
     def get_model_fields(self):
         names = self.get_model_field_names()

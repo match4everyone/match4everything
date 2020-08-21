@@ -7,6 +7,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 import numpy as np
 
+PREFIX_CONNECTOR = "--"
+
 
 class Property:
     properties = None
@@ -24,9 +26,9 @@ class Property:
             raise ValueError("You need to set the value for label.")
         self.label = _(label)  # the text that should appear when this property is referenced
         self.name = name if name is not None else label.lower().replace(" ", "_")
-        if "--" in self.name:
+        if PREFIX_CONNECTOR in self.name:
             raise ValueError(
-                f"The field name {self.name} is not allowed, since it contains '--'."
+                f"The field name {self.name} is not allowed, since it contains '{PREFIX_CONNECTOR}'."
                 " You can explicitly chose a suitable column name by setting the 'name' kwarg."
             )
         if len(self.name) > 12:
@@ -41,6 +43,8 @@ class Property:
         # Since properties should be able to generate a hierarchical structure,
         # they can have their own properties (children) that they act on (e.g. to group them).
         self.properties = None
+
+        self.prefix = None
 
     def get_model_field_names(self, prefix=None) -> List[str]:
         """
@@ -163,6 +167,9 @@ class PropertyGroup(Property):
             ),
             HTML("<br>"),
         )
+
+    def get_labels(self):
+        return list(chain(*[p.get_labels() for p in self.properties]))
 
 
 class ConditionalProperty(Property):
@@ -289,6 +296,10 @@ class ConditionalProperty(Property):
         json["conditional_field_name"] = self.get_model_field_names()[0]
         return json
 
+    def get_labels(self):
+        conditional_fields = list(chain(*[p.get_labels() for p in self.properties]))
+        return [self.label, *conditional_fields]
+
 
 class MultipleChoiceProperty(Property):
     """
@@ -365,6 +376,9 @@ class MultipleChoiceProperty(Property):
         json["choices"] = {choice: label for choice, label in self.choices}
         return json
 
+    def get_labels(self):
+        return [label for choice, label in self.choices]
+
 
 class SingleChoiceProperty(Property):
     """
@@ -394,8 +408,10 @@ class SingleChoiceProperty(Property):
         self.max_length = max_length if max_length is not None else 3
 
     def get_model_field_names(self, prefix=None):
-
-        return [self.name if prefix is None else prefix + "--" + self.name]
+        if self.prefix is None:
+            self.prefix = "" if prefix is None else prefix + PREFIX_CONNECTOR
+        model_field_name = self.prefix + self.name
+        return [model_field_name]
 
     def get_model_fields(self):
         if self.is_required:
@@ -448,6 +464,9 @@ class SingleChoiceProperty(Property):
         json["choices"] = {choice: label for choice, label in self.choices}
         return json
 
+    def get_labels(self):
+        return [self.label]
+
 
 class OrderedSingleChoiceProperty(Property):
     """
@@ -477,7 +496,10 @@ class OrderedSingleChoiceProperty(Property):
         self.is_required = is_required
 
     def get_model_field_names(self, prefix=None):
-        return [self.name if prefix is None else prefix + "--" + self.name]
+        if self.prefix is None:
+            self.prefix = "" if prefix is None else prefix + PREFIX_CONNECTOR
+        model_field_name = self.prefix + self.name
+        return [model_field_name]
 
     def get_model_fields(self):
         if self.is_required:
@@ -530,6 +552,9 @@ class OrderedSingleChoiceProperty(Property):
         json["choices"] = {choice: label for choice, label in self.choices}
         return json
 
+    def get_labels(self):
+        return [self.label]
+
 
 class TextProperty(Property):
     """
@@ -557,7 +582,10 @@ class TextProperty(Property):
         self.max_length = 100 if max_length is None else max_length
 
     def get_model_field_names(self, prefix=None):
-        return [self.name if prefix is None else prefix + "--" + self.name]
+        if self.prefix is None:
+            self.prefix = "" if prefix is None else prefix + PREFIX_CONNECTOR
+        model_field_name = self.prefix + self.name
+        return [model_field_name]
 
     def get_model_fields(self):
         if self.is_required:
@@ -600,6 +628,9 @@ class TextProperty(Property):
         json["max_length"] = self.max_length
         return json
 
+    def get_labels(self):
+        return [self.label]
+
 
 class BooleanProperty(Property):
     """
@@ -622,7 +653,10 @@ class BooleanProperty(Property):
         self.default = default
 
     def get_model_field_names(self, prefix=None):
-        return [self.name if prefix is None else prefix + "--" + self.name]
+        if self.prefix is None:
+            self.prefix = "" if prefix is None else prefix + PREFIX_CONNECTOR
+        model_field_name = self.prefix + self.name
+        return [model_field_name]
 
     def get_model_fields(self, prefix=None):
         if self.is_required:
@@ -649,3 +683,6 @@ class BooleanProperty(Property):
                 }
             ]
         ]
+
+    def get_labels(self):
+        return [self.label]
