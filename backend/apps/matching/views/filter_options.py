@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import Http404
 
+from apps.matching.models import CountryCodeChoices, RadiusChoices
 from match4everyone.configuration.A import A
 from match4everyone.configuration.B import B
 
@@ -8,8 +9,15 @@ from match4everyone.configuration.B import B
 def view_FilterOptionsJSON(request, p_type):
 
     if p_type == "A":
-        return JsonResponse(A.to_filter_json())
+        filter_options = A.to_filter_json()
     elif p_type == "B":
-        return JsonResponse(B.to_filter_json())
+        filter_options = B.to_filter_json()
+    else:
+        raise Http404
 
-    raise Http404
+    filter_options["location"] = {
+        "location_distance": RadiusChoices.choices,
+        "location_zipcode": CountryCodeChoices.choices,
+    }
+
+    return JsonResponse(filter_options)

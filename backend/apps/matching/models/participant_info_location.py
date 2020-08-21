@@ -22,7 +22,7 @@ class RadiusChoices(models.IntegerChoices):
     LESSFIFTY = 50, _("<50 km")
 
 
-class CountryCode(models.TextChoices):
+class CountryCodeChoices(models.TextChoices):
     GERMANY = "DE", _("Germany")
     AUSTRIA = "AT", _("Austria")
 
@@ -38,7 +38,7 @@ class AbstractParticipantInfoLocation(models.Model):
     registration_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
 
     country_code = models.CharField(
-        max_length=2, choices=CountryCode.choices, default=CountryCode.GERMANY
+        max_length=2, choices=CountryCodeChoices.choices, default=CountryCodeChoices.GERMANY
     )
     plz = models.CharField(max_length=5, null=True)
     radius = models.IntegerField(

@@ -13,7 +13,7 @@ from match4everyone.configuration.A import A
 from match4everyone.configuration.B import B
 
 from .participant_info import ParticipantInfo
-from .participant_info_location import CountryCode, ParticipantInfoLocation, RadiusChoices
+from .participant_info_location import CountryCodeChoices, ParticipantInfoLocation, RadiusChoices
 from .user import User
 
 
@@ -161,7 +161,7 @@ class LocationFilter:
 
     def is_valid(self, form, p_type):
         prefix = self.location_prefix
-        if form.cleaned_data[prefix + "country_code"] not in CountryCode.values:
+        if form.cleaned_data[prefix + "country_code"] not in CountryCodeChoices.values:
             form.add_error(prefix + "country_code", _("You need to provide a valid country code."))
             return False
 
@@ -249,7 +249,7 @@ def add_participant_specific_filters(p_type, participant_config):
     filter_cls.add_to_class("filter_field_labels", filter_field_labels)
     filter_cls.add_to_class("filter_field_descriptors", filter_field_descriptors)
     filter_cls.add_to_class(
-        "location_country_code", models.CharField(choices=CountryCode.choices, max_length=2)
+        "location_country_code", models.CharField(choices=CountryCodeChoices.choices, max_length=2)
     )
     filter_cls.add_to_class("location_zipcode", models.IntegerField())
     filter_cls.add_to_class("location_distance", models.IntegerField(choices=RadiusChoices.choices))
@@ -261,8 +261,8 @@ def add_participant_specific_filters(p_type, participant_config):
             field_name="country_code",
             lookup_expr="exact",
             label=_("Countrycode"),
-            choices=CountryCode.choices,
-            initial=CountryCode.GERMANY,
+            choices=CountryCodeChoices.choices,
+            initial=CountryCodeChoices.GERMANY,
             required=True,
         )
         location_zipcode = django_filters.CharFilter(
