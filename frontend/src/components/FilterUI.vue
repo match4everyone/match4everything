@@ -8,16 +8,16 @@
     <div class="row my-4">
       <div class="form-group col">
         <label for="location_country_code">Country-Code</label>
-        <input type="text" class="form-control" id="location_country_code" v-model="location.countryCode">
+        <input type="text" class="form-control" id="location_country_code" v-model="location.countryCode" @change="fetchResults">
       </div>
       <div class="form-group col">
         <label for="location_zipcode">ZIP-Code</label>
-        <input type="text" class="form-control" id="location_zipcode" v-model="location.zipCode">
+        <input type="text" class="form-control" id="location_zipcode" v-model="location.zipCode" @change="fetchResults">
       </div>
       <div class="form-group col">
         <label for="location_distance">Distance</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="location_distance" v-model="location.distance">
+          <input type="text" class="form-control" id="location_distance" v-model="location.distance" @change="fetchResults">
           <div class="input-group-append">
             <span class="input-group-text">km</span>
           </div>
@@ -79,15 +79,22 @@ export default {
       this.lastFetchRequestAbortController = new AbortController()
       let signal = abortController.signal
 
-      let mandatoryParameters = {
-        location_country_code: this.location.countryCode,
-        location_zipcode: this.location.zipCode,
-        location_distance: this.location.distance,
+      let mandatoryParameters = [
+        ['location_country_code', this.location.countryCode],
+        ['location_zipcode', this.location.zipCode],
+        ['location_distance', this.location.distance],
+      ]
+
+      let componentParameters = []
+      for (let key in this.componentQueryStrings) {
+        componentParameters.push(...this.componentQueryStrings[key])
       }
 
-      const parameters = new URLSearchParams({
-        ...mandatoryParameters
-      })
+      const parameters = new URLSearchParams([
+        ...mandatoryParameters,
+        ...componentParameters,
+      ])
+
 
       fetch(`${ this.urls.participantList }?${ parameters.toString() }`, { signal })
         .then( response => response.json() )

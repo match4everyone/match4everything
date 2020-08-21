@@ -32,9 +32,11 @@ export default {
   },
   methods: {
     selectionChanged: function () {
+
+      let queryParameters = this.selected.map(key => [`${ this.namePath }-${ key }`, true])
       this.$emit('updateQuery',{
         path: this.namePath,
-        queryString: this.selected
+        queryString: queryParameters
       })
     }
   }
