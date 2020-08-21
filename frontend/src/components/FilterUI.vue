@@ -8,16 +8,16 @@
     <div class="row my-4">
       <div class="form-group col">
         <label for="location_country_code">Country-Code</label>
-        <input type="text" class="form-control" id="location_country_code" v-model="location.countryCode" @change="fetchResults">
+        <input type="text" class="form-control" id="location_country_code" v-model="location.countryCode" @input="fetchResults">
       </div>
       <div class="form-group col">
         <label for="location_zipcode">ZIP-Code</label>
-        <input type="text" class="form-control" id="location_zipcode" v-model="location.zipCode" @change="fetchResults">
+        <input type="text" class="form-control" id="location_zipcode" v-model="location.zipCode" @input="fetchResults">
       </div>
       <div class="form-group col">
         <label for="location_distance">Distance</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="location_distance" v-model="location.distance" @change="fetchResults">
+          <input type="text" class="form-control" id="location_distance" v-model="location.distance" @input="fetchResults">
           <div class="input-group-append">
             <span class="input-group-text">km</span>
           </div>
