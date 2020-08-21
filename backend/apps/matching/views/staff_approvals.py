@@ -1,5 +1,6 @@
 import logging
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
@@ -53,6 +54,7 @@ class ApproveParticipantsView(View):
                 "table_approved": table_approved,
                 "table_unapproved": table_unapproved,
                 "p_type": p_type,
+                "p_name": settings.PARTICIPANT_SETTINGS[p_type].name,
                 "search_unapproved_mails": search_unapproved_mails,
                 "search_approved_mails": search_approved_mails,
             },

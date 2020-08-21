@@ -31,7 +31,7 @@ class User(AbstractUser):
         return value
 
     @staticmethod
-    def new(email, pwd, **kwargs):
+    def new(email, pwd=None, **kwargs):
         username = email
         user = User.objects.create(username=username, email=username, **kwargs)
         if pwd is not None:
@@ -46,15 +46,15 @@ class User(AbstractUser):
 
         if kwargs["is_A"]:
             user.groups.add(group_is_a)
-            if B.profile_visible_for_A:
+            if B.profile_visible_for_participants_of_different_type:
                 user.groups.add(group_can_view_b)
-            if A.profile_visible_for_other_A:
+            if A.profile_visible_for_participants_of_same_type:
                 user.groups.add(group_can_view_a)
         elif kwargs["is_B"]:
             user.groups.add(group_is_b)
-            if A.profile_visible_for_B:
+            if A.profile_visible_for_participants_of_different_type:
                 user.groups.add(group_can_view_a)
-            if B.profile_visible_for_other_B:
+            if B.profile_visible_for_participants_of_same_type:
                 user.groups.add(group_can_view_b)
 
         user.save()
