@@ -90,13 +90,13 @@ class Property:
             else:
                 return [False for i in self.get_model_fields()]
 
-    def get_signup_layout(self, prefix=None):
-        if self.private:
+    def get_signup_layout(self, prefix=None, ignore_private=None):
+        if self.private and not ignore_private:
             return Div()
         else:
-            return self._get_signup_layout(prefix)
+            return self._get_signup_layout(prefix, ignore_private=ignore_private)
 
-    def _get_signup_layout(self, prefix=None):
+    def _get_signup_layout(self, prefix=None, ignore_private=True):
         """Return a layout instance to render a signup page."""
         raise NotImplementedError
 
@@ -125,7 +125,7 @@ class PropertyGroup(Property):
     def generate_random_assignment(self, rs=None):
         return list(chain(*[p.generate_random_assignment(rs) for p in self.properties]))
 
-    def _get_signup_layout(self, prefix=None):
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
         return Div(
             Div(
                 Div(
@@ -137,7 +137,11 @@ class PropertyGroup(Property):
                 ),
                 Div(
                     *[
-                        Column(p.get_signup_layout(prefix=self.extend_prefix(prefix)))
+                        Column(
+                            p.get_signup_layout(
+                                prefix=self.extend_prefix(prefix), ignore_private=ignore_private
+                            )
+                        )
                         for p in self.properties
                     ],
                     css_class="card-body",
@@ -219,7 +223,7 @@ class ConditionalProperty(Property):
             *chain(*[p.generate_random_assignment(rs) for p in self.properties]),
         ]
 
-    def _get_signup_layout(self, prefix=None):
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
         field_names = self.get_model_field_names(prefix)
         conditional_field = field_names[0]
         return Div(
@@ -228,7 +232,13 @@ class ConditionalProperty(Property):
                 Div(
                     HTML("<hr>"),
                     *[
-                        Row(Column(p.get_signup_layout(prefix=self.extend_prefix(prefix))))
+                        Row(
+                            Column(
+                                p.get_signup_layout(
+                                    prefix=self.extend_prefix(prefix), ignore_private=ignore_private
+                                )
+                            )
+                        )
                         for p in self.properties
                     ],
                     HTML("<hr>"),
@@ -303,7 +313,7 @@ class MultipleChoiceProperty(Property):
 
         return [rs.choice([True, False]) for i in range(len(self.choices))]
 
-    def _get_signup_layout(self, prefix=None):
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
         return Div(
             HTML(self.label + "<br>"),
             Row(
@@ -370,7 +380,7 @@ class SingleChoiceProperty(Property):
             rs = np.random
         return [rs.choice([code for code, label in self.choices])]
 
-    def _get_signup_layout(self, prefix=None):
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
         return self.get_model_field_names(prefix=prefix)
 
 
@@ -423,7 +433,7 @@ class OrderedSingleChoiceProperty(Property):
             rs = np.random
         return [rs.choice([code for code, label in self.choices])]
 
-    def _get_signup_layout(self, prefix=None):
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
         return self.get_model_field_names(prefix=prefix)[0]
 
 
@@ -474,7 +484,7 @@ class TextProperty(Property):
         code = rs.choice([l for l in string.ascii_uppercase], self.max_length)
         return ["".join(code)]
 
-    def _get_signup_layout(self, prefix=None):
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
         return self.get_model_field_names(prefix=prefix)[0]
 
 
@@ -512,5 +522,5 @@ class BooleanProperty(Property):
             rs = np.random
         return [rs.choice([True, False])]
 
-    def _get_signup_layout(self, prefix=None):
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
         return self.get_model_field_names(prefix=prefix)[0]

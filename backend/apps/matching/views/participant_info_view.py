@@ -36,7 +36,7 @@ class ParticipantInfoViewView(UpdateView):
         # or you have the permission to approve or delete users and were given access to also
         # view the details
         has_permission_to_view = (
-            user.has_perm("matching.can_view_%s" % url_p_type.lower()) and user.is_approved()
+            user.has_perm("matching.view_participant%s" % url_p_type.lower()) and user.is_approved()
         )
 
         if is_own_profile or has_permission_to_view:
