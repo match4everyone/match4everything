@@ -11,7 +11,7 @@
         >
           <div class="p-2" @click="toggleCollapse">{{ child_property.label }}</div>
           <div class="collapse p-2">
-            <component :is="convertTypeToComponentName(child_property.type)" :options="child_property" :parent_name="namePath" @updateQuery="forwardEvent">
+            <component :is="convertTypeToComponentName(child_property.type)" :options="child_property" :parentName="namePath" @updateQuery="forwardEvent" ref="childComponents">
             </component>
           </div>
         </li>
@@ -23,13 +23,25 @@ import BaseProperty from './BaseProperty'
 
 export default {
   extends: BaseProperty,
+  name: 'PropertyGroup',
   methods: {
     toggleCollapse(event) {
       this.$jQuery(event.currentTarget.nextElementSibling).collapse('toggle')
     },
     forwardEvent(event) {
       this.$emit('updateQuery',event)
-    }
+    },
+    buildFilterfromURL(urlParameters) {
+      if (!Array.isArray(this.$refs.childComponents)) return []
+
+      let returnArray = new Array()
+      this.$refs.childComponents.forEach(childComponent => {
+        if (childComponent.buildFilterfromURL) {
+          returnArray.push(...childComponent.buildFilterfromURL(urlParameters))
+        }
+      })
+      return returnArray
+    },
   }
 }
 </script>

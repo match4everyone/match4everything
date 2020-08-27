@@ -26,7 +26,7 @@
     </div>
     <div class="row my-5">
       <div class="col-lg-3 filter-search-criteria">
-        <faceted-filter :filter-model="filterModel" @updateQuery="updateQuery" />
+        <faceted-filter :filter-model="filterModel" @updateQuery="updateQuery" ref="filter" />
       </div>
       <div class="col-lg-9 filter-search-results">
         <div class="card">
@@ -63,6 +63,8 @@ export default {
         participantList: '',
       },
       lastFetchRequestAbortController: new AbortController(),
+      initialURLParameters: new URLSearchParams(window.location.search),
+      filterModelPromise: null
     }
   },
   components: {
@@ -95,20 +97,32 @@ export default {
         ...componentParameters,
       ])
 
-
       fetch(`${ this.urls.participantList }?${ parameters.toString() }`, { signal })
         .then( response => response.json() )
         .then( jsonData => this.results = jsonData)
     }
   },
-  beforeMount() {
+  mounted() {
+    console.log('Main UI Mounted')
+    let parameters = this.initialURLParameters
+    this.location.zipCode = parameters.get('location_zipcode')
+    this.location.distance = parameters.get('location_distance')
+    this.location.countryCode = parameters.get('location_country_code')
 
+    this.filterModelPromise.then(() => {
+      let queryParameters = this.$refs.filter.buildFilterfromURL(this.initialURLParameters)
+      queryParameters.forEach((queryParameter) => this.componentQueryStrings[queryParameter.path] = queryParameter.queryString )
+      this.fetchResults()
+    })
+
+  },
+  beforeMount() {
+    console.log('Main UI created')
     this.urls.filterModel = this.$el.getAttribute('data-filter-model-url')
     this.urls.participantList = this.$el.getAttribute('data-get-participant-url')
-
-    fetch(this.urls.filterModel)
+    this.filterModelPromise = fetch(this.urls.filterModel)
       .then( response => response.json() )
-      .then( jsonData => this.filterModel = jsonData)
+      .then( jsonData => this.filterModel = jsonData )
   },
   filters: {
     pretty: function(value) {

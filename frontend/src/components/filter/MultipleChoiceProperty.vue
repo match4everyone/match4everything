@@ -31,15 +31,33 @@ export default {
     }
   },
   methods: {
-    selectionChanged: function () {
-
-      let queryParameters = this.selected.map(key => [`${ this.namePath }-${ key }`, true])
-      this.$emit('updateQuery',{
-        path: this.namePath,
-        queryString: queryParameters
+    selectionChanged() {
+      this.$emit('updateQuery',this.buildQueryParametersFromSelection())
+    },
+    buildFilterfromURL(urlParameters) {
+      // Build an array of possible URL parameters for the selectable options
+      let possibleURLParameters = Object.keys(this.options.choices).map(key => {
+        return {
+          key: key,
+          parameter: `${ this.namePath }-${ key }`,
+        }
       })
-    }
-  }
 
+      // Check whether any of the possible URL parameters are present
+      let presentURLParameters = possibleURLParameters.filter( keyParameterTuple => {
+        return urlParameters.has(keyParameterTuple.parameter)
+      })
+
+      // Preset selection based on URL parameters and return query parameters for the selection
+      this.selected = presentURLParameters.map(keyParameterTuple => keyParameterTuple.key )
+      return [this.buildQueryParametersFromSelection()]
+    },
+    buildQueryParametersFromSelection() {
+      return {
+        path: this.namePath,
+        queryString: this.selected.map(key => [`${ this.namePath }-${ key }`, true])
+      }
+    }
+  },
 }
 </script>

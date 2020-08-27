@@ -3,12 +3,12 @@
 import { FilterComponentManager } from '../../utils/FilterComponentManager'
 
 export default {
-  props: [ 'options', 'parent_name' ],
+  props: [ 'options', 'parentName' ],
   computed: {
     namePath() {
       // Concatenate the current component path for creating filters
       // the resulting name is all previous components concatenated with --
-      return [this.parent_name, this.options.name].filter( part => part !== undefined ).join('--')
+      return [this.parentName, this.options.name].filter( part => part !== undefined ).join('--')
     }
   },
   methods: {
@@ -18,7 +18,11 @@ export default {
      */
     convertTypeToComponentName(typeName) {
       return FilterComponentManager.getComponentForType(typeName)
-    }
+    },
+    buildFilterfromURL() {
+      // needs to be implemented in Sub-Components
+      return []
+    },
   }
 }
 </script>
