@@ -30,7 +30,7 @@
       </div>
       <div class="col-lg-9 filter-search-results">
         <div class="card">
-          <h5 class="card-header">Results</h5>"
+          <h5 class="card-header">Results</h5>
           <div class="card-body">
             <pre>{{ results | pretty }}</pre>
           </div>
