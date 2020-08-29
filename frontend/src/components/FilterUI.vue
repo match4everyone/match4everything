@@ -8,7 +8,15 @@
     <div class="row my-4">
       <div class="form-group col">
         <label for="location_country_code">Country-Code</label>
-        <input type="text" class="form-control" id="location_country_code" v-model="location.countryCode" @input="fetchResults">
+        <select class="form-control" id="location_country_code" v-model="location.countryCode" @change="fetchResults" >
+          <option
+            v-for="countryCode in filterModel.location.location_country_code"
+            :value="countryCode[0]"
+            :key="countryCode[0]"
+          >
+            {{countryCode[1]}}
+          </option>
+        </select>
       </div>
       <div class="form-group col">
         <label for="location_zipcode">ZIP-Code</label>
@@ -16,12 +24,15 @@
       </div>
       <div class="form-group col">
         <label for="location_distance">Distance</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="location_distance" v-model="location.distance" @input="fetchResults">
-          <div class="input-group-append">
-            <span class="input-group-text">km</span>
-          </div>
-        </div>
+        <select class="form-control" id="location_distance" v-model="location.distance" @change="fetchResults" >
+          <option
+            v-for="distance in filterModel.location.location_distance"
+            :value="distance[0]"
+            :key="distance[0]"
+          >
+            {{distance[1]}}
+          </option>
+        </select>
       </div>
     </div>
     <div class="row my-5">
@@ -49,7 +60,11 @@ export default {
   data() {
     return {
       filterModel: {
-        properties: []
+        properties: [],
+        location: {
+          location_country_code: [],
+          location_distance: [],
+        },
       },
       location: {
         countryCode: 'DE',
