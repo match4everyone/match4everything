@@ -4,14 +4,14 @@ import MultipleChoiceProperty from '../components/filter/MultipleChoiceProperty'
 import OrderedSingleChoiceProperty from '../components/filter/OrderedSingleChoiceProperty'
 import BooleanProperty from '../components/filter/BooleanProperty'
 import TextProperty from '../components/filter/TextProperty'
-
+import ConditionalPropertyGroup from '../components/filter/ConditionalPropertyGroup'
 
 class FilterComponentManager {
 
     constructor() {
         this.componentMap = {
             'group': PropertyGroup,
-            'conditional': null,
+            'conditional': ConditionalPropertyGroup,
             'multiple-choice': MultipleChoiceProperty,
             'single-choice': null,
             'ordered-single-choice': OrderedSingleChoiceProperty,
