@@ -9,11 +9,8 @@
           :key="child_property.name"
           class="list-group-item p-0"
         >
-          <div class="p-2" @click="toggleCollapse">{{ child_property.label }}</div>
-          <div class="collapse p-2">
-            <component :is="convertTypeToComponentName(child_property.type)" :options="child_property" :parentName="namePath" @updateQuery="forwardEvent" ref="childComponents">
-            </component>
-          </div>
+          <component :is="convertTypeToComponentName(child_property.type)" :options="child_property" :parentName="namePath" @updateQuery="forwardEvent" ref="childComponents">
+          </component>
         </li>
       </ul>
   </div>
@@ -25,9 +22,6 @@ export default {
   extends: BaseProperty,
   name: 'PropertyGroup',
   methods: {
-    toggleCollapse(event) {
-      this.$jQuery(event.currentTarget.nextElementSibling).collapse('toggle')
-    },
     forwardEvent(event) {
       this.$emit('updateQuery',event)
     },
