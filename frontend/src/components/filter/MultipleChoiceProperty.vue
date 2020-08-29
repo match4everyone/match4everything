@@ -64,6 +64,7 @@ export default {
 
       // Preset selection based on URL parameters and return query parameters for the selection
       this.selected = presentURLParameters.map(keyParameterTuple => keyParameterTuple.key )
+      this.selected.length ? this.$refs.accordion.show() : this.$refs.accordion.hide()
       return [this.buildQueryParametersFromSelection()]
     },
     buildQueryParametersFromSelection() {
