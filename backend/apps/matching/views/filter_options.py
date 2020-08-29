@@ -17,7 +17,7 @@ def view_FilterOptionsJSON(request, p_type):
 
     filter_options["location"] = {
         "location_distance": RadiusChoices.choices,
-        "location_zipcode": CountryCodeChoices.choices,
+        "location_country_code": CountryCodeChoices.choices,
     }
 
     return JsonResponse(filter_options)
