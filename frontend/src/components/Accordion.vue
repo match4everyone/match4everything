@@ -5,8 +5,10 @@
       <span v-if="badgeContent === 0 || badgeContent" class="badge badge-primary">{{ badgeContent}}</span>
       <span class="fa fa-caret-down" style="float:right"></span>
     </div>
-    <div class="collapse p-2" ref="collapsible">
-      <slot></slot>
+    <div class="collapse" ref="collapsible">
+      <div class="p-2">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
