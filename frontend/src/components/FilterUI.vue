@@ -91,7 +91,19 @@ export default {
       console.log('Updated queryString from component',event)
       this.fetchResults()
     },
-    fetchResults() {
+    buildFilterfromURL(anURLSearchParams) {
+      let parameters = anURLSearchParams
+      this.location.zipCode = parameters.get('location_zipcode')
+      this.location.distance = parameters.get('location_distance')
+      this.location.countryCode = parameters.get('location_country_code')
+
+      this.filterModelPromise.then(() => {
+        let queryParameters = this.$refs.filter.buildFilterfromURL(anURLSearchParams)
+        queryParameters.forEach((queryParameter) => this.componentQueryStrings[queryParameter.path] = queryParameter.queryString )
+        this.fetchResults(false)
+      })
+    },
+    fetchResults(saveState = true) {
       this.lastFetchRequestAbortController.abort() // abort old requests
       this.lastFetchRequestAbortController = new AbortController()
       let signal = abortController.signal
@@ -107,27 +119,29 @@ export default {
         componentParameters.push(...this.componentQueryStrings[key])
       }
 
-      const parameters = new URLSearchParams([
+      const parameters = [
         ...mandatoryParameters,
         ...componentParameters,
-      ])
+      ]
+      const urlParameters = new URLSearchParams(parameters)
 
-      fetch(`${ this.urls.participantList }?${ parameters.toString() }`, { signal })
+      if (saveState) {
+        history.pushState({ searchParameters: parameters },'',`?${ urlParameters.toString() }`)
+        console.log('Pushing state to history', { searchParameters: parameters })
+      }
+      fetch(`${ this.urls.participantList }?${ urlParameters.toString() }`, { signal })
         .then( response => response.json() )
         .then( jsonData => this.results = jsonData)
     }
   },
   mounted() {
     console.log('Main UI Mounted')
-    let parameters = this.initialURLParameters
-    this.location.zipCode = parameters.get('location_zipcode')
-    this.location.distance = parameters.get('location_distance')
-    this.location.countryCode = parameters.get('location_country_code')
+    this.buildFilterfromURL(this.initialURLParameters)
 
-    this.filterModelPromise.then(() => {
-      let queryParameters = this.$refs.filter.buildFilterfromURL(this.initialURLParameters)
-      queryParameters.forEach((queryParameter) => this.componentQueryStrings[queryParameter.path] = queryParameter.queryString )
-      this.fetchResults()
+    window.addEventListener('popstate', (event) => {
+      if (event.state && event.state.searchParameters) {
+        this.buildFilterfromURL(new URLSearchParams(event.state.searchParameters))
+      }
     })
 
   },
