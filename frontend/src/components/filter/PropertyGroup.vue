@@ -3,7 +3,7 @@
       <h2>{{ options.label }}</h2>
       {{ options.help_text }}
 
-      <ul class="list-group">
+      <ul class="list-group my-2">
         <li
           v-for="child_property in options.properties"
           :key="child_property.name"
