@@ -1,5 +1,5 @@
 <template>
-  <div class="my-3">
+  <div class="my-3 mx-2">
       <h2>{{ options.label }}</h2>
       {{ options.help_text }}
 
