@@ -9,7 +9,6 @@ services:
     ports:
       - '127.0.0.1:8000:8000'
     tty: true # needed for error output during django startup
-    restart: always
     environment:
       - DJANGO_SETTINGS_MODULE=match4everyone.settings.development
       - PYTHONPATH=/backend # needed for django-admin to find the module
