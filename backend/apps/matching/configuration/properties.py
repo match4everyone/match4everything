@@ -245,7 +245,9 @@ class ConditionalProperty(Property):
                     "description": self.label,
                 }
             ],
-            *chain(*[[] for p in self.properties]),  # no filters on those properties for now
+            *chain(
+                *[p.get_filters() for p in self.properties]
+            ),  # no filters on those properties for now
         ]
 
     def _get_signup_layout(self, prefix=None, ignore_private=None):

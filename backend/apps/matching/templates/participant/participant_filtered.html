@@ -8,6 +8,8 @@
 
 {% block header %}
     <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    {% load render_bundle from webpack_loader %}
+{% render_bundle 'filter-ui' %}
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -19,21 +21,17 @@
     <div style="height:40px"></div>
     <div class="container" style="margin-bottom: 55px;">
 
+        <div
+        id="app"
+        data-filter-model-url="{% url 'api_filter_options' p_type='A' %}"
+        data-get-participant-url="{% url 'api_participant_list' p_type='A' %}"
+    >
+    </div>
+
         <div class="row" style="margin-top:30px;">
             <div class="col-lg-10 col-sm-12 col-12">
             <form action="">
             {% csrf_token %}
-                {% if filter %}
-                    <div class="card" style="margin-bottom:35px;">
-                    <div class="card-header">
-                        {% blocktrans %}What are you looking for?{% endblocktrans %}
-                    </div>
-                    <div class="card-body">
-                    {{ filter.form |crispy }}
-                    <input type="submit" formmethod="get" class="btn btn-success" value="{% blocktrans %}Apply to search{% endblocktrans %}">
-                    </div>
-                    </div>
-                {% endif %}
             <p>{% blocktrans %}Search results{% endblocktrans %}</p>
             {% render_table table %}
                     <!-- Button to Open the Modal -->

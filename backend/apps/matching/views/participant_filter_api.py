@@ -39,7 +39,7 @@ class ParticipantInfoListAPI(generics.ListAPIView):
         class Serializer(serializers.ModelSerializer):
             class Meta:
                 model = ParticipantInfo[self.kwargs["p_type"]]
-                exclude = model.private_fields()
+                exclude = [f for f in model.private_fields() if f != "uuid"]
 
         return Serializer
 
