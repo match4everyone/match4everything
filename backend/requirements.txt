@@ -1,4 +1,5 @@
 Django==3.0.7
+django-ckeditor==5.9.0
 django-classy-tags==1.0.0
 django-cms==3.7.3
 django-cors-middleware==1.5.0
@@ -7,6 +8,7 @@ django-extensions==2.2.9
 django-filer==1.7.1
 django-filter==2.2.0
 django-formtools==2.2
+django-post-office==3.4.1
 django-sekizai==1.1.0
 django-sendgrid-v5==0.8.1
 django-settings-export==1.2.1
@@ -24,6 +26,7 @@ djangocms-video==2.3.0
 djangocms_text_ckeditor==3.9.1
 djangorestframework==3.11.0
 djangorestframework-filters==0.11.1
+html2text==2020.1.16
 JSON-log-formatter==0.3.0
 numpy==1.18.2
 pandas==1.0.3

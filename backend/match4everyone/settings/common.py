@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django_tables2",
     "apps.matching.apps.MatchingConfig",
     "apps.use_statistics.apps.UseStatisticsConfig",
+    "apps.email_handler.apps.EmailHandlerConfig",
     "django.contrib.sites",
     "cms",  # django CMS itself
     "treebeard",  # utilities for implementing a tree using materialised paths
@@ -58,6 +59,8 @@ INSTALLED_APPS = [
     "djangocms_video",
     "djangocms_snippet",
     "djangocms_style",
+    "post_office",
+    "ckeditor",
     "webpack_loader",
 ]
 
@@ -146,7 +149,6 @@ THUMBNAIL_PROCESSORS = (
     "easy_thumbnails.processors.filters",
 )
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -204,7 +206,6 @@ MESSAGE_TAGS = {
     messages.WARNING: "alert-warning",
     messages.ERROR: "alert-danger",
 }
-
 
 # Configure Logging for all environments
 LOGGING = {
@@ -287,6 +288,22 @@ WEBPACK_LOADER = {
         # 'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
         "LOADER_CLASS": "webpack_loader.loader.WebpackLoader",
     }
+}
+
+# Django CKEditor Plugin configuration
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+    },
+    'mail_text': {
+        'width': '100%',
+        'toolbar': 'Full',
+        # 'toolbar': 'Mail',
+        'toolbar_Mail': [
+            ['Bold', 'Italic', 'Underline', 'Format'],
+            ['Format']
+        ]
+    },
 }
 
 # ========== determine wether this is a forked version of m4h ==========#

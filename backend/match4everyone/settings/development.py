@@ -35,11 +35,12 @@ MAIL_RELAY_OPTION = "file"
 
 # +++ Store files locally
 if MAIL_RELAY_OPTION == "file":
-    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    POST_EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
     EMAIL_FILE_PATH = os.path.join(RUN_DIR, "sent_emails")
 
 # +++ Store files locally
 elif MAIL_RELAY_OPTION == "mailhog":
+    POST_EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "0.0.0.0"
     EMAIL_PORT = 1025
     EMAIL_HOST_USER = ""
@@ -48,6 +49,7 @@ elif MAIL_RELAY_OPTION == "mailhog":
 
 # +++ Use local debug server
 elif MAIL_RELAY_OPTION == "external":
+    POST_EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "spahr.uberspace.de"
     EMAIL_PORT = 587
     EMAIL_HOST_USER = "noreply@medisvs.spahr.uberspace.de"
@@ -65,7 +67,7 @@ elif MAIL_RELAY_OPTION == "sendgrid":
 
     if use_sendgrid_api:
         # Using the API
-        EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+        POST_EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
         # Disable sendbox mode to send actual emails
         SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
@@ -76,6 +78,7 @@ elif MAIL_RELAY_OPTION == "sendgrid":
 
     else:
         # Normal SMTP
+        POST_EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
         EMAIL_HOST = "smtp.sendgrid.net"
         EMAIL_HOST_USER = "apikey"
         EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
@@ -86,6 +89,15 @@ else:
     # TODO: add logger message instead? # noqa: T003
     print("No email option selected")
     exit(1)
+
+# This is the real email backend that is used
+EMAIL_BACKEND = 'post_office.EmailBackend'
+POST_OFFICE = {
+    'BACKENDS': {
+        'default': POST_EMAIL_BACKEND,
+        'ses': 'django_ses.SESBackend',
+    }
+}
 
 # Disable caching of bundles on dev
 WEBPACK_LOADER["DEFAULT"]["CACHE"] = False
