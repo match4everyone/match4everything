@@ -22,3 +22,10 @@ services:
       - './frontend/src:/frontend/src'
       - './frontend/dist:/frontend/dist'
       - './frontend/webpack.config.js:/frontend/webpack.config.js'
+
+  mailhog:
+    image: mailhog/mailhog
+    expose:
+      - 1025
+    ports:
+      - 8025:8025
