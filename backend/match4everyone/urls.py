@@ -22,6 +22,7 @@ from match4everyone import views
 urlpatterns = [
     path("matching/", include("apps.matching.urls")),
     path("use_statistics/", include("apps.use_statistics.urls")),
+    path("mail/", include("apps.email_handler.urls")),
     path("django-administration/", admin.site.urls),
     path("403/", views.handler403, name="403"),
     path("404/", views.handler404, name="404"),

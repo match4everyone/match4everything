@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block title %}
+    {% blocktrans %}Helfende Kontaktieren{% endblocktrans %}
+{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    {#  Workaround until Django-CKEditor fixes the configuration for widths...  #}
+    <style>
+        .django-ckeditor-widget {
+            width: 100%
+        }
+    </style>
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div style="height:40px"></div>
+
+    <!-- Mail template editor form-->
+    <div class="container">
+        <div class="card border-primary">
+            <div class="card-header">
+                <h4>{% blocktrans %}E-Mail versenden{% endblocktrans %}</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" id="create-template">
+                    {% crispy form form.helper %}
+                    <p>
+                        <button type="button" class="btn btn-success" id="btSaveTemplate">
+                            {% blocktrans %}Vorschau der Mail und senden{% endblocktrans %}</button>
+                        {% blocktrans %}Du möchtest eine Email an
+                            <mark>{{ n }} Helfer*innen</mark> schicken.{% endblocktrans %}
+                    </p>
+                </form>
+            </div>
+        </div>
+        <hr>
+    </div>
+
+
+    <!-- Mail template preview -->
+    <div class="modal fade mail-preview-modal" tabindex="-1" role="dialog" aria-labelledby="mailPreviewModal"
+         aria-hidden="true" id="mailPreviewModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Mail Vorschau</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <!-- Info-alert about this preview -->
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        Diese Vorschau zeigt die fertige Email an die bei "A"s ankommen wird.
+                        Falls Du einen Fehler in deiner Mail gefunden hast, kannst du die Vorschau schließen und
+                        nocheinmal bearbeiten.
+                        Solltest Du mit der Mail zufrieden sein, kannst du auf "E-Mail abschicken" klicken und wir
+                        versenden diese Nachricht für dich an die {{ n }} von Dir ausgewählten Helfer*innen.
+
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="embed-responsive embed-responsive-1by1">
+                        <iframe class="embed-responsive-item" id="templatePreviewIframe"
+                                src="{% url 'email_template_preview' template_name='00000000-0000-0000-0000-000000000000' %}"></iframe>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <!-- Actual form for sending the mails-->
+                    <form method="post" action="{% url 'send_mails' %}" id="formSendMails">
+                        <!-- Data needed to send mails-->
+                        {% csrf_token %}
+                        <input type="hidden" name="template_name" value="" id="inputTemplateName">
+                        <input type="hidden" name="matching_group" value="" id="inputMatchingGroup">
+
+                        <!-- Buttons -->
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Zurück zum Editor</button>
+                        <button type="button" class="btn btn-success" id="btSendMails">E-Mails abschicken</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // -- CSRF setup for AJAX requests
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        const csrftoken = getCookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        // -- Actual stuff
+        let template_name = null
+        let preview_url = $('#templatePreviewIframe').attr('src').replace('00000000-0000-0000-0000-000000000000', '')
+
+        // - Template preview handling
+        // Listen for preview button click -> submit form (template) and show preview
+        document.getElementById('btSaveTemplate').addEventListener('click', function () {
+            console.log("Save template and preview email");
+            submitTemplate();
+        });
+
+        // Submit form, get template UUID and preview
+        function submitTemplate() {
+            $.ajax({
+                type: "POST",
+                data: {
+                    subject: $('#id_subject').val(),
+                    html_content: CKEDITOR.instances['id_html_content'].getData(),
+                    template_name: template_name,
+                },
+                success: function (data) {
+                    // Save template name
+                    template_name = data['template_name']
+                    console.log("Template UUID: " + template_name)
+                    // Display the correct preview with correct url
+                    $('#templatePreviewIframe').attr('src', preview_url + template_name)
+                    $('#mailPreviewModal').modal('show');
+                },
+            });
+        }
+
+
+        // -- Mail sending
+        // Listen for send mail button click
+        document.getElementById('btSendMails').addEventListener('click', function () {
+            console.log("Sending mails using template %s and matching group %s", template_name, 'DUMMY_GROUP');
+            // Disable button
+            this.disabled = true;
+            this.innerText = "Sending..."
+            // Populate data
+            document.getElementById('inputTemplateName').value = template_name
+            document.getElementById('inputMatchingGroup').value = "DUMMY"
+
+            // Send form
+            document.getElementById('formSendMails').submit()
+        });
+
+
+        {# TODO REMOVE BEFORE COMMITING #}
+        /*$(window).on('load', function () {
+            $('#mailPreviewModal').modal('show');
+        })*/
+    </script>
+{% endblock %}
