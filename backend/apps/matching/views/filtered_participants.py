@@ -45,6 +45,7 @@ class FilteredParticipantList(SingleTableMixin, FilterView):
                     filterA=filter_,
                     initiator="B",
                 )
+                m.send_contact_request()
                 m.save()
             else:
                 m = Match.objects.create(
@@ -53,6 +54,7 @@ class FilteredParticipantList(SingleTableMixin, FilterView):
                     filterB=filter_,
                     initiator="A",
                 )
+                m.send_contact_request()
                 m.save()
 
         return HttpResponseRedirect(reverse("profile"))
