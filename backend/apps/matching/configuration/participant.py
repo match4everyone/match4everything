@@ -4,8 +4,26 @@ import urllib
 
 class ParticipantConfig:
 
-    properties = None
-    signup_layout = None
+    # the participant requires manual approval by a staff member
+    needs_manual_approval_from_staff = True
+
+    # wether the profiles can be accessed from other participant types
+    profile_visible_for_participants_of_different_type = True
+    profile_visible_for_participants_of_same_type = False
+
+    def signup_and_edit_layout(self):
+        if self.signup_layout_all is None:
+            self.signup_layout_all = [
+                p.get_signup_layout(ignore_private=True) for p in self.properties
+            ]
+        return self.signup_layout_all
+
+    def view_layout(self):
+        if self.signup_layout_private is None:
+            self.signup_layout_private = [
+                p.get_signup_layout(ignore_private=False) for p in self.properties
+            ]
+        return self.signup_layout_private
 
     @property
     def url_name(self):
@@ -29,7 +47,7 @@ class ParticipantConfig:
         privates = chain(*[p.get_private_fields() for p in self.properties])
         return [name for name, private in zip(names, privates) if private]
 
-    def get_signup_layout(self):
-        if self.signup_layout is None:
-            self.signup_layout = [p._get_signup_layout() for p in self.properties]
-        return self.signup_layout
+    # internal variables
+    properties = None
+    signup_layout_all = None
+    signup_layout_private = None

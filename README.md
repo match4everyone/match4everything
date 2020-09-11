@@ -12,7 +12,7 @@ Originally developed as [match4healthcare](https://github.com/match4everyone/mat
 ### Using docker
 - Copy `backend.dev.env.example` to `backend.dev.env` and fill in appropriate values.
 - Run `docker-compose up -d --build` (uses Docker),
-`scripts/delete_db_and_setup.sh DEV docker-compose exec backend`
+`scripts/delete_db_and_setup.sh DEV docker-compose exec -w / backend`
 and visit `http://localhost:8000/`.
 Note that the password you have to enter during the script will become the password for the superuser account with the username `admin`.
 
@@ -62,7 +62,7 @@ Copy `backend.prod.env.example` to `backend.prod.env` and set variables as docum
 Copy `database.prod.env.example` to `database.prod.env` and set variables as documented in the example file for postgres on your host machine.
 
 To run a container in production and in a new environment execute the `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build` script which builds the containers, runs all configurations and starts the web service.
-Afterwards, run `scripts/delete_db_and_setup.sh PROD docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec backend`.
+Afterwards, run `scripts/delete_db_and_setup.sh PROD docker-compose -f docker-compose.yml -f docker-compose.prod.yml exec -w / backend`.
 Note that the password you have to enter during the script will become the password for the superuser account with the username `admin`.
 
 If you want to deploy manually follow these steps closely:

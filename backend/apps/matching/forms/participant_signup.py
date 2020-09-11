@@ -30,13 +30,13 @@ def make_participant_signup_form(participant_type):
                 self.helper.layout = Layout(
                     Div(Div(Row(Column("email")), css_class="card-body"), css_class="card"),
                     HTML("<br>"),
-                    *A.get_signup_layout()
+                    *A.signup_and_edit_layout()
                 )
             else:
                 self.helper.layout = Layout(
                     Div(Div(Row(Column("email")), css_class="card-body"), css_class="card"),
                     HTML("<br>"),
-                    *B.get_signup_layout()
+                    *B.signup_and_edit_layout()
                 )
 
         @transaction.atomic
