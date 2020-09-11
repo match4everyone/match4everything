@@ -62,10 +62,10 @@
                 <p class="text-primary" style="margin-bottom:0px; font-weight:300;">{% blocktrans %}Not registered?{% endblocktrans %}
                 </p>
                 <a href="{% url 'signup' 'A' %}">
-                    <p style="margin-bottom: 0px; font-size:.9rem;">{% blocktrans %}I am{% endblocktrans %} settings.A_NAME </p>
+                    <p style="margin-bottom: 0px; font-size:.9rem;">{% blocktrans %}I am{% endblocktrans %} a {{ settings.A_NAME }} </p>
                 </a>
                 <a href="{% url 'signup' 'B' %}">
-                    <p style="font-size:.9rem;">{% blocktrans %}I am{% endblocktrans %} settings.B_NAME</p>
+                    <p style="font-size:.9rem;">{% blocktrans %}I am{% endblocktrans %} a {{  settings.B_NAME }}</p>
                 </a>
 
             </div>

@@ -1,5 +1,5 @@
 #!/bin/bash -e
-# To run script in Docker call for example "delete_db_and_setup.sh 'docker-compose exec backend'"
+# To run script in Docker call for example "delete_db_and_setup.sh 'docker-compose exec -w / backend'"
 #MODE={$1:-"None"}
 MODE=$1
 if [[  $MODE == '' ]]; then
