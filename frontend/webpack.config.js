@@ -63,7 +63,7 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                     options: {
-                        plugins: ['@babel/plugin-proposal-class-properties'],
+                        plugins: [],
                         presets: [
                             ['@babel/preset-env', {
                                 debug: false,
