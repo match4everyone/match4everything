@@ -8,7 +8,6 @@ repos:
     -   id: end-of-file-fixer
         exclude: |
                 (?x)(
-                    ^00_old_m4h_matching_code/|
                     ^backend/static/|
                     ^backend/backups/|
                     ^backend/run/|
@@ -42,7 +41,7 @@ repos:
         # args: [--filter-files]
 # use black or autopep8 to automatically format files to pep8
 -   repo: https://github.com/psf/black
-    rev: stable
+    rev: "19.10b0"
     hooks:
     -   id: black
         args: [--line-length=100]

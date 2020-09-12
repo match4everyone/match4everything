@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
 
+from django.conf import settings
+from django.contrib.auth.models import Group
 from django.core.management.base import BaseCommand
 import numpy as np
 from tqdm import tqdm
@@ -60,9 +62,9 @@ class Command(BaseCommand):
         if options["delete"]:
             self.delete_all_fakes()
         if options["add_{a}".format(a=A.url_name)] is not None:
-            self.add_fake("A", int(options["add_{a}".format(a=A.url_name)][0]))
+            self.add_fake(participant_type="A", n=int(options["add_{a}".format(a=A.url_name)][0]))
         if options["add_{b}".format(b=B.url_name)] is not None:
-            self.add_fake("B", int(options["add_{b}".format(b=B.url_name)][0]))
+            self.add_fake(participant_type="B", n=int(options["add_{b}".format(b=B.url_name)][0]))
 
     def delete_all_fakes(self):
         qs = User.objects.filter(email__contains=FAKE_MAIL)
@@ -94,8 +96,9 @@ class Command(BaseCommand):
             m = participant_type + new_mail(i + n_users)
             u = User.new(
                 email=m,
-                is_A=participant_type == A.url_name,
-                is_B=participant_type == B.url_name,
+                pwd=m,
+                is_A=participant_type == "A",
+                is_B=participant_type == "B",
                 is_participant=True,
                 validated_email=True,
                 date_joined=datetime.now() - timedelta(days=np.random.randint(0, 30)),
@@ -104,6 +107,25 @@ class Command(BaseCommand):
             p = Participant[participant_type].objects.create(user=u, is_activated=True)
             pi = ParticipantInfo[participant_type].generate_fake(participant=p)
             ParticipantInfoLocation[participant_type].generate_fake(participant_info=pi)
+
+            # if we do not require approvals, add everyone to the approved group on creation
+            if (
+                participant_type == "A"
+                and not settings.PARTICIPANT_SETTINGS["A"].needs_manual_approval_from_staff
+            ):
+                approved_participants = Group.objects.get(name="approved_a")
+                p.is_approved = True
+                p.approval_date = datetime.now()
+                approved_participants.user_set.add(u)
+            if (
+                participant_type == "B"
+                and not settings.PARTICIPANT_SETTINGS["B"].needs_manual_approval_from_staff
+            ):
+                approved_participants = Group.objects.get(name="approved_b")
+                p.is_approved = True
+                p.approval_date = datetime.now()
+                approved_participants.user_set.add(u)
+            p.save()
 
         self.stdout.write(
             self.style.SUCCESS("Created %s participants of p_type %s." % (n, participant_type))

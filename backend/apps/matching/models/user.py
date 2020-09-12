@@ -1,9 +1,12 @@
 import logging
 
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from match4everyone.configuration.A import A
+from match4everyone.configuration.B import B
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +38,25 @@ class User(AbstractUser):
             user.set_password(pwd)
         else:
             user.set_password(email)
+
+        group_is_a = Group.objects.get(name="is_a")
+        group_is_b = Group.objects.get(name="is_b")
+        group_can_view_a = Group.objects.get(name="can_view_a")
+        group_can_view_b = Group.objects.get(name="can_view_b")
+
+        if kwargs["is_A"]:
+            user.groups.add(group_is_a)
+            if B.profile_visible_for_participants_of_different_type:
+                user.groups.add(group_can_view_b)
+            if A.profile_visible_for_participants_of_same_type:
+                user.groups.add(group_can_view_a)
+        elif kwargs["is_B"]:
+            user.groups.add(group_is_b)
+            if A.profile_visible_for_participants_of_different_type:
+                user.groups.add(group_can_view_a)
+            if B.profile_visible_for_participants_of_same_type:
+                user.groups.add(group_can_view_b)
+
         user.save()
         return user
 
@@ -43,6 +65,12 @@ class User(AbstractUser):
             return self.a
         if self.is_B:
             return self.b
+
+    def is_approved(self):
+        if self.is_staff:
+            return True
+        p_type = self.participant().p_type()
+        return self.groups.filter(name="approved_%s" % p_type.lower()).exists()
 
     class Meta(AbstractUser.Meta):
         constraints = [

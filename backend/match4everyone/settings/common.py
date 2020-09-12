@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
     "django_filters",
     "widget_tweaks",
     "crispy_forms",
@@ -82,7 +83,12 @@ ROOT_URLCONF = "match4everyone.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [
+            # all regular templates
+            os.path.join(BASE_DIR, "templates"),
+            # used only for the generated favicon html
+            os.path.join(BASE_DIR, "../frontend/dist/favicon"),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -297,10 +303,13 @@ if IS_TRAVIS and os.environ["TRAVIS_PULL_REQUEST_SLUG"] not in ["match4everyone/
 # This is only used in the META tags for facebook's og
 BASE_URL = "https://match4everyone.de"
 
+PARTICIPANT_SETTINGS = {"A": A, "B": B}
+
 A_NAME = A.name
 B_NAME = B.name
 A = A.url_name
 B = B.url_name
+
 
 SETTINGS_EXPORT = [
     "BASE_URL",
