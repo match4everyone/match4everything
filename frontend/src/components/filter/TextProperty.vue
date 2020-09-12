@@ -51,7 +51,7 @@ export default {
     buildQueryParametersFromSelection() {
       return {
         path: this.namePath,
-        queryString: this.selected !== '' ? [[`${ this.namePath }__icontains`, this.searchText]] : []
+        queryString: this.searchText !== '' ? [[`${ this.namePath }__icontains`, this.searchText]] : []
       }
     }
   },
