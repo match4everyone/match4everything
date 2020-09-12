@@ -141,7 +141,7 @@ export default {
           }
         })
         .finally(() => { this.loading = false })
-    },1000,{ leading:true, trailing: true }), // throttle for 500 ms, execute a last time after thorttling window has elapsed
+    },250,{ leading:true, trailing: true }), // throttle for 500 ms, execute a last time after thorttling window has elapsed
   },
   mounted() {
     console.log('Main UI Mounted')
