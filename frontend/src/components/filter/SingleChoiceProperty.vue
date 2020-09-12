@@ -30,7 +30,7 @@ import Accordion from '../Accordion'
 
 export default {
   extends: BaseProperty,
-  name : 'MultipleChoiceProperty',
+  name : 'SingleChoiceProperty',
   components: {
     Accordion
   },
