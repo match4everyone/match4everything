@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 1900-01-01 00:00+0000\n"
-"PO-Revision-Date: 2020-08-15 17:21+0200\n"
+"POT-Creation-Date: 2020-09-12 12:36+0200\n"
+"PO-Revision-Date: 2020-09-12 12:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.3\n"
 
 msgid "is exactly"
 msgstr "ist genau"
@@ -111,17 +111,11 @@ msgstr "Erstellt"
 msgid "Name"
 msgstr "Name"
 
-msgid "New matches"
-msgstr "Neue Treffer"
-
-msgid "Contact"
-msgstr "Kontakt"
-
 msgid "Contact Request"
 msgstr "Anfrage"
 
-msgid "Match criteria"
-msgstr "Kriterien"
+msgid "Contact"
+msgstr "Kontakt"
 
 msgid "Email"
 msgstr "E-Mail-Adresse"
@@ -129,20 +123,18 @@ msgstr "E-Mail-Adresse"
 msgid "Your message"
 msgstr "Ihre Nachricht"
 
-msgid "Search criteria"
-msgstr "Sucherkriterien"
+msgid "Match criteria"
+msgstr "Kriterien"
 
-msgid "Contact all new matches"
-msgstr "Alle neuen Treffer kontaktieren"
+msgid "These criteria were critical"
+msgstr "Diese Kriterien waren entscheidend"
 
-msgid "Contact new candidates as well"
-msgstr "Auch neue Kandidaten kontaktieren"
+msgid "created by"
+msgstr "Erstellt von"
 
-msgid "Subject:"
-msgstr "Betreff:"
-
-msgid "Send"
-msgstr "Senden"
+msgid "The other participant found you because the following criteria matched:"
+msgstr ""
+"Der andere Teilnehmer fand Sie, weil die folgenden Kriterien übereinstimmten:"
 
 msgid "Edit your search"
 msgstr "Bearbeiten Sie Ihre Suche"
@@ -155,27 +147,6 @@ msgstr "Ihr Suchverlauf."
 
 msgid "Start a new search"
 msgstr "Erstelle eine neue Suche"
-
-msgid "Message"
-msgstr "Nachricht"
-
-msgid "Answer to this request:"
-msgstr "Auf diese Frage antworten:"
-
-msgid "Subject"
-msgstr "Betreff"
-
-msgid "Share my email and send"
-msgstr "Absenden und meine E-Mail mitteilen"
-
-msgid "View and modify search"
-msgstr "Suche ansehen und ändern"
-
-msgid "Give a meaningful name to your search"
-msgstr "Gib deiner Suche einen Namen"
-
-msgid "Save"
-msgstr "Speichern"
 
 msgid "Map"
 msgstr "Karte"
@@ -205,6 +176,42 @@ msgstr "As"
 msgid "Direct Search"
 msgstr "Direkte Suche"
 
+msgid "new matches"
+msgstr "neue Treffer"
+
+msgid "Contact new candidates as well"
+msgstr "Auch neue Kandidaten kontaktieren"
+
+msgid "Subject:"
+msgstr "Betreff:"
+
+msgid "Send"
+msgstr "Senden"
+
+msgid "Give a meaningful name to your search"
+msgstr "Gib deiner Suche einen Namen"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "details"
+msgstr "Details"
+
+msgid "Profile"
+msgstr "Mein Profil"
+
+msgid "View and modify search"
+msgstr "Suche ansehen und ändern"
+
+msgid "Message"
+msgstr "Nachricht"
+
+msgid "Contact request"
+msgstr "Anfrage"
+
+msgid "Send and share my email with them"
+msgstr "Absenden und meine E-Mail mitteilen"
+
 msgid "Contact Requests"
 msgstr "Anfrage"
 
@@ -213,15 +220,6 @@ msgstr "Diese User wollen Sie kontaktieren."
 
 msgid "Other participants you contacted."
 msgstr "Diese Teilnehmer haben Sie kontaktiert."
-
-msgid "Profile"
-msgstr "Mein Profil"
-
-msgid "share my email"
-msgstr "teile meine E-Mail-Adresse"
-
-msgid "not interested"
-msgstr "nicht interessiert"
 
 msgid "You have already shared your email adress with this user."
 msgstr "Du hast mit diesem Benutzer deine E-Mail-Adresse schon geteilt."
@@ -329,9 +327,6 @@ msgstr "Hinzufügen +"
 msgid "Remove last -"
 msgstr "Letzten entfernen -"
 
-msgid "Create a new account"
-msgstr "Einen neuen Account erstellen"
-
 #, python-format
 msgid ""
 "\n"
@@ -351,7 +346,7 @@ msgstr "Erstelle eine neue Suche nach"
 msgid "Respond to incoming contact requests"
 msgstr "Auf eingehende Anfragen antworten"
 
-msgid "View outgoing contact requests"
+msgid "See outgoing contact requests"
 msgstr "Ausgehende Anfragen ansehen"
 
 msgid "Follow up past searches "
@@ -422,6 +417,9 @@ msgstr "Kontakt ausgewählt"
 
 msgid "Contact Form"
 msgstr "Kontaktformular"
+
+msgid "Subject"
+msgstr "Betreff"
 
 msgid "Contact all selected"
 msgstr "Kontaktiere alle ausgewählten"
@@ -721,3 +719,21 @@ msgstr "und"
 
 msgid "Terms of Use"
 msgstr "AGBs"
+
+#~ msgid "Search criteria"
+#~ msgstr "Sucherkriterien"
+
+#~ msgid "Contact all new matches"
+#~ msgstr "Alle neuen Treffer kontaktieren"
+
+#~ msgid "Answer to this request:"
+#~ msgstr "Auf diese Frage antworten:"
+
+#~ msgid "share my email"
+#~ msgstr "teile meine E-Mail-Adresse"
+
+#~ msgid "not interested"
+#~ msgstr "nicht interessiert"
+
+#~ msgid "Create a new account"
+#~ msgstr "Einen neuen Account erstellen"
