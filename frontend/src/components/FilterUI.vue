@@ -41,7 +41,7 @@
       </div>
       <div class="col-lg-9 filter-search-results">
         <div class="card">
-          <h5 class="card-header">Results</h5>
+          <h5 class="card-header"><i v-if="loading" class="fa fa-spinner fa-pulse fa-fw"></i>Results</h5>
           <div class="card-body">
             <pre>{{ results | pretty }}</pre>
           </div>
@@ -53,7 +53,7 @@
 
 <script>
 import FacetedFilter from './filter/FacetedFilter'
-const abortController = new AbortController() // Used to cancel fetch requests
+const _ = require('lodash')
 
 export default {
   name: 'FilterUI',
@@ -79,7 +79,8 @@ export default {
       },
       lastFetchRequestAbortController: new AbortController(),
       initialURLParameters: new URLSearchParams(window.location.search),
-      filterModelPromise: null
+      filterModelPromise: null,
+      loading: false,
     }
   },
   components: {
@@ -103,10 +104,12 @@ export default {
         this.fetchResults(false)
       })
     },
-    fetchResults(saveState = true) {
+    fetchResults: _.debounce(function (saveState = true) {
+      console.log('Fetch Results')
+      this.loading = true
       this.lastFetchRequestAbortController.abort() // abort old requests
       this.lastFetchRequestAbortController = new AbortController()
-      let signal = abortController.signal
+      let signal = this.lastFetchRequestAbortController.signal
 
       let mandatoryParameters = [
         ['location_country_code', this.location.countryCode],
@@ -132,7 +135,13 @@ export default {
       fetch(`${ this.urls.participantList }?${ urlParameters.toString() }`, { signal })
         .then( response => response.json() )
         .then( jsonData => this.results = jsonData)
-    }
+        .catch(error => {
+          if (error.name !== 'AbortError') {
+            console.error('Error retrieving results', error)
+          }
+        })
+        .finally(() => { this.loading = false })
+    },1000,{ leading:true, trailing: true }), // throttle for 500 ms, execute a last time after thorttling window has elapsed
   },
   mounted() {
     console.log('Main UI Mounted')
