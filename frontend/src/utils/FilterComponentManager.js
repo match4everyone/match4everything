@@ -2,6 +2,7 @@
 import PropertyGroup from '../components/filter/PropertyGroup'
 import MultipleChoiceProperty from '../components/filter/MultipleChoiceProperty'
 import OrderedSingleChoiceProperty from '../components/filter/OrderedSingleChoiceProperty'
+import SingleChoiceProperty from '../components/filter/SingleChoiceProperty'
 import BooleanProperty from '../components/filter/BooleanProperty'
 import TextProperty from '../components/filter/TextProperty'
 import ConditionalPropertyGroup from '../components/filter/ConditionalPropertyGroup'
@@ -13,7 +14,7 @@ class FilterComponentManager {
             'group': PropertyGroup,
             'conditional': ConditionalPropertyGroup,
             'multiple-choice': MultipleChoiceProperty,
-            'single-choice': null,
+            'single-choice': SingleChoiceProperty,
             'ordered-single-choice': OrderedSingleChoiceProperty,
             'text': TextProperty,
             'boolean': BooleanProperty,
