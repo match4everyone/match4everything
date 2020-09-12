@@ -15,26 +15,21 @@
     </div>
     <div class="collapse" ref="collapsible">
       <div>
-        <ul class="list-group my-2">
-          <li
-            v-for="child_property in options.properties"
-            :key="child_property.name"
-            class="list-group-item p-0"
-          >
-            <component :is="convertTypeToComponentName(child_property.type)" :options="child_property" :parentName="namePath" @updateQuery="forwardEvent" ref="childComponents">
-            </component>
-          </li>
-        </ul>
+        <PropertyGroup :options="options" :parent-name="parentName" ref="propertyGroup" @updateQuery="forwardEvent"/>
       </div>
     </div>
   </div>
 </template>
 <script>
 import BaseProperty from './BaseProperty'
+import PropertyGroup from './PropertyGroup'
 
 export default {
   extends: BaseProperty,
   name: 'ConditionalPropertyGroup',
+  components: {
+    PropertyGroup
+  },
   data() {
     return {
       selected: false
@@ -55,31 +50,26 @@ export default {
         this.show()
       } else {
         this.hide()
-        this.$refs.childComponents.forEach(childComponent => childComponent.clear())
+        this.$refs.propertyGroup.clear()
       }
       this.$emit('updateQuery',this.buildQueryParametersFromSelection())
     },
     clear() {
       this.selected = false
       this.selectionChanged()
-      this.$refs.childComponents.forEach(childComponent => childComponent.clear())
+      this.$refs.propertyGroup.clear()
     },
     forwardEvent(event) {
       this.$emit('updateQuery',event)
     },
     buildFilterfromURL(urlParameters) {
-      let returnArray = new Array()
       this.selected = urlParameters.has(`${ this.namePath }-cond`) && urlParameters.get(`${ this.namePath }-cond`) === 'true'
       this.selected ? this.show() : this.hide()
-      returnArray.push(this.buildQueryParametersFromSelection())
 
-      if (!Array.isArray(this.$refs.childComponents)) return returnArray
-      this.$refs.childComponents.forEach(childComponent => {
-        if (childComponent.buildFilterfromURL) {
-          returnArray.push(...childComponent.buildFilterfromURL(urlParameters))
-        }
-      })
-      return returnArray
+      return [
+        this.buildQueryParametersFromSelection(),
+        ...this.$refs.propertyGroup.buildFilterfromURL(urlParameters)
+      ]
     },
     buildQueryParametersFromSelection() {
       return {
