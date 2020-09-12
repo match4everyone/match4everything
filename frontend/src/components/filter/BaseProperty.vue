@@ -23,6 +23,9 @@ export default {
       // needs to be implemented in Sub-Components
       return []
     },
+    clear() {
+      console.trace(`Warning: Clear method not implemented in component ${ this.$options.name }`)
+    }
   }
 }
 </script>

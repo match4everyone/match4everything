@@ -22,6 +22,9 @@ export default {
   extends: BaseProperty,
   name: 'PropertyGroup',
   methods: {
+    clear() {
+      this.$refs.childComponents.forEach(childComponent => childComponent.clear())
+    },
     forwardEvent(event) {
       this.$emit('updateQuery',event)
     },
