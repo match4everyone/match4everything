@@ -3,6 +3,10 @@
 import os
 import sys
 
+import django.contrib.admin
+
+django.contrib.admin.views.decorators = None
+
 
 def main():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "match4everyone.settings.development")
