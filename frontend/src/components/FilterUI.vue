@@ -76,11 +76,13 @@ export default {
       urls: {
         filterModel: '',
         participantList: '',
+        tableLayout: '',
       },
       lastFetchRequestAbortController: new AbortController(),
       initialURLParameters: new URLSearchParams(window.location.search),
       filterModelPromise: null,
       loading: false,
+      fieldLabels: [],
     }
   },
   components: {
@@ -158,15 +160,19 @@ export default {
     console.log('Main UI created')
     this.urls.filterModel = this.$el.getAttribute('data-filter-model-url')
     this.urls.participantList = this.$el.getAttribute('data-get-participant-url')
+    this.urls.tableLayout = this.$el.getAttribute('data-table-layout-url')
     this.filterModelPromise = fetch(this.urls.filterModel)
       .then( response => response.json() )
       .then( jsonData => this.filterModel = jsonData )
+    fetch(this.urls.tableLayout)
+      .then( response => response.json() )
+      .then( jsonData => {
+        this.fieldLabels = Object.keys(jsonData).map( k => ({
+          key: k,
+          label: String(jsonData[k]),
+        }))
+      })
   },
-  filters: {
-    pretty: function(value) {
-      return JSON.stringify(value, null, 2)
-    },
-  }
 }
 </script>
 
