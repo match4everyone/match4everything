@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import FacetedFilter from './filter/FacetedFilter'
+import FacetedFilter from './FilterUIFacetedFilter'
 const _ = require('lodash')
 
 export default {

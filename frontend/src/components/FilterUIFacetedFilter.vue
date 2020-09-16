@@ -13,9 +13,10 @@
 </template>
 
 <script>
-import { FilterComponentManager } from '../../utils/FilterComponentManager'
+import { FilterComponentManager } from '../utils/FilterComponentManager'
 
 export default {
+  name: 'FilterUIFacetedFilter',
   props: [ 'filterModel' ],
   methods: {
     convertTypeToComponentName(typeName) {
