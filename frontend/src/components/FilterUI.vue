@@ -43,7 +43,14 @@
         <div class="card">
           <h5 class="card-header"><i v-if="loading" class="fa fa-spinner fa-pulse fa-fw"></i>Results</h5>
           <div class="card-body">
-            <pre>{{ results | pretty }}</pre>
+            <filter-results
+              :field-labels="fieldLabels"
+              :filter-model="filterModel"
+              :items="results"
+              :current-page="currentPage"
+              @next="next"
+              @previous="previous">
+            </filter-results>
           </div>
         </div>
       </div>
@@ -53,6 +60,7 @@
 
 <script>
 import FacetedFilter from './FilterUIFacetedFilter'
+import FilterResults from './FilterUIResults'
 const _ = require('lodash')
 
 export default {
@@ -86,7 +94,8 @@ export default {
     }
   },
   components: {
-    FacetedFilter
+    FacetedFilter,
+    FilterResults,
   },
   methods: {
     updateQuery(event) {
