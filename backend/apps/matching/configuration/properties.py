@@ -1,4 +1,5 @@
 from itertools import chain
+import random
 import string
 from typing import List
 
@@ -605,8 +606,16 @@ class TextProperty(Property):
     def generate_random_assignment(self, rs=None):
         if rs is None:
             rs = np.random
-        code = rs.choice([l for l in string.ascii_uppercase], self.max_length)
-        return ["".join(code)]
+        random_letters = rs.choice(
+            [l for l in string.ascii_uppercase] + [" "], self.max_length
+        ).tolist()
+        words = []
+        while len(random_letters) > 0:
+            word_length = min(len(random_letters), random.randrange(1, 12))
+            words.append("".join(random_letters[:word_length]))
+            del random_letters[:word_length]
+
+        return [" ".join(words)[: self.max_length]]
 
     def get_filters(self) -> List:
         return [
