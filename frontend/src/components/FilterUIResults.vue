@@ -10,7 +10,6 @@
       small
       responsive
       :items="items"
-      :fields="tableFields"
       primary-key="uuid"
     >
       <!-- A custom formatted column -->
@@ -29,9 +28,49 @@
 </template>
 <script>
 /* eslint-disable no-prototype-builtins */
+
+/**
+ * Dictionary for data transformators creator functions. Each property is a function that can be called
+ * with a property from the filter model and its complete path
+ *
+ * @returns a dataTransformation function accepting sourceRow and targetRow parameters, which will
+ * map the source data to the correct target data format, e.g. by reducing multiple true/false columns
+ * for a multiple choice property to a string containing the labels for the selected entries
+ * A: true, B: false, C: true => "Label For A, Label For C"
+ */
+const dataTransformators = {
+  'multiple-choice': (path,property) => {
+    return (sourceRow,targetRow) => {
+      targetRow[path] = Object
+        .keys(property.choices)
+        .filter(choice => sourceRow.hasOwnProperty(`${ path }-${ choice }`) && sourceRow[`${ path }-${ choice }`] === true)
+        .map(choiceKey => property.choices[choiceKey])
+        .sort()
+        .join(', ')
+      return targetRow
+    }
+  },
+  /*'ordered-single-choice': (path,property) => [{
+    key: `${ path }`,
+    label: property.label
+  }],
+  'boolean': (path,property) => [{
+    key: `${ path }`,
+    label: property.label
+  }],
+  'conditional': (path,property) => [{
+    key: `${ path }`,
+    label: property.label
+  }],
+  'text': (path,property) => [{
+    key: `${ path }`,
+    label: property.label
+  }],*/
+}
+
 export default {
   name: 'FilterUIResults',
-  props: [ 'filterModel','fieldLabels','items','pages','currentPage'],
+  props: [ 'filterModel','fieldLabels','results','pages','currentPage'],
   computed: {
     flattenedFilterModel() {
       let map = new Map()
@@ -40,11 +79,25 @@ export default {
       )
       return map
     },
-    tableFields() {
-      const items = this.items
-      if (items === null || (Array.isArray(items) && items.length === 0)) return []
+    items() {
+      let sourceData = this.results
+      if (sourceData === null) return null
 
-      return this.fieldLabels.filter(field => this.flattenedFilterModel.has(field.key))
+      let transformers = []
+      this.flattenedFilterModel.forEach((property,path) => {
+        if (dataTransformators.hasOwnProperty(property.type)) {
+          let newTransformers = dataTransformators[property.type](path,property)
+          transformers.push(newTransformers)
+        }
+      })
+      let transformedData = sourceData.map(
+        sourceRow => transformers.reduce(
+          (targetObject, transformer) => transformer(sourceRow, targetObject),
+          {}
+        )
+      )
+
+      return transformedData
     },
   },
   methods: {

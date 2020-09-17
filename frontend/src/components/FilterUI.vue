@@ -46,7 +46,7 @@
             <filter-results
               :field-labels="fieldLabels"
               :filter-model="filterModel"
-              :items="results"
+              :results="results"
               :current-page="currentPage"
               @next="next"
               @previous="previous">
@@ -62,6 +62,7 @@
 import FacetedFilter from './FilterUIFacetedFilter'
 import FilterResults from './FilterUIResults'
 const _ = require('lodash')
+const itemsPerPage = 2
 
 export default {
   name: 'FilterUI',
@@ -90,6 +91,7 @@ export default {
       initialURLParameters: new URLSearchParams(window.location.search),
       filterModelPromise: null,
       loading: false,
+      currentPage: 0,
       fieldLabels: [],
     }
   },
@@ -115,8 +117,16 @@ export default {
         this.fetchResults(false)
       })
     },
-    fetchResults: _.debounce(function (saveState = true) {
-      console.log('Fetch Results')
+    next() {
+      this.fetchResults(true, this.currentPage + 1 )
+    },
+    previous() {
+      this.fetchResults(true, this.currentPage - 1 )
+    },
+    fetchResults: _.debounce(function (saveState = true, page = 0) {
+      console.log('Fetch Results',{ saveState, page })
+      page = Math.max(0,page)
+      if (page > 0 && page === this.currentPage) return
       this.loading = true
       this.lastFetchRequestAbortController.abort() // abort old requests
       this.lastFetchRequestAbortController = new AbortController()
@@ -126,6 +136,8 @@ export default {
         ['location_country_code', this.location.countryCode],
         ['location_zipcode', this.location.zipCode],
         ['location_distance', this.location.distance],
+        ['limit', itemsPerPage],
+        ['offset', page * itemsPerPage],
       ]
 
       let componentParameters = []
@@ -145,7 +157,10 @@ export default {
       }
       fetch(`${ this.urls.participantList }?${ urlParameters.toString() }`, { signal })
         .then( response => response.json() )
-        .then( jsonData => this.results = jsonData)
+        .then( jsonData => {
+          this.results = jsonData.results
+          this.currentPage = page
+        })
         .catch(error => {
           if (error.name !== 'AbortError') {
             console.error('Error retrieving results', error)
