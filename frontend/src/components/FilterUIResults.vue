@@ -1,6 +1,11 @@
 <template>
   <div>
+    <h2>Before transformation</h2>
+    <pre style="overflow-y:auto; overflow-x:auto; max-height:200px;">
+      {{ results | pretty }}
+    </pre>
 
+    <h2>After transformation</h2>
     <pre style="overflow-y:auto; overflow-x:auto; max-height:200px;">
       {{ items | pretty }}
     </pre>
@@ -10,6 +15,7 @@
       small
       responsive
       :items="items"
+      :fields="fields"
       primary-key="uuid"
     >
       <!-- A custom formatted column -->
@@ -37,6 +43,11 @@
  * map the source data to the correct target data format, e.g. by reducing multiple true/false columns
  * for a multiple choice property to a string containing the labels for the selected entries
  * A: true, B: false, C: true => "Label For A, Label For C"
+ *
+ * The function shall fulfill the following contract
+ * param sourceRow a reference to the source row object
+ * param targetRow a reference to the target row object, will set the value under the key of the properties path
+ * returns the target row reference
  */
 const dataTransformators = {
   'multiple-choice': (path,property) => {
@@ -50,23 +61,24 @@ const dataTransformators = {
       return targetRow
     }
   },
-  /*'ordered-single-choice': (path,property) => [{
-    key: `${ path }`,
-    label: property.label
-  }],
-  'boolean': (path,property) => [{
-    key: `${ path }`,
-    label: property.label
-  }],
-  'conditional': (path,property) => [{
-    key: `${ path }`,
-    label: property.label
-  }],
+  'ordered-single-choice': (path,property) => {
+    return (sourceRow,targetRow) => {
+      targetRow[path] = property.choices[sourceRow[path]]
+      return targetRow
+    }
+  },
+  'boolean': (path) => {
+    return (sourceRow,targetRow) => {
+      targetRow[path] = sourceRow[path]
+      return targetRow
+    }
+  },
   'text': (path,property) => [{
     key: `${ path }`,
     label: property.label
-  }],*/
+  }],
 }
+dataTransformators.conditional = dataTransformators.text = dataTransformators.boolean // same logic for all three
 
 export default {
   name: 'FilterUIResults',
@@ -81,7 +93,7 @@ export default {
     },
     items() {
       let sourceData = this.results
-      if (sourceData === null) return null
+      if (sourceData === null) return []
 
       let transformers = []
       this.flattenedFilterModel.forEach((property,path) => {
@@ -99,6 +111,16 @@ export default {
 
       return transformedData
     },
+    fields() {
+      if (this.items.length === 0 ) return []
+      let firstItem = this.items[0]
+      return Array.from(this.flattenedFilterModel)
+        .filter(keyPropertyTuple => firstItem.hasOwnProperty(keyPropertyTuple[0]))
+        .map(keyPropertyTuple => ({
+          key: keyPropertyTuple[0],
+          label: keyPropertyTuple[1].label,
+        }))
+    }
   },
   methods: {
     next() {
