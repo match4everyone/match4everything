@@ -41,7 +41,7 @@
       </div>
       <div class="col-lg-10 filter-search-results">
         <div class="card">
-          <h5 class="card-header"><i v-if="loading" class="fa fa-spinner fa-pulse fa-fw"></i>Results</h5>
+          <h5 class="card-header"> <b-spinner small variant="primary" v-if="loading" label="Loading..."> </b-spinner>Results</h5>
           <div class="card-body">
             <filter-results
               :field-labels="fieldLabels"
