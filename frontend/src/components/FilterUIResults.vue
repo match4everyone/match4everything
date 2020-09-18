@@ -8,7 +8,7 @@
       <div class="p-2">
         <b-dropdown right class="m-2" html="<i class='fa fa-filter' aria-hidden='true'></i> Select Fields">
           <b-dropdown-form style="width:40rem">
-            <b-form-checkbox-group class="mb-3 vertically-separate-children" switches :options="fieldSelector" v-model="selectedFields" stacked>
+            <b-form-checkbox-group class="mb-3 vertically-separate-children" switches :options="fieldSelector" v-model="selectedFields" stacked @change="fieldSelectionChanged">
             </b-form-checkbox-group>
             <b-form-group>
               <button type="button" class="btn btn-secondary btn-sm" @click="selectAllFields"><span class="fa fa-trash-o"></span> Zurücksetzen</button>
@@ -114,8 +114,9 @@ const dataTransformators = {
   },
 }
 dataTransformators.boolean = dataTransformators.text // same logic
-import SendMessageModal from './FilterUISendMessageModal'
 
+const selectedFieldsStorageKey = 'filter-ui-result-selected-fields'
+import SendMessageModal from './FilterUISendMessageModal'
 export default {
   name: 'FilterUIResults',
   components: {
@@ -189,7 +190,18 @@ export default {
   },
   watch: {
     fields(newValue) {
-      this.selectedFields = newValue.map(field => field.key)
+      // Will be called after the available fields have been determined from the filter model (and the filterModel has actually been loaded)
+      // Populates the field-selector control with the available fields
+      let validFields = newValue.map(field => field.key)
+      this.selectedFields = validFields // Create sensible default
+      try {
+        let fieldSelectionFromLocalStorage = JSON.parse(localStorage.getItem(selectedFieldsStorageKey))
+        if (fieldSelectionFromLocalStorage && Array.isArray(fieldSelectionFromLocalStorage) && fieldSelectionFromLocalStorage.every(field => validFields.includes(field))) {
+          // There is a field selection persisted to session storage, it is an Array and it only contains fields that are actually valid
+          this.selectedFields = fieldSelectionFromLocalStorage
+        }
+      // eslint-disable-next-line no-empty
+      } catch { /* we already set a sensible default beforehand. If JSON.parse fails, nothing to do */ }
     },
   },
   methods: {
@@ -237,6 +249,9 @@ export default {
     },
     sendFailed(message) {
       this.toast('Messages not sent',message,{ variant: 'danger', noAutoHide: true })
+    },
+    fieldSelectionChanged(checked) {
+      localStorage.setItem(selectedFieldsStorageKey, JSON.stringify(checked))
     }
   },
   filters: {
