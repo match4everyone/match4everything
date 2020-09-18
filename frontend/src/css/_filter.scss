@@ -13,4 +13,12 @@
     input[type="text"], select {
         font-size:0.7rem;
     }
+
+}
+.filter-search-results {
+
+    .vertically-separate-children > * {
+        margin-bottom:0.4rem;
+    }
+
 }
