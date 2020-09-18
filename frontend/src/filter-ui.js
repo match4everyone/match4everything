@@ -10,6 +10,10 @@ them, there is no choice
 */
 const globalBootstrapJQuery = window.$
 Vue.prototype.$jQuery = globalBootstrapJQuery
+
+const globalTranslateFunction = window.gettext || ((text) => { return `###${ text }###` })
+Vue.prototype.gettext = globalTranslateFunction
+
 FilterComponentManager.registerComponents(Vue)
 
 // Install BootstrapVue

@@ -2,7 +2,7 @@
   <div>
     <div class="row my-4">
       <div class="col-md-12">
-        Allgemeiner Text für den Filter
+        {{ gettext("Ich bin ein Filter Text") }}
       </div>
     </div>
     <b-form class="row my-4">
@@ -113,6 +113,7 @@ export default {
         location_zipcode: [],
         location_distance: [],
       },
+      testText: this.$gettext('TEST')
     }
   },
   components: {
