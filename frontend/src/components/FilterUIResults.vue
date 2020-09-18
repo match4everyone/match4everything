@@ -57,9 +57,12 @@
       :value="currentPage"
       :total-rows="totalRows"
       :per-page="itemsPerPage"
+      class="mb-3"
       @change="pageChanged"
     ></b-pagination>
 
+    <b-button :disabled="selectedItems.length === 0" primary @click="$refs.modal.show()">Contact {{ selectedItems.length }} selected</b-button>
+    <send-message-modal :selectedUUIDs="selectedItems" ref="modal" @sent="sendSuccessful" @error="sendFailed" />
   </div>
 </template>
 <script>
@@ -111,10 +114,13 @@ const dataTransformators = {
   },
 }
 dataTransformators.boolean = dataTransformators.text // same logic
-const _ = require('lodash')
+import SendMessageModal from './FilterUISendMessageModal'
 
 export default {
   name: 'FilterUIResults',
+  components: {
+    SendMessageModal
+  },
   props: [ 'filterModel','fieldLabels','results','totalRows','currentPage','itemsPerPage'],
   data() {
     return {
@@ -217,6 +223,21 @@ export default {
         this.selectedItems.push(uuid)
       }
     },
+    toast(title, message,options) {
+      this.$bvToast.toast(message, {
+        title,
+        toaster: 'b-toaster-top-center',
+        solid: true,
+        appendToast: true,
+        ...options
+      })
+    },
+    sendSuccessful(message) {
+      this.toast('Messages sent',message,{ variant: 'success' })
+    },
+    sendFailed(message) {
+      this.toast('Messages not sent',message,{ variant: 'danger', noAutoHide: true })
+    }
   },
   filters: {
     pretty: function(value) {
