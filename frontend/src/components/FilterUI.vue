@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="row my-4">
-      <div class="form-group col">
+      <div class="form-group col-md">
         <label for="location_country_code">Country-Code</label>
         <select class="form-control" id="location_country_code" v-model="location.countryCode" @change="fetchResults" >
           <option
@@ -18,11 +18,11 @@
           </option>
         </select>
       </div>
-      <div class="form-group col">
+      <div class="form-group col-sm">
         <label for="location_zipcode">ZIP-Code</label>
         <input type="text" class="form-control" id="location_zipcode" v-model="location.zipCode" @input="fetchResults">
       </div>
-      <div class="form-group col">
+      <div class="form-group col-sm">
         <label for="location_distance">Distance</label>
         <select class="form-control" id="location_distance" v-model="location.distance" @change="fetchResults" >
           <option
@@ -36,10 +36,10 @@
       </div>
     </div>
     <div class="row my-5">
-      <div class="col-lg-3 filter-search-criteria">
+      <div class="col-lg-2 filter-search-criteria">
         <faceted-filter :filter-model="filterModel" @updateQuery="updateQuery" ref="filter" />
       </div>
-      <div class="col-lg-9 filter-search-results">
+      <div class="col-lg-10 filter-search-results">
         <div class="card">
           <h5 class="card-header"><i v-if="loading" class="fa fa-spinner fa-pulse fa-fw"></i>Results</h5>
           <div class="card-body">
