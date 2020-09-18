@@ -20,61 +20,12 @@
 
     <div style="height:40px"></div>
     <div class="container-fluid px-5" style="margin-bottom: 55px;">
-
-        <div
+      <div
         id="app"
         data-filter-model-url="{% url 'api_filter_options' p_type='A' %}"
         data-get-participant-url="{% url 'api_participant_list' p_type='A' %}"
         data-table-layout-url="{% url 'api_table_columns' p_type='A' %}"
-    >
-    </div>
-
-        <div class="row" style="margin-top:30px;">
-            <div class="col-lg-10 col-sm-12 col-12">
-            <form action="">
-            {% csrf_token %}
-            <p>{% blocktrans %}Search results{% endblocktrans %}</p>
-            {% render_table table %}
-                    <!-- Button to Open the Modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  {% blocktrans %}Contact selected{% endblocktrans %}
-</button>
-
-<!-- The Modal -->
-<div class="modal" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">{% blocktrans %}Contact Form{% endblocktrans %}</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      >
       </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-          <div class="form-group">
-    <label for="formGroupExampleInput">{% blocktrans %}Subject{% endblocktrans %}</label>
-    <input type="text" class="form-control" name="msg-only-subject" placeholder="{% blocktrans %}Subject{% endblocktrans %}">
-  </div>
-        <div class="form-group">
-    <label for="exampleFormControlTextarea1">Message</label>
-    <textarea class="form-control" name="msg-only-contact_text" rows="3" placeholder="{% blocktrans %}Message{% endblocktrans %}"></textarea>
-  </div>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-          <input type="submit"  formmethod="post" class="btn btn-primary" value="{% blocktrans %}Contact all selected{% endblocktrans %}">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">{% blocktrans %}Close{% endblocktrans %}</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-            </form>
-            </div>
-        </div>
-
     </div>
 {% endblock %}
