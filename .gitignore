@@ -47,6 +47,7 @@ media
 build/
 develop-eggs/
 dist/
+dist-translation-build/
 downloads/
 eggs/
 .eggs/
