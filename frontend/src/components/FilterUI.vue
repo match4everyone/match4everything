@@ -50,6 +50,7 @@
               :current-page="currentPage"
               :total-rows="numberOfResults"
               :items-per-page="itemsPerPage"
+              ref="results"
               @pageChanged="pageChanged">
             </filter-results>
           </div>
@@ -105,6 +106,7 @@ export default {
     updateQuery(event) {
       this.componentQueryStrings[event.path] = event.queryString
       console.log('Updated queryString from component',event)
+      this.$refs.results.clearSelection()
       this.fetchResults()
     },
     buildFilterfromURL(anURLSearchParams) {
