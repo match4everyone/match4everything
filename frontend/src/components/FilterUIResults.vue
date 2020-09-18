@@ -58,18 +58,20 @@ const dataTransformators = {
       return targetRow
     }
   },
-  'boolean': (path) => {
+  'text': (path) => {
     return (sourceRow,targetRow) => {
       targetRow[path] = sourceRow[path]
       return targetRow
     }
   },
-  'text': (path,property) => [{
-    key: `${ path }`,
-    label: property.label
-  }],
+  'conditional': (path) => {
+    return (sourceRow,targetRow) => {
+      targetRow[path] = sourceRow[`${ path }-cond`]
+      return targetRow
+    }
+  },
 }
-dataTransformators.conditional = dataTransformators.text = dataTransformators.boolean // same logic for all three
+dataTransformators.boolean = dataTransformators.text // same logic
 
 export default {
   name: 'FilterUIResults',
