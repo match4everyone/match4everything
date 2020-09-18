@@ -48,8 +48,9 @@
               :filter-model="filterModel"
               :results="results"
               :current-page="currentPage"
-              @next="next"
-              @previous="previous">
+              :total-rows="numberOfResults"
+              :items-per-page="itemsPerPage"
+              @pageChanged="pageChanged">
             </filter-results>
           </div>
         </div>
@@ -62,7 +63,6 @@
 import FacetedFilter from './FilterUIFacetedFilter'
 import FilterResults from './FilterUIResults'
 const _ = require('lodash')
-const itemsPerPage = 2
 
 export default {
   name: 'FilterUI',
@@ -82,6 +82,8 @@ export default {
       },
       componentQueryStrings: {},
       results: null,
+      numberOfResults: 0,
+      itemsPerPage: 10,
       urls: {
         filterModel: '',
         participantList: '',
@@ -91,7 +93,7 @@ export default {
       initialURLParameters: new URLSearchParams(window.location.search),
       filterModelPromise: null,
       loading: false,
-      currentPage: 0,
+      currentPage: 1,
       fieldLabels: [],
     }
   },
@@ -117,16 +119,13 @@ export default {
         this.fetchResults(false)
       })
     },
-    next() {
-      this.fetchResults(true, this.currentPage + 1 )
+    pageChanged(page) {
+      this.fetchResults(true, page )
     },
-    previous() {
-      this.fetchResults(true, this.currentPage - 1 )
-    },
-    fetchResults: _.debounce(function (saveState = true, page = 0) {
+    fetchResults: _.debounce(function (saveState = true, page = 1) {
       console.log('Fetch Results',{ saveState, page })
-      page = Math.max(0,page)
-      if (page > 0 && page === this.currentPage) return
+      page = Math.max(1,page)
+      if (page > 1 && page === this.currentPage) return
       this.loading = true
       this.lastFetchRequestAbortController.abort() // abort old requests
       this.lastFetchRequestAbortController = new AbortController()
@@ -136,8 +135,8 @@ export default {
         ['location_country_code', this.location.countryCode],
         ['location_zipcode', this.location.zipCode],
         ['location_distance', this.location.distance],
-        ['limit', itemsPerPage],
-        ['offset', page * itemsPerPage],
+        ['limit', this.itemsPerPage],
+        ['offset', (page - 1 ) * this.itemsPerPage],
       ]
 
       let componentParameters = []
@@ -159,6 +158,7 @@ export default {
         .then( response => response.json() )
         .then( jsonData => {
           this.results = jsonData.results
+          this.numberOfResults = jsonData.count
           this.currentPage = page
         })
         .catch(error => {

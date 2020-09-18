@@ -24,11 +24,12 @@
       </template>
     </b-table>
 
-
-    Page: {{ currentPage }} / {{ pages }}
-    <button @click="previous">Previous</button>
-    <button @click="next">Next</button>
-
+    <b-pagination
+      :value="currentPage"
+      :total-rows="totalRows"
+      :per-page="itemsPerPage"
+      @change="pageChanged"
+    ></b-pagination>
 
   </div>
 </template>
@@ -82,7 +83,7 @@ dataTransformators.conditional = dataTransformators.text = dataTransformators.bo
 
 export default {
   name: 'FilterUIResults',
-  props: [ 'filterModel','fieldLabels','results','pages','currentPage'],
+  props: [ 'filterModel','fieldLabels','results','totalRows','currentPage','itemsPerPage'],
   computed: {
     flattenedFilterModel() {
       let map = new Map()
@@ -141,6 +142,9 @@ export default {
         }
       }
       return pathList
+    },
+    pageChanged(page) {
+      this.$emit('pageChanged',page)
     }
   },
   filters: {
