@@ -1,16 +1,55 @@
 <template>
   <div>
+
+    <div class="d-flex align-items-center justify-content-between flex-wrap">
+      <div class="p-2">
+        <h6 class="d-inline">Selected:</h6> <b-badge variant="primary">{{ selectedItems.length }}</b-badge>
+      </div>
+      <div class="p-2">
+        <b-dropdown right class="m-2" html="<i class='fa fa-filter' aria-hidden='true'></i> Select Fields">
+          <b-dropdown-form style="width:40rem">
+            <b-form-checkbox-group class="mb-3 vertically-separate-children" switches :options="fieldSelector" v-model="selectedFields" stacked>
+            </b-form-checkbox-group>
+            <b-form-group>
+              <button type="button" class="btn btn-secondary btn-sm" @click="selectAllFields"><span class="fa fa-trash-o"></span> Zurücksetzen</button>
+            </b-form-group>
+          </b-dropdown-form>
+        </b-dropdown>
+      </div>
+    </div>
+
+
+
     <b-table
       striped
       small
       responsive
       :items="items"
-      :fields="fields"
+      :fields="filteredFields"
+      ref="resultsTable"
       primary-key="uuid"
     >
-      <!-- A custom formatted column -->
+      <template v-slot:cell()="data">
+        <template v-if="data.value === true">
+          <div class="text-center">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+          </div>
+        </template>
+        <template v-else-if="data.value === false">
+          <div class="text-center">
+            <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+          </div>
+        </template>
+
+        <template v-else>
+        {{ data.value }}
+        </template>
+      </template>
+      <template v-slot:head(uuid)>
+        <!-- Due to pagination select all will be rather confusing <b-form-checkbox></b-form-checkbox>-->
+      </template>
       <template v-slot:cell(uuid)="data">
-        <b class="text-info">{{ data }}</b>, <b>{{ data }}</b>
+        <b-form-checkbox @change="toggleRowSelect(data)" :checked="selectedItems.includes(data.item.uuid)"></b-form-checkbox>
       </template>
     </b-table>
 
@@ -72,10 +111,17 @@ const dataTransformators = {
   },
 }
 dataTransformators.boolean = dataTransformators.text // same logic
+const _ = require('lodash')
 
 export default {
   name: 'FilterUIResults',
   props: [ 'filterModel','fieldLabels','results','totalRows','currentPage','itemsPerPage'],
+  data() {
+    return {
+      selectedFields: [],
+      selectedItems: [],
+    }
+  },
   computed: {
     flattenedFilterModel() {
       let map = new Map()
@@ -86,9 +132,13 @@ export default {
     },
     items() {
       let sourceData = this.results
-      if (sourceData === null) return []
+      if (!sourceData) return []
 
-      let transformers = []
+      let transformers = [(sourceRow, targetObject) => {
+        targetObject.uuid = sourceRow.uuid
+        return targetObject
+      }]
+
       this.flattenedFilterModel.forEach((property,path) => {
         if (dataTransformators.hasOwnProperty(property.type)) {
           let newTransformers = dataTransformators[property.type](path,property)
@@ -101,27 +151,42 @@ export default {
           {}
         )
       )
-
+      transformedData.checkbox = false
       return transformedData
     },
     fields() {
-      if (this.items.length === 0 ) return []
-      let firstItem = this.items[0]
-      return Array.from(this.flattenedFilterModel)
-        .filter(keyPropertyTuple => firstItem.hasOwnProperty(keyPropertyTuple[0]))
+      if (!this.flattenedFilterModel) return []
+      let fieldsFromFilterModel = Array.from(this.flattenedFilterModel)
+        .filter(keyPropertyTuple => dataTransformators.hasOwnProperty(keyPropertyTuple[1].type))
         .map(keyPropertyTuple => ({
           key: keyPropertyTuple[0],
           label: keyPropertyTuple[1].label,
         }))
-    }
+
+      let headerFields = [
+        {
+          key: 'uuid',
+          label: '',
+        },
+      ]
+
+      return [...headerFields,...fieldsFromFilterModel]
+    },
+    fieldSelector() {
+      return this.fields
+        .filter(field => field.label && field.label.length > 0)
+        .map(field => ({ text: field.label, value: field.key}))
+    },
+    filteredFields() {
+      return this.fields.filter(field => this.selectedFields.includes(field.key))
+    },
+  },
+  watch: {
+    fields(newValue) {
+      this.selectedFields = newValue.map(field => field.key)
+    },
   },
   methods: {
-    next() {
-      this.$emit('next')
-    },
-    previous() {
-      this.$emit('previous')
-    },
     flattenFilterModelTree(node,currentPath = []) {
       let pathList = []
       if (currentPath.length !== 0) { // do not add root node
@@ -137,7 +202,21 @@ export default {
     },
     pageChanged(page) {
       this.$emit('pageChanged',page)
-    }
+    },
+    selectAllFields() {
+      this.selectedFields = this.fields.map(field => field.key)
+    },
+    clearSelection()  {
+      this.selectedItems = []
+    },
+    toggleRowSelect(context) {
+      let uuid = context.item.uuid
+      if (this.selectedItems.includes(uuid)) {
+        this.selectedItems = this.selectedItems.filter(item => item !== uuid)
+      } else {
+        this.selectedItems.push(uuid)
+      }
+    },
   },
   filters: {
     pretty: function(value) {
