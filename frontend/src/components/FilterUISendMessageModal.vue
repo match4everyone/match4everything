@@ -60,15 +60,19 @@ export default {
         headers: {'X-CSRFToken': this.csrftoken},
         body: formData,
       })
-        .then(response => {
-          this.$emit('sent','All was well')
-          console.log(response)
+        .then(response => response.json())
+        .then(json => {
+          if (json.success) {
+            this.$emit('sent',json.message)
+          } else {
+            this.$emit('error',json.message)
+          }
+          console.log('Message sending response',json.success,json.message,json)
         })
         .catch(error => {
-          this.$emit('error','Nothing is well')
-          console.error('Error:', error)
+          this.$emit('error','Messages could not be send, please try again later')
+          console.error('Unexpexted error sending messages:', error)
         })
-
       this.hide()
     }
   },

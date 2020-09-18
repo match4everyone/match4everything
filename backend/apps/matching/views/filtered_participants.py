@@ -1,5 +1,5 @@
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.http import JsonResponse
+from django.utils.translation import gettext as _
 from django_filters.views import FilterView
 from django_tables2 import SingleTableMixin
 
@@ -55,7 +55,14 @@ class FilteredParticipantList(SingleTableMixin, FilterView):
                 )
                 m.save()
 
-        return HttpResponseRedirect(reverse("profile"))
+        return JsonResponse(  # Please do not return HTML in message. Only pure Text Message supported
+            {
+                "success": True,
+                "message": _(
+                    "Your message has been sent to the selected parties.\nReview your sent messages in your profile."
+                ),
+            }
+        )
 
     def get_model_class(self):
         return ParticipantInfo[self.kwargs["p_type"]]
