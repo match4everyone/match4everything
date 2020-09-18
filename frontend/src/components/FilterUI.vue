@@ -5,36 +5,48 @@
         Allgemeiner Text für den Filter
       </div>
     </div>
-    <div class="row my-4">
-      <div class="form-group col-md">
-        <label for="location_country_code">Country-Code</label>
-        <select class="form-control" id="location_country_code" v-model="location.countryCode" @change="fetchResults" >
-          <option
-            v-for="countryCode in filterModel.location.location_country_code"
-            :value="countryCode[0]"
-            :key="countryCode[0]"
-          >
-            {{countryCode[1]}}
-          </option>
-        </select>
-      </div>
-      <div class="form-group col-sm">
-        <label for="location_zipcode">ZIP-Code</label>
-        <input type="text" class="form-control" id="location_zipcode" v-model="location.zipCode" @input="fetchResults">
-      </div>
-      <div class="form-group col-sm">
-        <label for="location_distance">Distance</label>
-        <select class="form-control" id="location_distance" v-model="location.distance" @change="fetchResults" >
-          <option
-            v-for="distance in filterModel.location.location_distance"
-            :value="distance[0]"
-            :key="distance[0]"
-          >
-            {{distance[1]}}
-          </option>
-        </select>
-      </div>
-    </div>
+    <b-form class="row my-4">
+      <b-form-group
+        class="col-md"
+        label="Country-Code"
+        label-for="location_country_code"
+        :state="errorMessages.location_country_code.length === 0"
+        :invalid-feedback="errorMessages.location_country_code.join(' ')"
+      >
+        <b-form-select
+          id="location_country_code"
+          v-model="location.countryCode"
+          @change="fetchResults"
+          :state="errorMessages.location_country_code.length === 0"
+          :options="filterModel.location.location_country_code.map(e => ({ value: e[0], text: e[1] }))">
+        </b-form-select>
+      </b-form-group>
+      <b-form-group
+        class="col-sm"
+        label="ZIP-Code"
+        label-for="location_zipcode"
+        :state="errorMessages.location_zipcode.length === 0"
+        :invalid-feedback="errorMessages.location_zipcode.join(' ')"
+      >
+        <b-input id="location_zipcode" v-model="location.zipCode" @input="fetchResults" :state="errorMessages.location_zipcode.length === 0"></b-input>
+      </b-form-group>
+      <b-form-group
+        class="col-sm"
+        label="Distance"
+        label-for="location_distance"
+        :state="errorMessages.location_distance.length === 0"
+        :invalid-feedback="errorMessages.location_distance.join(' ')"
+      >
+        <b-form-select
+          id="location_distance"
+          v-model="location.distance"
+          @change="fetchResults"
+          :state="errorMessages.location_distance.length === 0"
+          :options="filterModel.location.location_distance.map(e => ({ value: e[0], text: e[1] }))"
+        >
+        </b-form-select>
+      </b-form-group>
+    </b-form>
     <div class="row my-5">
       <div class="col-lg-2 filter-search-criteria">
         <faceted-filter :filter-model="filterModel" @updateQuery="updateQuery" ref="filter" />
@@ -96,6 +108,11 @@ export default {
       loading: false,
       currentPage: 1,
       fieldLabels: [],
+      errorMessages: {
+        location_country_code: [],
+        location_zipcode: [],
+        location_distance: [],
+      },
     }
   },
   components: {
@@ -156,12 +173,29 @@ export default {
         history.pushState({ searchParameters: parameters },'',`?${ urlParameters.toString() }`)
         console.log('Pushing state to history', { searchParameters: parameters })
       }
+      for (let fieldId in this.errorMessages) {
+        this.errorMessages[fieldId] = [] // clear error messages
+      }
+      let response = null
       fetch(`${ this.urls.participantList }?${ urlParameters.toString() }`, { signal })
-        .then( response => response.json() )
+        .then( r => {
+          response = r
+          return r.json()
+        })
         .then( jsonData => {
-          this.results = jsonData.results
-          this.numberOfResults = jsonData.count
-          this.currentPage = page
+          if (response.status === 200) {
+            this.results = jsonData.results
+            this.numberOfResults = jsonData.count
+            this.currentPage = page
+          } else {
+            for (let fieldId in jsonData) {
+              if (Object.prototype.hasOwnProperty.call(this.errorMessages,fieldId)) {
+                this.errorMessages[fieldId] = jsonData[fieldId]
+              }
+            }
+            this.numberOfResults = 0
+            this.currentPage = 1
+          }
         })
         .catch(error => {
           if (error.name !== 'AbortError') {
