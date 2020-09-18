@@ -1,15 +1,5 @@
 <template>
   <div>
-    <h2>Before transformation</h2>
-    <pre style="overflow-y:auto; overflow-x:auto; max-height:200px;">
-      {{ results | pretty }}
-    </pre>
-
-    <h2>After transformation</h2>
-    <pre style="overflow-y:auto; overflow-x:auto; max-height:200px;">
-      {{ items | pretty }}
-    </pre>
-
     <b-table
       striped
       small
