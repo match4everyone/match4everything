@@ -69,8 +69,7 @@ export default {
           console.log('Message sending response',json.success,json.message,json)
         })
         .catch(error => {
-          this.$emit('error','Messages could not be send, please try again later')
-          console.error('Unexpexted error sending messages:', error)
+          console.error('Unexpected error sending messages:', error)
         })
       this.hide()
     }
