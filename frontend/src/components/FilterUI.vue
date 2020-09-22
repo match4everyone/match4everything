@@ -122,7 +122,7 @@ export default {
   methods: {
     updateQuery(event) {
       this.componentQueryStrings[event.path] = event.queryString
-      console.log('Updated queryString from component',event)
+      console.debug('Updated queryString from component',event)
       this.$refs.results.clearSelection()
       this.fetchResults()
     },
@@ -142,7 +142,7 @@ export default {
       this.fetchResults(true, page )
     },
     fetchResults: _.debounce(function (saveState = true, page = 1) {
-      console.log('Fetch Results',{ saveState, page })
+      console.debug('Fetch Results',{ saveState, page })
       page = Math.max(1,page)
       if (page > 1 && page === this.currentPage) return
       this.loading = true
@@ -171,7 +171,7 @@ export default {
 
       if (saveState) {
         history.pushState({ searchParameters: parameters },'',`?${ urlParameters.toString() }`)
-        console.log('Pushing state to history', { searchParameters: parameters })
+        console.debug('Pushing state to history', { searchParameters: parameters })
       }
       for (let fieldId in this.errorMessages) {
         this.errorMessages[fieldId] = [] // clear error messages
