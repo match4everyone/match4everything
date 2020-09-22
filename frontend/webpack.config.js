@@ -72,7 +72,7 @@ module.exports = (env, argv) => {
                 {
                     test: /\.m?js$/,
                     exclude: /(node_modules|bower_components)/,
-                    /*se: {
+                    use: {
                         loader: 'babel-loader',
                         options: {
                             plugins: [],
@@ -90,7 +90,7 @@ module.exports = (env, argv) => {
                                 }]
                             ]
                         }
-                    }*/
+                    }
                 },
                 {
                     test: /\.(scss)$/,
@@ -223,6 +223,11 @@ module.exports = (env, argv) => {
             configuration.plugins = configuration.plugins.filter(
                 pluginInstance => !excludedPlugins.some(excludedPlugin => pluginInstance instanceof excludedPlugin)
             )
+            configuration.module.rules.forEach(rule => {
+                if (rule.use && !Array.isArray(rule.use) && rule.use.loader === 'babel-loader') {
+                    delete rule.use
+                }
+            })
         }
     } else {
         console.log('Running in production mode')
