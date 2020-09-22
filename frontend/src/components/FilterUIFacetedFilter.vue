@@ -37,11 +37,5 @@ export default {
       return returnArray
     },
   },
-  mounted() {
-    console.log('Filter mounted')
-  },
-  created() {
-    console.log('Filter created')
-  }
 }
 </script>

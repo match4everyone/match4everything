@@ -207,18 +207,14 @@ export default {
     },250,{ leading:true, trailing: true }), // throttle for 500 ms, execute a last time after thorttling window has elapsed
   },
   mounted() {
-    console.log('Main UI Mounted')
     this.buildFilterfromURL(this.initialURLParameters)
-
     window.addEventListener('popstate', (event) => {
       if (event.state && event.state.searchParameters) {
         this.buildFilterfromURL(new URLSearchParams(event.state.searchParameters))
       }
     })
-
   },
   beforeMount() {
-    console.log('Main UI created')
     this.urls.filterModel = this.$el.getAttribute('data-filter-model-url')
     this.urls.participantList = this.$el.getAttribute('data-get-participant-url')
     this.urls.tableLayout = this.$el.getAttribute('data-table-layout-url')
