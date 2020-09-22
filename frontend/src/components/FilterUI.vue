@@ -113,7 +113,6 @@ export default {
         location_zipcode: [],
         location_distance: [],
       },
-      testText: this.$gettext('TEST')
     }
   },
   components: {
