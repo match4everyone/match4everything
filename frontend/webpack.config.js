@@ -22,6 +22,9 @@ module.exports = (env, argv) => {
         watchOptions: {
             ignored: /node_modules/,
         },
+        externals: {
+            django: 'django',
+        },
         context: __dirname,
         performance: {
             maxEntrypointSize: 600000,

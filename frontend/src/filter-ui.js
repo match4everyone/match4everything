@@ -2,6 +2,7 @@ import Vue from 'vue'
 import FilterUIComponentDefinition from './components/FilterUI'
 import { FilterComponentManager } from './utils/FilterComponentManager'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import django from 'django'
 
 /*
 Fugly, but need to get the global object, if imported the way it should be
@@ -11,8 +12,17 @@ them, there is no choice
 const globalBootstrapJQuery = window.$
 Vue.prototype.$jQuery = globalBootstrapJQuery
 
-const globalTranslateFunction = window.gettext || ((text) => { return `###${ text }###` })
-Vue.prototype.gettext = globalTranslateFunction
+/*
+A little bit of the same for django translations. This (re)uses the django approach.
+There are a lot better solutions for javascript by itself but this way we can keep
+all the translations in the same place as the django ones.
+
+Docs: https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#internationalization-in-javascript-code
+(Requires a separate webpack configuration to create a special build with unmodified function names and w/o source-maps)
+*/
+Vue.prototype.$gettext  = django.gettext
+Vue.prototype.$ngettext = django.ngettext
+Vue.prototype.$interpolate = django.interpolate
 
 FilterComponentManager.registerComponents(Vue)
 
