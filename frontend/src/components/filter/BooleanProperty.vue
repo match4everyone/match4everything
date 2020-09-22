@@ -9,12 +9,12 @@
         @change="selectionChanged"
       >
         <option value="0"></option>
-        <option value="1">Muss ausgewählt sein</option>
-        <option value="2">Darf nicht ausgewählt sein</option>
+        <option value="1">{{ $gettext('Has to be selected') }}</option>
+        <option value="2">{{ $gettext('May not be selected') }}</option>
       </select>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-secondary btn-sm" @click="clear"><span class="fa fa-trash-o"></span> Zurücksetzen</button>
+      <button type="button" class="btn btn-secondary btn-sm" @click="clear"><span class="fa fa-trash-o"></span> {{ $gettext('Reset Selection') }}</button>
     </div>
   </accordion>
 </template>

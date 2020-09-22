@@ -10,7 +10,7 @@
         @input="selectionChanged">
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-secondary btn-sm" @click="clear"><span class="fa fa-trash-o"></span> Zurücksetzen</button>
+      <button type="button" class="btn btn-secondary btn-sm" @click="clear"><span class="fa fa-trash-o"></span> {{ $gettext('Reset Selection') }}</button>
     </div>
   </accordion>
 </template>

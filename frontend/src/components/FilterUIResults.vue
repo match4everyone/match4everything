@@ -3,15 +3,15 @@
 
     <div class="d-flex align-items-center justify-content-between flex-wrap">
       <div class="p-2">
-        <h6 class="d-inline">Selected:</h6> <b-badge variant="primary">{{ selectedItems.length }}</b-badge>
+        <h6 class="d-inline">{{ $gettext('Selected:') }}</h6> <b-badge variant="primary">{{ selectedItems.length }}</b-badge>
       </div>
       <div class="p-2">
-        <b-dropdown right class="m-2" html="<i class='fa fa-filter' aria-hidden='true'></i> Select Fields">
+        <b-dropdown right class="m-2" :html="labels.fieldSelector">
           <b-dropdown-form style="width:40rem">
             <b-form-checkbox-group class="mb-3 vertically-separate-children" switches :options="fieldSelector" v-model="selectedFields" stacked @change="fieldSelectionChanged">
             </b-form-checkbox-group>
             <b-form-group>
-              <button type="button" class="btn btn-secondary btn-sm" @click="selectAllFields"><span class="fa fa-trash-o"></span> Zurücksetzen</button>
+              <button type="button" class="btn btn-secondary btn-sm" @click="selectAllFields"><span class="fa fa-trash-o"></span> {{ $gettext('Reset Selection') }}</button>
             </b-form-group>
           </b-dropdown-form>
         </b-dropdown>
@@ -61,7 +61,7 @@
       @change="pageChanged"
     ></b-pagination>
 
-    <b-button :disabled="selectedItems.length === 0" primary @click="$refs.modal.show()">Contact {{ selectedItems.length }} selected</b-button>
+    <b-button :disabled="selectedItems.length === 0" primary @click="$refs.modal.show()">{{ selectButtonLabel }}</b-button>
     <send-message-modal :selectedUUIDs="selectedItems" ref="modal" @sent="sendSuccessful" @error="sendFailed" />
   </div>
 </template>
@@ -127,9 +127,20 @@ export default {
     return {
       selectedFields: [],
       selectedItems: [],
+      labels: {
+        fieldSelector: `<i class='fa fa-filter' aria-hidden='true'></i> ${ this.$gettext('Select Fields') }`
+      },
     }
   },
   computed: {
+    selectButtonLabel() {
+      const formats = this.$ngettext(
+        'Contact %(selected)s selected',
+        'Contact %(selected)s selected',
+        this.selectedItems.length
+      )
+      return this.$interpolate(formats,{ selected: this.selectedItems.length },true)
+    },
     flattenedFilterModel() {
       let map = new Map()
       this.flattenFilterModelTree(this.filterModel).forEach(
@@ -245,10 +256,10 @@ export default {
       })
     },
     sendSuccessful(message) {
-      this.toast('Messages sent',message,{ variant: 'success' })
+      this.toast(this.$gettext('Messages sent'),message,{ variant: 'success' })
     },
     sendFailed(message) {
-      this.toast('Messages not sent',message,{ variant: 'danger', noAutoHide: true })
+      this.toast(this.$gettext('Messages not sent'),message,{ variant: 'danger', noAutoHide: true })
     },
     fieldSelectionChanged(checked) {
       localStorage.setItem(selectedFieldsStorageKey, JSON.stringify(checked))

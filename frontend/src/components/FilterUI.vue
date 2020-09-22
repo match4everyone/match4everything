@@ -2,13 +2,13 @@
   <div>
     <div class="row my-4">
       <div class="col-md-12">
-        {{ gettext("Ich bin ein Filter Text") }}
+        {{ $gettext("Please use the filter on the left hand side to narrow down your search results. Select the parties to be contacted and click the Contact button below the table to send a message") }}
       </div>
     </div>
     <b-form class="row my-4">
       <b-form-group
         class="col-md"
-        label="Country-Code"
+        :label="$gettext('Country-Code')"
         label-for="location_country_code"
         :state="errorMessages.location_country_code.length === 0"
         :invalid-feedback="errorMessages.location_country_code.join(' ')"
@@ -23,7 +23,7 @@
       </b-form-group>
       <b-form-group
         class="col-sm"
-        label="ZIP-Code"
+        :label="$gettext('ZIP-Code')"
         label-for="location_zipcode"
         :state="errorMessages.location_zipcode.length === 0"
         :invalid-feedback="errorMessages.location_zipcode.join(' ')"
@@ -32,7 +32,7 @@
       </b-form-group>
       <b-form-group
         class="col-sm"
-        label="Distance"
+        :label="$gettext('Distance')"
         label-for="location_distance"
         :state="errorMessages.location_distance.length === 0"
         :invalid-feedback="errorMessages.location_distance.join(' ')"
@@ -53,7 +53,7 @@
       </div>
       <div class="col-lg-10 filter-search-results">
         <div class="card">
-          <h5 class="card-header"> <b-spinner small variant="primary" v-if="loading" label="Loading..."> </b-spinner>Results</h5>
+          <h5 class="card-header"> <b-spinner small variant="primary" v-if="loading" :label="$gettext( 'Loading...' )"> </b-spinner>{{ $gettext('Search Results') }}</h5>
           <div class="card-body">
             <filter-results
               :field-labels="fieldLabels"

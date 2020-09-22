@@ -3,18 +3,18 @@
     <template v-slot:modal-footer="context">
       <div class="d-flex align-items-center justify-content-between flex-wrap" style="width:100%">
         <b-button variant="primary" @click="sendMessages()" >
-          Contact all selected
+          {{ $gettext('Contact all selected') }}
         </b-button>
         <b-button variant="danger" @click="context.ok()" >
-          Close
+          {{ $gettext('Cancel') }}
         </b-button>
       </div>
     </template>
     <b-form-group label="Subject">
-      <b-form-input v-model="subject" placeholder="Subject"></b-form-input>
+      <b-form-input v-model="subject" :placeholder="$gettext('Subject')"></b-form-input>
     </b-form-group>
     <b-form-group label="message">
-      <b-form-textarea v-model="message" placeholder="Message"></b-form-textarea>
+      <b-form-textarea v-model="message" :placeholder="$gettext('Message')"></b-form-textarea>
     </b-form-group>
   </b-modal>
 </template>
@@ -69,6 +69,7 @@ export default {
           console.log('Message sending response',json.success,json.message,json)
         })
         .catch(error => {
+          this.$emit('error',this.$gettext('Messages could not be send, please try again later'))
           console.error('Unexpected error sending messages:', error)
         })
       this.hide()
