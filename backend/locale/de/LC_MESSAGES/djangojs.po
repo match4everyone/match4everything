@@ -3,24 +3,85 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 1900-01-01 00:00+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2020-09-22 03:27+0200\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: filter-ui.js:68804
-msgid "TEST"
-msgstr "Test translated"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.4.1\n"
 
-#: filter-ui.js:70121
-msgid "Ich bin ein Filter Text"
-msgstr "I am a filter text"
+msgid "Select Fields"
+msgstr "Felder auswählen"
+
+msgid "Contact %(selected)s selected"
+msgid_plural "Contact %(selected)s selected"
+msgstr[0] "Ausgewählten kontaktieren"
+msgstr[1] "%(selected)s ausgewählte kontaktieren"
+
+msgid "Messages sent"
+msgstr "Nachrichten versendet"
+
+msgid "Messages not sent"
+msgstr "Fehler beim Versand der Nachricht"
+
+msgid "Messages could not be send, please try again later"
+msgstr ""
+"Nachrichten konnten nicht versendet werden. Bitte versuchen Sie es "
+"später noch einmal"
+
+msgid ""
+"Please use the filter on the left hand side to narrow down your search "
+"results. Select the parties to be contacted and click the Contact button "
+"below the table to send a message"
+msgstr ""
+"Bitte benutzen Sie den Filter auf der linken Seite, um Ihre "
+"Suchergebnisse einzugrenzen. Wählen Sie die zu kontaktierenden Parteien "
+"aus und klicken Sie auf die Schaltfläche Kontakt unterhalb der Tabelle, "
+"um eine Nachricht zu senden"
+
+msgid "Country-Code"
+msgstr "Länder-Code"
+
+msgid "ZIP-Code"
+msgstr "Postleitzahl"
+
+msgid "Distance"
+msgstr "Entfernung"
+
+msgid "Loading..."
+msgstr "Lade..."
+
+msgid "Search Results"
+msgstr "Suchergebnisse"
+
+msgid "Selected:"
+msgstr "Ausgewählt:"
+
+msgid "Reset Selection"
+msgstr "Auswahl löschen"
+
+msgid "Contact all selected"
+msgstr "Nachrichten versenden"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Subject"
+msgstr "Betreff"
+
+msgid "Message"
+msgstr "Nachricht"
+
+msgid "Has to be selected"
+msgstr "Muss ausgewählt sein"
+
+msgid "May not be selected"
+msgstr "Darf nicht ausgewählt sein"
