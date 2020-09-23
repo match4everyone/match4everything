@@ -19,10 +19,8 @@ CMD [ "npm" , "run", "dev" ]
 # during the second build stage (https://docs.docker.com/develop/develop-images/multistage-build/)
 
 
-FROM frontendbuilder AS frontendbuilder-translation
-RUN [ "npm" , "run", "build-translation" ]
-
 FROM ubuntu:18.04 AS backend-base
+ENV TZ=UTC DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y python3 python3-pip libpq-dev gettext
 
 WORKDIR /backend
@@ -31,21 +29,21 @@ RUN pip3 install -r requirements.txt
 COPY backend/requirements.prod.txt /backend/requirements.prod.txt
 RUN pip3 install -r requirements.prod.txt
 COPY backend .
+COPY --from=frontendbuilder frontend/dist /frontend/dist
 
 # For the translation we need to create a djangojs.po file, create a new intermediate stage that will be thrown away later
-FROM backend-base AS backend-js-translation
-COPY --from=frontendbuilder-translation frontend/dist-translation-build /frontend/dist-translation-build
-WORKDIR /frontend/dist-translation-build
+FROM backend-base AS backend-messages
+WORKDIR /frontend/dist
 RUN python3 /backend/manage.py makemessages -d djangojs --no-location
-
+WORKDIR /backend
+RUN python3 /backend/manage.py makemessages -d django --no-location
 
 FROM backend-base
 # Copy the JS Bundle from the intermediate stage over into the backend container
 # Important: Do this before collecting static, otherwise the bundles won't be found
-COPY --from=frontendbuilder frontend/dist /frontend/dist
-COPY --from=backend-js-translation /backend/locale /backend/locale
+COPY --from=backend-messages /backend/locale /backend/locale
 WORKDIR /backend
-RUN python3 manage.py makemessages --no-location  &&\
+RUN \
     python3 manage.py compilemessages             &&\
     python3 manage.py collectstatic --no-input
 # Change permissions on run/ in case app is later run by non-root user

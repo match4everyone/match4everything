@@ -206,32 +206,6 @@ module.exports = (env, argv) => {
         console.log('Running in development mode')
         configuration.mode = 'development'
         configuration.devtool = 'eval-source-map'
-        if (argv.translationBuild) {
-            configuration.mode = 'none'
-            configuration.devtool = 'source-map'
-            console.log(
-                'Creating a translation build without changing any function and/or class names and omitting unnecessary plugins\n',
-                'Please do not forget to run makemessages afterwards (see project documentation)\n'
-            )
-            configuration.optimization = {
-                minimize:false
-            }
-            configuration.output = {
-                filename: '[name].js',
-                chunkFilename: '[name].js',
-                path: path.resolve(__dirname, 'dist-translation-build'),
-                publicPath: '/static/'
-            }
-            let excludedPlugins = [BundleTracker, FaviconsWebpackPlugin]
-            configuration.plugins = configuration.plugins.filter(
-                pluginInstance => !excludedPlugins.some(excludedPlugin => pluginInstance instanceof excludedPlugin)
-            )
-            configuration.module.rules.forEach(rule => {
-                if (rule.use && !Array.isArray(rule.use) && rule.use.loader === 'babel-loader') {
-                    delete rule.use
-                }
-            })
-        }
     } else {
         console.log('Running in production mode')
         const TerserPlugin = require('terser-webpack-plugin')
