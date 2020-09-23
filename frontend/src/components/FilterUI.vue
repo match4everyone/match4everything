@@ -203,7 +203,7 @@ export default {
           }
         })
         .finally(() => { this.loading = false })
-    },250,{ leading:true, trailing: true }), // throttle for 500 ms, execute a last time after thorttling window has elapsed
+    },250,{ leading:false, trailing: true }), // throttle for 500 ms, execute a last time after thorttling window has elapsed
   },
   mounted() {
     this.buildFilterfromURL(this.initialURLParameters)
