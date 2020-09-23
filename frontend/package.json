@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --mode=production",
     "build-dev": "webpack --mode=development",
+    "makemessages": "webpack --mode=production && cd dist && python3 ../../backend/manage.py makemessages -d djangojs --no-location ",
     "dev": "webpack --mode=development --watch --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

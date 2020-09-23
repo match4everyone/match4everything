@@ -130,12 +130,25 @@ In order to run pre-commit checks every time, please run `pre-commit install` on
 `django-admin makemessages -l de --no-location` (line numbers omitted to allow nicer merges)
 - Edit translations in `backend/locale/de/LC_MESSAGES/django.po`
 
+#### JavaScript
+
+- Translations in the FilterUI are handled using Djangos Gettext Approach. (See [Django Docs](https://docs.djangoproject.com/en/3.1/topics/i18n/translation/#internationalization-in-javascript-code))
+- Translation functions are loaded into Vue in filter-ui.js, gettext, ngettext and interpolate are available
+- The easiest way to create the translation file is to run a docker build and extract the generated file from the image:
+
+```
+ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build --no-start
+ docker cp $(docker-compose ps -q backend):/backend/locale targetDirectory
+```
+
+- Alternatively create .po file in backend/locale by running npm run makemessages in the frontend directory (requires local nodejs installation and npm install beforehand)
+
+
 ### Testing
 
 For executing the tests use `python3 manage.py test`.
 
 In case you add more required environment variables for productions, please check for their existance in `backend/apps/checks.py`.
-
 
 ## Implementation details
 

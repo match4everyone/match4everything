@@ -18,24 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-msgid "Select Fields"
-msgstr "Felder auswählen"
-
-msgid "Contact %(selected)s selected"
-msgid_plural "Contact %(selected)s selected"
-msgstr[0] "Ausgewählten kontaktieren"
-msgstr[1] "%(selected)s ausgewählte kontaktieren"
-
-msgid "Messages sent"
-msgstr "Nachrichten versendet"
-
-msgid "Messages not sent"
-msgstr "Fehler beim Versand der Nachricht"
-
-msgid "Messages could not be send, please try again later"
-msgstr ""
-"Nachrichten konnten nicht versendet werden. Bitte versuchen Sie es später "
-"noch einmal"
+msgid "toPrimitive"
+msgstr "toPrimitive"
 
 msgid ""
 "Please use the filter on the left hand side to narrow down your search "
@@ -62,11 +46,17 @@ msgstr "Lade..."
 msgid "Search Results"
 msgstr "Suchergebnisse"
 
-msgid "Selected:"
-msgstr "Ausgewählt:"
-
 msgid "Reset Selection"
 msgstr "Auswahl löschen"
+
+msgid "Has to be selected"
+msgstr "Muss ausgewählt sein"
+
+msgid "May not be selected"
+msgstr "Darf nicht ausgewählt sein"
+
+msgid "Selected:"
+msgstr "Ausgewählt:"
 
 msgid "Contact all selected"
 msgstr "Nachrichten versenden"
@@ -80,8 +70,21 @@ msgstr "Betreff"
 msgid "Message"
 msgstr "Nachricht"
 
-msgid "Has to be selected"
-msgstr "Muss ausgewählt sein"
+msgid "Messages could not be send, please try again later"
+msgstr ""
+"Nachrichten konnten nicht versendet werden. Bitte versuchen Sie es später "
+"noch einmal"
 
-msgid "May not be selected"
-msgstr "Darf nicht ausgewählt sein"
+msgid "Select Fields"
+msgstr "Felder auswählen"
+
+msgid "Contact %(selected)s selected"
+msgid_plural "Contact %(selected)s selected"
+msgstr[0] "Ausgewählten kontaktieren"
+msgstr[1] "%(selected)s ausgewählte kontaktieren"
+
+msgid "Messages sent"
+msgstr "Nachrichten versendet"
+
+msgid "Messages not sent"
+msgstr "Fehler beim Versand der Nachricht"
