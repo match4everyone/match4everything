@@ -128,9 +128,9 @@ export default {
     },
     buildFilterfromURL(anURLSearchParams) {
       let parameters = anURLSearchParams
-      this.location.zipCode = parameters.get('location_zipcode')
-      this.location.distance = parameters.get('location_distance')
-      this.location.countryCode = parameters.get('location_country_code')
+      this.location.zipCode = parameters.get('location_zipcode') || ''
+      this.location.distance = parameters.get('location_distance') || ''
+      this.location.countryCode = parameters.get('location_country_code') || ''
 
       this.filterModelPromise.then(() => {
         let queryParameters = this.$refs.filter.buildFilterfromURL(anURLSearchParams)
