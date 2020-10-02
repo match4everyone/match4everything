@@ -320,10 +320,13 @@ if IS_TRAVIS and os.environ["TRAVIS_PULL_REQUEST_SLUG"] not in ["match4everyone/
 # This is only used in the META tags for facebook's og
 BASE_URL = "https://match4everyone.de"
 
+PARTICIPANT_SETTINGS = {"A": A, "B": B}
+
 A_NAME = A.name
 B_NAME = B.name
 A = A.url_name
 B = B.url_name
+
 
 SETTINGS_EXPORT = [
     "BASE_URL",

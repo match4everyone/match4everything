@@ -2,13 +2,13 @@ from itertools import chain
 import string
 from typing import List
 
+from crispy_forms.layout import Column, Div, HTML, Row
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import numpy as np
 
 
 class Property:
-
     properties = None
 
     def __init__(self, label=None, name=None, help_text=None, info_text=None, private=False):
@@ -82,6 +82,16 @@ class Property:
             else:
                 return [False for i in self.get_model_fields()]
 
+    def get_signup_layout(self, prefix=None, ignore_private=None):
+        if self.private and not ignore_private:
+            return Div()
+        else:
+            return self._get_signup_layout(prefix, ignore_private=ignore_private)
+
+    def _get_signup_layout(self, prefix=None, ignore_private=True):
+        """Return a layout instance to render a signup page."""
+        raise NotImplementedError
+
     # use the ideas from playing around with filters in #40
     # def get_filters(self):
     #    raise NotImplementedError
@@ -95,14 +105,43 @@ class PropertyGroup(Property):
         self.properties = properties
 
     def get_model_field_names(self, prefix=None):
-        model_field_name = self.name if prefix is None else prefix + "--" + self.name
+        model_field_name = self.extend_prefix(prefix)
         return list(chain(*[p.get_model_field_names(model_field_name) for p in self.properties]))
+
+    def extend_prefix(self, prefix=None):
+        return self.name if prefix is None else prefix + "--" + self.name
 
     def get_model_fields(self):
         return list(chain(*[p.get_model_fields() for p in self.properties]))
 
     def generate_random_assignment(self, rs=None):
         return list(chain(*[p.generate_random_assignment(rs) for p in self.properties]))
+
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
+        return Div(
+            Div(
+                Div(
+                    HTML(
+                        f"<h5>{self.label}</h5>"
+                        + (self.help_text if self.help_text is not None else "")
+                    ),
+                    css_class="card-header",
+                ),
+                Div(
+                    *[
+                        Column(
+                            p.get_signup_layout(
+                                prefix=self.extend_prefix(prefix), ignore_private=ignore_private
+                            )
+                        )
+                        for p in self.properties
+                    ],
+                    css_class="card-body",
+                ),
+                css_class="card border-primary",
+            ),
+            HTML("<br>"),
+        )
 
 
 class ConditionalProperty(Property):
@@ -142,16 +181,21 @@ class ConditionalProperty(Property):
         self.properties = properties
 
     def get_model_field_names(self, prefix=None):
-        model_field_name = self.name if prefix is None else prefix + "--" + self.name
+        model_field_name = self.extend_prefix(prefix)
         conditional_fields = list(
             chain(*[p.get_model_field_names(model_field_name) for p in self.properties])
         )
         return [model_field_name + "-cond", *conditional_fields]
 
+    def extend_prefix(self, prefix=None):
+        return self.name if prefix is None else prefix + "--" + self.name
+
     def get_model_fields(self):
         conditional_fields = list(chain(*[p.get_model_fields() for p in self.properties]))
         return [
-            models.BooleanField(default=False),  # field for determining the condition
+            models.BooleanField(
+                default=False, verbose_name=self.label
+            ),  # field for determining the condition
             *conditional_fields,
         ]
 
@@ -162,6 +206,49 @@ class ConditionalProperty(Property):
             rs.choice([True, False]),
             *chain(*[p.generate_random_assignment(rs) for p in self.properties]),
         ]
+
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
+        field_names = self.get_model_field_names(prefix)
+        conditional_field = field_names[0]
+        return Div(
+            Row(
+                Column(conditional_field),
+                Div(
+                    HTML("<hr>"),
+                    *[
+                        Row(
+                            Column(
+                                p.get_signup_layout(
+                                    prefix=self.extend_prefix(prefix), ignore_private=ignore_private
+                                )
+                            )
+                        )
+                        for p in self.properties
+                    ],
+                    HTML("<hr>"),
+                    css_id=conditional_field,
+                ),
+                HTML(
+                    "<script>"
+                    "function do_" + conditional_field.replace("-", "") + "(){"
+                    "if ($('#id_info-"
+                    + conditional_field
+                    + "')[0].checked) {$('#"
+                    + conditional_field
+                    + "').fadeIn(300);} else {$('#"
+                    + conditional_field
+                    + "').fadeOut(300);}}"
+                    "$(document).ready(function () { do_"
+                    + conditional_field.replace("-", "")
+                    + "();});"
+                    "$('#id_info-"
+                    + conditional_field
+                    + "').change(function (){ do_"
+                    + conditional_field.replace("-", "")
+                    + "();});</script>"
+                ),
+            )
+        )
 
 
 class MultipleChoiceProperty(Property):
@@ -192,18 +279,34 @@ class MultipleChoiceProperty(Property):
         self.choices = choices
 
     def get_model_field_names(self, prefix=None):
-        model_field_name = self.name if prefix is None else prefix + "--" + self.name
+        model_field_name = self.extend_prefix(prefix)
 
         return [model_field_name + "-" + choice for choice, label in self.choices]
 
+    def extend_prefix(self, prefix=None):
+        return self.name if prefix is None else prefix + "--" + self.name
+
     def get_model_fields(self):
-        return [models.BooleanField(default=False) for choice, label in self.choices]
+        return [
+            models.BooleanField(default=False, verbose_name=label) for choice, label in self.choices
+        ]
 
     def generate_random_assignment(self, rs=None):
         if rs is None:
             rs = np.random
 
         return [rs.choice([True, False]) for i in range(len(self.choices))]
+
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
+        return Div(
+            HTML(self.label + "<br>"),
+            Row(
+                *[
+                    Column(n, css_class="col-md-4")
+                    for n in self.get_model_field_names(prefix=prefix)
+                ]
+            ),
+        )
 
 
 class SingleChoiceProperty(Property):
@@ -239,7 +342,11 @@ class SingleChoiceProperty(Property):
 
     def get_model_fields(self):
         if self.is_required:
-            return [models.CharField(choices=self.choices, max_length=self.max_length)]
+            return [
+                models.CharField(
+                    choices=self.choices, max_length=self.max_length, verbose_name=self.label
+                )
+            ]
         else:
             return [
                 models.CharField(
@@ -248,6 +355,7 @@ class SingleChoiceProperty(Property):
                     blank=True,
                     null=True,
                     max_length=self.max_length,
+                    verbose_name=self.label,
                 )
             ]
 
@@ -255,6 +363,9 @@ class SingleChoiceProperty(Property):
         if rs is None:
             rs = np.random
         return [rs.choice([code for code, label in self.choices])]
+
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
+        return self.get_model_field_names(prefix=prefix)
 
 
 class OrderedSingleChoiceProperty(Property):
@@ -289,11 +400,15 @@ class OrderedSingleChoiceProperty(Property):
 
     def get_model_fields(self):
         if self.is_required:
-            return [models.IntegerField(choices=self.choices, null=False)]
+            return [models.IntegerField(choices=self.choices, null=False, verbose_name=self.label)]
         else:
             return [
                 models.IntegerField(
-                    choices=self.choices, blank=True, null=True, default=self.default
+                    choices=self.choices,
+                    blank=True,
+                    null=True,
+                    default=self.default,
+                    verbose_name=self.label,
                 )
             ]
 
@@ -301,6 +416,9 @@ class OrderedSingleChoiceProperty(Property):
         if rs is None:
             rs = np.random
         return [rs.choice([code for code, label in self.choices])]
+
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
+        return self.get_model_field_names(prefix=prefix)[0]
 
 
 class TextProperty(Property):
@@ -333,15 +451,25 @@ class TextProperty(Property):
 
     def get_model_fields(self):
         if self.is_required:
-            return [models.CharField(max_length=self.max_length)]
+            return [models.CharField(max_length=self.max_length, verbose_name=self.label)]
         else:
-            return [models.CharField(max_length=self.max_length, blank=True, default=self.default)]
+            return [
+                models.CharField(
+                    max_length=self.max_length,
+                    blank=True,
+                    default=self.default,
+                    verbose_name=self.label,
+                )
+            ]
 
     def generate_random_assignment(self, rs=None):
         if rs is None:
             rs = np.random
         code = rs.choice([l for l in string.ascii_uppercase], self.max_length)
         return ["".join(code)]
+
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
+        return self.get_model_field_names(prefix=prefix)[0]
 
 
 class BooleanProperty(Property):
@@ -369,11 +497,14 @@ class BooleanProperty(Property):
 
     def get_model_fields(self, prefix=None):
         if self.is_required:
-            return [models.BooleanField()]
+            return [models.BooleanField(verbose_name=self.label)]
         else:
-            return [models.BooleanField(blank=True, default=self.default)]
+            return [models.BooleanField(blank=True, default=self.default, verbose_name=self.label)]
 
     def generate_random_assignment(self, rs=None):
         if rs is None:
             rs = np.random
         return [rs.choice([True, False])]
+
+    def _get_signup_layout(self, prefix=None, ignore_private=None):
+        return self.get_model_field_names(prefix=prefix)[0]

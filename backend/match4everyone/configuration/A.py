@@ -12,6 +12,10 @@ class AConfig(ParticipantConfig):
     # permissions = [
     #    NewPermissions.can_contact_type_b,
     # ]
+    profile_visible_for_participants_of_different_type = True
+    profile_visible_for_participants_of_same_type = False
+
+    needs_manual_approval_from_staff = False
 
     properties = [
         m4e.PropertyGroup(
