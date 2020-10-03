@@ -188,10 +188,7 @@ class Match(models.Model):
     @property
     def email_receiver_url(self):
         p = self.requested_participant().user.participant()
-        return (
-            True,
-            reverse("info-view", kwargs={"uuid": p.info.uuid, "p_type": p.participant_type}),
-        )
+        return reverse("info-view", kwargs={"uuid": p.info.uuid, "p_type": p.participant_type})
 
     @property
     def inital_message(self):
