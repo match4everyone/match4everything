@@ -13,7 +13,7 @@
     <b-form-group label="Subject">
       <b-form-input v-model="subject" :placeholder="$gettext('Subject')"></b-form-input>
     </b-form-group>
-    <b-form-group label="message">
+    <b-form-group label="Message">
       <b-form-textarea v-model="message" :placeholder="$gettext('Message')"></b-form-textarea>
     </b-form-group>
   </b-modal>
@@ -50,11 +50,10 @@ export default {
       }
       let formData = new FormData()
       this.selectedUUIDs.forEach(uuid => formData.append('uuid',uuid))
-      formData.append('uuid', 'e2f1e4b6-000d-45e2-83d5-85b8783f5ec4')
       formData.append('msg-only-subject', this.subject)
       formData.append('msg-only-contact_text',this.message)
 
-      fetch('https://coding-machine/matching/helper/?location_country_code=DE&location_zipcode=22952&location_distance=50', {
+      fetch('', {
         method: 'POST',
         headers: {'X-CSRFToken': this.csrftoken},
         body: formData,
