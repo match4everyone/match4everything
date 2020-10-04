@@ -63,13 +63,13 @@ def check_participant_config(app_configs=None, **kwargs):
 
     if settings.PARTICIPANT_SETTINGS is None:
         errors.append(Error("You need to set configuration objects for participant A and B."))
-    if not issubclass(settings.PARTICIPANT_SETTINGS["A"], ParticipantConfig):
+    if not isinstance(settings.PARTICIPANT_SETTINGS["A"], ParticipantConfig):
         errors.append(
             Error(
                 "Your A in PARTICIPANT_SETTINGS needs to be an instance of a subclass of ParticipantConfig."
             )
         )
-    if not issubclass(settings.PARTICIPANT_SETTINGS["B"], ParticipantConfig):
+    if not isinstance(settings.PARTICIPANT_SETTINGS["B"], ParticipantConfig):
         errors.append(
             Error(
                 "Your B in PARTICIPANT_SETTINGS needs to be an instance of a subclass of ParticipantConfig."
