@@ -715,9 +715,6 @@ msgstr "AGBs"
 #~ msgid "Answer to this request:"
 #~ msgstr "Auf diese Frage antworten:"
 
-#~ msgid "Subject"
-#~ msgstr "Betreff"
-
 #~ msgid "share my email"
 #~ msgstr "teile meine E-Mail-Adresse"
 
@@ -726,21 +723,3 @@ msgstr "AGBs"
 
 #~ msgid "Create a new account"
 #~ msgstr "Einen neuen Account erstellen"
-
-#~ msgid "What are you looking for?"
-#~ msgstr "Wonach suchen Sie?"
-
-#~ msgid "Apply to search"
-#~ msgstr "Filter anwenden"
-
-#~ msgid "Contact selected"
-#~ msgstr "Kontakt ausgewählt"
-
-#~ msgid "Contact Form"
-#~ msgstr "Kontaktformular"
-
-#~ msgid "Contact all selected"
-#~ msgstr "Kontaktiere alle ausgewählten"
-
-#~ msgid "Close"
-#~ msgstr "Schließen"

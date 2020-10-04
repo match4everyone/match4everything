@@ -88,13 +88,6 @@ class Match(models.Model):
         else:
             return self.participantB
 
-    def send_contact_request(self):
-        send_email(
-            to=self.requested_participant().user.email,
-            cc=self.initiator_participant().user.email,
-            message="hi wanna match",
-        )
-
     @classmethod
     def contact_all_not_matched_to(cls, this_filter):
         normal_filter, location_filter = this_filter.as_get_params(seperate_location=True)
@@ -114,8 +107,9 @@ class Match(models.Model):
                     filterA=this_filter,
                     initiator="B",
                 )
-                m.save()
                 m.send_contact_request()
+                m.save()
+
         else:
             not_yet_contacted = matches.filter(
                 ~models.Q(participant__match__participantA=this_filter.created_by.participant())
@@ -128,15 +122,31 @@ class Match(models.Model):
                     filterB=this_filter,
                     initiator="A",
                 )
-                m.save()
                 m.send_contact_request()
+                m.save()
 
     def send_response(self, subject, message):
         self.state = MATCH_STATE_OPTIONS.SUCCESSFUL
         self.response_subject = subject
         self.response_message = message
-        send_email(to=self.initiator_participant().user.email, cc=self.receriver().user.email)
+        send_email(
+            to_participant=self.initiator_participant(),
+            from_participant=self.requested_participant(),
+            subject=subject,
+            message=message,
+            email_type="response",
+        )
         self.save()
+
+    def send_contact_request(self):
+        subject, message = self.inital_message
+        send_email(
+            to_participant=self.requested_participant(),
+            from_participant=self.initiator_participant(),
+            subject=subject,
+            message=message,
+            email_type="contact_request",
+        )
 
     @classmethod
     def matches_to(cls, this_filter):
