@@ -1,12 +1,10 @@
 import logging
 
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser, Group
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
 
 logger = logging.getLogger(__name__)
 
@@ -46,15 +44,19 @@ class User(AbstractUser):
 
         if kwargs["is_A"]:
             user.groups.add(group_is_a)
-            if B.profile_visible_for_participants_of_different_type:
+            if settings.PARTICIPANT_SETTINGS[
+                "B"
+            ].profile_visible_for_participants_of_different_type:
                 user.groups.add(group_can_view_b)
-            if A.profile_visible_for_participants_of_same_type:
+            if settings.PARTICIPANT_SETTINGS["A"].profile_visible_for_participants_of_same_type:
                 user.groups.add(group_can_view_a)
         elif kwargs["is_B"]:
             user.groups.add(group_is_b)
-            if A.profile_visible_for_participants_of_different_type:
+            if settings.PARTICIPANT_SETTINGS[
+                "A"
+            ].profile_visible_for_participants_of_different_type:
                 user.groups.add(group_can_view_a)
-            if B.profile_visible_for_participants_of_same_type:
+            if settings.PARTICIPANT_SETTINGS["B"].profile_visible_for_participants_of_same_type:
                 user.groups.add(group_can_view_b)
 
         user.save()

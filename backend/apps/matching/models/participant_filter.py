@@ -2,6 +2,7 @@ from datetime import datetime
 import urllib
 import uuid
 
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -9,8 +10,6 @@ import django_filters
 
 from apps.matching.data.map_data import zipcodes  # noqa
 from apps.matching.utils.map import get_plzs_close_to
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
 
 from .participant_info import ParticipantInfo
 from .participant_info_location import CountryCodeChoices, ParticipantInfoLocation, RadiusChoices
@@ -317,5 +316,5 @@ def add_participant_specific_filters(p_type, participant_config):
     ParticipantInfoFilterSet[p_type] = ParticipantInfoFilterSetP
 
 
-add_participant_specific_filters("A", A)
-add_participant_specific_filters("B", B)
+add_participant_specific_filters("A", settings.PARTICIPANT_SETTINGS["A"])
+add_participant_specific_filters("B", settings.PARTICIPANT_SETTINGS["B"])

@@ -1,11 +1,10 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout
 from django import forms
+from django.conf import settings
 
 from apps.matching.models import ParticipantInfo
 from apps.matching.utils.dual_factory import instanciate_for_participants
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
 
 
 def make_participant_info_edit_form(participant_type):
@@ -19,9 +18,13 @@ def make_participant_info_edit_form(participant_type):
             self.helper = FormHelper()
             self.helper.form_tag = False
             if participant_type == "A":
-                self.helper.layout = Layout(*A.signup_and_edit_layout())
+                self.helper.layout = Layout(
+                    *settings.PARTICIPANT_SETTINGS["A"].signup_and_edit_layout()
+                )
             else:
-                self.helper.layout = Layout(*B.signup_and_edit_layout())
+                self.helper.layout = Layout(
+                    *settings.PARTICIPANT_SETTINGS["B"].signup_and_edit_layout()
+                )
 
     return ParticipantInfoEditForm
 

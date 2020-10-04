@@ -10,6 +10,8 @@ from django.core.checks import Warning
 
 from match4everyone.constants.enum import Environment
 
+from .configuration.participant import ParticipantConfig
+
 logger = logging.getLogger(__name__)
 
 
@@ -52,6 +54,28 @@ class Tags(DjangoTags):
     mail_tag = "mails"
     env_tag = "environment"
     map_tag = "map"
+    conf_tag = "configuration"
+
+
+@register_check(Tags.conf_tag, [Environment.DEVELOPMENT, Environment.PRODUCTION])
+def check_participant_config(app_configs=None, **kwargs):
+    errors = []
+
+    if settings.PARTICIPANT_SETTINGS is None:
+        errors.append(Error("You need to set configuration objects for participant A and B."))
+    if not isinstance(settings.PARTICIPANT_SETTINGS["A"], ParticipantConfig):
+        errors.append(
+            Error(
+                "Your A in PARTICIPANT_SETTINGS needs to be an instance of a subclass of ParticipantConfig."
+            )
+        )
+    if not isinstance(settings.PARTICIPANT_SETTINGS["B"], ParticipantConfig):
+        errors.append(
+            Error(
+                "Your B in PARTICIPANT_SETTINGS needs to be an instance of a subclass of ParticipantConfig."
+            )
+        )
+    return errors
 
 
 @register_check(Tags.env_tag, [Environment.DEVELOPMENT, Environment.PRODUCTION])

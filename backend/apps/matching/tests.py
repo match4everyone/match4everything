@@ -1,10 +1,8 @@
 from io import StringIO
 
+from django.conf import settings
 from django.core.management import call_command
 from django.test import TestCase, TransactionTestCase
-
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
 
 
 def create_superuser():
@@ -17,7 +15,10 @@ def create_superuser():
 
 def create_fakeusers(a=10, b=5):
     output = StringIO()
-    args = ["--add-{a}=".format(a=A.url_name) + str(a), "--add-{b}=".format(b=B.url_name) + str(b)]
+    args = [
+        "--add-{a}=".format(a=settings.PARTICIPANT_SETTINGS["A"].url_name) + str(a),
+        "--add-{b}=".format(b=settings.PARTICIPANT_SETTINGS["B"].url_name) + str(b),
+    ]
     opts = {}
     call_command("createfakeusers", *args, stdout=output, **opts)
     output_string = output.getvalue()

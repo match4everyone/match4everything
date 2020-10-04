@@ -16,8 +16,8 @@ from os import path
 from django.contrib.messages import constants as messages
 from django.utils.translation import ugettext_lazy as _
 
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
+from match4everyone.configuration.helper import helper_config
+from match4everyone.configuration.institution import institution_config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # or better:
@@ -306,13 +306,12 @@ if IS_TRAVIS and os.environ["TRAVIS_PULL_REQUEST_SLUG"] not in ["match4everyone/
 # This is only used in the META tags for facebook's og
 BASE_URL = "https://match4everyone.de"
 
-PARTICIPANT_SETTINGS = {"A": A, "B": B}
+PARTICIPANT_SETTINGS = {"A": helper_config, "B": institution_config}
 
-A_NAME = A.name
-B_NAME = B.name
-A = A.url_name
-B = B.url_name
-
+A_NAME = PARTICIPANT_SETTINGS["A"].name
+B_NAME = PARTICIPANT_SETTINGS["B"].name
+A = PARTICIPANT_SETTINGS["A"].url_name
+B = PARTICIPANT_SETTINGS["B"].url_name
 
 SETTINGS_EXPORT = [
     "BASE_URL",

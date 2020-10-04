@@ -46,4 +46,4 @@ class BConfig(ParticipantConfig):
     ]
 
 
-B = BConfig()
+institution_config = BConfig()

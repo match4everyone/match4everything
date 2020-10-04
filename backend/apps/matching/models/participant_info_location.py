@@ -1,6 +1,7 @@
 from datetime import datetime
 import uuid
 
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -8,8 +9,6 @@ import numpy as np
 
 from apps.matching.data.map_data import zipcodes  # noqa
 from apps.matching.utils.zipcodes import GERMAN_BIG_CITY_ZIPCODES  # noqa
-from match4everyone.configuration.A import A  # noqa
-from match4everyone.configuration.B import B  # noqa
 
 from .participant_info import ParticipantInfo
 
@@ -74,7 +73,7 @@ class ParticipantInfoLocationA(AbstractParticipantInfoLocation):
     participant_info = models.ForeignKey(
         ParticipantInfo["A"], on_delete=models.CASCADE, related_name="location"
     )
-    MAX_RADIUS = A.LOCATION_SEARCH_MAX_RADIUS
+    MAX_RADIUS = settings.PARTICIPANT_SETTINGS["A"].LOCATION_SEARCH_MAX_RADIUS
 
 
 class ParticipantInfoLocationB(AbstractParticipantInfoLocation):
@@ -82,7 +81,7 @@ class ParticipantInfoLocationB(AbstractParticipantInfoLocation):
     participant_info = models.ForeignKey(
         ParticipantInfo["B"], on_delete=models.CASCADE, related_name="location"
     )
-    MAX_RADIUS = B.LOCATION_SEARCH_MAX_RADIUS
+    MAX_RADIUS = settings.PARTICIPANT_SETTINGS["B"].LOCATION_SEARCH_MAX_RADIUS
 
 
 ParticipantInfoLocation = {

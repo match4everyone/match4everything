@@ -1,11 +1,12 @@
+from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import Http404
 
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
-
 
 def view_TableColumnJSON(request, p_type):
+
+    A = settings.PARTICIPANT_SETTINGS["A"]
+    B = settings.PARTICIPANT_SETTINGS["B"]
 
     if p_type == "A":
         names = A.get_model_field_names()
