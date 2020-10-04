@@ -9,6 +9,11 @@
 $fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome";
 
+// Import bootstrap-vue scss
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
+
 /* Load our scss */
 @import "_general";
 @import "_map";
+@import "_filter";

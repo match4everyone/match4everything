@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+{% blocktrans %}Your searches{% endblocktrans %}
+{% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% load render_table from django_tables2 %}
+
+
+{% block content %}
+<hr>
+
+<div class="container" style="margin-bottom:30px;">
+   {% for message in messages %}
+  <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+  </div>
+{% endfor %}
+    <p style="margin-top:30px;">
+    <div class="card border-info" style="margin-top:30px;">
+        <div class="card-header">
+        <div class="row">
+            <div class="col test-left">{% blocktrans %}Your search history.{% endblocktrans %}</div>
+            <div class="col text-right"><a href="{% url 'participant_list' p_type %}" class="btn btn-sm btn-outline-primary" role="button" >
+                <i class="fa fa-search-plus" aria-hidden="true"></i>
+                {% blocktrans %}Start a new search{% endblocktrans %}
+            </a></div>
+        </div>
+        </div>
+        <div class="card-body">
+            {% render_table table %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

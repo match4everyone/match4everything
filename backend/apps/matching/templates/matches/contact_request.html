@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    {% blocktrans %}Contact request{% endblocktrans %}
+{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+    <div style="height:40px"></div>
+    <div class="container" style="margin-bottom: 55px;">
+        <h3>{{ initial_subject }}</h3>
+        <p><h6>Contact request by {{ initiator_email }}</h6></p>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Who sent this request?
+                    </div>
+                    <div class="card-body">
+                        More info about that
+                        <a href="{{ email_initiator_url }}"><i class="fa fa-user" aria-hidden="true"></i> {% blocktrans %}Profile{% endblocktrans %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Why are they looking for you?
+                    </div>
+
+                    <div class="card-body">
+                    {{ filter.as_HTML|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        Their message:
+        <div class="card">
+            <div class="card-body">
+                <p>{{ initial_msg }}</p>
+            </div>
+        </div>
+        <br>
+        {% if value == options.CONTACTED %}
+            <div id="response-options">
+                <div class="d-flex justify-content-center">
+                    <p>
+                    <button class="btn btn-success" onclick="show_inline_answer()">Respond</button>
+                    or
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <button class="btn btn-danger" name="decline">Directly Decline Offer</button>
+                    </form>
+                    </p>
+                </div>
+            </div>
+            <div id="inline-response" style="display: none;">
+                <div class="card border border-primary">
+                    <div class="card-body">
+                        <button type="button" class="close" onclick="show_inline_answer()">&times;</button>
+                        Respond to their message:
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button type="submit" name="send_message" class="btn btn-primary mb-2 float-right">
+                                {% blocktrans %}Send and share my email with them{% endblocktrans %}</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function show_inline_answer() {
+                    var x = document.getElementById("inline-response");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    } else {
+                        x.style.display = "none";
+                    }
+                    var y = document.getElementById("response-options");
+                    if (y.style.display === "none") {
+                        y.style.display = "block";
+                    } else {
+                        y.style.display = "none";
+                    }
+                }
+            </script>
+
+
+        {% elif value == options.DECLINE %}
+            <div class="d-flex justify-content-center">
+                    <h5 class="text-danger"><i class="fa fa-times" aria-hidden="true"></i> You declined the offer. </h5>
+            </div>
+        {% elif value == options.SUCCESSFUL %}
+            You response:
+            <div class="card">
+                <div class="card-body">
+                    <strong>{{ response_subject }}</strong><br><br>
+
+                    {{ response_msg }}
+                </div>
+            </div>
+            <br>
+            <div class="d-flex justify-content-center">
+                    <h5><i class="fa fa-check" aria-hidden="true"></i> You exchanged emails! </h5>
+            </div>
+            <div class="card">
+                <div class="card-body">
+
+                    <p>
+                    <strong>You want to send more messages?</strong><br>
+                    No problem, you can easily do so by directly contacting the other person via the email they
+                        provided to you:
+                        <mark>{{ initiator_email }}</mark>
+                        .
+                        <br><br>
+                        <strong>Why are no new messages turning up here?</strong><br>
+                         We only wanted to help with the matchmaking - for any communication beyond that you can use the emails you exchanged, so any news will turn up in your <mark>personal email inbox</mark> and not here!
+
+                        <br><br>
+                        Also, if you think you do not need your account anymore, do not hesitate to delete your profile :)
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+
+
+    </div>
+{% endblock %}

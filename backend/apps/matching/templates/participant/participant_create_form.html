@@ -34,7 +34,7 @@
                     {% crispy info_form info_form.helper %}
 
                 <div class="card">
-                    <div class="card-header"><h5>Your locations</h5></div>
+                    <div class="card-header"><h5>{% blocktrans %}Your locations{% endblocktrans %}</h5></div>
                 <div class="card-body">
                     {{ location_formset.management_form }}
                     <div id="form_set">
@@ -57,8 +57,8 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <input type="button" class="btn btn-sm btn-outline-primary" value="Add another +" id="add_more">
-                    <input type="button" class="btn btn-sm btn-outline-dark" value="Remove last -" id="remove_this">
+                    <input type="button" class="btn btn-sm btn-outline-primary" value="{% blocktrans %}Add another +{% endblocktrans %}" id="add_more">
+                    <input type="button" class="btn btn-sm btn-outline-dark" value="{% blocktrans %}Remove last -{% endblocktrans %}" id="remove_this">
                     <br>
                     <div id="empty_form" style="display:none">
                             <div class="form-row">

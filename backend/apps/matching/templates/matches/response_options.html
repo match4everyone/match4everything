@@ -1,0 +1,9 @@
+{% load i18n %}
+{% if value == options.CONTACTED %}
+    <i class="fa fa-envelope-o" aria-hidden="true"></i> waiting for your response
+{% elif value == options.DECLINE %}
+<i class="fa fa-ban" aria-hidden="true"></i> declined
+{% elif value == options.SUCCESSFUL %}
+    <div class="text-success"><i class="fa fa-check-circle-o"  data-toggle="tooltip" data-placement="bottom" title="{% blocktrans %}You have already shared your email adress with this user.{% endblocktrans %}" aria-hidden="true"></i>
+    {% blocktrans %}email shared{% endblocktrans %}</div>
+{% endif %}

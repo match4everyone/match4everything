@@ -18,6 +18,7 @@
     <title>{% block title %} {% endblock %} | match4everyone </title>
     <!-- TODO: Should be <title>{% page_attribute "page_title" %}</title>  (http://docs.django-cms.org/en/latest/how_to/install.html) -->
     {% render_block "css" %}
+    <script src="{% url 'javascript-catalog' %}"></script><!-- Needs to be the first script, keep above others -->
     {% load render_bundle from webpack_loader %}
     {% render_bundle 'vendor' %}
     {% render_bundle 'main' %}

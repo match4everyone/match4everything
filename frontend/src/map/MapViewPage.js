@@ -129,32 +129,32 @@ export class MapViewPage {
     }
 
     async loadMapMarkers() {
-        let [ facilities, supporters ] = await Promise.all([$.get(this.options.aURL),$.get(this.options.bURL)])
+        let [ aParticipants, bParticipants ] = await Promise.all([$.get(this.options.aURL),$.get(this.options.bURL)])
 
-        let facilityClusterMarkerGroup = L.markerClusterGroup({
+        let bParticipantsClusterMarkerGroup = L.markerClusterGroup({
             iconCreateFunction: this.cssClassedIconCreateFunction('facilityMarker'),
         })
-        let facilityMarkers = L.featureGroup.subGroup(facilityClusterMarkerGroup, this.createMapMarkers(facilities,(lat,lon,countrycode,city,plz,count) => {
+        let bParticipantsMarkers = L.featureGroup.subGroup(bParticipantsClusterMarkerGroup, this.createMapMarkers(bParticipants,(lat,lon,countrycode,city,plz,count) => {
             return L.marker([lon,lat],{
                 icon:  this.createFacilityIcon(count),
                 itemCount: count,
             }).bindPopup(this.options.createPopupTextB(countrycode,city, plz, count, this.options.bListURL.replace('COUNTRYCODE',countrycode).replace('PLZ',plz)))
         }))
 
-        let supporterClusterMarkerGroup = L.markerClusterGroup({
+        let aParticipantsClusterMarkerGroup = L.markerClusterGroup({
             iconCreateFunction: this.cssClassedIconCreateFunction('supporterMarker'),
         })
-        let supporterMarkers = L.featureGroup.subGroup(supporterClusterMarkerGroup, this.createMapMarkers(supporters,(lat,lon,countrycode,city,plz,count) => {
+        let aParticipantsMarkers = L.featureGroup.subGroup(aParticipantsClusterMarkerGroup, this.createMapMarkers(aParticipants,(lat,lon,countrycode,city,plz,count) => {
             return L.marker([lon,lat],{
                 icon:  this.createSupporterIcon(count),
                 itemCount: count,
             }).bindPopup(this.options.createPopupTextA(countrycode,city, plz, count, this.options.aListURL.replace('COUNTRYCODE',countrycode).replace('PLZ',plz)))
         }))
 
-        supporterClusterMarkerGroup.addTo(this.mapObject)
-        supporterMarkers.addTo(this.mapObject)
-        facilityClusterMarkerGroup.addTo(this.mapObject)
-        facilityMarkers.addTo(this.mapObject)
+        aParticipantsClusterMarkerGroup.addTo(this.mapObject)
+        aParticipantsMarkers.addTo(this.mapObject)
+        bParticipantsClusterMarkerGroup.addTo(this.mapObject)
+        bParticipantsMarkers.addTo(this.mapObject)
 
         const countItems = (o) => {
             let count = 0
@@ -167,10 +167,10 @@ export class MapViewPage {
         }
 
         let overlays = {}
-        overlays[this.options.createBCountText(countItems(facilities))] = facilityMarkers
-        overlays[this.options.createACountText(countItems(supporters))] = supporterMarkers
+        overlays[this.options.createBCountText(countItems(bParticipants))] = bParticipantsMarkers
+        overlays[this.options.createACountText(countItems(aParticipants))] = aParticipantsMarkers
 
-        facilityMarkers.addTo(this.mapObject)
+        bParticipantsMarkers.addTo(this.mapObject)
 
         L.control.layers(null, overlays, { collapsed: false, position: 'topright' }).addTo(this.mapObject)
     }

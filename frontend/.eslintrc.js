@@ -1,19 +1,25 @@
 module.exports = {
+    root: true,
     'env': {
         'browser': true,
         'es6': true,
         'node': true,
 
     },
-    'extends': 'eslint:recommended',
+    'extends': [
+        'plugin:vue/essential',
+        'eslint:recommended',
+    ],
     'globals': {
         'Atomics': 'readonly',
         'SharedArrayBuffer': 'readonly'
     },
-    'parser': 'babel-eslint',
+    'parser': 'vue-eslint-parser',
     'parserOptions': {
+        'parser': 'babel-eslint',
         'sourceType': 'module'
     },
+    'plugins': ['vue'],
     'rules': {
         'indent': [
             'error',
@@ -31,5 +37,14 @@ module.exports = {
             'error',
             'never'
         ]
-    }
+    },
+    'overrides': [
+        {
+          'files': [ '**/*.vue' ],
+          'rules': {
+            'indent': [ 'error', 2 ]
+          }
+        }
+      ]
+
 }

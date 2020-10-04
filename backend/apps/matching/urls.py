@@ -26,6 +26,9 @@ urlpatterns = [
         views.ParticipantInfoViewView.as_view(),
         name="info-view",
     ),
+    path("matches/to_me/", views.MatchesFromOthersView.as_view(), name="matches-requests-to-me",),
+    path("matches/from_me/", views.MatchesToOthersView.as_view(), name="matches-requests-from-me",),
+    path("matches/<str:uuid>/view/", views.MatchDetailView.as_view(), name="match-detail"),
     path(
         "change_activation/",
         views.ChangeActivationAskView.as_view(),
@@ -44,13 +47,44 @@ urlpatterns = [
     path("map/", views.map_view, name="map"),
     path("<p:p_type>/participant_JSON/", views.map_JSON, name="participant_JSON"),
     ####################################
-    #  List view
+    #  List view / filtering
     ####################################
     path(
-        "<p:p_type>/<countrycode>/<plz>/<float:distance>/",
-        TemplateView.as_view(template_name="messages/not_implemented.html"),
-        name="participant_list",
+        "api/<p:p_type>/info/list/",
+        views.ParticipantInfoListAPI.as_view(),
+        name="api_participant_list",
     ),
+    path(
+        "api/<p:p_type>/info/filter-options/",
+        views.view_FilterOptionsJSON,
+        name="api_filter_options",
+    ),
+    path(
+        "api/<p:p_type>/info/table-columns/", views.view_TableColumnJSON, name="api_table_columns",
+    ),
+    path("<p:p_type>/", views.FilteredParticipantList.as_view(), name="participant_list",),
+    path(
+        "<p:p_type>/filter/create/",
+        views.ParticipantFilterCreateView.as_view(),
+        name="create_participant_filter",
+    ),
+    path(
+        "<p:p_type>/filter/<str:uuid>/view/", views.FilterDetailView.as_view(), name="filter_detail"
+    ),
+    path(
+        "<p:p_type>/filter/<str:uuid>/search_again/",
+        views.ParticipantFilterSearchAgain.as_view(),
+        name="filter_search_again",
+    ),
+    path(
+        "<p:p_type>/filter/<str:uuid>/contact_new_matches/",
+        views.FilterContactNewMatchView.as_view(),
+        name="contact_all_new_matches",
+    ),
+    path(
+        "<p:p_type>/filter/<str:uuid>/edit/", views.FilterUpdateView.as_view(), name="filter-edit",
+    ),
+    path("<p:p_type>/filter/list/", views.FilterListView.as_view(), name="filter_list"),
     ####################################
     #  Staff
     ####################################
