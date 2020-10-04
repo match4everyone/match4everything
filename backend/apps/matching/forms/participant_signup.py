@@ -48,6 +48,9 @@ def make_participant_signup_form(participant_type):
             i.save()
             return p, i
 
+        def is_valid(self):
+            return super().is_valid()
+
     return ParticipantSignupForm
 
 

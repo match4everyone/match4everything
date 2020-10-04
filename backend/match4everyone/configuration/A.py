@@ -104,10 +104,7 @@ class AConfig(ParticipantConfig):
                             label="Recognition as an internship or other study requirements is important",
                         ),
                         m4e.TextProperty(
-                            name="other",
-                            label="Other Qualifications",
-                            is_required=True,
-                            max_length=500,
+                            name="other", label="Other Qualifications", max_length=500,
                         ),
                     ],
                 )

@@ -11,6 +11,12 @@ import numpy as np
 PREFIX_CONNECTOR = "--"
 
 
+class ConfigurationError(ValueError):
+    """Raise this error when something is explicitly wrong with the match4everything configuration."""
+
+    pass
+
+
 class Property:
     properties = None
 
@@ -24,22 +30,24 @@ class Property:
         private: Is true if only site administrators should be able to view this property
         """
         if label is None:
-            raise ValueError("You need to set the value for label.")
+            raise ConfigurationError("You need to set the value for label.")
         self.label = _(label)  # the text that should appear when this property is referenced
         self.name = name if name is not None else label.lower().replace(" ", "_")
         if PREFIX_CONNECTOR in self.name:
-            raise ValueError(
+            raise ConfigurationError(
                 f"The field name {self.name} is not allowed, since it contains '{PREFIX_CONNECTOR}'."
                 " You can explicitly chose a suitable column name by setting the 'name' kwarg."
             )
         if len(self.name) > 12:
-            raise ValueError(
+            raise ConfigurationError(
                 f"The field name {self.name} is too long. You can use 12 characters at max."
                 f" If you did not set the 'name' before, please set in in the constructor. "
             )
         self.help_text = help_text
         self.info_text = info_text
         self.private = private
+
+        self.is_required = False
 
         # Since properties should be able to generate a hierarchical structure,
         # they can have their own properties (children) that they act on (e.g. to group them).
@@ -208,6 +216,14 @@ class ConditionalProperty(Property):
         # the  condition and its conditional properties.
         super().__init__(**kwargs)
         self.properties = properties
+
+        for p in self.properties:
+            if p.is_required:
+                raise ConfigurationError(
+                    f"In the field '{p.name}' appearing in the conditional property '{self.name}' the value 'is_required' "
+                    f"is set to True. This behaviour is currently not supported. "
+                    f"Please set it to False or provide a default."
+                )
 
     def get_model_field_names(self, prefix=None):
         model_field_name = self.extend_prefix(prefix)
