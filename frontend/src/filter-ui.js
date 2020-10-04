@@ -24,6 +24,11 @@ Vue.prototype.$gettext  = django.gettext
 Vue.prototype.$ngettext = django.ngettext
 Vue.prototype.$interpolate = django.interpolate
 
+/* Provide a mechanism to get csrf token in all components easily */
+import Cookies from 'js-cookie'
+Vue.prototype.$getToken = () => Cookies.get('csrftoken')
+
+/* Register FilterUI Components */
 FilterComponentManager.registerComponents(Vue)
 
 // Install BootstrapVue

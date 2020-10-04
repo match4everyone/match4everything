@@ -62,7 +62,7 @@
     ></b-pagination>
 
     <b-button :disabled="selectedItems.length === 0" primary @click="$refs.modal.show()">{{ selectButtonLabel }}</b-button>
-    <send-message-modal :selectedUUIDs="selectedItems" ref="modal" @sent="sendSuccessful" @error="sendFailed" />
+    <send-message :selectedUUIDs="selectedItems" ref="modal" @sent="sendSuccessful" @error="sendFailed" />
   </div>
 </template>
 <script>
@@ -116,11 +116,11 @@ const dataTransformators = {
 dataTransformators.boolean = dataTransformators.text // same logic
 
 const selectedFieldsStorageKey = 'filter-ui-result-selected-fields'
-import SendMessageModal from './FilterUISendMessageModal'
+import SendMessage from './FilterUISendMessage'
 export default {
   name: 'FilterUIResults',
   components: {
-    SendMessageModal
+    SendMessage
   },
   props: [ 'filterModel','fieldLabels','results','totalRows','currentPage','itemsPerPage'],
   data() {
