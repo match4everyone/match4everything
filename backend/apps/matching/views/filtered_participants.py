@@ -72,3 +72,8 @@ class FilteredParticipantList(SingleTableMixin, FilterView):
 
     def get_table_class(self):
         return ParticipantInfoTable[self.kwargs["p_type"]]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["p_type"] = self.kwargs["p_type"]
+        return context
