@@ -1,17 +1,16 @@
+from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import Http404
 
 from apps.matching.models import CountryCodeChoices, RadiusChoices
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
 
 
 def view_FilterOptionsJSON(request, p_type):
 
     if p_type == "A":
-        filter_options = A.to_filter_json()
+        filter_options = settings.PARTICIPANT_SETTINGS["A"].to_filter_json()
     elif p_type == "B":
-        filter_options = B.to_filter_json()
+        filter_options = settings.PARTICIPANT_SETTINGS["B"].to_filter_json()
     else:
         raise Http404
 

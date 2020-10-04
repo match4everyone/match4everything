@@ -116,4 +116,4 @@ class AConfig(ParticipantConfig):
     ]
 
 
-A = AConfig()
+helper_config = AConfig()

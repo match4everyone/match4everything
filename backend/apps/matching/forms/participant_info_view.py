@@ -1,11 +1,10 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout
 from django import forms
+from django.conf import settings
 
 from apps.matching.models import ParticipantInfo
 from apps.matching.utils.dual_factory import instanciate_for_participants
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
 
 
 def make_participant_info_view_form(participant_type):
@@ -18,9 +17,9 @@ def make_participant_info_view_form(participant_type):
             super(ParticipantInfoViewForm, self).__init__(*args, **kwargs)
             self.helper = FormHelper()
             if participant_type == "A":
-                self.helper.layout = Layout(*A.view_layout())
+                self.helper.layout = Layout(*settings.PARTICIPANT_SETTINGS["A"].view_layout())
             else:
-                self.helper.layout = Layout(*B.view_layout())
+                self.helper.layout = Layout(*settings.PARTICIPANT_SETTINGS["B"].view_layout())
             for field in self.fields:
                 self.fields[field].disabled = True
 

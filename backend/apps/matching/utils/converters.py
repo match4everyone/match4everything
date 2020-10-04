@@ -1,7 +1,5 @@
+from django.conf import settings
 from django.shortcuts import Http404
-
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
 
 
 class DecimalPointFloatConverter:
@@ -35,18 +33,20 @@ class ParticipantTypeConverter:
     participants, e.g "A/profile" and "B/profile" from "<p:p_type>/profile"
     """
 
-    regex = "{A}|{B}".format(A=A.url_name, B=B.url_name)
+    regex = "{A}|{B}".format(
+        A=settings.PARTICIPANT_SETTINGS["A"].url_name, B=settings.PARTICIPANT_SETTINGS["B"].url_name
+    )
 
     def to_python(self, value):
-        if value == A.url_name:
+        if value == settings.PARTICIPANT_SETTINGS["A"].url_name:
             return "A"
-        if value == B.url_name:
+        if value == settings.PARTICIPANT_SETTINGS["B"].url_name:
             return "B"
         raise Http404
 
     def to_url(self, value):
         if value == "A":
-            return A.url_name
+            return settings.PARTICIPANT_SETTINGS["A"].url_name
         if value == "B":
-            return B.url_name
+            return settings.PARTICIPANT_SETTINGS["B"].url_name
         raise Http404

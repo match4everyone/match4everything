@@ -1,13 +1,12 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Column, Div, HTML, Layout, Row
 from django import forms
+from django.conf import settings
 from django.db import transaction
 from django.utils.translation import gettext_lazy as _
 
 from apps.matching.models import Participant, ParticipantInfo, User
 from apps.matching.utils.dual_factory import instanciate_for_participants
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
 
 
 def make_participant_signup_form(participant_type):
@@ -30,13 +29,13 @@ def make_participant_signup_form(participant_type):
                 self.helper.layout = Layout(
                     Div(Div(Row(Column("email")), css_class="card-body"), css_class="card"),
                     HTML("<br>"),
-                    *A.signup_and_edit_layout()
+                    *settings.PARTICIPANT_SETTINGS["A"].signup_and_edit_layout()
                 )
             else:
                 self.helper.layout = Layout(
                     Div(Div(Row(Column("email")), css_class="card-body"), css_class="card"),
                     HTML("<br>"),
-                    *B.signup_and_edit_layout()
+                    *settings.PARTICIPANT_SETTINGS["B"].signup_and_edit_layout()
                 )
 
         @transaction.atomic

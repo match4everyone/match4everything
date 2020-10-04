@@ -7,8 +7,6 @@ import numpy as np
 from tqdm import tqdm
 
 from apps.matching.models import Participant, ParticipantInfo, ParticipantInfoLocation, User
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
 
 FAKE_MAIL = "@example.com"
 
@@ -33,15 +31,15 @@ class Command(BaseCommand):
         )
 
         parser.add_argument(
-            "--add-{a}".format(a=A.url_name),
+            "--add-{a}".format(a=settings.PARTICIPANT_SETTINGS["A"].url_name),
             nargs=1,
-            help="Add [N] new {a} to the dataset".format(a=A.name),
+            help="Add [N] new {a} to the dataset".format(a=settings.PARTICIPANT_SETTINGS["A"].name),
         )
 
         parser.add_argument(
-            "--add-{b}".format(b=B.url_name),
+            "--add-{b}".format(b=settings.PARTICIPANT_SETTINGS["B"].url_name),
             nargs=1,
-            help="Add [N] new {b} to the dataset".format(b=B.name),
+            help="Add [N] new {b} to the dataset".format(b=settings.PARTICIPANT_SETTINGS["B"].name),
         )
 
         parser.add_argument(
@@ -51,8 +49,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if (
             not options["delete"]
-            and options["add_{a}".format(a=A.url_name)] is None
-            and options["add_{b}".format(b=B.url_name)] is None
+            and options["add_{a}".format(a=settings.PARTICIPANT_SETTINGS["A"].url_name)] is None
+            and options["add_{b}".format(b=settings.PARTICIPANT_SETTINGS["B"].url_name)] is None
         ):
             self.print_help("", "")
             return None
@@ -61,10 +59,16 @@ class Command(BaseCommand):
 
         if options["delete"]:
             self.delete_all_fakes()
-        if options["add_{a}".format(a=A.url_name)] is not None:
-            self.add_fake(participant_type="A", n=int(options["add_{a}".format(a=A.url_name)][0]))
-        if options["add_{b}".format(b=B.url_name)] is not None:
-            self.add_fake(participant_type="B", n=int(options["add_{b}".format(b=B.url_name)][0]))
+        if options["add_{a}".format(a=settings.PARTICIPANT_SETTINGS["A"].url_name)] is not None:
+            self.add_fake(
+                participant_type="A",
+                n=int(options["add_{a}".format(a=settings.PARTICIPANT_SETTINGS["A"].url_name)][0]),
+            )
+        if options["add_{b}".format(b=settings.PARTICIPANT_SETTINGS["B"].url_name)] is not None:
+            self.add_fake(
+                participant_type="B",
+                n=int(options["add_{b}".format(b=settings.PARTICIPANT_SETTINGS["B"].url_name)][0]),
+            )
 
     def delete_all_fakes(self):
         qs = User.objects.filter(email__contains=FAKE_MAIL)

@@ -1,11 +1,9 @@
 from datetime import datetime
 import uuid
 
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
-
-from match4everyone.configuration.A import A
-from match4everyone.configuration.B import B
 
 from .participant import Participant
 
@@ -93,5 +91,5 @@ def add_participant_specific_info(name, participant_config):
     info_cls.add_to_class("_private_fields", participant_config.get_private_fields)
 
 
-add_participant_specific_info("A", A)
-add_participant_specific_info("B", B)
+add_participant_specific_info("A", settings.PARTICIPANT_SETTINGS["A"])
+add_participant_specific_info("B", settings.PARTICIPANT_SETTINGS["B"])
