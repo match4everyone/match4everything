@@ -1,0 +1,24 @@
+{% load i18n %}
+<button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#mailModal{{ uuid }}">
+    <i class="fa fa-envelope-o" aria-hidden="true"></i> {{ value.0 }}
+</button>
+
+<!-- The Modal -->
+<div class="modal" id="mailModal{{ uuid }}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">{% blocktrans %}Message{% endblocktrans %}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <p class="h3">{{ value.0 }}</p>
+                <p>{{ value.1 }}</p>
+            </div>
+        </div>
+    </div>
+</div>

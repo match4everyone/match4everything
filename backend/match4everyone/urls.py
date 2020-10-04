@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import re_path
 from django.contrib import admin
 from django.urls import include, path
+from django.views.i18n import JavaScriptCatalog
 
 from match4everyone import views
 
@@ -27,5 +28,8 @@ urlpatterns = [
     path("404/", views.handler404, name="404"),
     path("500/", views.handler500, name="500"),
     path("legal-questions/", views.legal_questions),
+    path(
+        "jsi18n/", JavaScriptCatalog.as_view(packages=["apps.matching"]), name="javascript-catalog"
+    ),
     re_path(r"^", include("cms.urls")),
 ]

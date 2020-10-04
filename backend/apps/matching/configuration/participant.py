@@ -25,12 +25,19 @@ class ParticipantConfig:
             ]
         return self.signup_layout_private
 
+    def __init__(self):
+        # initialize th prefixes
+        self.get_model_field_names()
+
     @property
     def url_name(self):
         return urllib.parse.quote(self.name.lower())
 
     def get_model_field_names(self):
         return chain(*[p.get_model_field_names() for p in self.properties])
+
+    def get_labels(self):
+        return chain(*[p.get_labels() for p in self.properties])
 
     def get_model_fields(self):
         names = self.get_model_field_names()
@@ -47,7 +54,20 @@ class ParticipantConfig:
         privates = chain(*[p.get_private_fields() for p in self.properties])
         return [name for name, private in zip(names, privates) if private]
 
+    def get_filter_fields(self):
+        names = self.get_model_field_names()
+        filters = chain(*[p.get_filters() for p in self.properties])
+        return zip(names, filters)
+
+    def get_signup_layout(self):
+        if self.signup_layout is None:
+            self.signup_layout = [p._get_signup_layout() for p in self.properties]
+        return self.signup_layout
+
     # internal variables
     properties = None
     signup_layout_all = None
     signup_layout_private = None
+
+    def to_filter_json(self):
+        return {"properties": list(filter(None, [p.to_filter_json() for p in self.properties]))}

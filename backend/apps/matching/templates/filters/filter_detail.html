@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    {% blocktrans %}These criteria were critical{% endblocktrans %}
+{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+
+    <div style="height:40px"></div>
+    <div class="container" style="margin-bottom: 55px;">
+        <div class="card">
+            <div class="card-header">
+                {{ object.filter_name }}
+                <div class="float-right">{% blocktrans %}created by{% endblocktrans %} {{ object.created_by.email }}</div>
+            </div>
+            <div class="card-body">
+                <p>{% blocktrans %}The other participant found you because the following criteria matched:{% endblocktrans %}</p>
+                {{ object.as_HTML|safe }}
+            </div>
+        </div>
+
+
+
+
+    </div>
+{% endblock %}

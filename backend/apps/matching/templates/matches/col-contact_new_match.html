@@ -1,0 +1,44 @@
+{% load i18n %}
+{% if new_matches > 0 %}
+    <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal"
+            data-target="#contactModal{{ record.id }}">
+        {% blocktrans %}Contact{% endblocktrans %}
+        <mark>{{ new_matches }}</mark>
+        {% blocktrans %}new matches{% endblocktrans %}
+    </button>
+    <!-- The Modal -->
+    <div class="modal" id="contactModal{{ record.id }}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">{% blocktrans %}Contact new candidates as well{% endblocktrans %}</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <p>{% blocktrans %}Subject:{% endblocktrans %} {{ record.subject }}</p>
+                    <hr>
+                    <p>{{ record.contact_text }}</p>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <form action="{% url 'contact_all_new_matches' p_type record.uuid %}">
+                        {% csrf_token %}
+                        <input type="submit" formmethod="post" class="btn btn-primary"
+                               value="{% blocktrans %}Send{% endblocktrans %}">
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% else %}
+    no new matches
+{% endif %}

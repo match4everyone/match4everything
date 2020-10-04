@@ -1,2 +1,2 @@
-import { MapViewPage } from './map/map.mjs'
+import { MapViewPage } from './map/MapViewPage'
 window.MapViewPage = MapViewPage

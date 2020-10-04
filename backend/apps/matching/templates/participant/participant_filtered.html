@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    {% blocktrans %}Search results{% endblocktrans %}
+{% endblock %}
+
+{% block header %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    {% load render_bundle from webpack_loader %}
+{% render_bundle 'filter-ui' %}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% load render_table from django_tables2 %}
+
+
+{% block content %}
+
+    <div style="height:40px"></div>
+    <div class="container-fluid px-5" style="margin-bottom: 55px;">
+      <div
+        id="app"
+        data-filter-model-url="{% url 'api_filter_options' p_type=p_type %}"
+        data-get-participant-url="{% url 'api_participant_list' p_type=p_type %}"
+        data-table-layout-url="{% url 'api_table_columns' p_type=p_type %}"
+      >
+      </div>
+    </div>
+{% endblock %}

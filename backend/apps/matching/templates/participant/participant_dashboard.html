@@ -34,6 +34,53 @@
 
         {% endif %}
 
+        <div class="card" style="margin-bottom:35px;">
+            <div class="card-header">
+                {% blocktrans %}Your Dashboard{% endblocktrans %}
+            </div>
+            <div class="card-body">
+                <div class="col">
+                    <div class="row">
+                        <a role="button" class="btn btn-primary text-white btn-block"
+                           href="{% url 'participant_list' p_type_opposite %}">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                            {% blocktrans %}Start a new search for {% endblocktrans %}
+                            {{ p_type_opposite }}
+                        </a>
+
+                    </div>
+                    <hr>
+                    <div class="row">
+
+    <div class="col-md-4">
+                        <a role="button" class="btn btn-outline-primary btn-sm btn-block"
+                           href="{% url 'matches-requests-to-me' %}">
+                            <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                            {% blocktrans %}Respond to incoming contact requests{% endblocktrans %}
+                            {% if not_responded_to_n_requests != 0%}
+                            <span class="badge badge-warning">{{ not_responded_to_n_requests    }}</span>
+                            {%  endif %}
+                        </a>
+    </div>
+    <div class="col-md-4">
+                        <a role="button" class="btn btn-outline-primary btn-sm btn-block"
+                           href="{% url 'matches-requests-from-me' %}">
+                            <i class="fa fa-mail-forward" aria-hidden="true"></i>
+                            {% blocktrans %}See outgoing contact requests{% endblocktrans %}
+                        </a>
+    </div>
+    <div class="col-md-4">
+                        <a role="button" class="btn btn-outline-primary btn-sm btn-block"
+                           href="{% url 'filter_list' p_type_opposite %}">
+                            <i class="fa fa-history" aria-hidden="true"></i>
+                            {% blocktrans %}Follow up past searches {% endblocktrans %}
+                        </a></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
 
 
         <div class="card" style="margin-bottom:35px;">
@@ -43,9 +90,13 @@
             <div class="card-body">
                 <label for="email">{% blocktrans %}E-Mail{% endblocktrans %}:</label>
                 <div class="">
-                    <input type="text" id="email" name="email" value="{{ request.user.email }}" class="textinput textInput form-control" disabled="">
-                    <small id="email_change_hint_text" class="form-text text-muted">{% blocktrans %}Your account is irreversibly linked to your email address. Should you wish to use another one, please delete your account and register with a new one.{% endblocktrans %}</small>
-                </div> <br><br>
+                    <input type="text" id="email" name="email" value="{{ request.user.email }}"
+                           class="textinput textInput form-control" disabled="">
+                    <small id="email_change_hint_text" class="form-text text-muted">{% blocktrans %}Your account is
+                        irreversibly linked to your email address. Should you wish to use another one, please delete
+                        your account and register with a new one.{% endblocktrans %}</small>
+                </div>
+                <br><br>
                 <a role="button" class="btn btn-primary text-white btn-md" href="{% url 'logout' %}">{% blocktrans %}
                     Logout{% endblocktrans %}</a>
                 <a role="button" class="btn btn-primary text-white btn-md" href="{% url 'password_change' %}">
@@ -61,18 +112,18 @@
             </div>
         </div>
 
-    <div class="card" style="margin-bottom:35px;">
+        <div class="card" style="margin-bottom:35px;">
             <div class="card-header">
                 {% blocktrans %}Profile Editing{% endblocktrans %}
             </div>
             <div class="card-body">
 
-                <a role="button" class="btn btn-primary text-white btn-md" href="{% url 'info-edit' p_type uuid %}">{% blocktrans %}
-                    Edit my profile{% endblocktrans %}</a>
-
+                <a role="button" class="btn btn-primary text-white btn-md" href="{% url 'info-edit' p_type uuid %}">
+                    {% blocktrans %}Edit my profile{% endblocktrans %}</a>
             </div>
         </div>
 
+    </div>
     </div>
     <br>
 {% endblock %}

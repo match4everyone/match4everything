@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 1900-01-01 00:00+0000\n"
-"PO-Revision-Date: 2020-08-15 17:21+0200\n"
+"PO-Revision-Date: 2020-09-22 03:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,13 +16,73 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4\n"
+"X-Generator: Poedit 2.4.1\n"
+
+msgid "is exactly"
+msgstr "ist genau"
+
+msgid "is greater than"
+msgstr "ist größer als"
+
+msgid "is smaller than"
+msgstr "ist kleiner als"
+
+msgid "contains"
+msgstr "enthält"
 
 msgid "E-Mail"
 msgstr "E-Mail"
 
 msgid "Email address for your account."
 msgstr "E-Mail-Adresse für Ihr Konto."
+
+msgid "contacted"
+msgstr "kontaktiert"
+
+msgid "successful"
+msgstr "erfolgreich"
+
+msgid "not successful"
+msgstr "nicht erfolgreich"
+
+msgid "declined"
+msgstr "abgelehnt"
+
+msgid "the other participant declined your offer"
+msgstr "der andere Teilnehmer hat Ihr Angebot abgelehnt"
+
+msgid "waiting for response"
+msgstr "auf Antwort wird gewartet"
+
+msgid "You currently don't have the permission to approve users."
+msgstr ""
+"Du hast keine ausreichenden Berechtigungen um auf diese Seite zuzugreifen."
+
+msgid "You need to provide a valid country code."
+msgstr "Sie müssen einen gültigen Ländercode angeben."
+
+msgid " is not a postcode in "
+msgstr " ist keine Postleitzahl in "
+
+#, python-brace-format
+msgid ""
+"You can only search within a radius of {distance} km. Please decrease the "
+"radius or change your position."
+msgstr ""
+"Sie können nur innerhalb eines Radius von {distance} km suchen. Verringern "
+"Sie den Radius, oder ändern Sie Ihre Position."
+
+msgid "Countrycode"
+msgstr "Ländercode"
+
+msgid "Zipcode"
+msgstr "Postleitzahl"
+
+msgid "Distance"
+msgstr "Entfernung"
+
+msgid "0 km"
+msgstr "0 km"
 
 msgid "<10 km"
 msgstr "<10 km"
@@ -33,8 +93,8 @@ msgstr "<20 km"
 msgid "<40 km"
 msgstr "<20 km"
 
-msgid ">40 km"
-msgstr ">40 km"
+msgid "<50 km"
+msgstr "<50 km"
 
 msgid "Germany"
 msgstr "Deutschland"
@@ -42,11 +102,51 @@ msgstr "Deutschland"
 msgid "Austria"
 msgstr "Österreich"
 
-msgid " is not a postcode in "
-msgstr " ist keine Postleitzahl in "
-
 msgid "This email is already taken."
 msgstr "Diese E-Mail wurde bereits vergeben."
+
+msgid "Created"
+msgstr "Erstellt"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Contact Request"
+msgstr "Anfrage"
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Email"
+msgstr "E-Mail-Adresse"
+
+msgid "Your message"
+msgstr "Ihre Nachricht"
+
+msgid "Match criteria"
+msgstr "Kriterien"
+
+msgid "These criteria were critical"
+msgstr "Diese Kriterien waren entscheidend"
+
+msgid "created by"
+msgstr "Erstellt von"
+
+msgid "The other participant found you because the following criteria matched:"
+msgstr ""
+"Der andere User hat Sie gefunden, weil die folgenden Kriterien gepasst haben:"
+
+msgid "Edit your search"
+msgstr "Bearbeiten Sie Ihre Suche"
+
+msgid "Your searches"
+msgstr "Ihre Suchanfragen"
+
+msgid "Your search history."
+msgstr "Ihr Suchverlauf."
+
+msgid "Start a new search"
+msgstr "Erstelle eine neue Suche"
 
 msgid "Map"
 msgstr "Karte"
@@ -75,6 +175,57 @@ msgstr "As"
 
 msgid "Direct Search"
 msgstr "Direkte Suche"
+
+msgid "new matches"
+msgstr "Neue Treffer"
+
+msgid "Contact new candidates as well"
+msgstr "Auch neue Kandidaten kontaktieren"
+
+msgid "Subject:"
+msgstr "Betreff:"
+
+msgid "Send"
+msgstr "Senden"
+
+msgid "Give a meaningful name to your search"
+msgstr "Gib deiner Suche einen Namen"
+
+msgid "Save"
+msgstr "Speichern"
+
+msgid "details"
+msgstr "Details"
+
+msgid "Profile"
+msgstr "Mein Profil"
+
+msgid "View and modify search"
+msgstr "Suche ansehen und ändern"
+
+msgid "Message"
+msgstr "Nachricht"
+
+msgid "Contact request"
+msgstr "Anfrage"
+
+msgid "Send and share my email with them"
+msgstr "Absenden und meine E-Mail mitteilen"
+
+msgid "Contact Requests"
+msgstr "Anfrage"
+
+msgid "These participants want to contact you."
+msgstr "Diese User wollen Sie kontaktieren."
+
+msgid "Other participants you contacted."
+msgstr "Diese Teilnehmer haben Sie kontaktiert."
+
+msgid "You have already shared your email adress with this user."
+msgstr "Du hast mit diesem Benutzer deine E-Mail-Adresse schon geteilt."
+
+msgid "email shared"
+msgstr "E-Mail geteilt"
 
 msgid " Your account has been deleted. "
 msgstr " Ihr Konto wurde gelöscht. "
@@ -167,6 +318,15 @@ msgstr " oder "
 msgid "Reset Password"
 msgstr "Password zurücksetzen"
 
+msgid "Your locations"
+msgstr "Ihre Orte"
+
+msgid "Add another +"
+msgstr "Hinzufügen +"
+
+msgid "Remove last -"
+msgstr "Letzten entfernen -"
+
 #, python-format
 msgid ""
 "\n"
@@ -177,12 +337,29 @@ msgstr ""
 "        Mein Profil %(p_type)s\n"
 "    "
 
+msgid "Your Dashboard"
+msgstr "Ihr Dashboard"
+
+msgid "Start a new search for "
+msgstr "Erstelle eine neue Suche nach "
+
+msgid "Respond to incoming contact requests"
+msgstr "Auf eingehende Anfragen antworten"
+
+msgid "See outgoing contact requests"
+msgstr "Ausgehende Anfragen ansehen"
+
+msgid "Follow up past searches "
+msgstr "Mein Suchverlauf "
+
 msgid "Profile Details"
 msgstr "Profil"
 
 msgid ""
-"Your account is irreversibly linked to your email address. Should you wish "
-"to use another one, please delete your account and register with a new one."
+"Your account is\n"
+"                        irreversibly linked to your email address. Should "
+"you wish to use another one, please delete\n"
+"                        your account and register with a new one."
 msgstr ""
 "Dein Account ist fest mit deiner Email verbunden. Wenn du eine andere Email "
 "benutzen willst, lösche einfach deinen Account und leg einen neuen an."
@@ -211,12 +388,23 @@ msgstr "Profil aktivieren"
 msgid "Profile Editing"
 msgstr "Infos editieren"
 
+msgid "Edit my profile"
+msgstr "Mein Profil editieren"
+
+msgid "Filter"
+msgstr "Suche"
+
 msgid ""
 "\n"
-"                    Edit my profile"
+"        Create a new search\n"
+"        "
 msgstr ""
 "\n"
-"                    Meine Infos editieren"
+"        Erstelle eine neue Suche\n"
+"        "
+
+msgid "Search results"
+msgstr "Suchergebnisse"
 
 msgid "Edit"
 msgstr "Meine Infos editieren"
@@ -347,6 +535,12 @@ msgid "Please validate your email by clicking this:"
 msgstr ""
 "Bitte validieren Sie Ihre E-Mail indem Sie den folgenden Link anklicken:"
 
+msgid "Disapprove"
+msgstr "Ablehnen"
+
+msgid "Approve"
+msgstr "Freischalten"
+
 msgid "Approvals"
 msgstr "Freischalten"
 
@@ -382,9 +576,6 @@ msgstr "Log out"
 msgid "Functions for staff members"
 msgstr "Funktionen für Administratoren"
 
-msgid "Approve"
-msgstr "Freischalten"
-
 msgid "Change mail limit for"
 msgstr "Ändere maximale Anzahl an E-Mails für"
 
@@ -396,6 +587,19 @@ msgstr "Zugriffsstatistik ansehen"
 
 msgid "View user statistics (Not implemented!)"
 msgstr "Nutzerstatistiken ansehen (Nicht implementiert!)"
+
+msgid "Successfully updated your filter."
+msgstr "Ihr Filter wurde aktualisiert."
+
+msgid "You contacted new peoples."
+msgstr "Sie haben neue User kontatktiert."
+
+msgid ""
+"Your message has been sent to the selected parties.\n"
+"Review your sent messages in your profile."
+msgstr ""
+"Ihre Nachricht wurde an die ausgewählten User gesendet.\n"
+"Gesendete Nachrichten können Sie in Ihrem Profil überprüfen."
 
 #, python-brace-format
 msgid "You increased the mail limit for '{name}'."
@@ -502,10 +706,20 @@ msgstr "und"
 msgid "Terms of Use"
 msgstr "AGBs"
 
-#~ msgid ""
-#~ "\n"
-#~ "        Edit Info\n"
-#~ "    "
-#~ msgstr ""
-#~ "\n"
-#~ "        Infos editieren "
+#~ msgid "Search criteria"
+#~ msgstr "Sucherkriterien"
+
+#~ msgid "Contact all new matches"
+#~ msgstr "Alle neuen Treffer kontaktieren"
+
+#~ msgid "Answer to this request:"
+#~ msgstr "Auf diese Frage antworten:"
+
+#~ msgid "share my email"
+#~ msgstr "teile meine E-Mail-Adresse"
+
+#~ msgid "not interested"
+#~ msgstr "nicht interessiert"
+
+#~ msgid "Create a new account"
+#~ msgstr "Einen neuen Account erstellen"
