@@ -1,4 +1,5 @@
 from itertools import chain
+import random
 import string
 from typing import List
 
@@ -6,6 +7,8 @@ from crispy_forms.layout import Column, Div, HTML, Row
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 import numpy as np
+
+PREFIX_CONNECTOR = "--"
 
 
 class ConfigurationError(ValueError):
@@ -17,7 +20,7 @@ class ConfigurationError(ValueError):
 class Property:
     properties = None
 
-    def __init__(self, label=None, name=None, help_text=None, info_text=None, private=False):
+    def __init__(self, label=None, name=None, help_text="", info_text="", private=False):
         """
         Create a new property of a participant.
 
@@ -30,9 +33,9 @@ class Property:
             raise ConfigurationError("You need to set the value for label.")
         self.label = _(label)  # the text that should appear when this property is referenced
         self.name = name if name is not None else label.lower().replace(" ", "_")
-        if "--" in self.name:
+        if PREFIX_CONNECTOR in self.name:
             raise ConfigurationError(
-                f"The field name {self.name} is not allowed, since it contains '--'."
+                f"The field name {self.name} is not allowed, since it contains '{PREFIX_CONNECTOR}'."
                 " You can explicitly chose a suitable column name by setting the 'name' kwarg."
             )
         if len(self.name) > 12:
@@ -49,6 +52,8 @@ class Property:
         # Since properties should be able to generate a hierarchical structure,
         # they can have their own properties (children) that they act on (e.g. to group them).
         self.properties = None
+
+        self.prefix = None
 
     def get_model_field_names(self, prefix=None) -> List[str]:
         """
@@ -100,9 +105,27 @@ class Property:
         """Return a layout instance to render a signup page."""
         raise NotImplementedError
 
-    # use the ideas from playing around with filters in #40
-    # def get_filters(self):
-    #    raise NotImplementedError
+    def get_filters(self) -> List:
+        """Return a list of model fields that represent values that filters can take on."""
+        raise NotImplementedError(self.__class__.__name__)
+
+    def to_filter_json(self):
+        """Return a json that can be used by the frontend to view the filters."""
+        if self.private:
+            return None
+
+        json = {
+            "name": self.name,
+            "label": self.label,
+            "help_text": self.help_text,
+            "info_text": self.info_text,
+            "type": self.property_type,  # should be set by all subclasses
+        }
+
+        if self.properties is not None:
+            json["properties"] = list(filter(None, [p.to_filter_json() for p in self.properties]))
+
+        return json
 
 
 class PropertyGroup(Property):
@@ -124,6 +147,9 @@ class PropertyGroup(Property):
 
     def generate_random_assignment(self, rs=None):
         return list(chain(*[p.generate_random_assignment(rs) for p in self.properties]))
+
+    def get_filters(self) -> List:
+        return list(chain(*[p.get_filters() for p in self.properties]))
 
     def _get_signup_layout(self, prefix=None, ignore_private=None):
         return Div(
@@ -150,6 +176,9 @@ class PropertyGroup(Property):
             ),
             HTML("<br>"),
         )
+
+    def get_labels(self):
+        return list(chain(*[p.get_labels() for p in self.properties]))
 
 
 class ConditionalProperty(Property):
@@ -223,6 +252,21 @@ class ConditionalProperty(Property):
             *chain(*[p.generate_random_assignment(rs) for p in self.properties]),
         ]
 
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "exact",
+                    "label": _("is exactly"),
+                    "model_field": models.NullBooleanField(blank=True, null=True),
+                    "description": self.label,
+                }
+            ],
+            *chain(
+                *[p.get_filters() for p in self.properties]
+            ),  # no filters on those properties for now
+        ]
+
     def _get_signup_layout(self, prefix=None, ignore_private=None):
         field_names = self.get_model_field_names(prefix)
         conditional_field = field_names[0]
@@ -266,6 +310,15 @@ class ConditionalProperty(Property):
             )
         )
 
+    def to_filter_json(self):
+        json = super().to_filter_json()
+        json["conditional_field_name"] = self.get_model_field_names()[0]
+        return json
+
+    def get_labels(self):
+        conditional_fields = list(chain(*[p.get_labels() for p in self.properties]))
+        return [self.label, *conditional_fields]
+
 
 class MultipleChoiceProperty(Property):
     """
@@ -287,7 +340,7 @@ class MultipleChoiceProperty(Property):
         )
     """
 
-    property_type = "multiple_choice"
+    property_type = "multiple-choice"
 
     def __init__(self, choices, **kwargs):
         # putting a required in this property is a difficult to define behaviour
@@ -313,6 +366,19 @@ class MultipleChoiceProperty(Property):
 
         return [rs.choice([True, False]) for i in range(len(self.choices))]
 
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "exact",
+                    "label": _("is exactly"),
+                    "description": self.label,
+                    "model_field": models.NullBooleanField(blank=True, null=True),
+                }
+            ]
+            for i in range(len(self.choices))
+        ]
+
     def _get_signup_layout(self, prefix=None, ignore_private=None):
         return Div(
             HTML(self.label + "<br>"),
@@ -323,6 +389,14 @@ class MultipleChoiceProperty(Property):
                 ]
             ),
         )
+
+    def to_filter_json(self):
+        json = super().to_filter_json()
+        json["choices"] = {choice: label for choice, label in self.choices}
+        return json
+
+    def get_labels(self):
+        return [label for choice, label in self.choices]
 
 
 class SingleChoiceProperty(Property):
@@ -343,7 +417,7 @@ class SingleChoiceProperty(Property):
 
     """
 
-    property_type = "single_choice"
+    property_type = "single-choice"
 
     def __init__(self, choices, is_required=False, max_length=None, default=None, **kwargs):
         super().__init__(**kwargs)
@@ -353,8 +427,10 @@ class SingleChoiceProperty(Property):
         self.max_length = max_length if max_length is not None else 3
 
     def get_model_field_names(self, prefix=None):
-
-        return [self.name if prefix is None else prefix + "--" + self.name]
+        if self.prefix is None:
+            self.prefix = "" if prefix is None else prefix + PREFIX_CONNECTOR
+        model_field_name = self.prefix + self.name
+        return [model_field_name]
 
     def get_model_fields(self):
         if self.is_required:
@@ -380,8 +456,35 @@ class SingleChoiceProperty(Property):
             rs = np.random
         return [rs.choice([code for code, label in self.choices])]
 
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "exact",
+                    "label": "is exactly",
+                    "description": self.label,
+                    "choices": [(None, "--")] + self.choices,
+                    "max_length": self.max_length,
+                    "model_field": models.CharField(
+                        blank=True,
+                        null=True,
+                        choices=[(None, "--")] + self.choices,
+                        max_length=self.max_length,
+                    ),
+                }
+            ]
+        ]
+
     def _get_signup_layout(self, prefix=None, ignore_private=None):
         return self.get_model_field_names(prefix=prefix)
+
+    def to_filter_json(self):
+        json = super().to_filter_json()
+        json["choices"] = {choice: label for choice, label in self.choices}
+        return json
+
+    def get_labels(self):
+        return [self.label]
 
 
 class OrderedSingleChoiceProperty(Property):
@@ -403,7 +506,7 @@ class OrderedSingleChoiceProperty(Property):
                     ])
     """
 
-    property_type = "ordered_single_choice"
+    property_type = "ordered-single-choice"
 
     def __init__(self, choices, is_required=False, default=None, **kwargs):
         super().__init__(**kwargs)
@@ -412,7 +515,10 @@ class OrderedSingleChoiceProperty(Property):
         self.is_required = is_required
 
     def get_model_field_names(self, prefix=None):
-        return [self.name if prefix is None else prefix + "--" + self.name]
+        if self.prefix is None:
+            self.prefix = "" if prefix is None else prefix + PREFIX_CONNECTOR
+        model_field_name = self.prefix + self.name
+        return [model_field_name]
 
     def get_model_fields(self):
         if self.is_required:
@@ -435,6 +541,38 @@ class OrderedSingleChoiceProperty(Property):
 
     def _get_signup_layout(self, prefix=None, ignore_private=None):
         return self.get_model_field_names(prefix=prefix)[0]
+
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "gte",
+                    "label": _("is greater than"),
+                    "description": self.label,
+                    "choices": [(None, "No choice")] + self.choices,
+                    "model_field": models.IntegerField(
+                        null=True, choices=[(None, "No choice")] + self.choices, blank=True
+                    ),
+                },
+                {
+                    "lookup_exp": "lte",
+                    "label": _("is smaller than"),
+                    "description": self.label,
+                    "choices": [(None, "No choice")] + self.choices,
+                    "model_field": models.IntegerField(
+                        null=True, choices=[(None, "No choice")] + self.choices, blank=True
+                    ),
+                },
+            ]
+        ]
+
+    def to_filter_json(self):
+        json = super().to_filter_json()
+        json["choices"] = {choice: label for choice, label in self.choices}
+        return json
+
+    def get_labels(self):
+        return [self.label]
 
 
 class TextProperty(Property):
@@ -463,7 +601,10 @@ class TextProperty(Property):
         self.max_length = 100 if max_length is None else max_length
 
     def get_model_field_names(self, prefix=None):
-        return [self.name if prefix is None else prefix + "--" + self.name]
+        if self.prefix is None:
+            self.prefix = "" if prefix is None else prefix + PREFIX_CONNECTOR
+        model_field_name = self.prefix + self.name
+        return [model_field_name]
 
     def get_model_fields(self):
         if self.is_required:
@@ -481,11 +622,41 @@ class TextProperty(Property):
     def generate_random_assignment(self, rs=None):
         if rs is None:
             rs = np.random
-        code = rs.choice([l for l in string.ascii_uppercase], self.max_length)
-        return ["".join(code)]
+        random_letters = rs.choice(
+            [l for l in string.ascii_uppercase] + [" "], self.max_length
+        ).tolist()
+        words = []
+        while len(random_letters) > 0:
+            word_length = min(len(random_letters), random.randrange(1, 12))
+            words.append("".join(random_letters[:word_length]))
+            del random_letters[:word_length]
+
+        return [" ".join(words)[: self.max_length]]
+
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "icontains",
+                    "label": _("contains"),
+                    "description": self.label,
+                    "model_field": models.CharField(
+                        max_length=self.max_length, blank=True, null=True
+                    ),
+                }
+            ]
+        ]
 
     def _get_signup_layout(self, prefix=None, ignore_private=None):
         return self.get_model_field_names(prefix=prefix)[0]
+
+    def to_filter_json(self):
+        json = super().to_filter_json()
+        json["max_length"] = self.max_length
+        return json
+
+    def get_labels(self):
+        return [self.label]
 
 
 class BooleanProperty(Property):
@@ -501,7 +672,7 @@ class BooleanProperty(Property):
         )
     """
 
-    property_name = "boolean"
+    property_type = "boolean"
 
     def __init__(self, is_required=False, default=False, **kwargs):
         super().__init__(**kwargs)
@@ -509,7 +680,10 @@ class BooleanProperty(Property):
         self.default = default
 
     def get_model_field_names(self, prefix=None):
-        return [self.name if prefix is None else prefix + "--" + self.name]
+        if self.prefix is None:
+            self.prefix = "" if prefix is None else prefix + PREFIX_CONNECTOR
+        model_field_name = self.prefix + self.name
+        return [model_field_name]
 
     def get_model_fields(self, prefix=None):
         if self.is_required:
@@ -524,3 +698,18 @@ class BooleanProperty(Property):
 
     def _get_signup_layout(self, prefix=None, ignore_private=None):
         return self.get_model_field_names(prefix=prefix)[0]
+
+    def get_filters(self) -> List:
+        return [
+            [
+                {
+                    "lookup_exp": "exact",
+                    "label": _("is exactly"),
+                    "description": self.label,
+                    "model_field": models.NullBooleanField(blank=True, null=True),
+                }
+            ]
+        ]
+
+    def get_labels(self):
+        return [self.label]

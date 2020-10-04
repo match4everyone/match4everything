@@ -6,20 +6,23 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 import numpy as np
 
-from apps.matching.data.map_data import zipcodes
-from apps.matching.utils.zipcodes import GERMAN_BIG_CITY_ZIPCODES
+from apps.matching.data.map_data import zipcodes  # noqa
+from apps.matching.utils.zipcodes import GERMAN_BIG_CITY_ZIPCODES  # noqa
+from match4everyone.configuration.A import A  # noqa
+from match4everyone.configuration.B import B  # noqa
 
 from .participant_info import ParticipantInfo
 
 
 class RadiusChoices(models.IntegerChoices):
+    ONLY_HERE = 0, _("0 km")
     LESSTEN = 10, _("<10 km")
     LESSTWENTY = 20, _("<20 km")
-    LESSFOURTY = 30, _("<40 km")
-    MOREFOURTY = 40, _(">40 km")
+    LESSFOURTY = 40, _("<40 km")
+    LESSFIFTY = 50, _("<50 km")
 
 
-class CountryCode(models.TextChoices):
+class CountryCodeChoices(models.TextChoices):
     GERMANY = "DE", _("Germany")
     AUSTRIA = "AT", _("Austria")
 
@@ -35,7 +38,7 @@ class AbstractParticipantInfoLocation(models.Model):
     registration_date = models.DateTimeField(default=datetime.now, blank=True, null=True)
 
     country_code = models.CharField(
-        max_length=2, choices=CountryCode.choices, default=CountryCode.GERMANY
+        max_length=2, choices=CountryCodeChoices.choices, default=CountryCodeChoices.GERMANY
     )
     plz = models.CharField(max_length=5, null=True)
     radius = models.IntegerField(
@@ -71,6 +74,7 @@ class ParticipantInfoLocationA(AbstractParticipantInfoLocation):
     participant_info = models.ForeignKey(
         ParticipantInfo["A"], on_delete=models.CASCADE, related_name="location"
     )
+    MAX_RADIUS = A.LOCATION_SEARCH_MAX_RADIUS
 
 
 class ParticipantInfoLocationB(AbstractParticipantInfoLocation):
@@ -78,6 +82,7 @@ class ParticipantInfoLocationB(AbstractParticipantInfoLocation):
     participant_info = models.ForeignKey(
         ParticipantInfo["B"], on_delete=models.CASCADE, related_name="location"
     )
+    MAX_RADIUS = B.LOCATION_SEARCH_MAX_RADIUS
 
 
 ParticipantInfoLocation = {

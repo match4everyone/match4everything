@@ -1,0 +1,11 @@
+{% load i18n %}
+<form>
+    {% csrf_token %}
+<input type="hidden" value="{{record.uuid}}" name="uuid">
+<button type="submit" name="change_approval" formmethod="post" class="btn btn-sm {% if record.is_approved %} btn-warning {% else %} btn-success {% endif %}">
+{% if record.is_approved %}
+    {% blocktrans %}Disapprove{% endblocktrans %}
+{% else %}
+    {% blocktrans %}Approve{% endblocktrans %}
+{% endif %}
+</button></form>
