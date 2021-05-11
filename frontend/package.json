@@ -34,7 +34,7 @@
     "leaflet": "^1.6.0",
     "leaflet.featuregroup.subgroup": "^1.0.2",
     "leaflet.markercluster": "^1.4.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "postcss-loader": "^3.0.0",
     "precss": "^4.0.0",
     "sass": "^1.26.10",
