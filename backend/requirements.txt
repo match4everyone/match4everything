@@ -1,4 +1,4 @@
-Django==3.0.7
+Django==3.1.12
 django-classy-tags==1.0.0
 django-cms==3.7.3
 django-cors-middleware==1.5.0
