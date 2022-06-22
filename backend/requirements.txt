@@ -25,7 +25,7 @@ djangocms_text_ckeditor==3.9.1
 djangorestframework==3.11.0
 djangorestframework-filters==0.11.1
 JSON-log-formatter==0.3.0
-numpy==1.18.2
+numpy==1.22.0
 pandas==1.0.3
 pre-commit==2.2.0
 requests==2.23.0
